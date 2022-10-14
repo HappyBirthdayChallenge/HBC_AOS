@@ -34,6 +34,7 @@ class LoginActivity: AppCompatActivity() {
         }
 
         binding.tvLoginNormalLogin.setOnClickListener {
+            supportFragmentManager.beginTransaction().add(binding.flLogin.id, NormalLoginFragment()).commit()
         }
     }
 
