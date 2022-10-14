@@ -1,4 +1,4 @@
-package com.inha.hbc.ui.login
+package com.inha.hbc.ui.login.ui
 
 import android.os.Bundle
 import android.util.Log
@@ -12,7 +12,7 @@ import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
 
 class LoginActivity: AppCompatActivity() {
-    lateinit var binding: ActivityLoginBinding
+    private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +34,7 @@ class LoginActivity: AppCompatActivity() {
         }
 
         binding.tvLoginNormalLogin.setOnClickListener {
+            supportFragmentManager.beginTransaction().add(binding.flLogin.id, NormalLoginFragment()).commit()
         }
     }
 

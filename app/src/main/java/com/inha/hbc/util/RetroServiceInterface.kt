@@ -1,8 +1,14 @@
 package com.inha.hbc.util
 
-import retrofit2.http.GET
-import retrofit2.http.Query
+import com.inha.hbc.data.remote.req.NormSigninInfo
+import com.inha.hbc.data.remote.resp.NormSigninBody
+import retrofit2.Call
+import retrofit2.http.Body
+import retrofit2.http.POST
 
-class RetroServiceInterface {
-
+interface RetroServiceInterface {
+    @POST("/auth/signin")
+    fun normalSignin(
+        @Body userInfo: NormSigninInfo
+    ) : Call<NormSigninBody>
 }
