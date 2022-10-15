@@ -3,14 +3,18 @@ package com.inha.hbc.ui.login.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.auth0.android.jwt.JWT
 import com.inha.hbc.R
 import com.inha.hbc.data.remote.req.NormSigninInfo
+import com.inha.hbc.data.remote.resp.Data
+import com.inha.hbc.data.remote.resp.NormSigninBody
 import com.inha.hbc.databinding.FragmentNormalLoginBinding
 import com.inha.hbc.ui.login.view.NormLoginView
 import com.inha.hbc.ui.main.MainActivity
@@ -60,9 +64,49 @@ class NormalLoginFragment: Fragment(), NormLoginView {
         }
     }
 
-    override fun onNormLoginSuccess() {
+    fun decodeJwt(token: Data) {
+        val access = JWT(token.accessToken).claims
+        val accessMap = hashMapOf<String, String>()
+        accessMap.apply {
+            for (i in access) {
+                this.put(i.key,
+                    when(i.value.asString()) {
+                        null -> {
+                            ""
+                        }
+                        else -> {
+                            i.value.asString()!!
+                        }
+                    })
+            }
+        }
+
+
+        val refresh = JWT(token.refreshToken).claims
+        val refreshMap = hashMapOf<String, String>()
+        refreshMap.apply {
+            for (i in refresh) {
+                this.put(i.key,
+                    when(i.value.asString()) {
+                        null -> {
+                            ""
+                        }
+                        else -> {
+                            i.value.asString()!!
+                        }
+                    })
+            }
+        }
+
+        Log.d("access", accessMap.toString())
+        Log.d("refresh", refreshMap.toString())
+    }
+
+    override fun onNormLoginSuccess(data: NormSigninBody) {
+        Log.d("normlogin", "success")
+        decodeJwt(data.token!!)
+
         val intent = Intent(parentContext, MainActivity::class.java)
-        binding.lavNormalLoginLoading.visibility = View.INVISIBLE
         startActivity(intent)
     }
 

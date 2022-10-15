@@ -11,7 +11,7 @@ properties.load(project.rootProject.file('local.properties').newDataInputStream(
 
 android {
     namespace 'com.inha.hbc'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.inha.hbc"
@@ -69,8 +69,7 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.9.1'
 
     //material
-    implementation 'com.google.android.material:material:1.8.0-alpha01'
-
+    implementation 'androidx.compose.material3:material3:1.0.0-rc01'
 
     //kakao
     implementation "com.kakao.sdk:v2-user:2.11.2" // 카카오 로그인
@@ -80,5 +79,8 @@ dependencies {
 
     //gson
     implementation 'com.google.code.gson:gson:2.9.1'
+
+    //jwtDecode
+    implementation 'com.auth0.android:jwtdecode:2.0.1'
 
 }

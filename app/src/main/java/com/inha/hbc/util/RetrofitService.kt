@@ -20,7 +20,7 @@ class RetrofitService {
                 when(response.code()) {
                     200 -> {
                         if (response.body()!!.code == "R-M011") {
-                            normLoginView.onNormLoginSuccess()
+                            normLoginView.onNormLoginSuccess(response.body()!!)
                         }
                         else {
                             normLoginView.onNormLoginFailure(response.code())
@@ -30,11 +30,10 @@ class RetrofitService {
                         normLoginView.onNormLoginFailure(response.code())
                     }
                 }
-                Log.d("caller", response.toString())
             }
 
             override fun onFailure(call: Call<NormSigninBody>, t: Throwable) {
-                Log.d("caller", call.toString())
+                normLoginView.onNormLoginFailure(10000)
             }
 
         })
