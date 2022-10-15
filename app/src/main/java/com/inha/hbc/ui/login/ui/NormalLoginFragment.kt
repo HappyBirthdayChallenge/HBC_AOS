@@ -15,7 +15,8 @@ import com.inha.hbc.databinding.FragmentNormalLoginBinding
 import com.inha.hbc.ui.login.view.NormLoginView
 import com.inha.hbc.ui.main.MainActivity
 import com.inha.hbc.util.RetrofitService
-
+//아이디1234
+//비밀번호1@
 class NormalLoginFragment: Fragment(), NormLoginView {
     private lateinit var binding: FragmentNormalLoginBinding
     private lateinit var parentContext: Context
