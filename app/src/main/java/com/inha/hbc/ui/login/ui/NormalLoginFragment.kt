@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Base64
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,7 +23,7 @@ import com.inha.hbc.util.GlobalApplication
 import com.inha.hbc.util.RetrofitService
 import org.json.JSONObject
 
-class NormalLoginFragment: Fragment(), NormLoginView {
+class NormalLoginFragment(val flId: Int): Fragment(), NormLoginView {
     private lateinit var binding: FragmentNormalLoginBinding
     private lateinit var parentContext: Context
     override fun onCreateView(
@@ -103,7 +102,7 @@ class NormalLoginFragment: Fragment(), NormLoginView {
         }
 
         else {
-
+            parentFragmentManager.beginTransaction().replace(flId, SetbirthFragment()).commit()
         }
 
     }
