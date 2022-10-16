@@ -4,14 +4,20 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.inha.hbc.R
 import com.inha.hbc.databinding.ActivityLoginBinding
+import com.inha.hbc.ui.login.view.KakaoLoginView
+import com.inha.hbc.ui.login.view.NormLoginView
+import com.inha.hbc.util.RetrofitService
+import com.inha.hbc.util.getRetrofit
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
+import retrofit2.Retrofit
 
-class LoginActivity: AppCompatActivity() {
+class LoginActivity: AppCompatActivity(), NormLoginView, KakaoLoginView {
     private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,6 +79,22 @@ class LoginActivity: AppCompatActivity() {
     fun getToken(token: OAuthToken) {
         binding.lavLoginLoading.visibility = View.VISIBLE
         Log.d("kakaoTok", token.toString())
+        RetrofitService().kakaoSignin("KAKAO", token.accessToken, this)
 
+    }
+
+    override fun onNormLoginSuccess() {
+    }
+
+    override fun onNormLoginFailure(code: Int) {
+        Toast.makeText(this, "$code 에러", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onKakaoLoginSuccess() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onKakaoLoginFailure(code: Int) {
+        Toast.makeText(this, "$code 에러", Toast.LENGTH_SHORT).show()
     }
 }
