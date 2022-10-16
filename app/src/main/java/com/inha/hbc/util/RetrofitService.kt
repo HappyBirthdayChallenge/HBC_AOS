@@ -58,6 +58,7 @@ class RetrofitService {
                     kakaoLoginView.onKakaoLoginSuccess()
                 }
                 else {
+                    Log.d("retrofit", response.toString())
                     kakaoLoginView.onKakaoLoginFailure(response.code())
                 }
             }
