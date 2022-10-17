@@ -1,6 +1,7 @@
 package com.inha.hbc.util
 
 import com.google.gson.GsonBuilder
+import okhttp3.Interceptor
 import okhttp3.JavaNetCookieJar
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -16,12 +17,21 @@ private var gson = GsonBuilder().setLenient().create()
 
 fun getRetrofit(): Retrofit {
     if (instance == null) {
-    val interceptor = HttpLoggingInterceptor()
-    interceptor.level = HttpLoggingInterceptor.Level.BODY
 
     val client = OkHttpClient.Builder()
         .cookieJar(JavaNetCookieJar(CookieManager()))
-        .addInterceptor(interceptor)
+        .addInterceptor{
+            chain: Interceptor.Chain ->
+            val origin = chain.request()
+            if (origin.url.encodedPath.equals( "/associates/birthday", true)) {
+                chain.proceed(origin.newBuilder().apply{
+                    addHeader("Authorization", "Bearer " + GlobalApplication.prefs.getRealAccessJwt().toString())
+                }.build())
+            }
+            else {
+                chain.proceed(origin)
+            }
+        }
         .build()
 
     instance = Retrofit.Builder()

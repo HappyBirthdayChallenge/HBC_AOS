@@ -92,6 +92,9 @@ class NormalLoginFragment(val flId: Int): Fragment(), NormLoginView {
     }
 
     override fun onNormLoginSuccess(data: NormSigninBody) {
+        GlobalApplication.prefs.setRealAccessJwt(data.token!!.accessToken)
+        GlobalApplication.prefs.setRealRefreshJwt(data.token!!.accessToken)
+
         decodeJwt(data.token!!)
 
         val birth = isBirthAvailable(GlobalApplication.prefs.getAccessJwt())
