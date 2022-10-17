@@ -46,8 +46,7 @@
         app:layout_constraintBottom_toTopOf="@id/fab_letter_send"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        android:src="@drawable/ic_add_component"
-        style="?attr/floatingActionButtonSmallStyle">
+        android:src="@drawable/ic_add_component">
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab_letter_send"
