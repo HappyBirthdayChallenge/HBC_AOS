@@ -7,6 +7,7 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.inha.hbc.R
+import com.inha.hbc.data.remote.resp.NormSigninBody
 import com.inha.hbc.databinding.ActivityLoginBinding
 import com.inha.hbc.ui.login.view.KakaoLoginView
 import com.inha.hbc.ui.login.view.NormLoginView
@@ -83,7 +84,7 @@ class LoginActivity: AppCompatActivity(), NormLoginView, KakaoLoginView {
 
     }
 
-    override fun onNormLoginSuccess() {
+    override fun onNormLoginSuccess(data: NormSigninBody) {
     }
 
     override fun onNormLoginFailure(code: Int) {

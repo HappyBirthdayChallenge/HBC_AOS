@@ -144,7 +144,7 @@
         app:layout_constraintRight_toLeftOf="@id/tv_setbirth_lunar"
         app:layout_constraintBottom_toBottomOf="@id/tv_setbirth_lunar"
         android:layout_marginRight="5dp"
-        >
+        android:visibility="invisible">
     </com.google.android.material.checkbox.MaterialCheckBox>
     <TextView
         android:id="@+id/tv_setbirth_lunar"
@@ -155,7 +155,8 @@
         android:layout_marginTop="29dp"
         android:layout_marginRight="20dp"
         android:text="@string/birth_lunar"
-        android:textSize="14sp">
+        android:textSize="14sp"
+        android:visibility="invisible">
     </TextView>
 
     <TextView
