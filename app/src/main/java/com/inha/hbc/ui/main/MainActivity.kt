@@ -9,7 +9,7 @@ import com.inha.hbc.ui.letter.LetterFragment
 import com.inha.hbc.ui.menu.MenuFragment
 
 
-class MainActivity: AppCompatActivity(), MenuFragment.OnCloseDetection {
+class MainActivity: AppCompatActivity(), MenuFragment.OnCloseDetection, LetterFragment.OnListener {
     private lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,13 +47,18 @@ class MainActivity: AppCompatActivity(), MenuFragment.OnCloseDetection {
             binding.ablMain.visibility = View.GONE
             binding.fabMain.hide()
             val letter = LetterFragment()
+            letter.onlistener = this
             supportFragmentManager.beginTransaction().addToBackStack("menu").add(binding.flMain.id, letter).commit()
         }
     }
 
-    override fun onClose() {
+    override fun onCloseMenu() {
         binding.ablMain.visibility = View.VISIBLE
         binding.fabMain.show()
     }
 
+    override fun onCloseLetter() {
+        binding.ablMain.visibility = View.VISIBLE
+        binding.fabMain.show()
+    }
 }
