@@ -94,6 +94,8 @@ class SetbirthFragment:Fragment(), SetBirthView {
                 "SOLAR",
                 binding.etSetbirthYear.text.toString().toInt()
             )
+
+            Log.d("dataStart", data.toString())
             RetrofitService().setBirth(data, this)
         }
 
@@ -105,6 +107,6 @@ class SetbirthFragment:Fragment(), SetBirthView {
     }
 
     override fun onSetBirthFailure(code: Int) {
-        TODO("Not yet implemented")
+        Toast.makeText(parentContext, "$code 에러 발생", Toast.LENGTH_LONG).show()
     }
 }

@@ -14,7 +14,7 @@ interface RetroServiceInterface {
         @Body userInfo: NormSigninInfo
     ) : Call<NormSigninBody>
 
-    @POST("/associates/birthday")
+    @POST("/members/accounts/birthday")
     fun setBirth(
         @Body birthDate: BirthDateInfo
     ): Call<NormSigninBody>

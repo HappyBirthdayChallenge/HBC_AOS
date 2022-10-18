@@ -19,11 +19,10 @@ fun getRetrofit(): Retrofit {
     if (instance == null) {
 
     val client = OkHttpClient.Builder()
-        .cookieJar(JavaNetCookieJar(CookieManager()))
         .addInterceptor{
             chain: Interceptor.Chain ->
             val origin = chain.request()
-            if (origin.url.encodedPath.equals( "/associates/birthday", true)) {
+            if (origin.url.encodedPath.equals( "/members/accounts/birthday", true)) {
                 chain.proceed(origin.newBuilder().apply{
                     addHeader("Authorization", "Bearer " + GlobalApplication.prefs.getRealAccessJwt().toString())
                 }.build())

@@ -22,6 +22,7 @@ import com.inha.hbc.ui.main.MainActivity
 import com.inha.hbc.util.GlobalApplication
 import com.inha.hbc.util.RetrofitService
 import org.json.JSONObject
+import java.nio.charset.Charset
 
 class NormalLoginFragment(val flId: Int): Fragment(), NormLoginView {
     private lateinit var binding: FragmentNormalLoginBinding
@@ -70,7 +71,7 @@ class NormalLoginFragment(val flId: Int): Fragment(), NormLoginView {
     fun decodeJwt(token: Data) {
         val gson = Gson()
 
-        val accessString = String(Base64.decode(token.accessToken.split(".")[1], 0))
+        val accessString = String(Base64.decode(token.accessToken.split(".")[1], 0), Charsets.UTF_8).trim()
         val access = gson.fromJson(accessString, Jwt::class.java)
 
         GlobalApplication.prefs.setAccessJwt(access)

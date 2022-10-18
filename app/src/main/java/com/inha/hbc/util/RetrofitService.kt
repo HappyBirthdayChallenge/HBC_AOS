@@ -54,10 +54,17 @@ class RetrofitService {
                 call: Call<NormSigninBody>,
                 response: Response<NormSigninBody>
             ) {
-                Log.d("respBirth", response.toString())
+                Log.d("response", response.body().toString())
+                if (response.code() == 200) {
+                    setBirthView.onSetBirthSuccess(response.body()!!)
+                }
+                else {
+                    setBirthView.onSetBirthFailure(response.code())
+                }
             }
 
             override fun onFailure(call: Call<NormSigninBody>, t: Throwable) {
+                setBirthView.onSetBirthFailure(-1)
             }
 
         })
