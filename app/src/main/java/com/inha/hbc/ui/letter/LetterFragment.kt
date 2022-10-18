@@ -4,9 +4,12 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
+import android.provider.MediaStore.Files
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +26,7 @@ import com.inha.hbc.ui.adapter.LetterMenuRVAdapter
 import com.inha.hbc.ui.adapter.LetterTypeRVAdapter
 import java.io.File
 import java.net.URI
+import java.util.Date
 
 class LetterFragment: Fragment() {
     interface OnListener {
@@ -41,6 +45,7 @@ class LetterFragment: Fragment() {
     lateinit var menuData: ArrayList<String>
 
     lateinit var imgURI: Uri
+    lateinit var imgPath: String
 
     val gal =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -49,7 +54,7 @@ class LetterFragment: Fragment() {
         }
 
     val cam = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        Log.d("camUri", it.toString())
+        Log.d("imgUri", imgURI.toString())
     }
 
     val PERMISSIONS = arrayOf(
@@ -182,11 +187,20 @@ class LetterFragment: Fragment() {
 
     fun openCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-            File("^")
-//        imgURI = FileProvider.getUriForFile(
-//            mainContext,
-//            "com.inha.hbc.fileprovider",
-//        )
+        val sdf = java.text.SimpleDateFormat("yyyyMMdd_HHmmss")
+        val filename = sdf.format(System.currentTimeMillis()) + ".jpg"
+        //val photoFile = createTmpFile()!!
+        val photoFile = File(
+            File(mainContext.filesDir.toString() + "/image").apply{
+                if (!this.exists()) {
+                    this.mkdirs()
+                }
+            },
+            filename
+        )
+        imgURI = FileProvider.getUriForFile(
+            mainContext, "com.inha.hbc.fileprovider", photoFile
+        )
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imgURI)
         cam.launch(intent)
     }
@@ -196,6 +210,18 @@ class LetterFragment: Fragment() {
         intent.type = MediaStore.Images.Media.CONTENT_TYPE
         intent.type = "image/*"
         gal.launch(intent)
+    }
+
+    fun createTmpFile(): File? {
+        val timeStamp = java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val imgFileName = "JPEG_$timeStamp.jpg"
+        var imgFile: File? = null
+        val fileDir = File(
+            Environment.getDataDirectory().toString() + "/Pictures", "hbc"
+        )
+        imgFile = File (fileDir, imgFileName)
+        imgPath = imgFile.absolutePath
+        return imgFile
     }
 
     fun checkPermission(permissions: Array<String>, flag: Int):Boolean {
