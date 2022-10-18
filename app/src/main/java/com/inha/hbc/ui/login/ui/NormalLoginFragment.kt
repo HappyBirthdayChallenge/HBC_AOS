@@ -2,6 +2,7 @@ package com.inha.hbc.ui.login.ui
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Base64
 import android.view.LayoutInflater
@@ -9,8 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.google.gson.Gson
+import com.inha.hbc.BuildConfig
 import com.inha.hbc.R
 import com.inha.hbc.data.local.Jwt
 import com.inha.hbc.data.remote.req.NormSigninInfo
@@ -21,6 +24,8 @@ import com.inha.hbc.ui.login.view.NormLoginView
 import com.inha.hbc.ui.main.MainActivity
 import com.inha.hbc.util.GlobalApplication
 import com.inha.hbc.util.RetrofitService
+import org.json.JSONObject
+import java.nio.charset.Charset
 
 class NormalLoginFragment(val flId: Int): Fragment(), NormLoginView {
     private lateinit var binding: FragmentNormalLoginBinding
@@ -66,16 +71,18 @@ class NormalLoginFragment(val flId: Int): Fragment(), NormLoginView {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun decodeJwt(token: Data) {
-        val gson = Gson()
 
-        val accessString = String(Base64.decode(token.accessToken.split(".")[1], 0))
+        var gson = Gson()
+        val accessDecode = java.util.Base64.getUrlDecoder().decode(token.accessToken.split(".")[1])
+        val accessString = String(accessDecode, Charsets.UTF_8)
         val access = gson.fromJson(accessString, Jwt::class.java)
-
         GlobalApplication.prefs.setAccessJwt(access)
 
 
-        val refreshString = String(Base64.decode(token.refreshToken.split(".")[1], 0))
+        val refreshDecode = java.util.Base64.getUrlDecoder().decode(token.accessToken.split(".")[1])
+        val refreshString = String(refreshDecode, Charsets.UTF_8)
         val refresh = gson.fromJson(refreshString, Jwt::class.java)
 
         GlobalApplication.prefs.setRefreshJwt(refresh)
@@ -90,8 +97,16 @@ class NormalLoginFragment(val flId: Int): Fragment(), NormLoginView {
         return true
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onNormLoginSuccess(data: NormSigninBody) {
-        decodeJwt(data.token!!)
+        GlobalApplication.prefs.setRealAccessJwt(data.token!!.accessToken)
+        GlobalApplication.prefs.setRealRefreshJwt(data.token!!.accessToken)
+
+        if (Build.VERSION_CODES.O <= BuildConfig.VERSION_CODE) {
+            decodeJwt(data.token!!)
+        }
+        else {
+        }
 
         val birth = isBirthAvailable(GlobalApplication.prefs.getAccessJwt())
 

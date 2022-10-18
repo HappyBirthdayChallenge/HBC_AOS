@@ -8,6 +8,8 @@ class PreferenceUtil(context: Context) {
     val prefsName = "prefs"
     val accessJwtKey = "accessJwt"
     val refreshJwtKey = "refreshJwt"
+    val realAccessJwtKey = "realAccessJwt"
+    val realRefreshJwtKey = "realRefreshJwt"
     val prefs= context.getSharedPreferences(prefsName, 0)
 
     private fun jwtToString(jwt: Jwt): String {
@@ -36,6 +38,21 @@ class PreferenceUtil(context: Context) {
     fun setRefreshJwt(data: Jwt) {
         val str = jwtToString(data)
         prefs.edit().putString(refreshJwtKey, str).apply()
+    }
+
+    fun setRealAccessJwt(data: String) {
+        prefs.edit().putString(realAccessJwtKey, data).apply()
+    }
+
+    fun getRealAccessJwt(): String? {
+        return prefs.getString(realAccessJwtKey, "")
+    }
+    fun setRealRefreshJwt(data: String) {
+        prefs.edit().putString(realRefreshJwtKey, data).apply()
+    }
+
+    fun getRealRefreshJwt(): String? {
+        return prefs.getString(realRefreshJwtKey, "")
     }
 
 

@@ -10,10 +10,14 @@ import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.inha.hbc.data.remote.req.BirthDateInfo
+import com.inha.hbc.data.remote.resp.NormSigninBody
 import com.inha.hbc.databinding.FragmentSetbirthBinding
+import com.inha.hbc.ui.login.view.SetBirthView
 import com.inha.hbc.ui.main.MainActivity
+import com.inha.hbc.util.RetrofitService
 
-class SetbirthFragment:Fragment() {
+class SetbirthFragment:Fragment(), SetBirthView {
     lateinit var binding: FragmentSetbirthBinding
     lateinit var parentContext: Context
     override fun onCreateView(
@@ -84,10 +88,25 @@ class SetbirthFragment:Fragment() {
 
         binding.tvSetbirthStart.setOnClickListener {
             //생일 다시 한번 검증해보고 전송
+            val data = BirthDateInfo(
+                binding.etSetbirthDay.text.toString().toInt(),
+                binding.etSetbirthMonth.text.toString().toInt(),
+                "SOLAR",
+                binding.etSetbirthYear.text.toString().toInt()
+            )
 
-            val intent = Intent(parentContext, MainActivity::class.java)
-            startActivity(intent)
+            Log.d("dataStart", data.toString())
+            RetrofitService().setBirth(data, this)
         }
 
+    }
+
+    override fun onSetBirthSuccess(data: NormSigninBody) {
+        val intent = Intent(parentContext, MainActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun onSetBirthFailure(code: Int) {
+        Toast.makeText(parentContext, "$code 에러 발생", Toast.LENGTH_LONG).show()
     }
 }
