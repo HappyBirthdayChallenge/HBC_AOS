@@ -2,6 +2,7 @@ package com.inha.hbc.ui.login.ui
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.util.Base64
 import android.view.LayoutInflater
@@ -9,8 +10,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.google.gson.Gson
+import com.inha.hbc.BuildConfig
 import com.inha.hbc.R
 import com.inha.hbc.data.local.Jwt
 import com.inha.hbc.data.remote.req.NormSigninInfo
@@ -68,16 +71,18 @@ class NormalLoginFragment(val flId: Int): Fragment(), NormLoginView {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun decodeJwt(token: Data) {
-        val gson = Gson()
 
-        val accessString = String(Base64.decode(token.accessToken.split(".")[1], 0), Charsets.UTF_8).trim()
+        var gson = Gson()
+        val accessDecode = java.util.Base64.getUrlDecoder().decode(token.accessToken.split(".")[1])
+        val accessString = String(accessDecode, Charsets.UTF_8)
         val access = gson.fromJson(accessString, Jwt::class.java)
-
         GlobalApplication.prefs.setAccessJwt(access)
 
 
-        val refreshString = String(Base64.decode(token.refreshToken.split(".")[1], 0))
+        val refreshDecode = java.util.Base64.getUrlDecoder().decode(token.accessToken.split(".")[1])
+        val refreshString = String(refreshDecode, Charsets.UTF_8)
         val refresh = gson.fromJson(refreshString, Jwt::class.java)
 
         GlobalApplication.prefs.setRefreshJwt(refresh)
@@ -92,11 +97,16 @@ class NormalLoginFragment(val flId: Int): Fragment(), NormLoginView {
         return true
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onNormLoginSuccess(data: NormSigninBody) {
         GlobalApplication.prefs.setRealAccessJwt(data.token!!.accessToken)
         GlobalApplication.prefs.setRealRefreshJwt(data.token!!.accessToken)
 
-        decodeJwt(data.token!!)
+        if (Build.VERSION_CODES.O <= BuildConfig.VERSION_CODE) {
+            decodeJwt(data.token!!)
+        }
+        else {
+        }
 
         val birth = isBirthAvailable(GlobalApplication.prefs.getAccessJwt())
 
