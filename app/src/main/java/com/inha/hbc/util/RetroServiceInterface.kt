@@ -2,8 +2,8 @@ package com.inha.hbc.util
 
 import com.inha.hbc.data.remote.req.BirthDateInfo
 import com.inha.hbc.data.remote.req.NormSigninInfo
-import com.inha.hbc.data.remote.resp.KakaoSigninBody
 import com.inha.hbc.data.remote.resp.NormSigninBody
+import com.inha.hbc.data.remote.resp.kakaoSigninBody
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Header
@@ -22,7 +22,7 @@ interface RetroServiceInterface {
     fun kakaoSignin(
         @Path("provider") provider: String,
         @Query("token") token: String
-    ) : Call<KakaoSigninBody>
+    ) : Call<kakaoSigninBody>
 
 
     @POST("/members/accounts/birthday")

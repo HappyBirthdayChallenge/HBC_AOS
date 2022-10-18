@@ -3,19 +3,13 @@ package com.inha.hbc.data.remote.resp
 import com.google.gson.annotations.SerializedName
 
 data class NormSigninBody(
-    val code: String,
-    val errors: List<Error>?,
-    @SerializedName(value = "data") val token: Data?,
-    val message: String,
-    val status: Int
-)
-data class Error(
-    val field: String,
-    val reason: String,
-    val value: String
+    var code: String?,
+    @SerializedName(value = "data") var token: Data?,
+    var message: String?,
+    var status: Int?
 )
 
 data class Data(
-    @SerializedName(value = "access_token") val accessToken: String,
-    @SerializedName(value = "refresh_token") val refreshToken: String
+    @SerializedName(value = "access_token") var accessToken: String,
+    @SerializedName(value = "refresh_token") var refreshToken: String
 )

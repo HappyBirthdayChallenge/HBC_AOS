@@ -18,6 +18,7 @@ import com.inha.hbc.R
 import com.inha.hbc.data.local.Jwt
 import com.inha.hbc.data.remote.req.NormSigninInfo
 import com.inha.hbc.data.remote.resp.Data
+import com.inha.hbc.data.remote.resp.ErrorResp
 import com.inha.hbc.data.remote.resp.NormSigninBody
 import com.inha.hbc.databinding.FragmentNormalLoginBinding
 import com.inha.hbc.ui.login.view.NormLoginView
@@ -110,7 +111,7 @@ class NormalLoginFragment(val flId: Int): Fragment(), NormLoginView {
 
         val birth = isBirthAvailable(GlobalApplication.prefs.getAccessJwt())
 
-        if (birth) {
+        if (!birth) {
             val intent = Intent(parentContext, MainActivity::class.java)
             startActivity(intent)
         }
@@ -121,8 +122,13 @@ class NormalLoginFragment(val flId: Int): Fragment(), NormLoginView {
 
     }
 
-    override fun onNormLoginFailure(code: Int) {
+    override fun onNormLoginFailure(data: ErrorResp) {
         binding.lavNormalLoginLoading.visibility = View.INVISIBLE
-        Toast.makeText(parentContext, code.toString() + "오류", Toast.LENGTH_SHORT).show()
+        Toast.makeText(parentContext, data.message + "오류", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onNormLoginFailure(data: Int) {
+        binding.lavNormalLoginLoading.visibility = View.INVISIBLE
+        Toast.makeText(parentContext, data.toString() + "오류", Toast.LENGTH_SHORT).show()
     }
 }

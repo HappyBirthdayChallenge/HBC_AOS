@@ -7,6 +7,7 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.inha.hbc.R
+import com.inha.hbc.data.local.Jwt
 import com.inha.hbc.data.remote.resp.NormSigninBody
 import com.inha.hbc.databinding.ActivityLoginBinding
 import com.inha.hbc.ui.login.view.KakaoLoginView
@@ -18,7 +19,7 @@ import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
 import retrofit2.Retrofit
 
-class LoginActivity: AppCompatActivity(), NormLoginView, KakaoLoginView {
+class LoginActivity: AppCompatActivity(), KakaoLoginView {
     private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +42,8 @@ class LoginActivity: AppCompatActivity(), NormLoginView, KakaoLoginView {
         }
 
         binding.tvLoginNormalLogin.setOnClickListener {
-            supportFragmentManager.beginTransaction().add(binding.flLogin.id, NormalLoginFragment(binding.flLogin.id)).commit()
+            supportFragmentManager.beginTransaction().add(binding.flLogin.id, NormalLoginFragment(binding.flLogin.id))
+                .addToBackStack("normLogin").commit()
         }
     }
 
@@ -84,15 +86,19 @@ class LoginActivity: AppCompatActivity(), NormLoginView, KakaoLoginView {
 
     }
 
-    override fun onNormLoginSuccess(data: NormSigninBody) {
-    }
 
-    override fun onNormLoginFailure(code: Int) {
-        Toast.makeText(this, "$code 에러", Toast.LENGTH_SHORT).show()
+    fun isBirthAvailable(token: Jwt): Boolean {
+        if (token.birth.date == -1) return false
+        if (token.birth.month == -1) return false
+        if (token.birth.year == -1) return false
+        if (token.authorities.isEmpty()) return false
+        if (token.authorities[0] == "ROLE_ASSOCIATE") return false
+        return true
     }
 
     override fun onKakaoLoginSuccess() {
-        TODO("Not yet implemented")
+        val birth = SetbirthFragment()
+        supportFragmentManager.beginTransaction().add(binding.flLogin.id, birth).commit()
     }
 
     override fun onKakaoLoginFailure(code: Int) {
