@@ -9,6 +9,7 @@ import com.inha.hbc.ui.login.view.NormLoginView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Objects
 
 class RetrofitService {
 
@@ -22,6 +23,7 @@ class RetrofitService {
             override fun onResponse(call: Call<NormSigninBody>, response: Response<NormSigninBody>) {
                 when(response.code()) {
                     200 -> {
+                        Log.d("normCall", call.toString())
                         if (response.body()!!.code == "R-M011") {
                             normLoginView.onNormLoginSuccess(response.body()!!)
                         }

@@ -11,4 +11,7 @@
     <string name="day">일</string>
     <string name="birth_lunar">음력이에요</string>
     <string name="start">시작하기</string>
+
+    <dimen name="popup_width">310dp</dimen>
+    <dimen name="popup_height">405dp</dimen>
 </resources>

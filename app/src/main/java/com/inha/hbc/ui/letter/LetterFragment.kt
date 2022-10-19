@@ -24,6 +24,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.inha.hbc.databinding.FragmentLetterBinding
 import com.inha.hbc.ui.adapter.LetterMenuRVAdapter
 import com.inha.hbc.ui.adapter.LetterTypeRVAdapter
+import com.inha.hbc.ui.dialog.LetterDialog
 import java.io.File
 import java.net.URI
 import java.util.Date
@@ -168,10 +169,10 @@ class LetterFragment: Fragment() {
                         openGallery()
                     }
                     "녹음" -> {
-
+                        openRecord()
                     }
                     "애니메이션" -> {
-
+                        openAni()
                     }
                     else -> {
 
@@ -183,6 +184,14 @@ class LetterFragment: Fragment() {
 
         binding.rvLetter.adapter = typeRVAdapter
         binding.rvLetterAddMenu.adapter = menuRVAdapter
+    }
+
+    fun openAni() {
+        LetterDialog().show(parentFragmentManager,"aniDialog")
+    }
+
+    fun openRecord() {
+
     }
 
     fun openCamera() {
