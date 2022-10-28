@@ -7,12 +7,18 @@ import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFact
 import kotlinx.serialization.json.Json
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType
+import com.inha.hbc.data.remote.resp.ErrorResp
+import okhttp3.Interceptor
+import okhttp3.JavaNetCookieJar
+import okhttp3.OkHttpClient
+import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.reflect.Type
 import javax.inject.Inject
+import java.net.CookieManager
 
 
 object NetworkModule {

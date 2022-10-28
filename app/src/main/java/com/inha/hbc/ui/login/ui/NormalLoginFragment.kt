@@ -19,6 +19,7 @@ import com.inha.hbc.data.local.Jwt
 import com.inha.hbc.data.remote.req.NormSigninInfo
 import com.inha.hbc.data.remote.resp.Data
 import com.inha.hbc.data.remote.resp.NormSignin
+import com.inha.hbc.data.remote.resp.ErrorResp
 import com.inha.hbc.databinding.FragmentNormalLoginBinding
 import com.inha.hbc.ui.login.view.NormLoginView
 import com.inha.hbc.ui.main.MainActivity
@@ -119,5 +120,6 @@ class NormalLoginFragment(): Fragment(), NormLoginView {
     override fun onNormLoginFailure(code: Int) {
 //        binding.lavNormalLoginLoading.visibility = View.INVISIBLE
 //        Toast.makeText(parentContext, code.toString() + "오류", Toast.LENGTH_SHORT).show()
+
     }
 }

@@ -3,8 +3,8 @@ package com.inha.hbc.util
 import android.util.Log
 import com.inha.hbc.data.remote.req.BirthDateInfo
 import com.inha.hbc.data.remote.req.NormSigninInfo
-import com.inha.hbc.data.remote.resp.KakaoSigninBody
 import com.inha.hbc.data.remote.resp.NormSignin
+import com.inha.hbc.data.remote.resp.kakaoSigninBody
 import com.inha.hbc.ui.login.view.KakaoLoginView
 import com.inha.hbc.ui.login.view.NormLoginView
 import com.inha.hbc.ui.login.view.SetBirthView
@@ -14,12 +14,12 @@ import kotlinx.serialization.json.JsonObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
 import retrofit2.create
 import java.util.concurrent.Executor
 import java.util.Objects
 
 class RetrofitService {
-
     lateinit var normLoginView: NormLoginView
     lateinit var kakaoLoginView: KakaoLoginView
     lateinit var setBirthView: SetBirthView
@@ -57,23 +57,25 @@ class RetrofitService {
     fun kakaoSignin(provider: String, token: String, viewData: KakaoLoginView) {
         val kakaoAuth = NetworkModule.getRetrofit().create(RetroServiceInterface::class.java)
 
+        val net = NetworkModule.getRetrofit().create(RetroServiceInterface::class.java)
         kakaoLoginView = viewData
 
-        kakaoAuth.kakaoSignin(provider, token).enqueue(object: Callback<KakaoSigninBody> {
+        net.kakaoSignin(provider, token).enqueue(object: Callback<kakaoSigninBody> {
             override fun onResponse(
-                call: Call<KakaoSigninBody>,
-                response: Response<KakaoSigninBody>
+                call: Call<kakaoSigninBody>,
+                response: Response<kakaoSigninBody>
             ) {
                 if (response.code() == 200) {
                     kakaoLoginView.onKakaoLoginSuccess()
                 }
                 else {
-                    Log.d("retrofit", response.toString())
+                    Log.d("retrofit", response.message().toString())
+                    Log.d("retrofit", response.errorBody()!!.string())
                     kakaoLoginView.onKakaoLoginFailure(response.code())
                 }
             }
 
-            override fun onFailure(call: Call<KakaoSigninBody>, t: Throwable) {
+            override fun onFailure(call: Call<kakaoSigninBody>, t: Throwable) {
                 TODO("Not yet implemented")
             }
 
