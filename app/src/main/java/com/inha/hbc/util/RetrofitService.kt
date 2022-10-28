@@ -1,23 +1,15 @@
 package com.inha.hbc.util
 
 import android.util.Log
-import com.inha.hbc.data.remote.req.BirthDateInfo
 import com.inha.hbc.data.remote.req.NormSigninInfo
 import com.inha.hbc.data.remote.resp.NormSignin
 import com.inha.hbc.data.remote.resp.kakaoSigninBody
 import com.inha.hbc.ui.login.view.KakaoLoginView
 import com.inha.hbc.ui.login.view.NormLoginView
 import com.inha.hbc.ui.login.view.SetBirthView
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.JsonObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.create
-import java.util.concurrent.Executor
-import java.util.Objects
 
 class RetrofitService {
     lateinit var normLoginView: NormLoginView

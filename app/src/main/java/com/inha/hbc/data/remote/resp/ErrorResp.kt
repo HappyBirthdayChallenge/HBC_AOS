@@ -6,8 +6,3 @@ data class ErrorResp(
     var message: String,
     var errors: List<Error>?
 )
-data class Error(
-    var field: String?,
-    var reason: String?,
-    var value: String?
-)
