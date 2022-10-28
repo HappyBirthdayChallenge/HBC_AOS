@@ -2,22 +2,34 @@ package com.inha.hbc.util
 
 import android.util.Log
 import com.inha.hbc.data.remote.req.NormSigninInfo
+import com.inha.hbc.data.remote.resp.CheckId
+import com.inha.hbc.data.remote.resp.IdValid
 import com.inha.hbc.data.remote.resp.NormSignin
 import com.inha.hbc.data.remote.resp.kakaoSigninBody
+import com.inha.hbc.ui.login.view.CheckIdView
 import com.inha.hbc.ui.login.view.KakaoLoginView
 import com.inha.hbc.ui.login.view.NormLoginView
 import com.inha.hbc.ui.login.view.SetBirthView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.create
+import kotlin.reflect.typeOf
 
 class RetrofitService {
     lateinit var normLoginView: NormLoginView
     lateinit var kakaoLoginView: KakaoLoginView
+    lateinit var checkIdView: CheckIdView
     lateinit var setBirthView: SetBirthView
 
+    fun callRetro(): RetroServiceInterface  {
+        return NetworkModule.getRetrofit().create(RetroServiceInterface::class.java)
+    }
+
+
     fun normSignin(data: NormSigninInfo, view: NormLoginView) {
-        val normAuth = NetworkModule.getRetrofit().create(RetroServiceInterface::class.java)
+        val normAuth = callRetro()
         normLoginView = view
         normAuth.normalSignin(data).enqueue(object : Callback<List<NormSignin>> {
             override fun onResponse(call: Call<List<NormSignin>>, response: Response<List<NormSignin>>) {
@@ -72,6 +84,29 @@ class RetrofitService {
             }
 
         })
+    }
+
+    fun checkId(data: String, view: CheckIdView) {
+        checkIdView = view
+
+        callRetro().checkId(data).enqueue(object : Callback<List<CheckId>> {
+            override fun onResponse(call: Call<List<CheckId>>, response: Response<List<CheckId>>) {
+                if (response.isSuccessful) {
+                    if (response.body()!![0].javaClass.simpleName == "IdValid") {
+                        checkIdView.onResponseSuccess()
+                    } else {
+                        checkIdView.onResponseFailure(response.body()!![0].)
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<CheckId>>, t: Throwable) {
+                Log.d("idRespERr", t.toString())
+            }
+
+        })
+
+
     }
 //    fun setBirth(data: BirthDateInfo, view: SetBirthView) {
 //        val birth = getRetrofit().create(RetroServiceInterface::class.java)

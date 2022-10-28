@@ -2,6 +2,7 @@ package com.inha.hbc.util
 
 import com.inha.hbc.data.remote.req.BirthDateInfo
 import com.inha.hbc.data.remote.req.NormSigninInfo
+import com.inha.hbc.data.remote.resp.CheckId
 import com.inha.hbc.data.remote.resp.NormSignin
 import com.inha.hbc.data.remote.resp.kakaoSigninBody
 import retrofit2.Call
@@ -28,4 +29,10 @@ interface RetroServiceInterface {
     fun setBirth(
         @Body birthDate: BirthDateInfo
     ): Call<NormSignin>
+
+
+    @POST("/auth/check/username")
+    fun checkId(
+        @Body id: String
+    ): Call<List<CheckId>>
 }

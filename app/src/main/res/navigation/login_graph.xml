@@ -39,6 +39,9 @@
         <action
             android:id="@+id/action_login_signup2_to_login_signup3"
             app:destination="@id/login_signup3" />
+        <argument
+            android:name="userData"
+            app:argType="com.inha.hbc.data.local.SignupData" />
     </fragment>
     <fragment
         android:id="@+id/login_signup3"
@@ -48,6 +51,9 @@
         <action
             android:id="@+id/action_login_signup3_to_login_signup4"
             app:destination="@id/login_signup4" />
+        <argument
+            android:name="userData"
+            app:argType="com.inha.hbc.data.local.SignupData" />
     </fragment>
     <fragment
         android:id="@+id/login_signup4"
@@ -57,6 +63,9 @@
         <action
             android:id="@+id/action_login_signup4_to_login_signup5"
             app:destination="@id/login_signup5" />
+        <argument
+            android:name="userData"
+            app:argType="com.inha.hbc.data.local.SignupData" />
     </fragment>
     <fragment
         android:id="@+id/login_signup5"
@@ -66,11 +75,17 @@
         <action
             android:id="@+id/action_login_signup5_to_login_signup6"
             app:destination="@id/login_signup6" />
+        <argument
+            android:name="userData"
+            app:argType="com.inha.hbc.data.local.SignupData" />
     </fragment>
     <fragment
         android:id="@+id/login_signup6"
         android:name="com.inha.hbc.ui.login.ui.Signup6Fragment"
         android:label="signup_6"
         tools:layout="@layout/fragment_signup6">
+        <argument
+            android:name="userData"
+            app:argType="com.inha.hbc.data.local.SignupData" />
     </fragment>
 </navigation>
