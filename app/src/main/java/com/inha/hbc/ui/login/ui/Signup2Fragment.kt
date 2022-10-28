@@ -27,6 +27,7 @@ class Signup2Fragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initListener()
     }
 
@@ -36,25 +37,31 @@ class Signup2Fragment: Fragment() {
         }
 
         binding.tvSignup2Next.setOnClickListener {
-            if (checkValid()) {
+
+            val result = checkValid()
+            if (result == 1) {
                 var data = args.userData
                 data.pw = pw
                 val action = Signup2FragmentDirections.actionLoginSignup2ToLoginSignup3(data)
                 findNavController().navigate(action)
             }
+            else if (result == 2) {
+                binding.tvSignup2Error.text = "비밀번호 규칙이 일치하지 않습니다!"
+            }
         }
     }
 
-    fun checkValid():Boolean {
+    fun checkValid():Int {
         pw = binding.tieSignup2Pw.text.toString()
         val pwConfirm = binding.tieSignup2PwConfirm.text.toString()
         if (pw != pwConfirm) {
             binding.tvSignup2Error.text = "비밀번호가 다릅니다!"
-            return false
+            return 0
         }
-        val idPattern = "^(?=.*[`~!@#$%^&*()])(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z[0-9]]{5,20}$"
-        val pattern = Pattern.compile(idPattern)
+        val pwPattern = "^(?=.*[`~!@#$%^&*()])(?=.*[A-Za-z])(?=.*[0-9])[[`~!@#$%^&*()]A-Za-z[0-9]]{10,20}$"
+        val pattern = Pattern.compile(pwPattern)
         val matcher = pattern.matcher(pw)
-        return matcher.find()
+        return if (matcher.find()) 1
+        else 2
     }
 }
