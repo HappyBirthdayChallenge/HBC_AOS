@@ -106,9 +106,8 @@ class RetrofitService {
             }
 
         })
-
-
     }
+
 //    fun setBirth(data: BirthDateInfo, view: SetBirthView) {
 //        val birth = getRetrofit().create(RetroServiceInterface::class.java)
 //        setBirthView = view

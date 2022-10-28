@@ -6,10 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.inha.hbc.databinding.FragmentSignup2Binding
+import com.inha.hbc.util.RetrofitService
+import java.util.regex.Pattern
 
 class Signup2Fragment: Fragment() {
     lateinit var binding: FragmentSignup2Binding
+
+    val args: Signup2FragmentArgs by navArgs()
+    var pw  = ""
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -30,11 +36,25 @@ class Signup2Fragment: Fragment() {
         }
 
         binding.tvSignup2Next.setOnClickListener {
-
+            if (checkValid()) {
+                var data = args.userData
+                data.pw = pw
+                val action = Signup2FragmentDirections.actionLoginSignup2ToLoginSignup3(data)
+                findNavController().navigate(action)
+            }
         }
     }
 
-    fun checkValid() {
-        val idPattern = "^(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z[0-9]]{5,20}$"
+    fun checkValid():Boolean {
+        pw = binding.tieSignup2Pw.text.toString()
+        val pwConfirm = binding.tieSignup2PwConfirm.text.toString()
+        if (pw != pwConfirm) {
+            binding.tvSignup2Error.text = "비밀번호가 다릅니다!"
+            return false
+        }
+        val idPattern = "^(?=.*[`~!@#$%^&*()])(?=.*[A-Za-z])(?=.*[0-9])[A-Za-z[0-9]]{5,20}$"
+        val pattern = Pattern.compile(idPattern)
+        val matcher = pattern.matcher(pw)
+        return matcher.find()
     }
 }
