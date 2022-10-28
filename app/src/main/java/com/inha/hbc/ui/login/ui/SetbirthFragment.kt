@@ -11,13 +11,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.inha.hbc.data.remote.req.BirthDateInfo
-import com.inha.hbc.data.remote.resp.NormSigninBody
 import com.inha.hbc.databinding.FragmentSetbirthBinding
 import com.inha.hbc.ui.login.view.SetBirthView
 import com.inha.hbc.ui.main.MainActivity
 import com.inha.hbc.util.RetrofitService
 
-class SetbirthFragment:Fragment(), SetBirthView {
+class SetbirthFragment:Fragment() {
     lateinit var binding: FragmentSetbirthBinding
     lateinit var parentContext: Context
     override fun onCreateView(
@@ -96,17 +95,17 @@ class SetbirthFragment:Fragment(), SetBirthView {
             )
 
             Log.d("dataStart", data.toString())
-            RetrofitService().setBirth(data, this)
+            //RetrofitService().setBirth(data, this)
         }
 
     }
 
-    override fun onSetBirthSuccess(data: NormSigninBody) {
-        val intent = Intent(parentContext, MainActivity::class.java)
-        startActivity(intent)
-    }
-
-    override fun onSetBirthFailure(code: Int) {
-        Toast.makeText(parentContext, "$code 에러 발생", Toast.LENGTH_LONG).show()
-    }
+//    override fun onSetBirthSuccess(data: NormSigninBody) {
+//        val intent = Intent(parentContext, MainActivity::class.java)
+//        startActivity(intent)
+//    }
+//
+//    override fun onSetBirthFailure(code: Int) {
+//        Toast.makeText(parentContext, "$code 에러 발생", Toast.LENGTH_LONG).show()
+//    }
 }

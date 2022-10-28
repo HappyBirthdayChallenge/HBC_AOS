@@ -18,7 +18,7 @@ import com.inha.hbc.R
 import com.inha.hbc.data.local.Jwt
 import com.inha.hbc.data.remote.req.NormSigninInfo
 import com.inha.hbc.data.remote.resp.Data
-import com.inha.hbc.data.remote.resp.NormSigninBody
+import com.inha.hbc.data.remote.resp.NormSignin
 import com.inha.hbc.databinding.FragmentNormalLoginBinding
 import com.inha.hbc.ui.login.view.NormLoginView
 import com.inha.hbc.ui.main.MainActivity
@@ -98,31 +98,31 @@ class NormalLoginFragment(val flId: Int): Fragment(), NormLoginView {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun onNormLoginSuccess(data: NormSigninBody) {
-        GlobalApplication.prefs.setRealAccessJwt(data.token!!.accessToken)
-        GlobalApplication.prefs.setRealRefreshJwt(data.token!!.accessToken)
-
-        if (Build.VERSION_CODES.O <= BuildConfig.VERSION_CODE) {
-            decodeJwt(data.token!!)
-        }
-        else {
-        }
-
-        val birth = isBirthAvailable(GlobalApplication.prefs.getAccessJwt())
-
-        if (birth) {
-            val intent = Intent(parentContext, MainActivity::class.java)
-            startActivity(intent)
-        }
-
-        else {
-            parentFragmentManager.beginTransaction().replace(flId, SetbirthFragment()).commit()
-        }
+    override fun onNormLoginSuccess(data: NormSignin) {
+//        GlobalApplication.prefs.setRealAccessJwt(data.token!!.accessToken)
+//        GlobalApplication.prefs.setRealRefreshJwt(data.token!!.accessToken)
+//
+//        if (Build.VERSION_CODES.O <= BuildConfig.VERSION_CODE) {
+//            decodeJwt(data.token!!)
+//        }
+//        else {
+//        }
+//
+//        val birth = isBirthAvailable(GlobalApplication.prefs.getAccessJwt())
+//
+//        if (birth) {
+//            val intent = Intent(parentContext, MainActivity::class.java)
+//            startActivity(intent)
+//        }
+//
+//        else {
+//            parentFragmentManager.beginTransaction().replace(flId, SetbirthFragment()).commit()
+//        }
 
     }
 
     override fun onNormLoginFailure(code: Int) {
-        binding.lavNormalLoginLoading.visibility = View.INVISIBLE
-        Toast.makeText(parentContext, code.toString() + "오류", Toast.LENGTH_SHORT).show()
+//        binding.lavNormalLoginLoading.visibility = View.INVISIBLE
+//        Toast.makeText(parentContext, code.toString() + "오류", Toast.LENGTH_SHORT).show()
     }
 }

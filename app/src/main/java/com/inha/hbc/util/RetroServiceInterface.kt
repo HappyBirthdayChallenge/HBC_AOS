@@ -3,7 +3,7 @@ package com.inha.hbc.util
 import com.inha.hbc.data.remote.req.BirthDateInfo
 import com.inha.hbc.data.remote.req.NormSigninInfo
 import com.inha.hbc.data.remote.resp.KakaoSigninBody
-import com.inha.hbc.data.remote.resp.NormSigninBody
+import com.inha.hbc.data.remote.resp.NormSignin
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.Header
@@ -15,7 +15,7 @@ interface RetroServiceInterface {
     @POST("/auth/signin")
     fun normalSignin(
         @Body userInfo: NormSigninInfo
-    ) : Call<NormSigninBody>
+    ) : Call<List<NormSignin>>
 
 
     @POST("/oauth2/signin/{provider}")
@@ -28,5 +28,5 @@ interface RetroServiceInterface {
     @POST("/members/accounts/birthday")
     fun setBirth(
         @Body birthDate: BirthDateInfo
-    ): Call<NormSigninBody>
+    ): Call<NormSignin>
 }

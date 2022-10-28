@@ -7,12 +7,11 @@ import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.inha.hbc.R
-import com.inha.hbc.data.remote.resp.NormSigninBody
+import com.inha.hbc.data.remote.resp.NormSignin
 import com.inha.hbc.databinding.ActivityLoginBinding
 import com.inha.hbc.ui.login.view.KakaoLoginView
 import com.inha.hbc.ui.login.view.NormLoginView
 import com.inha.hbc.util.RetrofitService
-import com.inha.hbc.util.getRetrofit
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
@@ -36,7 +35,7 @@ class LoginActivity: AppCompatActivity(), NormLoginView, KakaoLoginView {
     }
 
     fun initListener() {
-        binding.ivLoginKakaoLogin.setOnClickListener {
+        binding.clLoginKakaoLogin.setOnClickListener {
             kakaologin()
         }
 
@@ -50,7 +49,7 @@ class LoginActivity: AppCompatActivity(), NormLoginView, KakaoLoginView {
         val aniBtn = AnimationUtils.loadAnimation(applicationContext, R.anim.login_btn_loading)
 
         binding.ivLoginLogo.startAnimation(aniLogo)
-        binding.ivLoginKakaoLogin.startAnimation(aniBtn)
+        binding.clLoginKakaoLogin.startAnimation(aniBtn)
         binding.tvLoginNormalLogin.startAnimation(aniBtn)
 
     }
@@ -84,7 +83,7 @@ class LoginActivity: AppCompatActivity(), NormLoginView, KakaoLoginView {
 
     }
 
-    override fun onNormLoginSuccess(data: NormSigninBody) {
+    override fun onNormLoginSuccess(data: NormSignin) {
     }
 
     override fun onNormLoginFailure(code: Int) {
