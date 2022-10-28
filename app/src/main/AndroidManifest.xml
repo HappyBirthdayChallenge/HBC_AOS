@@ -2,8 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" >
 
-    <uses-permission android:name="android.permission.INTERNET" >
-    </uses-permission>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CAMERA"/> <!-- 카메라 사용권한 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/> <!--저장소 읽기 권한-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/><!--저장소 쓰기 권한-->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" /><!--녹음권한-->
 
     <application
         android:name=".util.GlobalApplication"
@@ -17,6 +20,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HBC"
         tools:targetApi="33" >
+
+        <provider
+            android:authorities="com.inha.hbc.fileprovider"
+            android:name="androidx.core.content.FileProvider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths">
+            </meta-data>
+        </provider>
+
+
         <activity
             android:name=".ui.main.MainActivity"
             android:exported="true" >

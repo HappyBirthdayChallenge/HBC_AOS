@@ -11,7 +11,7 @@ import com.inha.hbc.ui.adapter.MenuListRVAdapter
 
 class MenuFragment(val flid: Int): Fragment(), MenuListRVAdapter.onListener {
     interface OnCloseDetection {
-        fun onClose()
+        fun onCloseMenu()
     }
     lateinit var onclose: OnCloseDetection
     lateinit var binding: FragmentMenuBinding
@@ -45,7 +45,7 @@ class MenuFragment(val flid: Int): Fragment(), MenuListRVAdapter.onListener {
     }
     override fun onDestroyView() {
         super.onDestroyView()
-        onclose.onClose()
+        onclose.onCloseMenu()
     }
 
     fun initListener() {

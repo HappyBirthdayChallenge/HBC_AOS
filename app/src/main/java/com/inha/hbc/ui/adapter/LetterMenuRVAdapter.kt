@@ -1,0 +1,41 @@
+package com.inha.hbc.ui.adapter
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.inha.hbc.databinding.ItemLetterMenuBinding
+
+class LetterMenuRVAdapter(val menuData: ArrayList<String>): RecyclerView.Adapter<LetterMenuRVAdapter.LetterMenuHolder>() {
+    interface OnListener {
+        fun onClick(pos: Int)
+    }
+    lateinit var onlistener: OnListener
+    lateinit var binding: ItemLetterMenuBinding
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LetterMenuHolder {
+        binding = ItemLetterMenuBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return LetterMenuHolder(binding, onlistener)
+    }
+
+    override fun onBindViewHolder(holder: LetterMenuHolder, position: Int) {
+        holder.bind(position)
+    }
+
+    override fun getItemCount(): Int {
+        return menuData.size
+    }
+
+
+
+    class LetterMenuHolder(val binding: ItemLetterMenuBinding, val onlistener: OnListener): ViewHolder(binding.root) {
+        fun bind(pos: Int) {
+            initListener(pos)
+        }
+
+        fun initListener(pos: Int) {
+            binding.root.setOnClickListener {
+                onlistener.onClick(pos)
+            }
+        }
+    }
+}

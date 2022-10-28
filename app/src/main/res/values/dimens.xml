@@ -8,4 +8,6 @@
     <dimen name="login_textfield_to_error">26dp</dimen>
     <dimen name="login_next_btn_to_bottom">62dp</dimen>
     <dimen name="login_info_margin">31dp</dimen>
+    <dimen name="popup_width">310dp</dimen>
+    <dimen name="popup_height">405dp</dimen>
 </resources>

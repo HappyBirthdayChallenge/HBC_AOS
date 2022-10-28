@@ -18,7 +18,7 @@ android {
 
     defaultConfig {
         applicationId "com.inha.hbc"
-        minSdk 21
+        minSdk 23
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -116,4 +116,7 @@ dependencies {
     //hilt
     implementation "com.google.dagger:hilt-android:2.44"
     kapt "com.google.dagger:hilt-compiler:2.44"
+
+    //flexboxlayout
+    implementation 'com.google.android.flexbox:flexbox:3.0.0'
 }
