@@ -1,15 +1,11 @@
 package com.inha.hbc.util
 
 import android.util.Log
+import com.inha.hbc.data.remote.req.CheckCodeData
+import com.inha.hbc.data.remote.req.CheckPhoneData
 import com.inha.hbc.data.remote.req.NormSigninInfo
-import com.inha.hbc.data.remote.resp.CheckId
-import com.inha.hbc.data.remote.resp.IdValid
-import com.inha.hbc.data.remote.resp.NormSignin
-import com.inha.hbc.data.remote.resp.kakaoSigninBody
-import com.inha.hbc.ui.login.view.CheckIdView
-import com.inha.hbc.ui.login.view.KakaoLoginView
-import com.inha.hbc.ui.login.view.NormLoginView
-import com.inha.hbc.ui.login.view.SetBirthView
+import com.inha.hbc.data.remote.resp.*
+import com.inha.hbc.ui.login.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,6 +17,9 @@ class RetrofitService {
     lateinit var normLoginView: NormLoginView
     lateinit var kakaoLoginView: KakaoLoginView
     lateinit var checkIdView: CheckIdView
+    lateinit var checkPhoneView: CheckPhoneView
+    lateinit var checkCodeView: CheckCodeView
+    lateinit var sendCodeView: SendCodeView
     lateinit var setBirthView: SetBirthView
 
     fun callRetro(): RetroServiceInterface  {
@@ -108,6 +107,80 @@ class RetrofitService {
         })
     }
 
+    fun checkPhone(data: String, view: CheckPhoneView) {
+        checkPhoneView = view
+        val body = CheckPhoneData(data, "SIGNUP")
+        callRetro().checkPhone(body).enqueue(object : Callback<List<CheckPhone>> {
+            override fun onResponse(
+                call: Call<List<CheckPhone>>,
+                response: Response<List<CheckPhone>>
+            ) {
+                if (response.isSuccessful) {
+                    if ((response.body()!! as PhoneSuccess).code == "R-M015") {
+                        checkPhoneView.onResponseSuccess()
+                    }
+                    else {
+                        checkPhoneView.onResponseFailure()
+                    }
+                }
+                else {
+                    (response.errorBody()!! as PhoneFailure).errors!!.reason
+                }
+            }
+
+            override fun onFailure(call: Call<List<CheckPhone>>, t: Throwable) {
+            }
+
+        })
+    }
+
+    fun reqCode(data: String, view: SendCodeView) {
+        sendCodeView = view
+        val body = CheckPhoneData(data, "SIGNUP")
+
+        callRetro().reqCode(body).enqueue(object: Callback<List<CheckPhone>> {
+            override fun onResponse(
+                call: Call<List<CheckPhone>>,
+                response: Response<List<CheckPhone>>
+            ) {
+                if (response.isSuccessful) {
+                    if ((response.body()!! as PhoneSuccess).code == "R-IV004") {
+                        sendCodeView.onSendCodeSuccess()
+                    }
+                    else {
+                        sendCodeView.onSendCodeFailure()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<CheckPhone>>, t: Throwable) {
+            }
+
+        })
+    }
+
+    fun checkCode(data: CheckCodeData, view: CheckCodeView) {
+        checkCodeView = view
+        callRetro().checkCode(data).enqueue(object : Callback<List<CheckPhone>> {
+            override fun onResponse(
+                call: Call<List<CheckPhone>>,
+                response: Response<List<CheckPhone>>
+            ) {
+                if (response.isSuccessful) {
+                    if ((response.body()!! as PhoneSuccess).code == "R-IV004") {
+                        checkCodeView.onCheckCodeResponseSuccess()
+                    }
+                    else {
+                        checkCodeView.onCheckCodeResponseFailure()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<CheckPhone>>, t: Throwable) {
+            }
+
+        })
+    }
 //    fun setBirth(data: BirthDateInfo, view: SetBirthView) {
 //        val birth = getRetrofit().create(RetroServiceInterface::class.java)
 //        setBirthView = view

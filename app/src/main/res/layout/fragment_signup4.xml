@@ -79,7 +79,8 @@
         android:layout_marginBottom="47dp"
         android:textSize="15sp"
         android:gravity="center"
-        android:text="작성해주신 휴대폰 번호로 발송된\n 인증코드를 입력해주세요">
+        android:text="작성해주신 휴대폰 번호로 발송된\n 인증코드를 입력해주세요"
+        android:visibility="gone">
     </TextView>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -93,7 +94,8 @@
         android:layout_marginHorizontal="@dimen/login_textfield_margin"
         android:layout_marginTop="@dimen/login_subtitle_to_textfield"
         android:hint="인증 코드"
-        android:textColorHint="@color/hint_text">
+        android:textColorHint="@color/hint_text"
+        android:visibility="gone">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tie_signup4_phone_auth"
             android:layout_height="wrap_content"
@@ -113,7 +115,8 @@
         app:layout_constraintRight_toRightOf="@id/til_signup4_phone_auth"
         android:text="0:00"
         android:textSize="15sp"
-        android:textColor="@color/main_color">
+        android:textColor="@color/main_color"
+        android:visibility="gone">
     </TextView>
 
 
