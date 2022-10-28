@@ -1,32 +1,24 @@
 package com.inha.hbc.ui.login.ui
 
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.util.Base64
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.google.gson.Gson
-import com.inha.hbc.BuildConfig
 import com.inha.hbc.R
 import com.inha.hbc.data.local.Jwt
 import com.inha.hbc.data.remote.req.NormSigninInfo
 import com.inha.hbc.data.remote.resp.Data
 import com.inha.hbc.data.remote.resp.NormSignin
-import com.inha.hbc.data.remote.resp.ErrorResp
 import com.inha.hbc.databinding.FragmentNormalLoginBinding
 import com.inha.hbc.ui.login.view.NormLoginView
-import com.inha.hbc.ui.main.MainActivity
 import com.inha.hbc.util.GlobalApplication
 import com.inha.hbc.util.RetrofitService
-import org.json.JSONObject
-import java.nio.charset.Charset
 
 class NormalLoginFragment(): Fragment(), NormLoginView {
     private lateinit var binding: FragmentNormalLoginBinding

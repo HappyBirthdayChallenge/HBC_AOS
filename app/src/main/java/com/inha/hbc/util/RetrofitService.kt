@@ -34,6 +34,7 @@ class RetrofitService {
         normAuth.normalSignin(data).enqueue(object : Callback<List<NormSignin>> {
             override fun onResponse(call: Call<List<NormSignin>>, response: Response<List<NormSignin>>) {
                 Log.d("respNorm", response.body().toString())
+                Log.d("respErrbody", response.code().toString())
 //                when(response.code()) {
 //                    200 -> {
 //                        if (response.body() == "R-M011") {
@@ -95,7 +96,7 @@ class RetrofitService {
                     if (response.body()!![0].javaClass.simpleName == "IdValid") {
                         checkIdView.onResponseSuccess()
                     } else {
-                        checkIdView.onResponseFailure(response.body()!![0].)
+                        checkIdView.onResponseFailure()
                     }
                 }
             }

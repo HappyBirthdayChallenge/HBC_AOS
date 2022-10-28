@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 
 object NetworkModule {
-    const val BASE_URL = "http://ec2-3-36-103-165.ap-northeast-2.compute.amazonaws.com:8080"
+    const val BASE_URL = "http://ec2-52-78-124-246.ap-northeast-2.compute.amazonaws.com:8080"
 
     private var instance: Retrofit? = null
     private var gson = GsonBuilder().setLenient().create()
@@ -33,19 +33,6 @@ object NetworkModule {
         if (instance == null) {
             val client = OkHttpClient.Builder()
                 .addInterceptor(interceptor)
-                .addInterceptor { chain: Interceptor.Chain ->
-                    val origin = chain.request()
-                    if (origin.url.encodedPath.equals("/members/accounts/birthday", true)) {
-                        chain.proceed(origin.newBuilder().apply {
-                            addHeader(
-                                "Authorization",
-                                "Bearer " + GlobalApplication.prefs.getRealAccessJwt().toString()
-                            )
-                        }.build())
-                    } else {
-                        chain.proceed(origin)
-                    }
-                }
                 .addInterceptor(RespInterceptor())
                 .build()
 
