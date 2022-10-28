@@ -17,7 +17,7 @@ import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
 import retrofit2.Retrofit
 
-class LoginActivity: AppCompatActivity(), NormLoginView, KakaoLoginView {
+class LoginActivity: AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,76 +25,8 @@ class LoginActivity: AppCompatActivity(), NormLoginView, KakaoLoginView {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initListener()
-
-
-        afterSplash()
 
         var keyHash = Utility.getKeyHash(this)
         Log.d("keyhash", keyHash)
-    }
-
-    fun initListener() {
-        binding.clLoginKakaoLogin.setOnClickListener {
-            kakaologin()
-        }
-
-        binding.tvLoginNormalLogin.setOnClickListener {
-            supportFragmentManager.beginTransaction().add(binding.flLogin.id, NormalLoginFragment(binding.flLogin.id)).commit()
-        }
-    }
-
-    fun afterSplash() {
-        val aniLogo = AnimationUtils.loadAnimation(applicationContext, R.anim.login_logo_loading)
-        val aniBtn = AnimationUtils.loadAnimation(applicationContext, R.anim.login_btn_loading)
-
-        binding.ivLoginLogo.startAnimation(aniLogo)
-        binding.clLoginKakaoLogin.startAnimation(aniBtn)
-        binding.tvLoginNormalLogin.startAnimation(aniBtn)
-
-    }
-    fun kakaologin() {
-        if (UserApiClient.instance.isKakaoTalkLoginAvailable(this)) { //카카오톡 앱 깔려있을 경우
-            UserApiClient.instance.loginWithKakaoTalk(this) { token, error ->
-                if (error != null) {
-                    Log.d("kakaoErr", error.toString())
-                }
-                else if (token != null){
-                    getToken(token!!)
-                }
-            }
-        }
-        else {
-            UserApiClient.instance.loginWithKakaoAccount(this) { token, error ->
-                if (error != null) {
-                    Log.d("kakaoErr", error.toString())
-                }
-                else if (token != null) {
-                    getToken(token!!)
-                }
-            }
-        }
-    }
-
-    fun getToken(token: OAuthToken) {
-        binding.lavLoginLoading.visibility = View.VISIBLE
-        Log.d("kakaoTok", token.toString())
-        RetrofitService().kakaoSignin("KAKAO", token.accessToken, this)
-
-    }
-
-    override fun onNormLoginSuccess(data: NormSignin) {
-    }
-
-    override fun onNormLoginFailure(code: Int) {
-        Toast.makeText(this, "$code 에러", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun onKakaoLoginSuccess() {
-        TODO("Not yet implemented")
-    }
-
-    override fun onKakaoLoginFailure(code: Int) {
-        Toast.makeText(this, "$code 에러", Toast.LENGTH_SHORT).show()
     }
 }

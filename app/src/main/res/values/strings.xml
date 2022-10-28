@@ -2,6 +2,7 @@
     <string name="app_name">HBC</string>
     <string name="id">아이디</string>
     <string name="pw">비밀번호</string>
+    <string name="pw_confirm">비밀번호 확인</string>
     <string name="gohome">내파티룸으로</string>
     <string name="menu">메뉴</string>
     <string name="bitrh_title">저희에게 생일을 알려주세요</string>

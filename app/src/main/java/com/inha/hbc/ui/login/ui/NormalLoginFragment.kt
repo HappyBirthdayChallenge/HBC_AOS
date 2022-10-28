@@ -27,7 +27,7 @@ import com.inha.hbc.util.RetrofitService
 import org.json.JSONObject
 import java.nio.charset.Charset
 
-class NormalLoginFragment(val flId: Int): Fragment(), NormLoginView {
+class NormalLoginFragment(): Fragment(), NormLoginView {
     private lateinit var binding: FragmentNormalLoginBinding
     private lateinit var parentContext: Context
     override fun onCreateView(
@@ -49,19 +49,14 @@ class NormalLoginFragment(val flId: Int): Fragment(), NormLoginView {
         val aniLogo = AnimationUtils.loadAnimation(parentContext, R.anim.login_logo_loading)
         val aniBtn = AnimationUtils.loadAnimation(parentContext, R.anim.login_btn_loading)
 
-        binding.ivNormalLoginLogo.startAnimation(aniLogo)
-        binding.tilNormalLoginId.startAnimation(aniBtn)
-        binding.tilNormalLoginPw.startAnimation(aniBtn)
-        binding.tvNormalLoginSignin.startAnimation(aniBtn)
-        binding.tvNormalLoginSignup.startAnimation(aniBtn)
+//        binding.tilNormalLoginId.startAnimation(aniBtn)
+//        binding.tilNormalLoginPw.startAnimation(aniBtn)
+//        binding.tvNormalLoginSignin.startAnimation(aniBtn)
 
         initListener()
     }
 
     fun initListener() {
-        binding.ivNormalLoginBack.setOnClickListener {
-            parentFragmentManager.beginTransaction().remove(this).commit()
-        }
 
         binding.tvNormalLoginSignin.setOnClickListener {
             val id = binding.tieNormalLoginId.text.toString()

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/login_main">
+    <fragment
+        android:id="@+id/login_main"
+        android:name="com.inha.hbc.ui.login.ui.LoginFragment"
+        android:label="main"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_login_main_to_login_signup1"
+            app:destination="@id/login_signup1" />
+        <action
+            android:id="@+id/action_login_main_to_login_norm_login"
+            app:destination="@id/login_norm_login" />
+    </fragment>
+    <fragment
+        android:id="@+id/login_norm_login"
+        android:name="com.inha.hbc.ui.login.ui.NormalLoginFragment"
+        android:label="norm_login"
+        tools:layout="@layout/fragment_normal_login">
+    </fragment>
+    <fragment
+        android:id="@+id/login_signup1"
+        android:name="com.inha.hbc.ui.login.ui.Signup1Fragment"
+        android:label="signup_1"
+        tools:layout="@layout/fragment_signup1">
+        <action
+            android:id="@+id/action_login_signup1_to_login_signup2"
+            app:destination="@id/login_signup2" />
+    </fragment>
+    <fragment
+        android:id="@+id/login_signup2"
+        android:name="com.inha.hbc.ui.login.ui.Signup2Fragment"
+        android:label="signup_2"
+        tools:layout="@layout/fragment_signup2">
+        <action
+            android:id="@+id/action_login_signup2_to_login_signup3"
+            app:destination="@id/login_signup3" />
+    </fragment>
+    <fragment
+        android:id="@+id/login_signup3"
+        android:name="com.inha.hbc.ui.login.ui.Signup3Fragment"
+        android:label="signup_3"
+        tools:layout="@layout/fragment_signup3">
+        <action
+            android:id="@+id/action_login_signup3_to_login_signup4"
+            app:destination="@id/login_signup4" />
+    </fragment>
+    <fragment
+        android:id="@+id/login_signup4"
+        android:name="com.inha.hbc.ui.login.ui.Signup4Fragment"
+        android:label="signup_4"
+        tools:layout="@layout/fragment_signup4">
+        <action
+            android:id="@+id/action_login_signup4_to_login_signup5"
+            app:destination="@id/login_signup5" />
+    </fragment>
+    <fragment
+        android:id="@+id/login_signup5"
+        android:name="com.inha.hbc.ui.login.ui.Signup5Fragment"
+        android:label="signup_5"
+        tools:layout="@layout/fragment_signup5">
+        <action
+            android:id="@+id/action_login_signup5_to_login_signup6"
+            app:destination="@id/login_signup6" />
+    </fragment>
+    <fragment
+        android:id="@+id/login_signup6"
+        android:name="com.inha.hbc.ui.login.ui.Signup6Fragment"
+        android:label="signup_6"
+        tools:layout="@layout/fragment_signup6">
+    </fragment>
+</navigation>
