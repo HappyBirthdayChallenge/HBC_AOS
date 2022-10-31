@@ -1,6 +1,63 @@
 package com.inha.hbc.ui.login.ui
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.inha.hbc.data.local.SignupData
+import com.inha.hbc.databinding.FragmentForgetPw1Binding
+import com.inha.hbc.ui.login.view.CheckIdView
+import com.inha.hbc.util.RetrofitService
+import java.util.regex.Pattern
 
-class ForgetPw1Fragment: Fragment() {
+class ForgetPw1Fragment: Fragment(), CheckIdView {
+    lateinit var binding :FragmentForgetPw1Binding
+    var id = ""
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentForgetPw1Binding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initListener()
+    }
+
+    fun initListener() {
+        binding.tvForgetPw1Next.setOnClickListener {
+            id = binding.tieForgetPw1Id.text.toString()
+
+            if (checkValid()) {
+                binding.lavForgetPw1Loading.visibility = View.VISIBLE
+                RetrofitService().checkId(id, this)
+            }
+        }
+    }
+
+
+    fun checkValid(): Boolean {
+        val idPattern = "^[A-Za-z\\d]{5,20}\$"
+        val pattern = Pattern.compile(idPattern)
+        val matcher = pattern.matcher(id)
+        return matcher.find()
+    }
+
+    override fun onResponseSuccess() {
+        var data = SignupData()
+        data.id = id
+        val action = ForgetPw1FragmentDirections.actionLoginForgetPw1ToLoginForget1(data)
+        findNavController().navigate(action)
+    }
+
+    override fun onResponseFailure() {
+        TODO("Not yet implemented")
+    }
+
 }
