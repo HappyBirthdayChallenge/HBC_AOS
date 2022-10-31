@@ -15,6 +15,15 @@
         <action
             android:id="@+id/action_login_main_to_login_norm_login"
             app:destination="@id/login_norm_login" />
+        <action
+            android:id="@+id/action_login_main_to_login_kakao_birth"
+            app:destination="@id/login_kakao_birth" />
+    </fragment>
+    <fragment
+        android:id="@+id/login_kakao_birth"
+        android:name="com.inha.hbc.ui.login.ui.KakaoBirthFragment"
+        android:label="kakao_birth"
+        tools:layout="@layout/fragment_kakao_birth">
     </fragment>
     <fragment
         android:id="@+id/login_norm_login"

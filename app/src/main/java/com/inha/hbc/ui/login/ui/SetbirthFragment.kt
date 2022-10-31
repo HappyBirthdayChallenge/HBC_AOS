@@ -10,11 +10,9 @@ import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.inha.hbc.data.remote.req.BirthDateInfo
+import com.inha.hbc.data.remote.req.CheckBirthData
 import com.inha.hbc.databinding.FragmentSetbirthBinding
-import com.inha.hbc.ui.login.view.SetBirthView
 import com.inha.hbc.ui.main.MainActivity
-import com.inha.hbc.util.RetrofitService
 
 class SetbirthFragment:Fragment() {
     lateinit var binding: FragmentSetbirthBinding
@@ -87,7 +85,7 @@ class SetbirthFragment:Fragment() {
 
         binding.tvSetbirthStart.setOnClickListener {
             //생일 다시 한번 검증해보고 전송
-            val data = BirthDateInfo(
+            val data = CheckBirthData(
                 binding.etSetbirthDay.text.toString().toInt(),
                 binding.etSetbirthMonth.text.toString().toInt(),
                 "SOLAR",

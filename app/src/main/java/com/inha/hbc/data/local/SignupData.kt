@@ -12,5 +12,6 @@ data class SignupData (
     var phone: String? = null,
     var year: Int? = null,
     var month: Int? = null,
-    var day: Int? = null
+    var day: Int? = null,
+    var key: String? = null
 ) : Parcelable

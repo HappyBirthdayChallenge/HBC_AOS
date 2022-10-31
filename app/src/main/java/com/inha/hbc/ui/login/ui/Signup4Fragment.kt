@@ -1,23 +1,30 @@
 package com.inha.hbc.ui.login.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.inha.hbc.R
+import com.inha.hbc.data.remote.req.CheckCodeData
+import com.inha.hbc.data.remote.resp.*
 import com.inha.hbc.databinding.FragmentSignup4Binding
 import com.inha.hbc.ui.login.view.CheckCodeView
 import com.inha.hbc.ui.login.view.CheckPhoneView
 import com.inha.hbc.ui.login.view.SendCodeView
 import com.inha.hbc.util.RetrofitService
+import java.util.*
+import kotlin.concurrent.timer
 
 class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
-    var step = false
+    var step = true
     var phone = ""
+    var time = 0
+    lateinit var timer: Timer
     lateinit var binding: FragmentSignup4Binding
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,9 +42,10 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
     }
 
     fun initListener() {
-        binding.tieSignup4Phone.addTextChangedListener { PhoneNumberFormattingTextWatcher() }
+        binding.tieSignup4Phone.addTextChangedListener(PhoneNumberFormattingTextWatcher())
+
         binding.ivSignup4Back.setOnClickListener {
-            findNavController().popBackStack()
+            findNavController().navigate(R.id.action_login_signup5_to_login_signup6)
         }
 
         binding.tvSignup4Next.setOnClickListener {
@@ -52,8 +60,47 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
                 val code = binding.tieSignup4PhoneAuth.text.toString()
                 if(code.length == 6) {
                     binding.lavSignup4Loading.visibility = View.VISIBLE
-                    RetrofitService()
+                    val data = CheckCodeData(code.toInt(), phone, "SIGNUP")
+                    RetrofitService().checkCode(data, this)
                 }
+            }
+        }
+
+        binding.tvSignup4Resend.setOnClickListener {
+            binding.lavSignup4Loading.visibility = View.VISIBLE
+            RetrofitService().checkPhone(phone, this)
+        }
+    }
+
+    fun startTimer() {
+        timer = timer(period = 1000) {
+            time++
+
+            if (time == 180) {
+                this.cancel()
+                step = false
+
+                requireActivity().runOnUiThread {
+                    binding.tvSignup4Description.visibility = View.GONE
+                    binding.tilSignup4PhoneAuth.visibility = View.GONE
+                    binding.tvSignup4PhoneTime.visibility = View.GONE
+                    binding.tvSignup4Resend.visibility = View.GONE
+
+                    binding.tieSignup4Phone.isEnabled = true
+
+                    binding.tvSignup4Error.text = "인증시간이 초과되었습니다."
+
+                }
+            }
+            val sec = time
+
+            val left = 180 - sec
+            val m = left/60
+            val s: String= if (left%60 >= 10) (left%60).toString()
+            else "0" + (left%60).toString()
+
+             activity?.runOnUiThread{
+                binding.tvSignup4PhoneTime.text = "$m:$s"
             }
         }
     }
@@ -62,20 +109,46 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
         RetrofitService().reqCode(phone, this)
     }
 
-    override fun onResponseFailure() {
+    override fun onResponseFailure(data: PhoneSuccess) {
+        binding.lavSignup4Loading.visibility = View.GONE
+        binding.tvSignup4Error.text = data.message
     }
 
-    override fun onCheckCodeResponseSuccess() {
+    override fun onResponseFailure(data: PhoneFailure) {
+        binding.lavSignup4Loading.visibility = View.GONE
+        binding.tvSignup4Error.text = data.errors!!.reason
+    }
+
+    override fun onResponseFailure() {
+        binding.lavSignup4Loading.visibility = View.GONE
+        binding.tvSignup4Error.text= "서버 연결 오류"
+    }
+
+    override fun onCheckCodeResponseSuccess(respData: CodeSuccess) {
+        binding.tvSignup4Error.text = ""
+
         binding.lavSignup4Loading.visibility = View.GONE
         val args: Signup4FragmentArgs by navArgs()
         var data = args.userData
         data.phone = phone
+        data.key = respData.data.key
         val action = Signup4FragmentDirections.actionLoginSignup4ToLoginSignup5(data)
         findNavController().navigate(action)
     }
 
+    override fun onCheckCodeResponseFailure(respData: CodeSuccess) {
+        binding.lavSignup4Loading.visibility = View.GONE
+        binding.tvSignup4Error.text = respData.message
+    }
+
+    override fun onCheckCodeResponseFailure(respData: CodeFailure) {
+        binding.lavSignup4Loading.visibility = View.GONE
+        binding.tvSignup4Error.text = respData.message+ respData.errors!!.reason
+    }
+
     override fun onCheckCodeResponseFailure() {
-        TODO("Not yet implemented")
+        binding.lavSignup4Loading.visibility = View.GONE
+        binding.tvSignup4Error.text = "서버 연결 오류"
     }
 
     override fun onSendCodeSuccess() {
@@ -83,12 +156,15 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
         binding.tvSignup4Description.visibility = View.VISIBLE
         binding.tilSignup4PhoneAuth.visibility = View.VISIBLE
         binding.tvSignup4PhoneTime.visibility = View.VISIBLE
+        binding.tvSignup4Resend.visibility = View.VISIBLE
+
+        binding.tvSignup4Error.text = ""
 
         binding.tieSignup4Phone.isEnabled = false
-        step = true
+        step = false
+        startTimer()
     }
 
     override fun onSendCodeFailure() {
-        TODO("Not yet implemented")
     }
 }

@@ -1,13 +1,7 @@
 package com.inha.hbc.util
 
-import com.inha.hbc.data.remote.req.BirthDateInfo
-import com.inha.hbc.data.remote.req.CheckCodeData
-import com.inha.hbc.data.remote.req.CheckPhoneData
-import com.inha.hbc.data.remote.req.NormSigninInfo
-import com.inha.hbc.data.remote.resp.CheckId
-import com.inha.hbc.data.remote.resp.CheckPhone
-import com.inha.hbc.data.remote.resp.NormSignin
-import com.inha.hbc.data.remote.resp.kakaoSigninBody
+import com.inha.hbc.data.remote.req.*
+import com.inha.hbc.data.remote.resp.*
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -25,13 +19,7 @@ interface RetroServiceInterface {
     fun kakaoSignin(
         @Path("provider") provider: String,
         @Query("token") token: String
-    ) : Call<kakaoSigninBody>
-
-
-    @POST("/members/accounts/birthday")
-    fun setBirth(
-        @Body birthDate: BirthDateInfo
-    ): Call<NormSignin>
+    ) : Call<List<KakaoSignin>>
 
 
     @POST("/auth/check/username")
@@ -52,5 +40,15 @@ interface RetroServiceInterface {
     @POST("/auth/verify/code")
     fun checkCode(
         @Body checkCodeData: CheckCodeData
-    ): Call<List<CheckPhone>>
+    ): Call<List<CheckCode>>
+
+    @POST("/members/accounts/birthday")
+    fun checkBirth(
+        @Body birthDate: CheckBirthData
+    ): Call<List<CheckBirth>>
+
+    @POST("/auth/signup")
+    fun getSignup(
+        @Body allData: GetSignupData
+    ): Call<List<GetSignup>>
 }

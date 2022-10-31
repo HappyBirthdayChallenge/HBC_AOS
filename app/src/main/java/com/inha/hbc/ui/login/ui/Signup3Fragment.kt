@@ -32,7 +32,7 @@ class Signup3Fragment: Fragment() {
         }
 
         binding.tvSignup3Next.setOnClickListener {
-            val name = binding.tieSignup3Pw.text.toString()
+            val name = binding.tieSignup3Name.text.toString()
             if (checkValid(name)) {
                 val args: Signup3FragmentArgs by navArgs()
                 var data = args.userData
@@ -44,7 +44,7 @@ class Signup3Fragment: Fragment() {
     }
 
     fun checkValid(name: String):Boolean {
-        val namePattern = "^(?=.*[ㄱ-ㅎ|ㅏ-ㅣ|가-힣])(?=.*[A-Za-z])(?=.*[0-9])[[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]A-Za-z[0-9]]{2,20}$"
+        val namePattern = "^[가-힣A-Za-z\\d]{2,20}\$"
         val pattern = Pattern.compile(namePattern)
         val matcher = pattern.matcher(name)
         return matcher.find()

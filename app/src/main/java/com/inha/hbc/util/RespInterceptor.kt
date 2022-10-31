@@ -1,6 +1,7 @@
 package com.inha.hbc.util
 
 import android.util.Log
+import com.inha.hbc.data.remote.resp.Key
 import okhttp3.Interceptor
 import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
@@ -25,6 +26,18 @@ class RespInterceptor: Interceptor {
         val code = respJson["code"]
         val type = code.toString()[0]
         respJson.put("type", type)
+
+
+        if (respJson.has("data")) {
+            val data = respJson["data"]
+            if (data == "") {
+                if (origin.url.encodedPath.equals("/auth/verify/code", true)) {
+                    val dt = JSONObject()
+                    dt.put("key", "")
+                    respJson.put("data", dt)
+                }
+            }
+        }
         val a = ArrayList<JSONObject>()
         a.add(respJson)
         val b = a.toString()

@@ -6,22 +6,22 @@ import kotlinx.serialization.json.JsonClassDiscriminator
 
 @Serializable
 @JsonClassDiscriminator("type")
-sealed class KakaoSignin
+sealed class GetSignup
 
 @Serializable
 @SerialName("R")
-data class KakaoSuccess(
+data class SignupSuccess(
     val status: Int,
     val data: Data,
     val code: String,
     val message: String
-): KakaoSignin()
+): GetSignup()
 
 @Serializable
 @SerialName("E")
-data class KakaoFailure(
-    var code: String?,
-    var errors: Error?,
-    var message: String?,
-    var status: Int?
-): KakaoSignin()
+data class SignupFailure (
+    val code: String,
+    val errors: Error,
+    val message: String,
+    val status: Int?
+        ): GetSignup()

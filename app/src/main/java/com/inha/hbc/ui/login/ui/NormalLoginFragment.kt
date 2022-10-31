@@ -60,32 +60,6 @@ class NormalLoginFragment(): Fragment(), NormLoginView {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun decodeJwt(token: Data) {
-
-        var gson = Gson()
-        val accessDecode = java.util.Base64.getUrlDecoder().decode(token.accessToken.split(".")[1])
-        val accessString = String(accessDecode, Charsets.UTF_8)
-        val access = gson.fromJson(accessString, Jwt::class.java)
-        GlobalApplication.prefs.setAccessJwt(access)
-
-
-        val refreshDecode = java.util.Base64.getUrlDecoder().decode(token.accessToken.split(".")[1])
-        val refreshString = String(refreshDecode, Charsets.UTF_8)
-        val refresh = gson.fromJson(refreshString, Jwt::class.java)
-
-        GlobalApplication.prefs.setRefreshJwt(refresh)
-    }
-
-    fun isBirthAvailable(token: Jwt): Boolean {
-        if (token.birth.date == -1) return false
-        if (token.birth.month == -1) return false
-        if (token.birth.year == -1) return false
-        if (token.authorities.isEmpty()) return false
-        if (token.authorities[0] == "ROLE_ASSOCIATE") return false
-        return true
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onNormLoginSuccess(data: NormSignin) {
 //        GlobalApplication.prefs.setRealAccessJwt(data.token!!.accessToken)
 //        GlobalApplication.prefs.setRealRefreshJwt(data.token!!.accessToken)

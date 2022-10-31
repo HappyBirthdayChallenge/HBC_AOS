@@ -26,7 +26,6 @@ class LoginActivity: AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         var keyHash = Utility.getKeyHash(this)
         Log.d("keyhash", keyHash)
     }

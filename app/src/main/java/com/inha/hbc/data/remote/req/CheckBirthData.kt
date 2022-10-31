@@ -1,6 +1,6 @@
 package com.inha.hbc.data.remote.req
 
-data class BirthDateInfo(
+data class CheckBirthData(
     val date: Int,
     val month: Int,
     val type: String,

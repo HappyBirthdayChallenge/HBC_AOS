@@ -60,8 +60,10 @@
             android:id="@+id/tie_signup4_phone"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:nextFocusDown="@id/tie_normal_login_pw"
+            android:nextFocusDown="@id/tv_signup4_next"
             android:textSize="20sp"
+            android:inputType="phone"
+            android:maxLength="13"
             android:background="@color/transparent">
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
@@ -100,11 +102,24 @@
             android:id="@+id/tie_signup4_phone_auth"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:nextFocusDown="@id/tie_normal_login_pw"
+            android:nextFocusDown="@id/tv_signup4_next"
             android:textSize="20sp"
+            android:inputType="number"
             android:background="@color/transparent">
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:id="@+id/tv_signup4_resend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/login_textfield_to_error"
+        android:layout_marginBottom="47dp"
+        app:layout_constraintTop_toBottomOf="@id/til_signup4_phone_auth"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="코드 재발송"
+        android:visibility="gone">
+    </TextView>
 
     <TextView
         android:id="@+id/tv_signup4_phone_time"
@@ -119,6 +134,18 @@
         android:visibility="gone">
     </TextView>
 
+    <TextView
+        android:id="@+id/tv_signup4_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/til_signup4_phone_auth"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="@dimen/login_textfield_to_error"
+        android:textSize="15sp"
+        android:textColor="@color/main_color"
+        android:gravity="center">
+    </TextView>
 
     <TextView
         android:id="@+id/tv_signup4_spacer"
