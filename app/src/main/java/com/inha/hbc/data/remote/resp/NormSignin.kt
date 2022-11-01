@@ -10,21 +10,14 @@ sealed class NormSignin
 
 
 @Serializable
-@SerialName("R-M011")
-data class Success(
+@SerialName("R")
+data class NormSuccess(
     @SerialName("data") var token: Data,
     var message: String,
-    var status: Int
+    var status: Int,
+    var code: String
 ): NormSignin()
 
-@SerialName("R-M010")
-@Serializable
-data class Invalid (
-    var data: String?,
-    var message: String,
-    var status: Int
-
-    ): NormSignin()
 
 @Serializable
 @SerialName("E")

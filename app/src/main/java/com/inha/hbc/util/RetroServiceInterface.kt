@@ -51,4 +51,19 @@ interface RetroServiceInterface {
     fun getSignup(
         @Body allData: GetSignupData
     ): Call<List<GetSignup>>
+
+    @POST("/auth/identify")
+    fun isMe(
+        @Body meData: IsMeData
+    ): Call<List<IsMe>>
+
+    @POST("/auth/find/username")
+    fun findId(
+        @Body idData: FindIdData
+    ): Call<List<FindId>>
+
+    @POST("/auth/find/password")
+    fun findPw(
+        @Body pwData: FindPwData
+    ): Call<List<FindPw>>
 }

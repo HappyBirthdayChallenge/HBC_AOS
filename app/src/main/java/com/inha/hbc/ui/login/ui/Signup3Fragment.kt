@@ -40,6 +40,9 @@ class Signup3Fragment: Fragment() {
                 val action = Signup3FragmentDirections.actionLoginSignup3ToLoginSignup4(data)
                 findNavController().navigate(action)
             }
+            else {
+                binding.tvSignup3Error.text = "상단의 이름 규칙을 확인 후 작성해주세요"
+            }
         }
     }
 

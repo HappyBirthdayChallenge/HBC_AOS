@@ -50,8 +50,9 @@
         app:layout_constraintTop_toBottomOf="@id/tv_kakao_birth_subtitle"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:text="생일은 이후 수정이 불가합니다."
+        android:text="서비스 사용을 위해 생일입력이 필요합니다.\n생일은 이후 수정이 불가합니다."
         android:textSize="15sp"
+        android:textAlignment="center"
         android:layout_marginTop="@dimen/login_subtitle_to_description">
     </TextView>
 

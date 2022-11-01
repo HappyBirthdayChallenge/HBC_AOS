@@ -79,6 +79,7 @@ class KakaoBirthFragment: Fragment(), CheckBirthView {
     override fun onBirthSuccess() {
         val intent = Intent(requireActivity(), MainActivity::class.java)
         startActivity(intent)
+        requireActivity().finish()
     }
 
     override fun onBirthFailure() {

@@ -97,7 +97,7 @@
             android:layout_width="match_parent"
             android:nextFocusDown="@id/tv_forget1_next"
             android:textSize="20sp"
-            android:inputType="text"
+            android:inputType="phone"
             android:background="@color/transparent">
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>

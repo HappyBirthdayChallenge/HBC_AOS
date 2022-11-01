@@ -4,8 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    android:clickable="true"
-    android:layout_marginHorizontal="@dimen/login_margin">
+    android:clickable="true">
     <ImageView
         android:id="@+id/iv_normal_login_back"
         android:layout_width="25dp"
@@ -14,7 +13,8 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/tv_normal_login_title"
         android:src="@drawable/ic_close"
-        android:layout_marginTop="@dimen/login_margin">
+        android:layout_marginTop="@dimen/login_margin"
+        android:layout_marginLeft="@dimen/login_margin">
     </ImageView>
     <TextView
         android:id="@+id/tv_normal_login_title"
@@ -60,6 +60,7 @@
             android:layout_width="match_parent"
             android:nextFocusDown="@id/tie_normal_login_pw"
             android:textSize="20sp"
+            android:inputType="text"
             android:background="@color/transparent">
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
@@ -116,7 +117,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/tv_normal_login_signup"
+        app:layout_constraintBottom_toTopOf="@id/tv_normal_login_forget"
         app:layout_constraintTop_toBottomOf="@id/tv_normal_login_spacer"
         android:layout_marginTop="18dp"
         android:text="로그인"
@@ -125,10 +126,11 @@
         android:textColor="@color/white"
         android:gravity="center"
         android:background="@drawable/item_highlighted_btn"
-        android:paddingVertical="14dp">
+        android:paddingVertical="14dp"
+        android:layout_marginHorizontal="@dimen/login_margin">
     </TextView>
     <TextView
-        android:id="@+id/tv_normal_login_signup"
+        android:id="@+id/tv_normal_login_forget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/tv_normal_login_signin"
@@ -140,8 +142,69 @@
         android:textStyle="bold"
         android:gravity="center"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="30dp">
+        android:layout_marginBottom="30dp"
+        android:layout_marginHorizontal="@dimen/login_margin">
     </TextView>
+
+    <TextView
+        android:id="@+id/tv_normal_login__forget_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/transparent_gray"
+        android:visibility="gone">
+    </TextView>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_normal_login_forget_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginHorizontal="50dp"
+        android:background="@drawable/item_norm_login_forget"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/tv_normal_login_forget_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="어떤 문제가 있나요?"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp">
+        </TextView>
+        <TextView
+            android:id="@+id/tv_normal_login__forget_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_normal_login_forget_title"
+            app:layout_constraintBottom_toTopOf="@id/tv_normal_login__forget_pw"
+            android:text="아이디를 잊어버렸어요"
+            android:textSize="15sp"
+            android:layout_marginTop="16dp">
+        </TextView>
+        <TextView
+            android:id="@+id/tv_normal_login__forget_pw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_normal_login__forget_id"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="비밀번호를 잊어버렸어요"
+            android:textSize="15sp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="13dp">
+        </TextView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <com.airbnb.lottie.LottieAnimationView

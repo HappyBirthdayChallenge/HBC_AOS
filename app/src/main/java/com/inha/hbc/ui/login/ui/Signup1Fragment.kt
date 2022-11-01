@@ -40,6 +40,9 @@ class Signup1Fragment: Fragment(), CheckIdView {
                 binding.lavSignup1Loading.visibility = View.VISIBLE
                 RetrofitService().checkId(id, this)
             }
+            else {
+                binding.tvSignup1Error.text = "상단의 아이디 규칙을 확인 후 작성해주세요"
+            }
         }
     }
 
@@ -60,7 +63,8 @@ class Signup1Fragment: Fragment(), CheckIdView {
         findNavController().navigate(action)
     }
 
-    override fun onResponseFailure() {
-        binding.tvSignup1Error.text
+    override fun onResponseFailure(message: String) {
+        binding.lavSignup1Loading.visibility = View.GONE
+        binding.tvSignup1Error.text = message
     }
 }

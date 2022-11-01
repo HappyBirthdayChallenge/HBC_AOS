@@ -17,6 +17,9 @@ class RetrofitService {
     lateinit var sendCodeView: SendCodeView
     lateinit var checkBirthView: CheckBirthView
     lateinit var getSignupView: GetSignupView
+    lateinit var isMeView: IsMeView
+    lateinit var findIdView: FindIdView
+    lateinit var findPwView: FindPwView
 
     fun callRetro(): RetroServiceInterface  {
         return NetworkModule.getRetrofit().create(RetroServiceInterface::class.java)
@@ -28,28 +31,22 @@ class RetrofitService {
         normLoginView = view
         normAuth.normalSignin(data).enqueue(object : Callback<List<NormSignin>> {
             override fun onResponse(call: Call<List<NormSignin>>, response: Response<List<NormSignin>>) {
-                Log.d("respNorm", response.body().toString())
-                Log.d("respErrbody", response.code().toString())
-//                when(response.code()) {
-//                    200 -> {
-//                        if (response.body() == "R-M011") {
-//                            Log.d("signinResp", response.body().toString())
-//                            normLoginView.onNormLoginSuccess(response.body()!!)
-//                        }
-//                        else {
-//                            normLoginView.onNormLoginFailure(response.code())
-//                        }
-//                    }
-//                    else -> {
-//                        normLoginView.onNormLoginFailure(response.code())
-//                    }
-//                }
+                if (response.isSuccessful) {
+                    val resp = response.body()!![0] as NormSuccess
+                    if (resp.code  == "R-M011") {
+                        normLoginView.onNormLoginSuccess(resp)
+                    }
+                    else {
+                        normLoginView.onNormLoginFailure()
+                    }
+                }
+                else {
+                    normLoginView.onNormLoginFailure()
+                }
             }
 
             override fun onFailure(call: Call<List<NormSignin>>, t: Throwable) {
-                Log.d("respERrNorm", t.message.toString())
-                Log.d("respErrNorm", call.cancel().toString())
-                normLoginView.onNormLoginFailure(10000)
+                normLoginView.onNormLoginFailure()
             }
 
         })
@@ -87,16 +84,21 @@ class RetrofitService {
         callRetro().checkId(data).enqueue(object : Callback<List<CheckId>> {
             override fun onResponse(call: Call<List<CheckId>>, response: Response<List<CheckId>>) {
                 if (response.isSuccessful) {
-                    if (response.body()!![0].javaClass.simpleName == "IdValid") {
+                    val resp = response.body()!![0] as CheckIdSuccess
+                    if (resp.code == "R-M001") {
                         checkIdView.onResponseSuccess()
-                    } else {
-                        checkIdView.onResponseFailure()
                     }
+                    else {
+                        checkIdView.onResponseFailure(resp.message!!)
+                    }
+                }
+                else {
+                    checkIdView.onResponseFailure((response.body()!![0] as CheckIdFailure).message)
                 }
             }
 
             override fun onFailure(call: Call<List<CheckId>>, t: Throwable) {
-                Log.d("idRespERr", t.toString())
+                checkIdView.onResponseFailure("서버에러")
             }
 
         })
@@ -193,13 +195,20 @@ class RetrofitService {
             ) {
                 if (response.isSuccessful) {
                     val resp = response.body()!![0] as SignupSuccess
-                    getSignupView.onSignupSuccess()
+                    if (resp.code == "R-M003") {
+                        getSignupView.onSignupSuccess()
+                    }
+                    else {
+                        getSignupView.onSignupFailure()
+                    }
                 }
-                Log.d("checkREsp", response.toString())
+                else {
+                    getSignupView.onSignupFailure()
+                }
             }
 
             override fun onFailure(call: Call<List<GetSignup>>, t: Throwable) {
-                Log.d("checkREsp", t.toString())
+                getSignupView.onSignupFailure()
             }
 
         })
@@ -227,5 +236,84 @@ class RetrofitService {
         })
 
 
+    }
+
+    fun isMe(data: IsMeData, view: IsMeView) {
+        isMeView = view
+
+        callRetro().isMe(data).enqueue(object: Callback<List<IsMe>> {
+            override fun onResponse(call: Call<List<IsMe>>, response: Response<List<IsMe>>) {
+                if (response.isSuccessful) {
+                    val resp = response.body()!![0] as IsMeSuccess
+                    if (resp.code == "R-M016") {
+                        isMeView.onMeSuccess()
+                    }
+                    else {
+                        isMeView.onMeFailure()
+                    }
+                }
+                else {
+                    isMeView.onMeFailure()
+                }
+            }
+
+            override fun onFailure(call: Call<List<IsMe>>, t: Throwable) {
+                Log.d("meResp", t.toString())
+                isMeView.onMeFailure()
+            }
+
+        })
+    }
+
+    fun findId(data: FindIdData, view: FindIdView) {
+        findIdView = view
+
+        callRetro().findId(data).enqueue(object: Callback<List<FindId>> {
+            override fun onResponse(call: Call<List<FindId>>, response: Response<List<FindId>>) {
+                if (response.isSuccessful) {
+                    val resp = response.body()!![0] as FindIdSuccess
+                    if (resp.code == "R-M008") {
+                        findIdView.onFindIdSuccess(resp)
+                    }
+                    else {
+                        findIdView.onFindIdFailure()
+                    }
+                }
+                else {
+                    findIdView.onFindIdFailure()
+                }
+            }
+
+            override fun onFailure(call: Call<List<FindId>>, t: Throwable) {
+                findIdView.onFindIdFailure()
+            }
+
+        })
+    }
+
+    fun findPw(data: FindPwData, view: FindPwView) {
+        findPwView = view
+
+        callRetro().findPw(data).enqueue(object: Callback<List<FindPw>>{
+            override fun onResponse(call: Call<List<FindPw>>, response: Response<List<FindPw>>) {
+                if (response.isSuccessful) {
+                    val resp = response.body()!![0] as FindPwSuccess
+                    if (resp.code == "R-M009") {
+                        findPwView.onFindPwSuccess()
+                    }
+                    else {
+                        findPwView.onFindPwFailure()
+                    }
+                }
+                else {
+                    findPwView.onFindPwFailure()
+                }
+            }
+
+            override fun onFailure(call: Call<List<FindPw>>, t: Throwable) {
+                findPwView.onFindPwFailure()
+            }
+
+        })
     }
 }

@@ -53,11 +53,13 @@ class ForgetPw1Fragment: Fragment(), CheckIdView {
         var data = SignupData()
         data.id = id
         val action = ForgetPw1FragmentDirections.actionLoginForgetPw1ToLoginForget1(data)
+        binding.lavForgetPw1Loading.visibility = View.GONE
         findNavController().navigate(action)
     }
 
-    override fun onResponseFailure() {
-        TODO("Not yet implemented")
+    override fun onResponseFailure(message: String) {
+        binding.lavForgetPw1Loading.visibility = View.GONE
+        binding.tvForgetPw1Error.text = message
     }
 
 }

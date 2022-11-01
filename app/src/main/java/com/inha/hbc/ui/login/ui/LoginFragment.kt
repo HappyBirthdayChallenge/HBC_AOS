@@ -56,6 +56,7 @@ class LoginFragment: Fragment(), KakaoLoginView {
         binding.tvLoginSignup.setOnClickListener {
             findNavController().navigate(R.id.action_login_main_to_login_signup1)
         }
+
     }
 
     fun afterSplash() {
@@ -130,6 +131,7 @@ class LoginFragment: Fragment(), KakaoLoginView {
         if (isBirthAvailable(GlobalApplication.prefs.getAccessJwt())) {
             val intent = Intent(requireActivity(), MainActivity::class.java)
             startActivity(intent)
+            requireActivity().finish()
         }
         else {
             findNavController().navigate(R.id.action_login_main_to_login_kakao_birth)

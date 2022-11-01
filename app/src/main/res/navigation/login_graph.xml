@@ -46,7 +46,7 @@
             android:id="@+id/action_login_forget1_to_login_forget2"
             app:destination="@id/login_forget2" />
         <argument
-            android:name="ForgetData"
+            android:name="forgetData"
             app:argType="com.inha.hbc.data.local.SignupData" />
     </fragment>
     <fragment
@@ -61,7 +61,7 @@
             android:id="@+id/action_login_forget2_to_login_forget_pw2"
             app:destination="@id/login_forget_pw2" />
         <argument
-            android:name="ForgetData"
+            android:name="forgetData"
             app:argType="com.inha.hbc.data.local.SignupData" />
     </fragment>
     <fragment
@@ -82,7 +82,7 @@
             android:id="@+id/action_login_forget_pw2_to_login_forget_pw3"
             app:destination="@id/login_forget_pw3" />
         <argument
-            android:name="ForgetData"
+            android:name="forgetData"
             app:argType="com.inha.hbc.data.local.SignupData" />
     </fragment>
     <fragment
@@ -90,12 +90,21 @@
         android:name="com.inha.hbc.ui.login.ui.ForgetPw3Fragment"
         android:label="forget_pw_3"
         tools:layout="@layout/fragment_forget_pw3">
+        <action
+            android:id="@+id/action_login_forget_pw3_to_login_norm_login"
+            app:destination="@id/login_norm_login" />
     </fragment>
     <fragment
         android:id="@+id/login_forget_id"
         android:name="com.inha.hbc.ui.login.ui.ForgetIdFragment"
         android:label="forget_id"
         tools:layout="@layout/fragment_forget_id">
+        <argument
+            android:name="forgetData"
+            app:argType="com.inha.hbc.data.local.SignupData" />
+        <action
+            android:id="@+id/action_login_forget_id_to_login_norm_login"
+            app:destination="@id/login_norm_login" />
     </fragment>
     <fragment
         android:id="@+id/login_signup1"

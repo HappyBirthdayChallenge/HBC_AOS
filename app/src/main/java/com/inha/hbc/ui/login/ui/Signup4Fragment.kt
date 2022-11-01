@@ -45,15 +45,18 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
         binding.tieSignup4Phone.addTextChangedListener(PhoneNumberFormattingTextWatcher())
 
         binding.ivSignup4Back.setOnClickListener {
-            findNavController().navigate(R.id.action_login_signup5_to_login_signup6)
+            findNavController().popBackStack()
         }
 
         binding.tvSignup4Next.setOnClickListener {
             if (step) {
                 phone = binding.tieSignup4Phone.text.toString()
-                if (phone.isNotEmpty()) {
+                if (checkPhone(phone)) {
                     binding.lavSignup4Loading.visibility = View.VISIBLE
                     RetrofitService().checkPhone(phone, this)
+                }
+                else {
+                    binding.tvSignup4Error.text = "올바른 휴대폰 번호가 아닙니다."
                 }
             }
             else {
@@ -72,6 +75,20 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
         }
     }
 
+    fun checkPhone(phone: String): Boolean {
+        val arr = phone.split("-")
+        if (arr.size != 3) return false
+        if (arr[0].length != 3) return false
+        if (arr[1].length == 3 || arr[1].length == 4) {
+
+        }
+        else {
+            return false
+        }
+        if (arr[2].length != 4) return false
+        return true
+
+    }
     fun startTimer() {
         timer = timer(period = 1000) {
             time++

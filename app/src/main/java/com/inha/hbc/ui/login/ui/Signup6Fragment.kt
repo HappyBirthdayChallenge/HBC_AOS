@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.inha.hbc.data.local.SignupData
 import com.inha.hbc.data.remote.req.BirthDate
@@ -44,6 +45,10 @@ class Signup6Fragment: Fragment(), GetSignupView {
     }
 
     fun initListener() {
+        binding.ivSignup6Back.setOnClickListener {
+            findNavController().popBackStack()
+        }
+        
         binding.tvSignup6Start.setOnClickListener {
             val birth = BirthDate(data.day!!, data.month!!, "SOLAR", data.year!!)
             val info = GetSignupData(birth, data.key!!, data.name!!, data.pw!!, data.pw!!, data.phone!!, data.id!!)
@@ -54,6 +59,7 @@ class Signup6Fragment: Fragment(), GetSignupView {
     override fun onSignupSuccess() {
         val intent = Intent(requireActivity(), MainActivity::class.java)
         startActivity(intent)
+        requireActivity().finish()
     }
 
     override fun onSignupFailure() {

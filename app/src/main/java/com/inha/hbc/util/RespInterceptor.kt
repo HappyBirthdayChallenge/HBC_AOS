@@ -36,6 +36,13 @@ class RespInterceptor: Interceptor {
                     dt.put("key", "")
                     respJson.put("data", dt)
                 }
+
+                else if (origin.url.encodedPath.equals("/auth/signin", true)) {
+                    val dt = JSONObject()
+                    dt.put("access_token", "")
+                    dt.put("refresh_token", "")
+                    respJson.put("data", dt)
+                }
             }
         }
         val a = ArrayList<JSONObject>()
