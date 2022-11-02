@@ -77,6 +77,9 @@ class LoginFragment: Fragment(), KakaoLoginView {
                 else if (token != null){
                     getToken(token!!)
                 }
+                else {
+                    Toast.makeText(context, "에러 발생", Toast.LENGTH_SHORT).show()
+                }
             }
         }
         else {
@@ -86,6 +89,9 @@ class LoginFragment: Fragment(), KakaoLoginView {
                 }
                 else if (token != null) {
                     getToken(token!!)
+                }
+                else {
+                    Toast.makeText(context, "에러 발생", Toast.LENGTH_SHORT).show()
                 }
             }
         }
