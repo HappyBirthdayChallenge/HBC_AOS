@@ -98,7 +98,7 @@ class LoginFragment: Fragment(), KakaoLoginView {
     }
 
     fun getToken(token: OAuthToken) {
-        Log.d("kakaoTok", token.toString())
+        binding.lavLoginLoading.visibility = View.VISIBLE
         RetrofitService().kakaoSignin("KAKAO", token.accessToken, this)
 
     }
@@ -140,11 +140,13 @@ class LoginFragment: Fragment(), KakaoLoginView {
             requireActivity().finish()
         }
         else {
+            binding.lavLoginLoading.visibility = View.GONE
             findNavController().navigate(R.id.action_login_main_to_login_kakao_birth)
         }
     }
 
     override fun onKakaoLoginFailure(code: Int) {
+        binding.lavLoginLoading.visibility = View.GONE
         Toast.makeText(context, "$code 에러", Toast.LENGTH_SHORT).show()
     }
 }

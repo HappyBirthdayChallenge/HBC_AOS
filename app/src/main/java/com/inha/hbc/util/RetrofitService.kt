@@ -240,7 +240,7 @@ class RetrofitService {
             ) {
                 if (response.isSuccessful) {
                     val resp = response.body()!![0] as BirthSuccess
-                    getSignupView.onSignupSuccess()
+                    checkBirthView.onBirthSuccess()
                 }
                 Log.d("checkREsp", response.toString())
             }
