@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -17,7 +18,9 @@ import com.inha.hbc.data.local.Jwt
 import com.inha.hbc.data.local.SignupData
 import com.inha.hbc.data.remote.req.NormSigninInfo
 import com.inha.hbc.data.remote.resp.Data
+import com.inha.hbc.data.remote.resp.NormFailure
 import com.inha.hbc.data.remote.resp.NormSignin
+import com.inha.hbc.data.remote.resp.NormSuccess
 import com.inha.hbc.databinding.FragmentNormalLoginBinding
 import com.inha.hbc.ui.login.view.NormLoginView
 import com.inha.hbc.ui.main.MainActivity
@@ -112,16 +115,30 @@ class NormalLoginFragment(): Fragment(), NormLoginView {
         return matcher.find()
     }
 
-    override fun onNormLoginSuccess(data: NormSignin) {
+    override fun onNormLoginSuccess(data: NormSuccess) {
 
         val intent = Intent(parentContext, MainActivity::class.java)
         startActivity(intent)
         requireActivity().finish()
     }
 
-    override fun onNormLoginFailure() {
+    override fun onNormLoginFailure(data: NormSuccess) {
         binding.lavNormalLoginLoading.visibility = View.GONE
-//        Toast.makeText(parentContext, code.toString() + "오류", Toast.LENGTH_SHORT).show()
+        binding.tvNormalLoginError.text = data.message
 
+    }
+
+    override fun onNormLoginFailure(data: NormFailure) {
+        binding.lavNormalLoginLoading.visibility = View.GONE
+        binding.tvNormalLoginError.text = data.message  + ", " + if (data.errors.isNotEmpty()) {
+            data.errors[0].reason
+        }
+        else {
+            ""
+        }
+    }
+
+    override fun onNormLoginFailure(message: String) {
+        binding.tvNormalLoginError.text = message
     }
 }

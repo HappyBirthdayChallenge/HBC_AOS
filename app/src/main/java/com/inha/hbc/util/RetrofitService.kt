@@ -50,16 +50,17 @@ class RetrofitService {
                         normLoginView.onNormLoginSuccess(resp)
                     }
                     else {
-                        normLoginView.onNormLoginFailure()
+                        normLoginView.onNormLoginFailure(resp)
                     }
                 }
                 else {
-                    normLoginView.onNormLoginFailure()
+                    val errbody = Gson().fromJson(errToJson(response.errorBody()!!.string()), NormFailure::class.java)
+                    normLoginView.onNormLoginFailure(errbody)
                 }
             }
 
             override fun onFailure(call: Call<List<NormSignin>>, t: Throwable) {
-                normLoginView.onNormLoginFailure()
+                normLoginView.onNormLoginFailure("서버 오류")
             }
 
         })

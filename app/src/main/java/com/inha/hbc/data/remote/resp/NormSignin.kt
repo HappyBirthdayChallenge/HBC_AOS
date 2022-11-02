@@ -21,8 +21,8 @@ data class NormSuccess(
 
 @Serializable
 @SerialName("E")
-data class NoInput (
-    var errors: Error?,
+data class NormFailure (
+    var errors: List<Error>,
     var message: String,
     var status: Int,
     var code: String
