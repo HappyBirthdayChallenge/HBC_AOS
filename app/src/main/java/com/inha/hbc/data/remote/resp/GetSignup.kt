@@ -12,7 +12,7 @@ sealed class GetSignup
 @SerialName("R")
 data class SignupSuccess(
     val status: Int,
-    val data: Data,
+    val data: String?,
     val code: String,
     val message: String
 ): GetSignup()

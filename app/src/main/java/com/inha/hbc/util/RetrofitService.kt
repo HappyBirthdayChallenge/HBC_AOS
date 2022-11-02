@@ -1,12 +1,19 @@
 package com.inha.hbc.util
 
 import android.util.Log
+import com.google.gson.Gson
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import com.inha.hbc.data.remote.req.*
 import com.inha.hbc.data.remote.resp.*
 import com.inha.hbc.ui.login.view.*
+import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.reflect.typeOf
 
 class RetrofitService {
     lateinit var normLoginView: NormLoginView
@@ -23,6 +30,12 @@ class RetrofitService {
 
     fun callRetro(): RetroServiceInterface  {
         return NetworkModule.getRetrofit().create(RetroServiceInterface::class.java)
+    }
+
+    fun errToJson(resp: String): JsonObject {
+        val errBody = resp
+        val suberr = errBody.substring(1 until  errBody.length - 1)
+        return JsonParser.parseString(suberr).asJsonObject
     }
 
 
@@ -86,14 +99,15 @@ class RetrofitService {
                 if (response.isSuccessful) {
                     val resp = response.body()!![0] as CheckIdSuccess
                     if (resp.code == "R-M001") {
-                        checkIdView.onResponseSuccess()
+                        checkIdView.onResponseSuccess(resp)
                     }
                     else {
-                        checkIdView.onResponseFailure(resp.message!!)
+                        checkIdView.onResponseFailure(resp)
                     }
                 }
                 else {
-                    checkIdView.onResponseFailure((response.body()!![0] as CheckIdFailure).message)
+                    val err = Gson().fromJson(errToJson(response.errorBody()!!.string()), CheckIdFailure::class.java)
+                    checkIdView.onResponseFailure(err)
                 }
             }
 
@@ -134,9 +148,9 @@ class RetrofitService {
         })
     }
 
-    fun reqCode(data: String, view: SendCodeView) {
+    fun reqCode(data: String, view: SendCodeView, category: String) {
         sendCodeView = view
-        val body = CheckPhoneData(data, "SIGNUP")
+        val body = CheckPhoneData(data, category)
 
         callRetro().reqCode(body).enqueue(object: Callback<List<CheckPhone>> {
             override fun onResponse(
@@ -175,7 +189,8 @@ class RetrofitService {
                     }
                 }
                 else {
-                    checkCodeView.onCheckCodeResponseFailure(response.body()!![0] as CodeFailure)
+                    val err = Gson().fromJson(errToJson(response.errorBody()!!.string()), CodeFailure::class.java)
+                    checkCodeView.onCheckCodeResponseFailure(err)
                 }
             }
 

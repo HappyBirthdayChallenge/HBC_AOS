@@ -20,7 +20,7 @@ data class CodeSuccess(
 @SerialName("E")
 data class CodeFailure(
     val code: String,
-    val errors: Error?,
+    val errors: List<Error>,
     val message: String?,
     val status: Int?
 ): CheckCode()

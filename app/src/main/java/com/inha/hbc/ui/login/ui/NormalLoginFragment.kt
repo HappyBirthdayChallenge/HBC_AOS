@@ -23,6 +23,7 @@ import com.inha.hbc.ui.login.view.NormLoginView
 import com.inha.hbc.ui.main.MainActivity
 import com.inha.hbc.util.GlobalApplication
 import com.inha.hbc.util.RetrofitService
+import java.util.regex.Pattern
 
 class NormalLoginFragment(): Fragment(), NormLoginView {
     private lateinit var binding: FragmentNormalLoginBinding
@@ -56,6 +57,15 @@ class NormalLoginFragment(): Fragment(), NormLoginView {
         binding.tvNormalLoginSignin.setOnClickListener {
             val id = binding.tieNormalLoginId.text.toString()
             val pw = binding.tieNormalLoginPw.text.toString()
+            if (!checkIdValid(id)) {
+                binding.tvNormalLoginError.text = "id가 형식에 맞지 않습니다."
+                return@setOnClickListener
+            }
+
+            if(!checkPwValid(pw)){
+                binding.tvNormalLoginError.text = "pw가 형식에 맞지 않습니다."
+                return@setOnClickListener
+            }
             binding.lavNormalLoginLoading.visibility = View.VISIBLE
             RetrofitService().normSignin(NormSigninInfo(pw, id), this)
         }
@@ -86,6 +96,20 @@ class NormalLoginFragment(): Fragment(), NormLoginView {
 
             findNavController().navigate(R.id.action_login_norm_login_to_login_forget_pw1)
         }
+    }
+
+    fun checkIdValid(id: String): Boolean {
+        val idPattern = "^[A-Za-z\\d]{5,20}\$"
+        val pattern = Pattern.compile(idPattern)
+        val matcher = pattern.matcher(id)
+        return matcher.find()
+    }
+
+    fun checkPwValid(pw: String):Boolean {
+        val pwPattern = "^(?=.*[`~!@#$%^&*()])(?=.*[A-Za-z])(?=.*[0-9])[[`~!@#$%^&*()]A-Za-z[0-9]]{10,20}$"
+        val pattern = Pattern.compile(pwPattern)
+        val matcher = pattern.matcher(pw)
+        return matcher.find()
     }
 
     override fun onNormLoginSuccess(data: NormSignin) {

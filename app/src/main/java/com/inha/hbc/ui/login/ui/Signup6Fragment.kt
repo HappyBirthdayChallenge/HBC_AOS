@@ -63,6 +63,5 @@ class Signup6Fragment: Fragment(), GetSignupView {
     }
 
     override fun onSignupFailure() {
-        TODO("Not yet implemented")
     }
 }

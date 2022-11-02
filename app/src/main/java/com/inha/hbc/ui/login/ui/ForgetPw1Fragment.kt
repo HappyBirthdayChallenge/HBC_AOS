@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.inha.hbc.data.local.SignupData
+import com.inha.hbc.data.remote.resp.CheckIdFailure
+import com.inha.hbc.data.remote.resp.CheckIdSuccess
 import com.inha.hbc.databinding.FragmentForgetPw1Binding
 import com.inha.hbc.ui.login.view.CheckIdView
 import com.inha.hbc.util.RetrofitService
@@ -31,6 +33,9 @@ class ForgetPw1Fragment: Fragment(), CheckIdView {
     }
 
     fun initListener() {
+        binding.ivForgetPw1Back.setOnClickListener {
+            findNavController().popBackStack()
+        }
         binding.tvForgetPw1Next.setOnClickListener {
             id = binding.tieForgetPw1Id.text.toString()
 
@@ -49,12 +54,22 @@ class ForgetPw1Fragment: Fragment(), CheckIdView {
         return matcher.find()
     }
 
-    override fun onResponseSuccess() {
+    override fun onResponseSuccess(resp: CheckIdSuccess) {
+        binding.lavForgetPw1Loading.visibility = View.GONE
+        binding.tvForgetPw1Error.text = "아이디가 조회되지 않습니다."
+    }
+
+    override fun onResponseFailure(resp: CheckIdSuccess) {
         var data = SignupData()
         data.id = id
         val action = ForgetPw1FragmentDirections.actionLoginForgetPw1ToLoginForget1(data)
         binding.lavForgetPw1Loading.visibility = View.GONE
         findNavController().navigate(action)
+    }
+
+    override fun onResponseFailure(resp: CheckIdFailure) {
+        binding.lavForgetPw1Loading.visibility = View.GONE
+        binding.tvForgetPw1Error.text = resp.message + resp.errors[0]!!.reason
     }
 
     override fun onResponseFailure(message: String) {

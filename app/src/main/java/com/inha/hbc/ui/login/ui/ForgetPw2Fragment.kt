@@ -31,6 +31,9 @@ class ForgetPw2Fragment: Fragment(), FindPwView {
     }
 
     fun initListener() {
+        binding.ivForgetPw2Back.setOnClickListener {
+            findNavController().popBackStack()
+        }
         binding.tvForgetPw2Next.setOnClickListener {
             binding.lavForgetPw2Loading.visibility = View.VISIBLE
             val pw = binding.tieForgetPw2Pw.text.toString()

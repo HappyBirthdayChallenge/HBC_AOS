@@ -27,6 +27,9 @@ class ForgetPw3Fragment: Fragment() {
     }
 
     fun initListener() {
+        binding.ivForgetPw3Back.setOnClickListener {
+            findNavController().popBackStack()
+        }
         binding.tvForgetPw3Next.setOnClickListener {
             findNavController().navigate(R.id.action_login_forget_pw3_to_login_norm_login)
         }

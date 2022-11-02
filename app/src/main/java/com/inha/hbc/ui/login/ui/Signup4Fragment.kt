@@ -25,6 +25,7 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
     var phone = ""
     var time = 0
     lateinit var timer: Timer
+    var resend = false
     lateinit var binding: FragmentSignup4Binding
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -70,6 +71,7 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
         }
 
         binding.tvSignup4Resend.setOnClickListener {
+            resend = true
             binding.lavSignup4Loading.visibility = View.VISIBLE
             RetrofitService().checkPhone(phone, this)
         }
@@ -123,7 +125,7 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
     }
 
     override fun onResponseSuccess() {
-        RetrofitService().reqCode(phone, this)
+        RetrofitService().reqCode(phone, this, "SIGNUP")
     }
 
     override fun onResponseFailure(data: PhoneSuccess) {
@@ -160,7 +162,7 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
 
     override fun onCheckCodeResponseFailure(respData: CodeFailure) {
         binding.lavSignup4Loading.visibility = View.GONE
-        binding.tvSignup4Error.text = respData.message+ respData.errors!!.reason
+        binding.tvSignup4Error.text = respData.message+ respData.errors!![0].reason
     }
 
     override fun onCheckCodeResponseFailure() {
@@ -179,6 +181,13 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
 
         binding.tieSignup4Phone.isEnabled = false
         step = false
+
+        if (resend) {
+            timer.cancel()
+            time = 0
+            resend = false
+        }
+        binding.tvSignup4PhoneTime.text = "3:00"
         startTimer()
     }
 

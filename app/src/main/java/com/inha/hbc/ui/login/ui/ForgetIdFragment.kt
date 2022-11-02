@@ -35,6 +35,9 @@ class ForgetIdFragment: Fragment() {
     }
 
     fun initListener() {
+        binding.ivForgetIdBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
         binding.tvForgetIdNext.setOnClickListener {
             findNavController().navigate(R.id.action_login_forget_id_to_login_norm_login)
         }

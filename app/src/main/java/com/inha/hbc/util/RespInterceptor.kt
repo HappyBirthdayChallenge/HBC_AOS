@@ -27,7 +27,6 @@ class RespInterceptor: Interceptor {
         val type = code.toString()[0]
         respJson.put("type", type)
 
-
         if (respJson.has("data")) {
             val data = respJson["data"]
             if (data == "") {

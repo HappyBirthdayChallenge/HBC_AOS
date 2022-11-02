@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.inha.hbc.data.local.SignupData
+import com.inha.hbc.data.remote.resp.CheckIdFailure
+import com.inha.hbc.data.remote.resp.CheckIdSuccess
 import com.inha.hbc.databinding.FragmentSignup1Binding
 import com.inha.hbc.ui.login.view.CheckIdView
 import com.inha.hbc.util.RetrofitService
@@ -53,7 +55,7 @@ class Signup1Fragment: Fragment(), CheckIdView {
         return matcher.find()
     }
 
-    override fun onResponseSuccess() {
+    override fun onResponseSuccess(resp: CheckIdSuccess) {
         id = binding.tieSignup1Id.text.toString()
         var data = SignupData()
         data.id = id
@@ -61,6 +63,14 @@ class Signup1Fragment: Fragment(), CheckIdView {
 
         binding.lavSignup1Loading.visibility = View.GONE
         findNavController().navigate(action)
+    }
+
+    override fun onResponseFailure(resp: CheckIdSuccess) {
+        binding.lavSignup1Loading.visibility = View.GONE
+        binding.tvSignup1Error.text = resp.message
+    }
+
+    override fun onResponseFailure(resp: CheckIdFailure) {
     }
 
     override fun onResponseFailure(message: String) {

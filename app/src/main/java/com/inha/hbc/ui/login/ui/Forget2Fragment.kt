@@ -27,6 +27,7 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
     var auth = ""
     lateinit var data: SignupData
     lateinit var binding: FragementForget2Binding
+    var resend = false
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,17 +47,36 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
     }
 
     fun initListener() {
+        binding.ivForget2Back.setOnClickListener {
+            findNavController().popBackStack()
+        }
         binding.tvForget2Next.setOnClickListener {
             binding.lavForget2Loading.visibility = View.VISIBLE
             auth = binding.tieForget2PhoneAuth.text.toString()
+            if (!auth.isNullOrEmpty()) {
+                val reqData = if (data.id.isNullOrEmpty()) {
+                    CheckCodeData(auth.toInt(), data.phone!!, "FIND_ID")
+                }
+                else {
+                    CheckCodeData(auth.toInt(), data.phone!!, "FIND_PW")
+                }
+                    RetrofitService().checkCode(reqData, this)
+                }
+            else {
+                binding.tvForget2Error.text = "번호를 입력해주세요"
+            }
 
-            val reqData = CheckCodeData(auth.toInt(),  data.phone!!, "SIGNUP")
-            RetrofitService().checkCode(reqData, this)
         }
 
         binding.tvForget2Resend.setOnClickListener {
             binding.lavForget2Loading.visibility = View.VISIBLE
-            RetrofitService().reqCode(data.phone!!, this)
+            resend = true
+            if (data.id.isNullOrEmpty()) {
+                RetrofitService().reqCode(data.phone!!, this, "FIND_ID")
+            }
+            else {
+                RetrofitService().reqCode(data.phone!!, this, "FIND_PW")
+            }
         }
     }
 
@@ -110,7 +130,7 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
 
     override fun onCheckCodeResponseFailure(respData: CodeFailure) {
         binding.lavForget2Loading.visibility = View.GONE
-        binding.tvForget2Error.text = respData.message+ respData.errors!!.reason
+        binding.tvForget2Error.text = respData.message+ respData.errors[0].reason
     }
 
     override fun onCheckCodeResponseFailure() {
@@ -134,8 +154,11 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
         binding.lavForget2Loading.visibility = View.GONE
         binding.tvForget2Error.text = ""
 
-        timer.cancel()
-        time = 0
+        if (resend) {
+            timer.cancel()
+            time = 0
+            resend= false
+        }
         binding.tvForget2PhoneTime.text = "3:00"
         startTimer()
     }
