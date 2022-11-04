@@ -22,9 +22,6 @@ object NormLoginFragmentManager {
         activity = act
     }
 
-    fun kakaoStart() {
-
-    }
 
     fun normloginStart() {
         baseLoginFragment = NormalLoginFragment()

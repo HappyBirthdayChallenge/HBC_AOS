@@ -40,7 +40,7 @@ class Signup2Fragment: Fragment() {
                 SignupFragmentManager.transaction(2, 3)
             }
             else if (result == 2) {
-                binding.tvSignup2Error.text = "비밀번호 규칙이 일치하지 않습니다!"
+                binding.tvSignup2Error.text = "비밀번호는 10~20자의 영문 대/소문자, 숫자, 특수문자(`~!@#\$%^&*())를 조합하여 설정해 주세요."
             }
         }
     }
@@ -49,7 +49,7 @@ class Signup2Fragment: Fragment() {
         pw = binding.tieSignup2Pw.text.toString()
         val pwConfirm = binding.tieSignup2PwConfirm.text.toString()
         if (pw != pwConfirm) {
-            binding.tvSignup2Error.text = "비밀번호가 다릅니다!"
+            binding.tvSignup2Error.text = "비밀번호가 일치하지 않아요."
             return 0
         }
         val pwPattern = "^(?=.*[`~!@#$%^&*()])(?=.*[A-Za-z])(?=.*[0-9])[[`~!@#$%^&*()]A-Za-z[0-9]]{10,20}$"

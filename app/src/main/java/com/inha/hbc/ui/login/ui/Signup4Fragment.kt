@@ -54,7 +54,7 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
                     RetrofitService().checkPhone(phone, this)
                 }
                 else {
-                    binding.tvSignup4Error.text = "올바른 휴대폰 번호가 아닙니다."
+                    binding.tvSignup4Error.text = "휴대폰 번호를 정확하게 입력해주세요."
                 }
             }
             else {
@@ -104,7 +104,7 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
 
                     binding.tieSignup4Phone.isEnabled = true
 
-                    binding.tvSignup4Error.text = "인증시간이 초과되었습니다."
+                    binding.tvSignup4Error.text = "입력 시간이 초과 되었어요. 다시 시도해 주세요."
 
                 }
             }
@@ -127,12 +127,12 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
 
     override fun onResponseFailure(data: PhoneSuccess) {
         binding.lavSignup4Loading.visibility = View.GONE
-        binding.tvSignup4Error.text = data.message
+        binding.tvSignup4Error.text = "이미 가입된 휴대폰 번호에요. 다른 휴대폰 번호를 입력해주세요."
     }
 
     override fun onResponseFailure(data: PhoneFailure) {
         binding.lavSignup4Loading.visibility = View.GONE
-        binding.tvSignup4Error.text = data.errors!!.reason
+        binding.tvSignup4Error.text = "휴대폰 번호를 정확하게 입력해주세요."
     }
 
     override fun onResponseFailure() {
@@ -156,7 +156,7 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
 
     override fun onCheckCodeResponseFailure(respData: CodeFailure) {
         binding.lavSignup4Loading.visibility = View.GONE
-        binding.tvSignup4Error.text = respData.message+ respData.errors!![0].reason
+        binding.tvSignup4Error.text = "인증 코드를 잘못 입력했어요"
     }
 
     override fun onCheckCodeResponseFailure() {

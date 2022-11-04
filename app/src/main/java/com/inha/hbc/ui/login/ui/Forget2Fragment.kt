@@ -70,7 +70,7 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
                     RetrofitService().checkCode(reqData, this)
                 }
             else {
-                binding.tvForget2Error.text = "번호를 입력해주세요"
+                binding.tvForget2Error.text = "인증 코드를 잘못 입력했어요"
             }
 
         }
@@ -100,7 +100,7 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
                     binding.tieForget2PhoneAuth.isEnabled = false
                     binding.tvForget2Next.isEnabled = false
 
-                    binding.tvForget2Error.text = "인증시간이 초과되었습니다. 코드 재발송을 하시거나\n이전 화면으로 돌아가서 다시 시도해주세요"
+                    binding.tvForget2Error.text = "입력 시간이 초과 되었어요. 다시 시도해 주세요."
 
                 }
             }
@@ -132,12 +132,12 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
 
     override fun onCheckCodeResponseFailure(respData: CodeSuccess) {
         binding.lavForget2Loading.visibility = View.GONE
-        binding.tvForget2Error.text = respData.message
+        binding.tvForget2Error.text = "인증 코드를 잘못 입력했어요"
     }
 
     override fun onCheckCodeResponseFailure(respData: CodeFailure) {
         binding.lavForget2Loading.visibility = View.GONE
-        binding.tvForget2Error.text = respData.message+ respData.errors[0].reason
+        binding.tvForget2Error.text = "인증 코드를 잘못 입력했어요"
     }
 
     override fun onCheckCodeResponseFailure() {

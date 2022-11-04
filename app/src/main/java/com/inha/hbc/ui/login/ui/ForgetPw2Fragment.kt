@@ -13,6 +13,7 @@ import com.inha.hbc.databinding.FragmentForgetPw2Binding
 import com.inha.hbc.ui.login.view.FindPwView
 import com.inha.hbc.util.NormLoginFragmentManager
 import com.inha.hbc.util.RetrofitService
+import java.util.regex.Pattern
 
 class ForgetPw2Fragment: Fragment(), FindPwView {
     lateinit var binding: FragmentForgetPw2Binding
@@ -40,12 +41,31 @@ class ForgetPw2Fragment: Fragment(), FindPwView {
             val pw = binding.tieForgetPw2Pw.text.toString()
             val pwConfirm = binding.tieForgetPw2PwConfirm.text.toString()
 
-            if (pw == pwConfirm) {
+            val result = checkValid(pw, pwConfirm)
+            if (result == 1) {
                 val data = NormLoginFragmentManager.data
-                val reqData = FindPwData(data.key!!, data.name!!, pw, pwConfirm, data.phone!!, data.id!!)
+                val reqData =
+                    FindPwData(data.key!!, data.name!!, pw, pwConfirm, data.phone!!, data.id!!)
                 RetrofitService().findPw(reqData, this)
             }
+            else {
+                binding.tvForgetPw2Error.text = "비밀번호는 10~20자의 영문 대/소문자, 숫자, 특수문자(`~!@#\$%^&*())를 조합하여 설정해 주세요."
+            }
+
         }
+    }
+
+
+    fun checkValid(pw: String, pwConfirm: String):Int {
+        if (pw != pwConfirm) {
+            binding.tvForgetPw2Error.text = "비밀번호가 일치하지 않아요."
+            return 0
+        }
+        val pwPattern = "^(?=.*[`~!@#$%^&*()])(?=.*[A-Za-z])(?=.*[0-9])[[`~!@#$%^&*()]A-Za-z[0-9]]{10,20}$"
+        val pattern = Pattern.compile(pwPattern)
+        val matcher = pattern.matcher(pw)
+        return if (matcher.find()) 1
+        else 2
     }
 
     override fun onFindPwSuccess() {

@@ -37,7 +37,7 @@ class Signup3Fragment: Fragment() {
                 SignupFragmentManager.transaction(3, 4)
             }
             else {
-                binding.tvSignup3Error.text = "상단의 이름 규칙을 확인 후 작성해주세요"
+                binding.tvSignup3Error.text = "이름은 2~20자의 한글, 영문 대/소문자, 숫자만 사용하여 설정해 주세요."
             }
         }
     }

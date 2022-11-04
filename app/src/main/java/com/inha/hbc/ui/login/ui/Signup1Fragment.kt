@@ -44,7 +44,7 @@ class Signup1Fragment: Fragment(), CheckIdView {
                 RetrofitService().checkId(id, this)
             }
             else {
-                binding.tvSignup1Error.text = "상단의 아이디 규칙을 확인 후 작성해주세요"
+                binding.tvSignup1Error.text = "아이디는 5~20자의 영문 대/소문자, 숫자만 사용하여 설정해 주세요."
             }
         }
     }
@@ -66,7 +66,7 @@ class Signup1Fragment: Fragment(), CheckIdView {
 
     override fun onResponseFailure(resp: CheckIdSuccess) {
         binding.lavSignup1Loading.visibility = View.GONE
-        binding.tvSignup1Error.text = resp.message
+        binding.tvSignup1Error.text = "사용 중인 아이디에요. 다른 아이디를 입력해주세요."
     }
 
     override fun onResponseFailure(resp: CheckIdFailure) {
@@ -74,7 +74,7 @@ class Signup1Fragment: Fragment(), CheckIdView {
 
     override fun onResponseFailure(message: String) {
         binding.lavSignup1Loading.visibility = View.GONE
-        binding.tvSignup1Error.text = message
+        binding.tvSignup1Error.text = "사용 중인 아이디에요. 다른 아이디를 입력해주세요."
     }
 
 

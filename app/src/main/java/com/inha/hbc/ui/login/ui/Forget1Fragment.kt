@@ -57,7 +57,7 @@ class Forget1Fragment: Fragment(), IsMeView, SendCodeView {
             }
 
             if (!checkPhone(phone)) {
-                binding.tvForget1Error.text = "전화번호가 규칙에 맞지 않습니다."
+                binding.tvForget1Error.text = " 휴대폰 번호를 정확하게 입력해주세요."
                 return@setOnClickListener
             }
 

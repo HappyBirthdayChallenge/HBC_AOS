@@ -55,7 +55,8 @@
         android:layout_marginBottom="47dp"
         android:textSize="15sp"
         android:gravity="center"
-        android:text="작성해주신 휴대폰 번호로 발송된\n인증코드를 입력해주세요">
+        android:text="작성해주신 휴대폰 번호로 발송된\n인증코드를 입력해주세요"
+        android:visibility="invisible">
     </TextView>
 
     <com.google.android.material.textfield.TextInputLayout

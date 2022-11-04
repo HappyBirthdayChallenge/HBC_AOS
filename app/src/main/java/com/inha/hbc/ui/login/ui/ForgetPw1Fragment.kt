@@ -56,7 +56,7 @@ class ForgetPw1Fragment: Fragment(), CheckIdView {
 
     override fun onResponseSuccess(resp: CheckIdSuccess) {
         binding.lavForgetPw1Loading.visibility = View.GONE
-        binding.tvForgetPw1Error.text = "아이디가 조회되지 않습니다."
+        binding.tvForgetPw1Error.text = "일치하는 회원이 없어요."
     }
 
     override fun onResponseFailure(resp: CheckIdSuccess) {

@@ -53,7 +53,8 @@
         android:text="아이디는 영문 대/소문자와 숫자를 포함하여\n5~20자 사이로 작성해주세요"
         android:textSize="15sp"
         android:layout_marginTop="@dimen/login_subtitle_to_description"
-        android:textAlignment="center">
+        android:textAlignment="center"
+        android:visibility="invisible">
     </TextView>
 
     <com.google.android.material.textfield.TextInputLayout
