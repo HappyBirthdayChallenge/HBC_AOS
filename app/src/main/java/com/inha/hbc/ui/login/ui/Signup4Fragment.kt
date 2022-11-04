@@ -39,11 +39,26 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
         initListener()
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden) {
+            step = true
+
+            binding.tvSignup4Description.visibility = View.GONE
+            binding.tilSignup4PhoneAuth.visibility = View.GONE
+            binding.tvSignup4PhoneTime.visibility = View.GONE
+            binding.tvSignup4Resend.visibility = View.GONE
+            binding.tieSignup4PhoneAuth.setText("")
+
+            binding.tieSignup4Phone.isEnabled = true
+        }
+    }
+
     fun initListener() {
         binding.tieSignup4Phone.addTextChangedListener(PhoneNumberFormattingTextWatcher())
 
         binding.ivSignup4Back.setOnClickListener {
-            SignupFragmentManager.transaction(4, 3)
+            SignupFragmentManager.backPressed()
         }
 
         binding.tvSignup4Next.setOnClickListener {
@@ -94,7 +109,7 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
 
             if (time == 180) {
                 this.cancel()
-                step = false
+                step = true
 
                 SignupFragmentManager.activity.runOnUiThread {
                     binding.tvSignup4Description.visibility = View.GONE
@@ -103,6 +118,7 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
                     binding.tvSignup4Resend.visibility = View.GONE
 
                     binding.tieSignup4Phone.isEnabled = true
+                    binding.tieSignup4PhoneAuth.setText("")
 
                     binding.tvSignup4Error.text = "입력 시간이 초과 되었어요. 다시 시도해 주세요."
 

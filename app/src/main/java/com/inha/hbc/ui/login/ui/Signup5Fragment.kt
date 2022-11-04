@@ -27,7 +27,7 @@ class Signup5Fragment: Fragment() {
 
     fun initListener() {
         binding.ivSignup5Back.setOnClickListener {
-            SignupFragmentManager.transaction(5, 4)
+            SignupFragmentManager.backPressed()
         }
 
         binding.npSignup5Year.apply {

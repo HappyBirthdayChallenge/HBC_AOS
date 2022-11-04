@@ -67,6 +67,7 @@ object SignupFragmentManager {
         else {
             end()
         }
+
     }
 
 }
