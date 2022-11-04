@@ -4,9 +4,12 @@ import android.content.Context
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import com.inha.hbc.data.remote.resp.GetTokenSuccess
 import com.inha.hbc.databinding.ActivityLoginBinding
+import com.inha.hbc.ui.login.view.GetTokenView
 import com.inha.hbc.util.GlobalApplication
 import com.inha.hbc.util.NormLoginFragmentManager
+import com.inha.hbc.util.RetrofitService
 import com.inha.hbc.util.SignupFragmentManager
 
 
@@ -23,7 +26,6 @@ class LoginActivity: AppCompatActivity() {
         SignupFragmentManager.setManager(supportFragmentManager, binding.fcLogin.id, this)
         NormLoginFragmentManager.setManager(supportFragmentManager, binding.fcLogin.id, this)
 
-        checkToken()
         supportFragmentManager.beginTransaction().add(binding.fcLogin.id, LoginFragment()).commit()
     }
 
@@ -32,7 +34,4 @@ class LoginActivity: AppCompatActivity() {
         keyboard.hideSoftInputFromWindow(currentFocus?.windowToken, 0)
     }
 
-    fun checkToken() {
-        //GlobalApplication.prefs.getAccessJwt()
-    }
 }

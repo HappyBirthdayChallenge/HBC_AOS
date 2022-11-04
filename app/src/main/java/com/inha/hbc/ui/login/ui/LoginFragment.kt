@@ -16,7 +16,9 @@ import com.google.gson.Gson
 import com.inha.hbc.R
 import com.inha.hbc.data.local.Jwt
 import com.inha.hbc.data.remote.resp.Data
+import com.inha.hbc.data.remote.resp.GetTokenSuccess
 import com.inha.hbc.databinding.FragmentLoginBinding
+import com.inha.hbc.ui.login.view.GetTokenView
 import com.inha.hbc.ui.login.view.KakaoLoginView
 import com.inha.hbc.ui.main.MainActivity
 import com.inha.hbc.util.NormLoginFragmentManager
@@ -26,7 +28,7 @@ import com.inha.hbc.util.RetrofitService
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 
-class LoginFragment: Fragment(), KakaoLoginView {
+class LoginFragment: Fragment(), KakaoLoginView, GetTokenView {
 
     lateinit var binding: FragmentLoginBinding
     override fun onCreateView(
@@ -40,6 +42,8 @@ class LoginFragment: Fragment(), KakaoLoginView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        checkToken()
 
         initListener()
 
@@ -98,6 +102,18 @@ class LoginFragment: Fragment(), KakaoLoginView {
         }
     }
 
+    fun checkToken() {
+        val refreshJwt = GlobalApplication.prefs.getRealRefreshJwt()
+        if (refreshJwt.isNullOrEmpty()) {
+        }
+        else {
+            binding.lavLoginLoading.visibility = View.VISIBLE
+            RetrofitService().getToken(refreshJwt, this)
+        }
+    }
+
+
+
     fun getToken(token: OAuthToken) {
         binding.lavLoginLoading.visibility = View.VISIBLE
         RetrofitService().kakaoSignin("KAKAO", token.accessToken, this)
@@ -148,5 +164,21 @@ class LoginFragment: Fragment(), KakaoLoginView {
     override fun onKakaoLoginFailure(code: Int) {
         binding.lavLoginLoading.visibility = View.GONE
         Toast.makeText(context, "$code 에러", Toast.LENGTH_SHORT).show()
+    }
+
+
+
+    override fun onGetTokenSuccess(resp: GetTokenSuccess) {
+        decodeJwt(resp.data!!)
+        binding.lavLoginLoading.visibility = View.GONE
+//        val intent = Intent(requireActivity(), MainActivity::class.java)
+//        startActivity(intent)
+//        requireActivity().finish()
+
+
+    }
+
+    override fun onGetTokenFailure() {
+        binding.lavLoginLoading.visibility = View.GONE
     }
 }

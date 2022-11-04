@@ -45,7 +45,7 @@ object NormLoginFragmentManager {
         fragmentManager.beginTransaction().show(forgetArr[0]).commit()
         data = SignupData()
         currentPage = 1
-        isId = false
+        isId = true
     }
 
     fun pwstart() {
@@ -67,7 +67,7 @@ object NormLoginFragmentManager {
         fragmentManager.beginTransaction().show(forgetArr[0]).commit()
         data = SignupData()
         currentPage = 1
-        isId = true
+        isId = false
     }
 
     fun end() {
@@ -78,6 +78,7 @@ object NormLoginFragmentManager {
 
         data = SignupData()
         currentPage = 0
+        forgetArr.clear()
     }
 
     fun transaction(start: Int, dest: Int) {

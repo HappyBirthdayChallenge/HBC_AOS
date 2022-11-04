@@ -66,4 +66,9 @@ interface RetroServiceInterface {
     fun findPw(
         @Body pwData: FindPwData
     ): Call<List<FindPw>>
+
+    @POST("/auth/reissue")
+    fun getToken(
+        @Query("refreshToken") refreshToken: String
+    ):Call<List<GetToken>>
 }

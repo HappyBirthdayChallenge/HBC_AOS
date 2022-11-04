@@ -27,6 +27,7 @@ class RetrofitService {
     lateinit var isMeView: IsMeView
     lateinit var findIdView: FindIdView
     lateinit var findPwView: FindPwView
+    lateinit var getTokenView: GetTokenView
 
     fun callRetro(): RetroServiceInterface  {
         return NetworkModule.getRetrofit().create(RetroServiceInterface::class.java)
@@ -328,6 +329,37 @@ class RetrofitService {
 
             override fun onFailure(call: Call<List<FindPw>>, t: Throwable) {
                 findPwView.onFindPwFailure()
+            }
+
+        })
+    }
+
+    fun getToken(data: String, view: GetTokenView) {
+        getTokenView = view
+        val reData = "Bearer $data"
+
+        callRetro().getToken(reData).enqueue(object: Callback<List<GetToken>> {
+            override fun onResponse(
+                call: Call<List<GetToken>>,
+                response: Response<List<GetToken>>
+            ) {
+                if (response.isSuccessful) {
+
+                    val resp = response.body()!![0] as GetTokenSuccess
+                    if (resp.code == "R-J001") {
+                        getTokenView.onGetTokenSuccess(resp)
+                    }
+                    else {
+                        getTokenView.onGetTokenFailure()
+                    }
+                }
+                else {
+                    getTokenView.onGetTokenFailure()
+                }
+            }
+
+            override fun onFailure(call: Call<List<GetToken>>, t: Throwable) {
+                getTokenView.onGetTokenFailure()
             }
 
         })

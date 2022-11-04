@@ -42,13 +42,18 @@ class ForgetPw2Fragment: Fragment(), FindPwView {
             val pwConfirm = binding.tieForgetPw2PwConfirm.text.toString()
 
             val result = checkValid(pw, pwConfirm)
-            if (result == 1) {
+            if (result == 0) {
+                binding.lavForgetPw2Loading.visibility = View.GONE
+                binding.tvForgetPw2Error.text = "비밀번호가 일치하지 않아요."
+            }
+            else if (result == 1) {
                 val data = NormLoginFragmentManager.data
                 val reqData =
                     FindPwData(data.key!!, data.name!!, pw, pwConfirm, data.phone!!, data.id!!)
                 RetrofitService().findPw(reqData, this)
             }
             else {
+                binding.lavForgetPw2Loading.visibility = View.GONE
                 binding.tvForgetPw2Error.text = "비밀번호는 10~20자의 영문 대/소문자, 숫자, 특수문자(`~!@#\$%^&*())를 조합하여 설정해 주세요."
             }
 
@@ -58,7 +63,6 @@ class ForgetPw2Fragment: Fragment(), FindPwView {
 
     fun checkValid(pw: String, pwConfirm: String):Int {
         if (pw != pwConfirm) {
-            binding.tvForgetPw2Error.text = "비밀번호가 일치하지 않아요."
             return 0
         }
         val pwPattern = "^(?=.*[`~!@#$%^&*()])(?=.*[A-Za-z])(?=.*[0-9])[[`~!@#$%^&*()]A-Za-z[0-9]]{10,20}$"

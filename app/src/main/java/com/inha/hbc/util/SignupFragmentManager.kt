@@ -47,6 +47,8 @@ object SignupFragmentManager {
         fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         signupData = SignupData()
         signupCurrentPage = 0
+
+        signupArr.clear()
     }
 
 

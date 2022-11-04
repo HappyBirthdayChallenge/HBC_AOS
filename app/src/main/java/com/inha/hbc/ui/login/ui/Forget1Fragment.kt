@@ -99,6 +99,7 @@ class Forget1Fragment: Fragment(), IsMeView, SendCodeView {
     }
 
     override fun onMeFailure() {
+        binding.tvForget1Error.text = "일치하는 회원이 없어요."
     }
 
     override fun onSendCodeSuccess() {

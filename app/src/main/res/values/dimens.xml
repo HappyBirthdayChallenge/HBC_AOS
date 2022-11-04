@@ -2,7 +2,7 @@
 <resources>
     <dimen name="login_margin">20dp</dimen>
     <dimen name="login_subtitle_margin">132dp</dimen>
-    <dimen name="login_subtitle_to_textfield">71dp</dimen>
+    <dimen name="login_subtitle_to_textfield">30dp</dimen>
     <dimen name="login_textfield_margin">35dp</dimen>
     <dimen name="login_subtitle_to_description">26dp</dimen>
     <dimen name="login_textfield_to_error">26dp</dimen>

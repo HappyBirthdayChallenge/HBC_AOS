@@ -79,6 +79,9 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
                     val data = CheckCodeData(code.toInt(), phone, "SIGNUP")
                     RetrofitService().checkCode(data, this)
                 }
+                else {
+                    binding.tvSignup4Error.text = "인증 코드를 잘못 입력했어요"
+                }
             }
         }
 
@@ -167,7 +170,7 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
 
     override fun onCheckCodeResponseFailure(respData: CodeSuccess) {
         binding.lavSignup4Loading.visibility = View.GONE
-        binding.tvSignup4Error.text = respData.message
+        binding.tvSignup4Error.text = "인증 코드를 잘못 입력했어요"
     }
 
     override fun onCheckCodeResponseFailure(respData: CodeFailure) {
