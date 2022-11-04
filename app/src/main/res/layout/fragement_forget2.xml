@@ -78,7 +78,8 @@
             android:nextFocusDown="@id/tv_forget2_next"
             android:textSize="20sp"
             android:inputType="number"
-            android:background="@color/transparent">
+            android:background="@color/transparent"
+            android:saveEnabled="false">
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
     <TextView

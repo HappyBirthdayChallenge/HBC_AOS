@@ -74,7 +74,10 @@ object NormLoginFragmentManager {
         activity.hideKeyboard()
         fragmentManager.beginTransaction().show(baseLoginFragment).commit()
         fragmentManager.beginTransaction().replace(frameId, baseLoginFragment).commit()
-        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        for (i in 0..forgetArr.size- 1) {
+            forgetArr[i].onDestroy()
+        }
+//        fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
 
         data = SignupData()
         currentPage = 0

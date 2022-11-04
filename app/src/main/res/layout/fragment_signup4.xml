@@ -64,7 +64,8 @@
             android:textSize="20sp"
             android:inputType="phone"
             android:maxLength="13"
-            android:background="@color/transparent">
+            android:background="@color/transparent"
+            android:saveEnabled="false">
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
 

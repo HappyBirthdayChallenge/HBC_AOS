@@ -76,7 +76,8 @@
             android:nextFocusDown="@id/tv_signup1_next"
             android:textSize="20sp"
             android:inputType="text"
-            android:background="@color/transparent">
+            android:background="@color/transparent"
+            android:saveEnabled="false">
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
 
