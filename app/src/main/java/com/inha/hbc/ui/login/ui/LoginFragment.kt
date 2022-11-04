@@ -104,7 +104,6 @@ class LoginFragment: Fragment(), KakaoLoginView {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     fun decodeJwt(token: Data) {
 
         var gson = Gson()
@@ -132,7 +131,6 @@ class LoginFragment: Fragment(), KakaoLoginView {
         return true
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onKakaoLoginSuccess(data: Data) {
         decodeJwt(data)
         if (isBirthAvailable(GlobalApplication.prefs.getAccessJwt())) {
@@ -142,7 +140,8 @@ class LoginFragment: Fragment(), KakaoLoginView {
         }
         else {
             binding.lavLoginLoading.visibility = View.GONE
-            findNavController().navigate(R.id.action_login_main_to_login_kakao_birth)
+
+            parentFragmentManager.beginTransaction().replace(NormLoginFragmentManager.frameId, KakaoBirthFragment()).commit()
         }
     }
 

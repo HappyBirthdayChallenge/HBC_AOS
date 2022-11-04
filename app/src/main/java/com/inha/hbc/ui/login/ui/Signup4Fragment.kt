@@ -96,7 +96,7 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
                 this.cancel()
                 step = false
 
-                requireActivity().runOnUiThread {
+                SignupFragmentManager.activity.runOnUiThread {
                     binding.tvSignup4Description.visibility = View.GONE
                     binding.tilSignup4PhoneAuth.visibility = View.GONE
                     binding.tvSignup4PhoneTime.visibility = View.GONE

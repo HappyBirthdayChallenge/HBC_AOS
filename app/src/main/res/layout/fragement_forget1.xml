@@ -37,7 +37,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/til_forget1_name"
-        android:text="기존의 이름과\n휴대폰 번호를 입력해주세요"
+        android:text="이름과\n휴대폰 번호를 입력해주세요"
         android:textSize="20sp"
         android:textAlignment="center"
         android:textStyle="bold"

@@ -36,7 +36,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:text="비밀번호가 재설정 되었어요"
+        android:text="비밀번호가 변경되었어요.\n다시 로그인 해주세요"
+        android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginTop="@dimen/login_subtitle_margin">

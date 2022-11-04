@@ -1,10 +1,12 @@
 package com.inha.hbc.ui.login.ui
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -13,10 +15,12 @@ import com.inha.hbc.data.remote.req.CheckBirthData
 import com.inha.hbc.databinding.FragmentKakaoBirthBinding
 import com.inha.hbc.ui.login.view.CheckBirthView
 import com.inha.hbc.ui.main.MainActivity
+import com.inha.hbc.util.NormLoginFragmentManager
 import com.inha.hbc.util.RetrofitService
 import java.util.Calendar
 
 class KakaoBirthFragment: Fragment(), CheckBirthView {
+    lateinit var callback: OnBackPressedCallback
     lateinit var binding: FragmentKakaoBirthBinding
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,7 +38,7 @@ class KakaoBirthFragment: Fragment(), CheckBirthView {
 
     fun initListener() {
         binding.ivKakaoBirthBack.setOnClickListener {
-            findNavController().popBackStack()
+            parentFragmentManager.beginTransaction().replace(NormLoginFragmentManager.frameId, LoginFragment()).commit()
         }
 
         binding.npKakaoBirthYear.apply {
@@ -83,6 +87,23 @@ class KakaoBirthFragment: Fragment(), CheckBirthView {
     }
 
     override fun onBirthFailure() {
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                parentFragmentManager.beginTransaction().replace(NormLoginFragmentManager.frameId, LoginFragment()).commit()
+            }
+
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 
 }
