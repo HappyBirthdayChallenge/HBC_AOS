@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.inha.hbc.data.local.SignupData
 import com.inha.hbc.data.remote.resp.CheckIdFailure
 import com.inha.hbc.data.remote.resp.CheckIdSuccess
 import com.inha.hbc.databinding.FragmentForgetPw1Binding
 import com.inha.hbc.ui.login.view.CheckIdView
+import com.inha.hbc.util.NormLoginFragmentManager
 import com.inha.hbc.util.RetrofitService
 import java.util.regex.Pattern
 
@@ -34,7 +34,7 @@ class ForgetPw1Fragment: Fragment(), CheckIdView {
 
     fun initListener() {
         binding.ivForgetPw1Back.setOnClickListener {
-            findNavController().popBackStack()
+            NormLoginFragmentManager.forgetBackPressed()
         }
         binding.tvForgetPw1Next.setOnClickListener {
             id = binding.tieForgetPw1Id.text.toString()
@@ -60,11 +60,9 @@ class ForgetPw1Fragment: Fragment(), CheckIdView {
     }
 
     override fun onResponseFailure(resp: CheckIdSuccess) {
-        var data = SignupData()
-        data.id = id
-        val action = ForgetPw1FragmentDirections.actionLoginForgetPw1ToLoginForget1(data)
+        NormLoginFragmentManager.data.id = id
         binding.lavForgetPw1Loading.visibility = View.GONE
-        findNavController().navigate(action)
+        NormLoginFragmentManager.transaction(1, 2)
     }
 
     override fun onResponseFailure(resp: CheckIdFailure) {
@@ -76,5 +74,4 @@ class ForgetPw1Fragment: Fragment(), CheckIdView {
         binding.lavForgetPw1Loading.visibility = View.GONE
         binding.tvForgetPw1Error.text = message
     }
-
 }

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -25,12 +26,13 @@ import com.inha.hbc.databinding.FragmentNormalLoginBinding
 import com.inha.hbc.ui.login.view.NormLoginView
 import com.inha.hbc.ui.main.MainActivity
 import com.inha.hbc.util.GlobalApplication
+import com.inha.hbc.util.NormLoginFragmentManager
 import com.inha.hbc.util.RetrofitService
 import java.util.regex.Pattern
 
 class NormalLoginFragment(): Fragment(), NormLoginView {
+    lateinit var callback: OnBackPressedCallback
     private lateinit var binding: FragmentNormalLoginBinding
-    private lateinit var parentContext: Context
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -41,10 +43,6 @@ class NormalLoginFragment(): Fragment(), NormLoginView {
         return binding.root
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        parentContext = context
-    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -54,7 +52,7 @@ class NormalLoginFragment(): Fragment(), NormLoginView {
     fun initListener() {
 
         binding.ivNormalLoginBack.setOnClickListener {
-            findNavController().popBackStack()
+            NormLoginFragmentManager.baseBackPressed()
         }
 
         binding.tvNormalLoginSignin.setOnClickListener {
@@ -84,20 +82,17 @@ class NormalLoginFragment(): Fragment(), NormLoginView {
         }
 
         binding.tvNormalLoginForgetId.setOnClickListener {
-            var data = SignupData()
-            val action = NormalLoginFragmentDirections.actionLoginNormLoginToLoginForget1(data)
-
             binding.tvNormalLoginForgetBackground.visibility = View.GONE
             binding.clNormalLoginForgetDialog.visibility = View.GONE
 
-            findNavController().navigate(action)
+            NormLoginFragmentManager.idStart()
         }
 
         binding.tvNormalLoginForgetPw.setOnClickListener {
             binding.tvNormalLoginForgetBackground.visibility = View.GONE
             binding.clNormalLoginForgetDialog.visibility = View.GONE
 
-            findNavController().navigate(R.id.action_login_norm_login_to_login_forget_pw1)
+            NormLoginFragmentManager.pwstart()
         }
     }
 
@@ -117,7 +112,7 @@ class NormalLoginFragment(): Fragment(), NormLoginView {
 
     override fun onNormLoginSuccess(data: NormSuccess) {
 
-        val intent = Intent(parentContext, MainActivity::class.java)
+        val intent = Intent(requireActivity(), MainActivity::class.java)
         startActivity(intent)
         requireActivity().finish()
     }
@@ -140,5 +135,23 @@ class NormalLoginFragment(): Fragment(), NormLoginView {
 
     override fun onNormLoginFailure(message: String) {
         binding.tvNormalLoginError.text = message
+    }
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                NormLoginFragmentManager.forgetBackPressed()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
+
     }
 }

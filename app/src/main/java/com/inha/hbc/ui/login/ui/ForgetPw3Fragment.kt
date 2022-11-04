@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.inha.hbc.R
 import com.inha.hbc.databinding.FragmentForgetPw3Binding
+import com.inha.hbc.util.NormLoginFragmentManager
 
 class ForgetPw3Fragment: Fragment() {
     lateinit var binding: FragmentForgetPw3Binding
@@ -28,10 +29,10 @@ class ForgetPw3Fragment: Fragment() {
 
     fun initListener() {
         binding.ivForgetPw3Back.setOnClickListener {
-            findNavController().popBackStack()
+            NormLoginFragmentManager.forgetBackPressed()
         }
         binding.tvForgetPw3Next.setOnClickListener {
-            findNavController().navigate(R.id.action_login_forget_pw3_to_login_norm_login)
+            NormLoginFragmentManager.end()
         }
     }
 }

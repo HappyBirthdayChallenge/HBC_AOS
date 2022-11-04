@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.inha.hbc.R
 import com.inha.hbc.databinding.FragmentForgetIdBinding
+import com.inha.hbc.util.NormLoginFragmentManager
 
 class ForgetIdFragment: Fragment() {
     lateinit var binding: FragmentForgetIdBinding
@@ -26,20 +27,22 @@ class ForgetIdFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initListener()
-        initView()
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        initView()
+    }
     fun initView() {
-        val arg : ForgetIdFragmentArgs by navArgs()
-        binding.tvForgetIdId.text = arg.forgetData.id
+        binding.tvForgetIdId.text = NormLoginFragmentManager.data.id
     }
 
     fun initListener() {
         binding.ivForgetIdBack.setOnClickListener {
-            findNavController().popBackStack()
+            NormLoginFragmentManager.forgetBackPressed()
         }
         binding.tvForgetIdNext.setOnClickListener {
-            findNavController().navigate(R.id.action_login_forget_id_to_login_norm_login)
+            NormLoginFragmentManager.end()
         }
     }
 }

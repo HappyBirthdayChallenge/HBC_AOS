@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import com.inha.hbc.databinding.ActivityLoginBinding
+import com.inha.hbc.util.NormLoginFragmentManager
 import com.inha.hbc.util.SignupFragmentManager
 
 
@@ -19,6 +20,7 @@ class LoginActivity: AppCompatActivity() {
 
 
         SignupFragmentManager.setManager(supportFragmentManager, binding.fcLogin.id, this)
+        NormLoginFragmentManager.setManager(supportFragmentManager, binding.fcLogin.id, this)
 
         supportFragmentManager.beginTransaction().add(binding.fcLogin.id, LoginFragment()).commit()
     }

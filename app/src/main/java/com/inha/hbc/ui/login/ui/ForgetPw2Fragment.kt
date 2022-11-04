@@ -11,6 +11,7 @@ import com.inha.hbc.R
 import com.inha.hbc.data.remote.req.FindPwData
 import com.inha.hbc.databinding.FragmentForgetPw2Binding
 import com.inha.hbc.ui.login.view.FindPwView
+import com.inha.hbc.util.NormLoginFragmentManager
 import com.inha.hbc.util.RetrofitService
 
 class ForgetPw2Fragment: Fragment(), FindPwView {
@@ -32,7 +33,7 @@ class ForgetPw2Fragment: Fragment(), FindPwView {
 
     fun initListener() {
         binding.ivForgetPw2Back.setOnClickListener {
-            findNavController().popBackStack()
+            NormLoginFragmentManager.forgetBackPressed()
         }
         binding.tvForgetPw2Next.setOnClickListener {
             binding.lavForgetPw2Loading.visibility = View.VISIBLE
@@ -40,8 +41,7 @@ class ForgetPw2Fragment: Fragment(), FindPwView {
             val pwConfirm = binding.tieForgetPw2PwConfirm.text.toString()
 
             if (pw == pwConfirm) {
-                val arg: ForgetPw2FragmentArgs by navArgs()
-                val data = arg.forgetData
+                val data = NormLoginFragmentManager.data
                 val reqData = FindPwData(data.key!!, data.name!!, pw, pwConfirm, data.phone!!, data.id!!)
                 RetrofitService().findPw(reqData, this)
             }
@@ -51,7 +51,7 @@ class ForgetPw2Fragment: Fragment(), FindPwView {
     override fun onFindPwSuccess() {
         binding.lavForgetPw2Loading.visibility = View.GONE
 
-        findNavController().navigate(R.id.action_login_forget_pw2_to_login_forget_pw3)
+        NormLoginFragmentManager.transaction(4, 5)
 
     }
 

@@ -1,5 +1,6 @@
 package com.inha.hbc.ui.login.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.inha.hbc.databinding.FragementForget2Binding
 import com.inha.hbc.ui.login.view.CheckCodeView
 import com.inha.hbc.ui.login.view.FindIdView
 import com.inha.hbc.ui.login.view.SendCodeView
+import com.inha.hbc.util.NormLoginFragmentManager
 import com.inha.hbc.util.RetrofitService
 import java.util.*
 import kotlin.concurrent.timer
@@ -39,16 +41,21 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val args : Forget2FragmentArgs by navArgs()
-        data = args.forgetData
+        data = NormLoginFragmentManager.data
 
-        startTimer()
         initListener()
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden) {
+            startTimer()
+        }
     }
 
     fun initListener() {
         binding.ivForget2Back.setOnClickListener {
-            findNavController().popBackStack()
+            NormLoginFragmentManager.forgetBackPressed()
         }
         binding.tvForget2Next.setOnClickListener {
             binding.lavForget2Loading.visibility = View.VISIBLE
@@ -80,6 +87,7 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
         }
     }
 
+
     fun startTimer() {
         timer = timer(period = 1000) {
             time++
@@ -87,7 +95,7 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
             if (time == 180) {
                 this.cancel()
 
-                requireActivity().runOnUiThread {
+                NormLoginFragmentManager.activity.runOnUiThread {
 
                     binding.tieForget2PhoneAuth.isEnabled = false
                     binding.tvForget2Next.isEnabled = false
@@ -110,16 +118,15 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
     }
     override fun onCheckCodeResponseSuccess(respData: CodeSuccess) {
 
-        data.key = respData.data.key
+        NormLoginFragmentManager.data.key = respData.data.key
         if (data.id.isNullOrEmpty()) {
             val reqData = FindIdData(data.key!!, data.name!!, data.phone!!)
             RetrofitService().findId(reqData, this)
         }
         else {
-            val action = Forget2FragmentDirections.actionLoginForget2ToLoginForgetPw2(data)
             binding.lavForget2Loading.visibility = View.GONE
 
-            findNavController().navigate(action)
+            NormLoginFragmentManager.transaction(3, 4)
         }
     }
 
@@ -139,10 +146,9 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
     }
 
     override fun onFindIdSuccess(respData: FindIdSuccess) {
-        data.id = respData.data!!.username
-        val action = Forget2FragmentDirections.actionLoginForget2ToLoginForgetId(data)
+        NormLoginFragmentManager.data.id = respData.data!!.username
         binding.lavForget2Loading.visibility = View.GONE
-        findNavController().navigate(action)
+        NormLoginFragmentManager.transaction(2, 3)
     }
 
     override fun onFindIdFailure() {

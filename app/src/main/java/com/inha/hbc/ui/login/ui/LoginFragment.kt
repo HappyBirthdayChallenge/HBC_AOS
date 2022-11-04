@@ -19,6 +19,7 @@ import com.inha.hbc.data.remote.resp.Data
 import com.inha.hbc.databinding.FragmentLoginBinding
 import com.inha.hbc.ui.login.view.KakaoLoginView
 import com.inha.hbc.ui.main.MainActivity
+import com.inha.hbc.util.NormLoginFragmentManager
 import com.inha.hbc.util.GlobalApplication
 import com.inha.hbc.util.SignupFragmentManager
 import com.inha.hbc.util.RetrofitService
@@ -50,7 +51,7 @@ class LoginFragment: Fragment(), KakaoLoginView {
         }
 
         binding.tvLoginNormalLogin.setOnClickListener {
-            findNavController().navigate(R.id.action_login_main_to_login_norm_login)
+            NormLoginFragmentManager.normloginStart()
         }
 
         binding.tvLoginSignup.setOnClickListener {

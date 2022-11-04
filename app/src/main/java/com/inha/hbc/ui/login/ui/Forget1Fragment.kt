@@ -1,28 +1,30 @@
 package com.inha.hbc.ui.login.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import com.inha.hbc.R
 import com.inha.hbc.data.local.SignupData
 import com.inha.hbc.data.remote.req.IsMeData
 import com.inha.hbc.databinding.FragementForget1Binding
 import com.inha.hbc.ui.login.view.IsMeView
 import com.inha.hbc.ui.login.view.SendCodeView
+import com.inha.hbc.util.NormLoginFragmentManager
 import com.inha.hbc.util.RetrofitService
 import java.util.regex.Pattern
 
 class Forget1Fragment: Fragment(), IsMeView, SendCodeView {
+    lateinit var callback: OnBackPressedCallback
     lateinit var binding: FragementForget1Binding
+    var isId = true
     var name = ""
     var phone = ""
 
-    lateinit var data: SignupData
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,15 +36,14 @@ class Forget1Fragment: Fragment(), IsMeView, SendCodeView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val args: Forget1FragmentArgs by navArgs()
-        data = args.forgetData
 
+        isId = NormLoginFragmentManager.isId
         initListener()
     }
 
     fun initListener() {
         binding.ivForget1Back.setOnClickListener {
-            findNavController().popBackStack()
+            NormLoginFragmentManager.forgetBackPressed()
         }
 
         binding.tieForget1PwPhone.addTextChangedListener( PhoneNumberFormattingTextWatcher() )
@@ -89,7 +90,7 @@ class Forget1Fragment: Fragment(), IsMeView, SendCodeView {
     }
 
     override fun onMeSuccess() {
-        if (data.id.isNullOrEmpty()) {
+        if (NormLoginFragmentManager.data.id.isNullOrEmpty()) {
             RetrofitService().reqCode(phone, this, "FIND_ID")
         }
         else {
@@ -101,14 +102,36 @@ class Forget1Fragment: Fragment(), IsMeView, SendCodeView {
     }
 
     override fun onSendCodeSuccess() {
-        data.name = name
-        data.phone = phone
+        NormLoginFragmentManager.data.name = name
+        NormLoginFragmentManager.data.phone = phone
 
-        val action = Forget1FragmentDirections.actionLoginForget1ToLoginForget2(data)
-
-        findNavController().navigate(action)
+        if (isId) {
+            NormLoginFragmentManager.transaction(1, 2)
+        }
+        else {
+            NormLoginFragmentManager.transaction(2, 3)
+        }
     }
 
     override fun onSendCodeFailure() {
     }
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                NormLoginFragmentManager.forgetBackPressed()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
+
+    }
+
 }
