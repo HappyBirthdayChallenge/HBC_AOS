@@ -16,11 +16,11 @@ import com.google.gson.Gson
 import com.inha.hbc.R
 import com.inha.hbc.data.local.Jwt
 import com.inha.hbc.data.remote.resp.Data
-import com.inha.hbc.data.remote.resp.NormSignin
 import com.inha.hbc.databinding.FragmentLoginBinding
 import com.inha.hbc.ui.login.view.KakaoLoginView
 import com.inha.hbc.ui.main.MainActivity
 import com.inha.hbc.util.GlobalApplication
+import com.inha.hbc.util.SignupFragmentManager
 import com.inha.hbc.util.RetrofitService
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
@@ -54,7 +54,7 @@ class LoginFragment: Fragment(), KakaoLoginView {
         }
 
         binding.tvLoginSignup.setOnClickListener {
-            findNavController().navigate(R.id.action_login_main_to_login_signup1)
+            SignupFragmentManager.start()
         }
 
     }

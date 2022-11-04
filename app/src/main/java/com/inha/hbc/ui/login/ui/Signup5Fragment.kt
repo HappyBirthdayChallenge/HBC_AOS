@@ -5,12 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import com.inha.hbc.data.remote.req.CheckBirthData
 import com.inha.hbc.databinding.FragmentSignup5Binding
-import com.inha.hbc.ui.login.view.CheckBirthView
-import com.inha.hbc.util.RetrofitService
+import com.inha.hbc.util.SignupFragmentManager
 import java.util.Calendar
 
 class Signup5Fragment: Fragment() {
@@ -31,7 +27,7 @@ class Signup5Fragment: Fragment() {
 
     fun initListener() {
         binding.ivSignup5Back.setOnClickListener {
-            findNavController().popBackStack()
+            SignupFragmentManager.transaction(5, 4)
         }
 
         binding.npSignup5Year.apply {
@@ -59,14 +55,10 @@ class Signup5Fragment: Fragment() {
         }
 
         binding.tvSignup5Next.setOnClickListener {
-            val info = CheckBirthData(binding.npSignup5Day.value, binding.npSignup5Month.value, "SOLAR", binding.npSignup5Year.value )
-            val args : Signup5FragmentArgs by navArgs()
-            var data = args.userData
-            data.year = binding.npSignup5Year.value
-            data.month = binding.npSignup5Month.value
-            data.day = binding.npSignup5Day.value
-            val action = Signup5FragmentDirections.actionLoginSignup5ToLoginSignup6(data)
-            findNavController().navigate(action)
+            SignupFragmentManager.signupData.year = binding.npSignup5Year.value
+            SignupFragmentManager.signupData.month = binding.npSignup5Month.value
+            SignupFragmentManager.signupData.day = binding.npSignup5Day.value
+            SignupFragmentManager.transaction(5, 6)
 
         }
     }

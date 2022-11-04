@@ -1,21 +1,18 @@
 package com.inha.hbc.ui.login.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import com.inha.hbc.R
 import com.inha.hbc.data.remote.req.CheckCodeData
 import com.inha.hbc.data.remote.resp.*
 import com.inha.hbc.databinding.FragmentSignup4Binding
 import com.inha.hbc.ui.login.view.CheckCodeView
 import com.inha.hbc.ui.login.view.CheckPhoneView
 import com.inha.hbc.ui.login.view.SendCodeView
+import com.inha.hbc.util.SignupFragmentManager
 import com.inha.hbc.util.RetrofitService
 import java.util.*
 import kotlin.concurrent.timer
@@ -46,7 +43,7 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
         binding.tieSignup4Phone.addTextChangedListener(PhoneNumberFormattingTextWatcher())
 
         binding.ivSignup4Back.setOnClickListener {
-            findNavController().popBackStack()
+            SignupFragmentManager.transaction(4, 3)
         }
 
         binding.tvSignup4Next.setOnClickListener {
@@ -147,12 +144,9 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
         binding.tvSignup4Error.text = ""
 
         binding.lavSignup4Loading.visibility = View.GONE
-        val args: Signup4FragmentArgs by navArgs()
-        var data = args.userData
-        data.phone = phone
-        data.key = respData.data.key
-        val action = Signup4FragmentDirections.actionLoginSignup4ToLoginSignup5(data)
-        findNavController().navigate(action)
+        SignupFragmentManager.signupData.phone = phone
+        SignupFragmentManager.signupData.key = respData.data.key
+        SignupFragmentManager.transaction(4, 5)
     }
 
     override fun onCheckCodeResponseFailure(respData: CodeSuccess) {
@@ -193,4 +187,6 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
 
     override fun onSendCodeFailure() {
     }
+
+
 }

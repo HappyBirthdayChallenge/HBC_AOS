@@ -1,21 +1,22 @@
 package com.inha.hbc.ui.login.ui
 
+import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.inha.hbc.data.local.SignupData
 import com.inha.hbc.data.remote.resp.CheckIdFailure
 import com.inha.hbc.data.remote.resp.CheckIdSuccess
 import com.inha.hbc.databinding.FragmentSignup1Binding
 import com.inha.hbc.ui.login.view.CheckIdView
+import com.inha.hbc.util.SignupFragmentManager
 import com.inha.hbc.util.RetrofitService
 import java.util.regex.Pattern
 
 class Signup1Fragment: Fragment(), CheckIdView {
+    lateinit var callback: OnBackPressedCallback
     lateinit var binding: FragmentSignup1Binding
     var id = ""
     override fun onCreateView(
@@ -34,7 +35,7 @@ class Signup1Fragment: Fragment(), CheckIdView {
 
     fun initListener() {
         binding.ivSignup1Back.setOnClickListener {
-            findNavController().popBackStack()
+            SignupFragmentManager.end()
         }
         binding.tvSignup1Next.setOnClickListener {
             id = binding.tieSignup1Id.text.toString()
@@ -57,12 +58,10 @@ class Signup1Fragment: Fragment(), CheckIdView {
 
     override fun onResponseSuccess(resp: CheckIdSuccess) {
         id = binding.tieSignup1Id.text.toString()
-        var data = SignupData()
-        data.id = id
-        val action = Signup1FragmentDirections.actionLoginSignup1ToLoginSignup2(data)
+        SignupFragmentManager.signupData.id = id
 
         binding.lavSignup1Loading.visibility = View.GONE
-        findNavController().navigate(action)
+        SignupFragmentManager.transaction(1, 2)
     }
 
     override fun onResponseFailure(resp: CheckIdSuccess) {
@@ -77,4 +76,21 @@ class Signup1Fragment: Fragment(), CheckIdView {
         binding.lavSignup1Loading.visibility = View.GONE
         binding.tvSignup1Error.text = message
     }
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                SignupFragmentManager.backPressed()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
+    }
+
 }

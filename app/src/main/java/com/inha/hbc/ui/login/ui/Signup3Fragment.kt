@@ -5,9 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.inha.hbc.databinding.FragmentSignup3Binding
+import com.inha.hbc.util.SignupFragmentManager
 import java.util.regex.Pattern
 
 class Signup3Fragment: Fragment() {
@@ -28,17 +27,14 @@ class Signup3Fragment: Fragment() {
 
     fun initListener() {
         binding.ivSignup3Back.setOnClickListener {
-            findNavController().popBackStack()
+            SignupFragmentManager.transaction(3, 2)
         }
 
         binding.tvSignup3Next.setOnClickListener {
             val name = binding.tieSignup3Name.text.toString()
             if (checkValid(name)) {
-                val args: Signup3FragmentArgs by navArgs()
-                var data = args.userData
-                data.name = name
-                val action = Signup3FragmentDirections.actionLoginSignup3ToLoginSignup4(data)
-                findNavController().navigate(action)
+                SignupFragmentManager.signupData.name = name
+                SignupFragmentManager.transaction(3, 4)
             }
             else {
                 binding.tvSignup3Error.text = "상단의 이름 규칙을 확인 후 작성해주세요"
@@ -52,4 +48,6 @@ class Signup3Fragment: Fragment() {
         val matcher = pattern.matcher(name)
         return matcher.find()
     }
+
+
 }

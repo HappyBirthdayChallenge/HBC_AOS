@@ -18,6 +18,11 @@ android {
     namespace 'com.inha.hbc'
     compileSdk 33
 
+    signingConfigs {
+        release {
+        }
+    }
+
     defaultConfig {
         applicationId "com.inha.hbc"
         minSdk 23
@@ -31,12 +36,15 @@ android {
         buildConfigField "String", "KAKAO_API_KEY", "\"${properties['kakao_api_key']}\""
         manifestPlaceholders["KAKAO_API_KEY"] = properties['kakao_api_key']
 
+
         vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
         release {
             minifyEnabled false
+            debuggable false
+            signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }

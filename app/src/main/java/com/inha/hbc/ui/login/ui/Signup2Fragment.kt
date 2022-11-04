@@ -5,16 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.inha.hbc.databinding.FragmentSignup2Binding
-import com.inha.hbc.util.RetrofitService
+import com.inha.hbc.util.SignupFragmentManager
 import java.util.regex.Pattern
 
 class Signup2Fragment: Fragment() {
     lateinit var binding: FragmentSignup2Binding
-
-    val args: Signup2FragmentArgs by navArgs()
     var pw  = ""
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,17 +29,15 @@ class Signup2Fragment: Fragment() {
 
     fun initListener() {
         binding.ivSignup2Back.setOnClickListener {
-            findNavController().popBackStack()
+            SignupFragmentManager.transaction(2, 1)
         }
 
         binding.tvSignup2Next.setOnClickListener {
 
             val result = checkValid()
             if (result == 1) {
-                var data = args.userData
-                data.pw = pw
-                val action = Signup2FragmentDirections.actionLoginSignup2ToLoginSignup3(data)
-                findNavController().navigate(action)
+                SignupFragmentManager.signupData.pw = pw
+                SignupFragmentManager.transaction(2, 3)
             }
             else if (result == 2) {
                 binding.tvSignup2Error.text = "비밀번호 규칙이 일치하지 않습니다!"
@@ -64,4 +58,5 @@ class Signup2Fragment: Fragment() {
         return if (matcher.find()) 1
         else 2
     }
+
 }
