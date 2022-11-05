@@ -18,7 +18,7 @@ class MainActivity: AppCompatActivity() {
         setContentView(binding.root)
 
 
-        MainFragmentManager.init(supportFragmentManager, binding.fcMain.id)
+        MainFragmentManager.init(supportFragmentManager, binding.fcMain.id, this)
         MainFragmentManager.start()
 
     }

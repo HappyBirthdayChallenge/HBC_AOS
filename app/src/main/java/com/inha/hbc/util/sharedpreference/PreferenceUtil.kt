@@ -55,6 +55,14 @@ class PreferenceUtil(context: Context) {
         return prefs.getString(realRefreshJwtKey, "")
     }
 
+    fun delJwt() {
+        prefs.edit().remove(accessJwtKey)
+            .remove(realAccessJwtKey)
+            .remove(refreshJwtKey)
+            .remove(realRefreshJwtKey)
+            .commit()
+    }
+
 
 //    var jwt: String?
 //        get() = prefs.getString(accessJwtKey, "")

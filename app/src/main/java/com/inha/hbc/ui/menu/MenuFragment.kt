@@ -1,6 +1,7 @@
 package com.inha.hbc.ui.menu
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +9,12 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.inha.hbc.databinding.FragmentMenuBinding
 import com.inha.hbc.ui.adapter.MenuListRVAdapter
+import com.inha.hbc.ui.login.ui.LoginActivity
+import com.inha.hbc.util.fragmentmanager.MainFragmentManager
+import com.inha.hbc.util.sharedpreference.GlobalApplication
 
-class MenuFragment(val flid: Int): Fragment(), MenuListRVAdapter.onListener {
-    interface OnCloseDetection {
-        fun onCloseMenu()
-    }
-    lateinit var onclose: OnCloseDetection
+class MenuFragment(): Fragment(), MenuListRVAdapter.onListener {
+
     lateinit var binding: FragmentMenuBinding
     lateinit var rvAdapter: MenuListRVAdapter
     lateinit var mainContext: Context
@@ -43,22 +44,22 @@ class MenuFragment(val flid: Int): Fragment(), MenuListRVAdapter.onListener {
         super.onAttach(context)
         mainContext = context
     }
-    override fun onDestroyView() {
-        super.onDestroyView()
-        onclose.onCloseMenu()
-    }
 
     fun initListener() {
         binding.ivMenuClose.setOnClickListener {
-            parentFragmentManager.beginTransaction().remove(this).commit()
+            MainFragmentManager.menuClose(this)
+        }
+
+        binding.tvMenuSignout.setOnClickListener {
+            GlobalApplication.prefs.delJwt()
+            val intent = Intent(MainFragmentManager.baseActivity, LoginActivity::class.java)
+            startActivity(intent)
+            MainFragmentManager.baseActivity.finish()
         }
 
 
     }
 
-    fun setClose(data: OnCloseDetection) {
-        onclose = data
-    }
 
     override fun onClick(menu: String) {//recyclerview 클릭리스너
         var menuString =
@@ -73,18 +74,18 @@ class MenuFragment(val flid: Int): Fragment(), MenuListRVAdapter.onListener {
                     ""
                 }
             }
-        val downFragment: Fragment? =
-            when(menu) {
-                "친구목록" -> {
-                    FriendListFragment()
-                }
-                "알림함" -> {
-                    NotifyFragment()
-                }
-                else -> {
-                    null
-                }
-            }
-        parentFragmentManager.beginTransaction().addToBackStack(menuString).add(flid, downFragment!!).commit()
+//        val downFragment: Fragment? =
+//            when(menu) {
+//                "친구목록" -> {
+//                    FriendListFragment()
+//                }
+//                "알림함" -> {
+//                    NotifyFragment()
+//                }
+//                else -> {
+//                    null
+//                }
+//            }
+//        parentFragmentManager.beginTransaction().addToBackStack(menuString).add(flid, downFragment!!).commit()
         }
     }

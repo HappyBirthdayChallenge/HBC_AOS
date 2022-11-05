@@ -168,9 +168,9 @@ class LoginFragment: Fragment(), KakaoLoginView, GetTokenView {
     override fun onGetTokenSuccess(resp: GetTokenSuccess) {
         decodeJwt(resp.data!!)
         binding.lavLoginLoading.visibility = View.GONE
-//        val intent = Intent(requireActivity(), MainActivity::class.java)
-//        startActivity(intent)
-//        requireActivity().finish()
+        val intent = Intent(requireActivity(), MainActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
 
 
     }

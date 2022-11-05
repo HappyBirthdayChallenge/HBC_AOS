@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.inha.hbc.databinding.FragmentMainBinding
 import com.inha.hbc.ui.adapter.MainPageAdapter
+import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 
 class MainFragment: Fragment() {
     lateinit var binding : FragmentMainBinding
@@ -28,7 +29,17 @@ class MainFragment: Fragment() {
 
     fun initListener() {
         binding.ivMainProfileMenu.setOnClickListener {
+            MainFragmentManager.transToMenu()
+        }
 
+        binding.ivMessageMenu.setOnClickListener {
+        }
+
+        binding.tvMainTitle.setOnClickListener {
+        }
+
+        binding.fabMain.setOnClickListener {
+            MainFragmentManager.transToLetter()
         }
     }
 
