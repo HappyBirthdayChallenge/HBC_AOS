@@ -1,4 +1,4 @@
-package com.inha.hbc.util
+package com.inha.hbc.util.sharedpreference
 
 import android.content.Context
 import com.google.gson.Gson

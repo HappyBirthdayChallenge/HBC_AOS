@@ -1,7 +1,6 @@
-package com.inha.hbc.util
+package com.inha.hbc.util.network
 
-import android.util.Log
-import com.inha.hbc.data.remote.resp.Key
+import com.inha.hbc.util.sharedpreference.GlobalApplication
 import okhttp3.Interceptor
 import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody

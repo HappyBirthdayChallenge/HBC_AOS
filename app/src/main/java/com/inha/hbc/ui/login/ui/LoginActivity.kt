@@ -4,13 +4,9 @@ import android.content.Context
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
-import com.inha.hbc.data.remote.resp.GetTokenSuccess
 import com.inha.hbc.databinding.ActivityLoginBinding
-import com.inha.hbc.ui.login.view.GetTokenView
-import com.inha.hbc.util.GlobalApplication
-import com.inha.hbc.util.NormLoginFragmentManager
-import com.inha.hbc.util.RetrofitService
-import com.inha.hbc.util.SignupFragmentManager
+import com.inha.hbc.util.fragmentmanager.NormLoginFragmentManager
+import com.inha.hbc.util.fragmentmanager.SignupFragmentManager
 
 
 class LoginActivity: AppCompatActivity() {

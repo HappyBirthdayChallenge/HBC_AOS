@@ -5,14 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import com.inha.hbc.R
 import com.inha.hbc.data.remote.req.FindPwData
 import com.inha.hbc.databinding.FragmentForgetPw2Binding
 import com.inha.hbc.ui.login.view.FindPwView
-import com.inha.hbc.util.NormLoginFragmentManager
-import com.inha.hbc.util.RetrofitService
+import com.inha.hbc.util.fragmentmanager.NormLoginFragmentManager
+import com.inha.hbc.util.network.RetrofitService
 import java.util.regex.Pattern
 
 class ForgetPw2Fragment: Fragment(), FindPwView {

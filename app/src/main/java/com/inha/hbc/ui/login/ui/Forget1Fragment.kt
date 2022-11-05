@@ -8,14 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import com.inha.hbc.data.local.SignupData
 import com.inha.hbc.data.remote.req.IsMeData
 import com.inha.hbc.databinding.FragementForget1Binding
 import com.inha.hbc.ui.login.view.IsMeView
 import com.inha.hbc.ui.login.view.SendCodeView
-import com.inha.hbc.util.NormLoginFragmentManager
-import com.inha.hbc.util.RetrofitService
+import com.inha.hbc.util.fragmentmanager.NormLoginFragmentManager
+import com.inha.hbc.util.network.RetrofitService
 import java.util.regex.Pattern
 
 class Forget1Fragment: Fragment(), IsMeView, SendCodeView {

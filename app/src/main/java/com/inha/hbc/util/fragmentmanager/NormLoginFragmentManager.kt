@@ -1,4 +1,4 @@
-package com.inha.hbc.util
+package com.inha.hbc.util.fragmentmanager
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

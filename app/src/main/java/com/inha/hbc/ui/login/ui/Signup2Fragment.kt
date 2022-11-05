@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.inha.hbc.databinding.FragmentSignup2Binding
-import com.inha.hbc.util.SignupFragmentManager
+import com.inha.hbc.util.fragmentmanager.SignupFragmentManager
 import java.util.regex.Pattern
 
 class Signup2Fragment: Fragment() {

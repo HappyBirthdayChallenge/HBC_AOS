@@ -5,11 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import com.inha.hbc.R
 import com.inha.hbc.databinding.FragmentForgetIdBinding
-import com.inha.hbc.util.NormLoginFragmentManager
+import com.inha.hbc.util.fragmentmanager.NormLoginFragmentManager
 
 class ForgetIdFragment: Fragment() {
     lateinit var binding: FragmentForgetIdBinding

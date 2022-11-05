@@ -1,13 +1,10 @@
 package com.inha.hbc.ui.login.ui
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.inha.hbc.data.local.SignupData
 import com.inha.hbc.data.remote.req.CheckCodeData
 import com.inha.hbc.data.remote.req.FindIdData
@@ -18,8 +15,8 @@ import com.inha.hbc.databinding.FragementForget2Binding
 import com.inha.hbc.ui.login.view.CheckCodeView
 import com.inha.hbc.ui.login.view.FindIdView
 import com.inha.hbc.ui.login.view.SendCodeView
-import com.inha.hbc.util.NormLoginFragmentManager
-import com.inha.hbc.util.RetrofitService
+import com.inha.hbc.util.fragmentmanager.NormLoginFragmentManager
+import com.inha.hbc.util.network.RetrofitService
 import java.util.*
 import kotlin.concurrent.timer
 

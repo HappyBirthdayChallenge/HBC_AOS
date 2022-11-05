@@ -11,8 +11,8 @@ import com.inha.hbc.data.remote.resp.CheckIdFailure
 import com.inha.hbc.data.remote.resp.CheckIdSuccess
 import com.inha.hbc.databinding.FragmentSignup1Binding
 import com.inha.hbc.ui.login.view.CheckIdView
-import com.inha.hbc.util.SignupFragmentManager
-import com.inha.hbc.util.RetrofitService
+import com.inha.hbc.util.fragmentmanager.SignupFragmentManager
+import com.inha.hbc.util.network.RetrofitService
 import java.util.regex.Pattern
 
 class Signup1Fragment: Fragment(), CheckIdView {

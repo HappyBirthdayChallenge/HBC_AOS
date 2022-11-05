@@ -1,7 +1,6 @@
 package com.inha.hbc.ui.login.ui
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,9 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
 import com.inha.hbc.R
 import com.inha.hbc.data.local.Jwt
@@ -21,10 +18,10 @@ import com.inha.hbc.databinding.FragmentLoginBinding
 import com.inha.hbc.ui.login.view.GetTokenView
 import com.inha.hbc.ui.login.view.KakaoLoginView
 import com.inha.hbc.ui.main.MainActivity
-import com.inha.hbc.util.NormLoginFragmentManager
-import com.inha.hbc.util.GlobalApplication
-import com.inha.hbc.util.SignupFragmentManager
-import com.inha.hbc.util.RetrofitService
+import com.inha.hbc.util.fragmentmanager.NormLoginFragmentManager
+import com.inha.hbc.util.sharedpreference.GlobalApplication
+import com.inha.hbc.util.fragmentmanager.SignupFragmentManager
+import com.inha.hbc.util.network.RetrofitService
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 

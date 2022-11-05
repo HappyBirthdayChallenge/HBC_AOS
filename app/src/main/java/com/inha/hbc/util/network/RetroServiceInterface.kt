@@ -1,4 +1,4 @@
-package com.inha.hbc.util
+package com.inha.hbc.util.network
 
 import com.inha.hbc.data.remote.req.*
 import com.inha.hbc.data.remote.resp.*

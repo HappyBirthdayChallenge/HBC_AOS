@@ -1,4 +1,4 @@
-package com.inha.hbc.util
+package com.inha.hbc.util.sharedpreference
 
 import android.app.Application
 import com.inha.hbc.BuildConfig

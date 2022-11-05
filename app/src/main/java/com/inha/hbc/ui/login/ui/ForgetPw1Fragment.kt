@@ -5,13 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import com.inha.hbc.data.remote.resp.CheckIdFailure
 import com.inha.hbc.data.remote.resp.CheckIdSuccess
 import com.inha.hbc.databinding.FragmentForgetPw1Binding
 import com.inha.hbc.ui.login.view.CheckIdView
-import com.inha.hbc.util.NormLoginFragmentManager
-import com.inha.hbc.util.RetrofitService
+import com.inha.hbc.util.fragmentmanager.NormLoginFragmentManager
+import com.inha.hbc.util.network.RetrofitService
 import java.util.regex.Pattern
 
 class ForgetPw1Fragment: Fragment(), CheckIdView {

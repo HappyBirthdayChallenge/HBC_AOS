@@ -1,4 +1,4 @@
-package com.inha.hbc.util
+package com.inha.hbc.util.network
 
 import android.util.Log
 import com.google.gson.Gson
@@ -7,13 +7,9 @@ import com.google.gson.JsonParser
 import com.inha.hbc.data.remote.req.*
 import com.inha.hbc.data.remote.resp.*
 import com.inha.hbc.ui.login.view.*
-import okhttp3.ResponseBody
-import okhttp3.ResponseBody.Companion.toResponseBody
-import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.reflect.typeOf
 
 class RetrofitService {
     lateinit var normLoginView: NormLoginView
@@ -29,7 +25,7 @@ class RetrofitService {
     lateinit var findPwView: FindPwView
     lateinit var getTokenView: GetTokenView
 
-    fun callRetro(): RetroServiceInterface  {
+    fun callRetro(): RetroServiceInterface {
         return NetworkModule.getRetrofit().create(RetroServiceInterface::class.java)
     }
 

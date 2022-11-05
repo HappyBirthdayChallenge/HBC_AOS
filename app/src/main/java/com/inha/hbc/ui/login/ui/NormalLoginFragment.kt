@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.google.gson.Gson
-import com.inha.hbc.R
 import com.inha.hbc.data.local.Jwt
 import com.inha.hbc.data.remote.req.NormSigninInfo
 import com.inha.hbc.data.remote.resp.Data
@@ -18,9 +17,9 @@ import com.inha.hbc.data.remote.resp.NormSuccess
 import com.inha.hbc.databinding.FragmentNormalLoginBinding
 import com.inha.hbc.ui.login.view.NormLoginView
 import com.inha.hbc.ui.main.MainActivity
-import com.inha.hbc.util.GlobalApplication
-import com.inha.hbc.util.NormLoginFragmentManager
-import com.inha.hbc.util.RetrofitService
+import com.inha.hbc.util.sharedpreference.GlobalApplication
+import com.inha.hbc.util.fragmentmanager.NormLoginFragmentManager
+import com.inha.hbc.util.network.RetrofitService
 import java.util.regex.Pattern
 
 class NormalLoginFragment(): Fragment(), NormLoginView {

@@ -8,15 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
-import com.inha.hbc.data.remote.req.BirthDate
 import com.inha.hbc.data.remote.req.CheckBirthData
 import com.inha.hbc.databinding.FragmentKakaoBirthBinding
 import com.inha.hbc.ui.login.view.CheckBirthView
 import com.inha.hbc.ui.main.MainActivity
-import com.inha.hbc.util.NormLoginFragmentManager
-import com.inha.hbc.util.RetrofitService
+import com.inha.hbc.util.fragmentmanager.NormLoginFragmentManager
+import com.inha.hbc.util.network.RetrofitService
 import java.util.Calendar
 
 class KakaoBirthFragment: Fragment(), CheckBirthView {

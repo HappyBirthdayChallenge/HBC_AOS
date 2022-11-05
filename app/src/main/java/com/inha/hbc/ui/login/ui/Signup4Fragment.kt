@@ -12,8 +12,8 @@ import com.inha.hbc.databinding.FragmentSignup4Binding
 import com.inha.hbc.ui.login.view.CheckCodeView
 import com.inha.hbc.ui.login.view.CheckPhoneView
 import com.inha.hbc.ui.login.view.SendCodeView
-import com.inha.hbc.util.SignupFragmentManager
-import com.inha.hbc.util.RetrofitService
+import com.inha.hbc.util.fragmentmanager.SignupFragmentManager
+import com.inha.hbc.util.network.RetrofitService
 import java.util.*
 import kotlin.concurrent.timer
 

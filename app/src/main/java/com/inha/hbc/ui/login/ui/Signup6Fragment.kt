@@ -9,8 +9,8 @@ import com.inha.hbc.data.remote.req.BirthDate
 import com.inha.hbc.data.remote.req.GetSignupData
 import com.inha.hbc.databinding.FragmentSignup6Binding
 import com.inha.hbc.ui.login.view.GetSignupView
-import com.inha.hbc.util.SignupFragmentManager
-import com.inha.hbc.util.RetrofitService
+import com.inha.hbc.util.fragmentmanager.SignupFragmentManager
+import com.inha.hbc.util.network.RetrofitService
 
 class Signup6Fragment: Fragment(), GetSignupView {
     lateinit var binding: FragmentSignup6Binding
@@ -49,7 +49,8 @@ class Signup6Fragment: Fragment(), GetSignupView {
         }
         
         binding.tvSignup6Start.setOnClickListener {
-            val birth = BirthDate(SignupFragmentManager.signupData.day!!,
+            val birth = BirthDate(
+                SignupFragmentManager.signupData.day!!,
                 SignupFragmentManager.signupData.month!!, "SOLAR",
                 SignupFragmentManager.signupData.year!!)
             val info = GetSignupData(birth,
