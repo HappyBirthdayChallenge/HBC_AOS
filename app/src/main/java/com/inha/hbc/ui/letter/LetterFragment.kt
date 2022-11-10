@@ -30,10 +30,7 @@ import java.net.URI
 import java.util.Date
 
 class LetterFragment: Fragment() {
-    interface OnListener {
-        fun onCloseLetter()
-    }
-    lateinit var onlistener: OnListener
+
     lateinit var backPressedCallback: OnBackPressedCallback
 
     lateinit var mainContext: Context
@@ -107,10 +104,6 @@ class LetterFragment: Fragment() {
 
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        onlistener.onCloseLetter()
-    }
 
     fun initListener() {
         binding.ivLetterClose.setOnClickListener {

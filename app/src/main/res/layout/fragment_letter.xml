@@ -20,73 +20,119 @@
         android:id="@+id/tv_letter_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ㅇㅇ의 파티룸"
+        android:text="편지쓰기"
         android:textSize="24sp"
         app:layout_constraintTop_toTopOf="@id/iv_letter_close"
         app:layout_constraintBottom_toBottomOf="@id/iv_letter_close"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintLeft_toRightOf="@id/iv_letter_close"
+        android:layout_marginLeft="24dp">
     </TextView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_letter"
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_letter_object"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintTop_toBottomOf="@id/iv_letter_close"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/cl_letter"
         android:layout_marginTop="20dp">
-    </androidx.recyclerview.widget.RecyclerView>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_letter_object"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </androidx.recyclerview.widget.RecyclerView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_letter_add"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/fab_letter_send"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="16dp"
-        android:src="@drawable/ic_add_component">
-    </com.google.android.material.floatingactionbutton.FloatingActionButton>
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/fab_letter_send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="30dp"
-        android:layout_marginRight="16dp"
-        style="?attr/extendedFloatingActionButtonStyle"
-        app:icon="@drawable/ic_send_letter"
-        android:text="send">
-    </com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton>
-<!--    <androidx.coordinatorlayout.widget.CoordinatorLayout-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content">-->
-<!--        <FrameLayout-->
-<!--            android:id="@+id/fl_letter"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">-->
-<!--            <androidx.recyclerview.widget.RecyclerView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content">-->
-<!--            </androidx.recyclerview.widget.RecyclerView>-->
-<!--        </FrameLayout>-->
-
-<!--    </androidx.coordinatorlayout.widget.CoordinatorLayout>-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
-    <TextView
-        android:id="@+id/tv_letter_add_background"
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_letter_anime"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/rv_letter_add_menu"
-        android:background="@color/transparent_gray"
-        android:visibility="gone">
-    </TextView>
+        app:layout_constraintTop_toBottomOf="@id/iv_letter_close"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/cl_letter"
+        android:layout_marginTop="20dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_letter_anime"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_letter_write"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/iv_letter_close"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/cl_letter"
+        android:layout_marginTop="20dp">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_letter_write_media"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/et_letter"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal">
+        </androidx.recyclerview.widget.RecyclerView>
+        <EditText
+            android:id="@+id/et_letter"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/rv_letter_write_media"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:background="@color/transparent">
+        </EditText>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_letter_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/fab_letter_send"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/ic_add_component">
+        </com.google.android.material.floatingactionbutton.FloatingActionButton>
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fab_letter_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="30dp"
+            android:layout_marginRight="16dp"
+            style="?attr/extendedFloatingActionButtonStyle"
+            app:icon="@drawable/ic_send_letter"
+            android:text="send">
+        </com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton>
+
+
+
+        <TextView
+            android:id="@+id/tv_letter_add_background"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/rv_letter_add_menu"
+            android:background="@color/transparent_gray"
+            android:visibility="gone">
+        </TextView>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_letter_add_menu"
             android:layout_width="match_parent"
@@ -98,4 +144,46 @@
             android:orientation="vertical"
             tools:listitem="@layout/item_letter_menu">
         </androidx.recyclerview.widget.RecyclerView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_letter"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="장식품"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="14sp"
+            android:layout_marginLeft="50dp">
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="효과"
+            android:textSize="14sp">
+        </TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="편지"
+            android:textSize="14sp"
+            android:layout_marginRight="50dp">
+        </TextView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

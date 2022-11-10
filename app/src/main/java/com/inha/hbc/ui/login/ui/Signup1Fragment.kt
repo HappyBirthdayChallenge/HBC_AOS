@@ -2,6 +2,7 @@ package com.inha.hbc.ui.login.ui
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import com.inha.hbc.databinding.FragmentSignup1Binding
 import com.inha.hbc.ui.login.view.CheckIdView
 import com.inha.hbc.util.fragmentmanager.SignupFragmentManager
 import com.inha.hbc.util.network.RetrofitService
+import java.text.BreakIterator
 import java.util.regex.Pattern
 
 class Signup1Fragment: Fragment(), CheckIdView {
@@ -39,6 +41,7 @@ class Signup1Fragment: Fragment(), CheckIdView {
         }
         binding.tvSignup1Next.setOnClickListener {
             id = binding.tieSignup1Id.text.toString()
+
             if (checkValid()) {
                 binding.lavSignup1Loading.visibility = View.VISIBLE
                 RetrofitService().checkId(id, this)
