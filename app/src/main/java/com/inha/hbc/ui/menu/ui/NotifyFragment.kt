@@ -1,4 +1,4 @@
-package com.inha.hbc.ui.menu
+package com.inha.hbc.ui.menu.ui
 
 import androidx.fragment.app.Fragment
 

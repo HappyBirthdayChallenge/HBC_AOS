@@ -19,7 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.HBC"
-        tools:targetApi="33" >
+        tools:targetApi="33">
 
         <provider
             android:authorities="com.inha.hbc.fileprovider"

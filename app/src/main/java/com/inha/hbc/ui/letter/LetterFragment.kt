@@ -4,39 +4,38 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import android.provider.MediaStore.Files
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.result.ActivityResultRegistry
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.flexbox.AlignItems
+import com.google.android.flexbox.FlexboxLayout
+import com.google.android.flexbox.FlexboxLayoutManager
+import com.google.android.flexbox.JustifyContent
 import com.inha.hbc.databinding.FragmentLetterBinding
 import com.inha.hbc.ui.adapter.LetterMenuRVAdapter
-import com.inha.hbc.ui.adapter.LetterTypeRVAdapter
+import com.inha.hbc.ui.adapter.LetterObjectRVAdapter
 import com.inha.hbc.ui.dialog.LetterDialog
+import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import java.io.File
-import java.net.URI
 import java.util.Date
 
 class LetterFragment: Fragment() {
 
     lateinit var backPressedCallback: OnBackPressedCallback
+    var step = 1
 
     lateinit var mainContext: Context
     lateinit var binding: FragmentLetterBinding
 
-    lateinit var typeRVAdapter: LetterTypeRVAdapter
     lateinit var menuRVAdapter: LetterMenuRVAdapter
 
     lateinit var viewData: ArrayList<Int>
@@ -74,25 +73,7 @@ class LetterFragment: Fragment() {
         return binding.root
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        mainContext = context
-        backPressedCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                if (binding.tvLetterAddBackground.visibility == View.VISIBLE) {
-                    binding.tvLetterAddBackground.visibility = View.GONE
-                    binding.rvLetterAddMenu.visibility = View.GONE
 
-                    binding.fabLetterSend.show()
-                    binding.fabLetterAdd.show()
-                }
-                else {
-                    parentFragmentManager.beginTransaction().remove(this@LetterFragment).commit()
-                }
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(this, backPressedCallback)
-    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -104,10 +85,16 @@ class LetterFragment: Fragment() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        MainFragmentManager.viewWidth = binding.clLetterTab.rootView.width
+    }
+
 
     fun initListener() {
         binding.ivLetterClose.setOnClickListener {
-            parentFragmentManager.beginTransaction().remove(this).commit()
+            MainFragmentManager.letterClose(this@LetterFragment)
         }
 
         binding.fabLetterAdd.setOnClickListener {
@@ -140,11 +127,8 @@ class LetterFragment: Fragment() {
             add("카메라")
             add("앨범")
             add("녹음")
-            add("애니메이션")
-            add("장식")
         }
 
-        typeRVAdapter = LetterTypeRVAdapter(viewData)
         menuRVAdapter = LetterMenuRVAdapter(menuData)
         menuRVAdapter.onlistener = object : LetterMenuRVAdapter.OnListener {
             override fun onClick(pos: Int) {
@@ -161,27 +145,31 @@ class LetterFragment: Fragment() {
                     "앨범" -> {
                         openGallery()
                     }
-                    "녹음" -> {
-                        openRecord()
-                    }
-                    "애니메이션" -> {
-                        openAni()
-                    }
                     else -> {
-
+                        openRecord()
                     }
                 }
             }
         }
 
 
-        binding.rvLetter.adapter = typeRVAdapter
         binding.rvLetterAddMenu.adapter = menuRVAdapter
+
+        val objectAdapter = LetterObjectRVAdapter()
+        objectAdapter.clistener = object: LetterObjectRVAdapter.Clistener {
+            override fun onClick(title: String) {
+                MainFragmentManager.objectOpen(title)
+            }
+
+        }
+        binding.rvLetterObject.adapter = objectAdapter
+        val objectLayoutManager = FlexboxLayoutManager(context)
+        objectLayoutManager.alignItems = AlignItems.FLEX_START
+        binding.rvLetterObject.layoutManager = objectLayoutManager
+
+
     }
 
-    fun openAni() {
-        LetterDialog().show(parentFragmentManager,"aniDialog")
-    }
 
     fun openRecord() {
 
@@ -241,14 +229,37 @@ class LetterFragment: Fragment() {
     }
 
 
-//    fun setBottomSheet() {
-//        val bottomMenuSheet = BottomMenuSheet()
-//        bottomMenuSheet.show(parentFragmentManager, bottomMenuSheet.tag)
-//
-//        val behavior = (bottomMenuSheet as BottomSheetDialog).behavior
-//        behavior.saveFlags = BottomSheetBehavior.SAVE_ALL
-//        behavior.state = BottomSheetBehavior.STATE_EXPANDED
-//        behavior.isHideable = true
-//        behavior.isFitToContents = true
-//    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        mainContext = context
+        backPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (binding.tvLetterAddBackground.visibility == View.VISIBLE) {
+                    binding.tvLetterAddBackground.visibility = View.GONE
+                    binding.rvLetterAddMenu.visibility = View.GONE
+
+                    binding.fabLetterSend.show()
+                    binding.fabLetterAdd.show()
+                }
+
+                else if (step == 3) {
+                    step = 2
+
+                }
+                else if (step == 2) {
+                    step = 1
+                }
+                else {
+                    MainFragmentManager.letterClose(this@LetterFragment)
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, backPressedCallback)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        backPressedCallback.remove()
+    }
 }

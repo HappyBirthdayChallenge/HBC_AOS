@@ -21,7 +21,7 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
     var step = true
     var phone = ""
     var time = 0
-    lateinit var timer: Timer
+    var timer: Timer? = null
     var resend = false
     lateinit var binding: FragmentSignup4Binding
     override fun onCreateView(
@@ -49,8 +49,16 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
             binding.tvSignup4PhoneTime.visibility = View.GONE
             binding.tvSignup4Resend.visibility = View.GONE
             binding.tieSignup4PhoneAuth.setText("")
+            binding.tvSignup4Error.text = ""
 
             binding.tieSignup4Phone.isEnabled = true
+        }
+        else {
+            if (timer != null) {
+                timer!!.cancel()
+            }
+            time = 0
+            resend = false
         }
     }
 
@@ -125,6 +133,7 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
 
                     binding.tvSignup4Error.text = "입력 시간이 초과 되었어요. 다시 시도해 주세요."
 
+                    time = 0
                 }
             }
             val sec = time
@@ -196,7 +205,7 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
         step = false
 
         if (resend) {
-            timer.cancel()
+            timer!!.cancel()
             time = 0
             resend = false
         }

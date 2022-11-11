@@ -68,6 +68,7 @@ class LoginFragment: Fragment(), KakaoLoginView, GetTokenView {
         binding.ivLoginLogo.startAnimation(aniLogo)
         binding.clLoginKakaoLogin.startAnimation(aniBtn)
         binding.tvLoginNormalLogin.startAnimation(aniBtn)
+        binding.tvLoginSignup.startAnimation(aniBtn)
 
     }
     fun kakaologin() {

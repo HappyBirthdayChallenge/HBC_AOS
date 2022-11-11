@@ -1,12 +1,8 @@
 package com.inha.hbc.ui.main
 
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.inha.hbc.databinding.ActivityMainBinding
-import com.inha.hbc.ui.letter.LetterFragment
-import com.inha.hbc.ui.menu.MenuFragment
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 
 

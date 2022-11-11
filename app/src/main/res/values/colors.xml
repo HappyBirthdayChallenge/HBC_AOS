@@ -13,6 +13,7 @@
     <color name="main_color">#f47f7e</color>
     <color name="hint_text">#d9d9d9</color>
     <color name="transparent_gray">#33000000</color>
+    <color name="sub_color">#feedf0</color>
 
 
 </resources>

@@ -71,4 +71,8 @@ interface RetroServiceInterface {
     fun getToken(
         @Query("refreshToken") refreshToken: String
     ):Call<List<GetToken>>
+
+    @POST("members.accounts/signout")
+    fun signout(
+    ): Call<List<Signout>>
 }

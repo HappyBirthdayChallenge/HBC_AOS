@@ -7,6 +7,7 @@ import com.google.gson.JsonParser
 import com.inha.hbc.data.remote.req.*
 import com.inha.hbc.data.remote.resp.*
 import com.inha.hbc.ui.login.view.*
+import com.inha.hbc.ui.menu.view.SignoutView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -24,6 +25,7 @@ class RetrofitService {
     lateinit var findIdView: FindIdView
     lateinit var findPwView: FindPwView
     lateinit var getTokenView: GetTokenView
+    lateinit var signoutView: SignoutView
 
     fun callRetro(): RetroServiceInterface {
         return NetworkModule.getRetrofit().create(RetroServiceInterface::class.java)
@@ -356,6 +358,30 @@ class RetrofitService {
 
             override fun onFailure(call: Call<List<GetToken>>, t: Throwable) {
                 getTokenView.onGetTokenFailure()
+            }
+
+        })
+    }
+
+    fun signout(view: SignoutView) {
+        signoutView = view
+        callRetro().signout().enqueue(object: Callback<List<Signout>> {
+            override fun onResponse(call: Call<List<Signout>>, response: Response<List<Signout>>) {
+                if (response.isSuccessful) {
+                    val resp= response as SignupSuccess
+                    if (resp.code == "200") {
+                        signoutView.onSignoutSuccess()
+                    }
+                    else {
+                        signoutView.onSignoutFailure()
+                    }
+                }
+                else {
+                    signoutView.onSignoutFailure()
+                }
+            }
+
+            override fun onFailure(call: Call<List<Signout>>, t: Throwable) {
             }
 
         })

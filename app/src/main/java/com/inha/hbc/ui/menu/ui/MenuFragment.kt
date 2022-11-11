@@ -1,4 +1,4 @@
-package com.inha.hbc.ui.menu
+package com.inha.hbc.ui.menu.ui
 
 import android.content.Context
 import android.content.Intent
@@ -10,10 +10,12 @@ import androidx.fragment.app.Fragment
 import com.inha.hbc.databinding.FragmentMenuBinding
 import com.inha.hbc.ui.adapter.MenuListRVAdapter
 import com.inha.hbc.ui.login.ui.LoginActivity
+import com.inha.hbc.ui.menu.view.SignoutView
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
+import com.inha.hbc.util.network.RetrofitService
 import com.inha.hbc.util.sharedpreference.GlobalApplication
 
-class MenuFragment(): Fragment(), MenuListRVAdapter.onListener {
+class MenuFragment(): Fragment(), MenuListRVAdapter.onListener, SignoutView {
 
     lateinit var binding: FragmentMenuBinding
     lateinit var rvAdapter: MenuListRVAdapter
@@ -51,10 +53,7 @@ class MenuFragment(): Fragment(), MenuListRVAdapter.onListener {
         }
 
         binding.tvMenuSignout.setOnClickListener {
-            GlobalApplication.prefs.delJwt()
-            val intent = Intent(MainFragmentManager.baseActivity, LoginActivity::class.java)
-            startActivity(intent)
-            MainFragmentManager.baseActivity.finish()
+            RetrofitService().signout(this)
         }
 
 
@@ -88,4 +87,17 @@ class MenuFragment(): Fragment(), MenuListRVAdapter.onListener {
 //            }
 //        parentFragmentManager.beginTransaction().addToBackStack(menuString).add(flid, downFragment!!).commit()
         }
+
+    override fun onSignoutSuccess() {
+        GlobalApplication.prefs.delJwt()
+
+        val intent = Intent(MainFragmentManager.baseActivity, LoginActivity::class.java)
+        startActivity(intent)
+        MainFragmentManager.baseActivity.finish()
+
     }
+
+    override fun onSignoutFailure() {
+        TODO("Not yet implemented")
+    }
+}
