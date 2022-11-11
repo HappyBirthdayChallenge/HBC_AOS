@@ -50,6 +50,21 @@ class NormalLoginFragment(): Fragment(), NormLoginView {
         binding.tvNormalLoginSignin.setOnClickListener {
             val id = binding.tieNormalLoginId.text.toString()
             val pw = binding.tieNormalLoginPw.text.toString()
+            if (id.isNullOrEmpty() or pw.isNullOrEmpty()) {
+                binding.tvNormalLoginError.text =
+                    if (id.isNullOrEmpty()) {
+                        if (pw.isNullOrEmpty()) {
+                            "아이디와 비밀번호를 입력해주세요"
+                        }
+                        else {
+                            "아이디를 입력해주세요"
+                        }
+                    }
+                else {
+                    "비밀번호를 입력해주세요"
+                    }
+                return@setOnClickListener
+            }
             if (!checkIdValid(id)) {
                 binding.tvNormalLoginError.text = "입력하신 아이디 또는 비밀번호가 일치하지 않아요"
                 return@setOnClickListener

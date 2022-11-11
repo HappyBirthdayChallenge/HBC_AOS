@@ -77,6 +77,7 @@
             android:nextFocusDown="@id/tie_normal_login_pw"
             android:textSize="20sp"
             android:inputType="textPassword"
+            android:maxLength="20"
             android:background="@color/transparent"
             android:saveEnabled="false">
         </com.google.android.material.textfield.TextInputEditText>
@@ -100,6 +101,7 @@
             android:layout_width="match_parent"
             android:nextFocusDown="@id/tv_forget_pw2_next"
             android:textSize="20sp"
+            android:maxLength="20"
             android:inputType="textPassword"
             android:background="@color/transparent"
             android:saveEnabled="false">

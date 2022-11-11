@@ -61,6 +61,7 @@
             android:nextFocusDown="@id/tie_normal_login_pw"
             android:textSize="20sp"
             android:inputType="text"
+            android:maxLength="20"
             android:background="@color/transparent">
         </com.google.android.material.textfield.TextInputEditText>
     </com.google.android.material.textfield.TextInputLayout>
@@ -83,6 +84,7 @@
             android:layout_width="match_parent"
             android:inputType="textPassword"
             android:textSize="20sp"
+            android:maxLength="20"
             android:background="@color/transparent">
 
         </com.google.android.material.textfield.TextInputEditText>
