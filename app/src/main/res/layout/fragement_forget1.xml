@@ -74,7 +74,7 @@
             android:id="@+id/tie_forget1_name"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:nextFocusDown="@id/tie_normal_login_pw"
+            android:nextFocusDown="@id/tie_forget1_pw_phone"
             android:textSize="20sp"
             android:inputType="text"
             android:maxLength="20"

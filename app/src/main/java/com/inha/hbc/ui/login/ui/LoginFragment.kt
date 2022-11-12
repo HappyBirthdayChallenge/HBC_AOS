@@ -12,9 +12,10 @@ import androidx.fragment.app.Fragment
 import com.google.gson.Gson
 import com.inha.hbc.R
 import com.inha.hbc.data.local.Jwt
-import com.inha.hbc.data.remote.resp.Data
-import com.inha.hbc.data.remote.resp.GetTokenSuccess
+import com.inha.hbc.data.remote.resp.*
 import com.inha.hbc.databinding.FragmentLoginBinding
+import com.inha.hbc.ui.login.view.CheckTokenView
+import com.inha.hbc.ui.login.view.GetMyInfoView
 import com.inha.hbc.ui.login.view.GetTokenView
 import com.inha.hbc.ui.login.view.KakaoLoginView
 import com.inha.hbc.ui.main.MainActivity
@@ -25,7 +26,7 @@ import com.inha.hbc.util.network.RetrofitService
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 
-class LoginFragment: Fragment(), KakaoLoginView, GetTokenView {
+class LoginFragment: Fragment(), KakaoLoginView, GetTokenView, CheckTokenView, GetMyInfoView {
 
     lateinit var binding: FragmentLoginBinding
     override fun onCreateView(
@@ -101,12 +102,10 @@ class LoginFragment: Fragment(), KakaoLoginView, GetTokenView {
     }
 
     fun checkToken() {
-        val refreshJwt = GlobalApplication.prefs.getRealRefreshJwt()
-        if (refreshJwt.isNullOrEmpty()) {
-        }
-        else {
+        val accessJwt = GlobalApplication.prefs.getRealAccessJwt()
+        if (!accessJwt.isNullOrEmpty()) {
             binding.lavLoginLoading.visibility = View.VISIBLE
-            RetrofitService().getToken(refreshJwt, this)
+            RetrofitService().checkToken(this)
         }
     }
 
@@ -138,25 +137,16 @@ class LoginFragment: Fragment(), KakaoLoginView, GetTokenView {
 
     }
 
-    fun isBirthAvailable(token: Jwt): Boolean {
-        if (token.birth.date == -1) return false
-        if (token.birth.month == -1) return false
-        if (token.birth.year == -1) return false
+    fun isBirthAvailable(data: GetMyInfoBirth): Boolean {
+        if (data.date == -1) return false
+        if (data.month == -1) return false
+        if (data.year == -1) return false
         return true
     }
 
     override fun onKakaoLoginSuccess(data: Data) {
         decodeJwt(data)
-        if (isBirthAvailable(GlobalApplication.prefs.getAccessJwt())) {
-            val intent = Intent(requireActivity(), MainActivity::class.java)
-            startActivity(intent)
-            requireActivity().finish()
-        }
-        else {
-            binding.lavLoginLoading.visibility = View.GONE
-
-            parentFragmentManager.beginTransaction().replace(NormLoginFragmentManager.frameId, KakaoBirthFragment()).commit()
-        }
+        RetrofitService().getMyInfo(this)
     }
 
     override fun onKakaoLoginFailure(code: Int) {
@@ -172,11 +162,43 @@ class LoginFragment: Fragment(), KakaoLoginView, GetTokenView {
         val intent = Intent(requireActivity(), MainActivity::class.java)
         startActivity(intent)
         requireActivity().finish()
-
-
     }
 
     override fun onGetTokenFailure() {
         binding.lavLoginLoading.visibility = View.GONE
+    }
+
+    override fun onCheckTokenSuccess() {
+        binding.lavLoginLoading.visibility = View.GONE
+        val intent = Intent(requireActivity(), MainActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
+    }
+
+    override fun onCheckTokenFailure() {
+        val refreshJwt = GlobalApplication.prefs.getRealRefreshJwt()
+        if (refreshJwt.isNullOrEmpty()) {
+        }
+        else {
+            binding.lavLoginLoading.visibility = View.VISIBLE
+            RetrofitService().getToken(refreshJwt, this)
+        }
+    }
+
+    override fun onGetMyInfoSuccess(resp: GetMyInfoSuccess) {
+        if (isBirthAvailable(resp.data!!.birth_date)) {
+            val intent = Intent(requireActivity(), MainActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
+        }
+        else {
+            binding.lavLoginLoading.visibility = View.GONE
+
+            parentFragmentManager.beginTransaction().replace(NormLoginFragmentManager.frameId, KakaoBirthFragment()).commit()
+        }
+    }
+
+    override fun onGetMyInfoFailure() {
+        TODO("Not yet implemented")
     }
 }

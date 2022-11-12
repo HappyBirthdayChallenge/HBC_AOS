@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 
 object NetworkModule {
-    const val BASE_URL = "http://ec2-52-78-124-246.ap-northeast-2.compute.amazonaws.com:8080"
+    const val BASE_URL = "http://ec2-43-201-3-169.ap-northeast-2.compute.amazonaws.com:8080"
 
     private var instance: Retrofit? = null
     private var gson = GsonBuilder().setLenient().create()

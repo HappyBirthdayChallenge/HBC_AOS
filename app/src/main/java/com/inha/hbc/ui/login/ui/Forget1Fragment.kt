@@ -88,6 +88,7 @@ class Forget1Fragment: Fragment(), IsMeView, SendCodeView {
     }
 
     override fun onMeSuccess() {
+        binding.tvForget1Error.text = ""
         if (NormLoginFragmentManager.data.id.isNullOrEmpty()) {
             RetrofitService().reqCode(phone, this, "FIND_ID")
         }

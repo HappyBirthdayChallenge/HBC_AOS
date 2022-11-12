@@ -22,11 +22,13 @@ import kotlin.concurrent.timer
 
 class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
     var time = 0
-    lateinit var timer: Timer
+    var timer: Timer? = null
     var auth = ""
     lateinit var data: SignupData
     lateinit var binding: FragementForget2Binding
     var resend = false
+    var step = false
+    var id = true
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,25 +42,60 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
         super.onViewCreated(view, savedInstanceState)
         data = NormLoginFragmentManager.data
 
+
         initListener()
     }
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        if (!hidden) {
-            startTimer()
+        if (hidden) {
+            if (timer != null) {
+                timer!!.cancel()
+            }
+            if (!binding.tieForget2PhoneAuth.isEnabled) {
+                step = false
+                binding.tieForget2PhoneAuth.isEnabled = true
+                binding.tvForget2Resend.isEnabled =true
+                binding.tieForget2PhoneAuth.setText("")
+                if (id) {
+                    data.id = null
+                }
+            }
+            time = 0
+        }
+        else {
+            if (step) {
+                binding.tvForget2PhoneTime.visibility = View.GONE
+                binding.tieForget2PhoneAuth.isEnabled = false
+                binding.tvForget2Resend.isEnabled =false
+                binding.tvForget2Error.text = ""
+            }
+            else {
+                id = data.id.isNullOrEmpty()
+                binding.tvForget2PhoneTime.visibility = View.VISIBLE
+                startTimer()
+            }
         }
     }
 
     fun initListener() {
         binding.ivForget2Back.setOnClickListener {
+            step = false
             NormLoginFragmentManager.forgetBackPressed()
         }
         binding.tvForget2Next.setOnClickListener {
             binding.lavForget2Loading.visibility = View.VISIBLE
+            if (step) {
+                if (id) {
+                    NormLoginFragmentManager.transaction(2, 3)
+                }
+                else {
+                    NormLoginFragmentManager.transaction(3, 4)
+                }
+            }
             auth = binding.tieForget2PhoneAuth.text.toString()
             if (!auth.isNullOrEmpty()) {
-                val reqData = if (data.id.isNullOrEmpty()) {
+                val reqData = if (id) {
                     CheckCodeData(auth.toInt(), data.phone!!, "FIND_ID")
                 }
                 else {
@@ -68,6 +105,7 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
                 }
             else {
                 binding.tvForget2Error.text = "인증 코드를 잘못 입력했어요"
+                binding.lavForget2Loading.visibility = View.GONE
             }
 
         }
@@ -75,10 +113,12 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
         binding.tvForget2Resend.setOnClickListener {
             binding.lavForget2Loading.visibility = View.VISIBLE
             resend = true
-            if (data.id.isNullOrEmpty()) {
+            if (id) {
+                id = true
                 RetrofitService().reqCode(data.phone!!, this, "FIND_ID")
             }
             else {
+                id = false
                 RetrofitService().reqCode(data.phone!!, this, "FIND_PW")
             }
         }
@@ -96,7 +136,9 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
 
                     binding.tieForget2PhoneAuth.isEnabled = false
                     binding.tvForget2Next.isEnabled = false
+                    binding.tvForget2PhoneTime.visibility = View.GONE
 
+                    time = 0
                     binding.tvForget2Error.text = "입력 시간이 초과 되었어요. 다시 시도해 주세요."
 
                 }
@@ -116,7 +158,7 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
     override fun onCheckCodeResponseSuccess(respData: CodeSuccess) {
 
         NormLoginFragmentManager.data.key = respData.data.key
-        if (data.id.isNullOrEmpty()) {
+        if (id) {
             val reqData = FindIdData(data.key!!, data.name!!, data.phone!!)
             RetrofitService().findId(reqData, this)
         }
@@ -124,6 +166,7 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
             binding.lavForget2Loading.visibility = View.GONE
 
             NormLoginFragmentManager.transaction(3, 4)
+            step = true
         }
     }
 
@@ -146,6 +189,7 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
         NormLoginFragmentManager.data.id = respData.data!!.username
         binding.lavForget2Loading.visibility = View.GONE
         NormLoginFragmentManager.transaction(2, 3)
+        step = true
     }
 
     override fun onFindIdFailure() {
@@ -156,9 +200,14 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
     override fun onSendCodeSuccess() {
         binding.lavForget2Loading.visibility = View.GONE
         binding.tvForget2Error.text = ""
+        binding.tvForget2PhoneTime.visibility = View.VISIBLE
+        binding.tieForget2PhoneAuth.isEnabled = true
+        binding.tvForget2Next.isEnabled = true
+        binding.tieForget2PhoneAuth.setText("")
+
 
         if (resend) {
-            timer.cancel()
+            timer!!.cancel()
             time = 0
             resend= false
         }

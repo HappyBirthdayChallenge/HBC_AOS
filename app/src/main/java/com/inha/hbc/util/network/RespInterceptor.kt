@@ -9,7 +9,10 @@ import org.json.JSONObject
 class RespInterceptor: Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val origin = chain.request()
-        val response = if (origin.url.encodedPath.equals("/members/accounts/birthday", true)) {
+        val response = if (origin.url.encodedPath.equals("/members/accounts/birthday", true) ||
+            origin.url.encodedPath.equals("/token/check", true) ||
+            origin.url.encodedPath.equals("/members/accounts/me", true) ||
+            origin.url.encodedPath.equals("/members/accounts/signout", true)) {
             chain.proceed(origin.newBuilder().apply {
                 addHeader(
                     "Authorization",

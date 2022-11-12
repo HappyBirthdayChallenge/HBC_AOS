@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.inha.hbc.databinding.FragmentMenuBinding
 import com.inha.hbc.ui.adapter.MenuListRVAdapter
@@ -98,6 +99,6 @@ class MenuFragment(): Fragment(), MenuListRVAdapter.onListener, SignoutView {
     }
 
     override fun onSignoutFailure() {
-        TODO("Not yet implemented")
+        Toast.makeText(requireContext(), "에러로 로그아웃 실패!",Toast.LENGTH_SHORT).show()
     }
 }

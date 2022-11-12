@@ -26,6 +26,8 @@ class RetrofitService {
     lateinit var findPwView: FindPwView
     lateinit var getTokenView: GetTokenView
     lateinit var signoutView: SignoutView
+    lateinit var checkTokenView: CheckTokenView
+    lateinit var getMyInfoView: GetMyInfoView
 
     fun callRetro(): RetroServiceInterface {
         return NetworkModule.getRetrofit().create(RetroServiceInterface::class.java)
@@ -368,8 +370,8 @@ class RetrofitService {
         callRetro().signout().enqueue(object: Callback<List<Signout>> {
             override fun onResponse(call: Call<List<Signout>>, response: Response<List<Signout>>) {
                 if (response.isSuccessful) {
-                    val resp= response as SignupSuccess
-                    if (resp.code == "200") {
+                    val resp= response.body()!![0] as SignoutSuccess
+                    if (resp.code == "R-M018") {
                         signoutView.onSignoutSuccess()
                     }
                     else {
@@ -382,6 +384,63 @@ class RetrofitService {
             }
 
             override fun onFailure(call: Call<List<Signout>>, t: Throwable) {
+            }
+
+        })
+    }
+
+    fun checkToken(view: CheckTokenView) {
+        checkTokenView = view
+
+        callRetro().checkToken().enqueue(object: Callback<List<CheckToken>> {
+            override fun onResponse(
+                call: Call<List<CheckToken>>,
+                response: Response<List<CheckToken>>
+            ) {
+                if (response.isSuccessful) {
+
+                    val resp = response.body()!![0] as CheckTokenSuccess
+                    if (resp.code == "R-J003") {
+                        checkTokenView.onCheckTokenSuccess()
+                    }
+                    else {
+                        checkTokenView.onCheckTokenFailure()
+                    }
+                }
+                else {
+                    checkTokenView.onCheckTokenFailure()
+                }
+            }
+
+            override fun onFailure(call: Call<List<CheckToken>>, t: Throwable) {
+            }
+
+        })
+    }
+
+    fun getMyInfo(view: GetMyInfoView) {
+        getMyInfoView = view
+        callRetro().getMyInfo().enqueue(object: Callback<List<GetMyInfo>> {
+            override fun onResponse(
+                call: Call<List<GetMyInfo>>,
+                response: Response<List<GetMyInfo>>
+            ) {
+                if (response.isSuccessful) {
+                    val resp = response.body()!![0] as GetMyInfoSuccess
+                    if (resp.code == "R-M019") {
+                        getMyInfoView.onGetMyInfoSuccess(resp)
+                    }
+                    else {
+                        getMyInfoView.onGetMyInfoFailure()
+                    }
+                }
+                else {
+                    getMyInfoView.onGetMyInfoFailure()
+                }
+            }
+
+            override fun onFailure(call: Call<List<GetMyInfo>>, t: Throwable) {
+                TODO("Not yet implemented")
             }
 
         })

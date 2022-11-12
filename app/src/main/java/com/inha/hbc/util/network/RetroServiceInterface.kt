@@ -4,6 +4,7 @@ import com.inha.hbc.data.remote.req.*
 import com.inha.hbc.data.remote.resp.*
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -67,12 +68,20 @@ interface RetroServiceInterface {
         @Body pwData: FindPwData
     ): Call<List<FindPw>>
 
-    @POST("/auth/reissue")
+    @POST("/token/reissue")
     fun getToken(
         @Query("refreshToken") refreshToken: String
     ):Call<List<GetToken>>
 
-    @POST("members.accounts/signout")
+    @POST("/token/check")
+    fun checkToken(
+    ):Call<List<CheckToken>>
+
+    @POST("/members/accounts/signout")
     fun signout(
     ): Call<List<Signout>>
+
+    @GET("/members/accounts/me")
+    fun getMyInfo(
+    ): Call<List<GetMyInfo>>
 }
