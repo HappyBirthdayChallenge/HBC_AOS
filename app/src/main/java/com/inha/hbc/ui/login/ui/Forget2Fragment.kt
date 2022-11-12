@@ -96,10 +96,10 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
             auth = binding.tieForget2PhoneAuth.text.toString()
             if (!auth.isNullOrEmpty()) {
                 val reqData = if (id) {
-                    CheckCodeData(auth.toInt(), data.phone!!, "FIND_ID")
+                    CheckCodeData(auth, data.phone!!, "FIND_ID")
                 }
                 else {
-                    CheckCodeData(auth.toInt(), data.phone!!, "FIND_PW")
+                    CheckCodeData(auth, data.phone!!, "FIND_PW")
                 }
                     RetrofitService().checkCode(reqData, this)
                 }

@@ -23,6 +23,8 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
     var time = 0
     var timer: Timer? = null
     var resend = false
+    var already = false
+    var goNext = false
     lateinit var binding: FragmentSignup4Binding
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,24 +43,40 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        if (!hidden) {
-            step = true
-
-            binding.tvSignup4Description.visibility = View.GONE
-            binding.tilSignup4PhoneAuth.visibility = View.GONE
-            binding.tvSignup4PhoneTime.visibility = View.GONE
-            binding.tvSignup4Resend.visibility = View.GONE
-            binding.tieSignup4PhoneAuth.setText("")
-            binding.tvSignup4Error.text = ""
-
-            binding.tieSignup4Phone.isEnabled = true
-        }
-        else {
+        if (hidden) {
+            if (already && !goNext) {
+                SignupFragmentManager.signupData.phone = ""
+                SignupFragmentManager.signupData.key = ""
+                already = false
+            }
             if (timer != null) {
                 timer!!.cancel()
             }
             time = 0
             resend = false
+
+            step = true
+
+        }
+        else {
+            goNext = false
+            if (already) {
+                binding.tieSignup4Phone.isEnabled = false
+                binding.tieSignup4PhoneAuth.isEnabled = false
+                binding.tvSignup4Resend.visibility = View.GONE
+                binding.tvSignup4PhoneTime.visibility = View.GONE
+                binding.tvSignup4Error.text = ""
+            }
+            else {
+                binding.tieSignup4PhoneAuth.setText("")
+                binding.tilSignup4PhoneAuth.visibility = View.GONE
+                binding.tieSignup4Phone.isEnabled = true
+                binding.tieSignup4PhoneAuth.isEnabled = true
+                binding.tvSignup4Description.visibility = View.GONE
+                binding.tvSignup4PhoneTime.visibility = View.GONE
+                binding.tvSignup4Resend.visibility = View.GONE
+                binding.tvSignup4Error.text = ""
+            }
         }
     }
 
@@ -70,6 +88,11 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
         }
 
         binding.tvSignup4Next.setOnClickListener {
+            if (already) {
+                goNext = true
+                SignupFragmentManager.transaction(4, 5)
+                return@setOnClickListener
+            }
             if (step) {
                 phone = binding.tieSignup4Phone.text.toString()
                 if (checkPhone(phone)) {
@@ -84,7 +107,7 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
                 val code = binding.tieSignup4PhoneAuth.text.toString()
                 if(code.length == 6) {
                     binding.lavSignup4Loading.visibility = View.VISIBLE
-                    val data = CheckCodeData(code.toInt(), phone, "SIGNUP")
+                    val data = CheckCodeData(code, phone, "SIGNUP")
                     RetrofitService().checkCode(data, this)
                 }
                 else {
@@ -170,6 +193,9 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
 
     override fun onCheckCodeResponseSuccess(respData: CodeSuccess) {
         binding.tvSignup4Error.text = ""
+
+        already = true
+        goNext = true
 
         binding.lavSignup4Loading.visibility = View.GONE
         SignupFragmentManager.signupData.phone = phone
