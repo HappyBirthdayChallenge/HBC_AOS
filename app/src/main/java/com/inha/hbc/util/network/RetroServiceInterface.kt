@@ -16,10 +16,9 @@ interface RetroServiceInterface {
     ) : Call<List<NormSignin>>
 
 
-    @POST("/oauth2/signin/{provider}")
+    @POST("/oauth2/signin")
     fun kakaoSignin(
-        @Path("provider") provider: String,
-        @Query("token") token: String
+        @Body data: KakaoSigninInfo
     ) : Call<List<KakaoSignin>>
 
 
@@ -68,20 +67,26 @@ interface RetroServiceInterface {
         @Body pwData: FindPwData
     ): Call<List<FindPw>>
 
-    @POST("/token/reissue")
+    @POST("/token/jwt/reissue")
     fun getToken(
         @Query("refreshToken") refreshToken: String
     ):Call<List<GetToken>>
 
-    @POST("/token/check")
+    @POST("/token/jwt/check")
     fun checkToken(
     ):Call<List<CheckToken>>
 
     @POST("/members/accounts/signout")
     fun signout(
+        @Query("fcm_token") fcmToken: String
     ): Call<List<Signout>>
 
     @GET("/members/accounts/me")
     fun getMyInfo(
     ): Call<List<GetMyInfo>>
+
+    @POST("/token/fcm/refresh")
+    fun refreshFcm(
+        @Query("fcm_token") fcmToken: String
+    ): Call<List<GetRefreshFcm>>
 }

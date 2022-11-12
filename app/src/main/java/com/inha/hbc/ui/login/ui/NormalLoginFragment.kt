@@ -16,13 +16,14 @@ import com.inha.hbc.data.remote.resp.NormFailure
 import com.inha.hbc.data.remote.resp.NormSuccess
 import com.inha.hbc.databinding.FragmentNormalLoginBinding
 import com.inha.hbc.ui.login.view.NormLoginView
+import com.inha.hbc.ui.login.view.RefreshFcmView
 import com.inha.hbc.ui.main.MainActivity
 import com.inha.hbc.util.sharedpreference.GlobalApplication
 import com.inha.hbc.util.fragmentmanager.NormLoginFragmentManager
 import com.inha.hbc.util.network.RetrofitService
 import java.util.regex.Pattern
 
-class NormalLoginFragment(): Fragment(), NormLoginView {
+class NormalLoginFragment(): Fragment(), NormLoginView, RefreshFcmView {
     lateinit var callback: OnBackPressedCallback
     private lateinit var binding: FragmentNormalLoginBinding
     override fun onCreateView(
@@ -75,7 +76,7 @@ class NormalLoginFragment(): Fragment(), NormLoginView {
                 return@setOnClickListener
             }
             binding.lavNormalLoginLoading.visibility = View.VISIBLE
-            RetrofitService().normSignin(NormSigninInfo(pw, id), this)
+            RetrofitService().normSignin(NormSigninInfo(GlobalApplication.prefs.getFcmtoken(), pw, id), this)
         }
 
         binding.tvNormalLoginForget.setOnClickListener {
@@ -141,6 +142,7 @@ class NormalLoginFragment(): Fragment(), NormLoginView {
 
         decodeJwt(data.token)
 
+        RetrofitService().refreshFcm(GlobalApplication.prefs.getFcmtoken()!!)
         val intent = Intent(requireActivity(), MainActivity::class.java)
         startActivity(intent)
         requireActivity().finish()
@@ -177,5 +179,12 @@ class NormalLoginFragment(): Fragment(), NormLoginView {
         super.onDetach()
         callback.remove()
 
+    }
+
+    override fun onRefreshFcmSuccess() {
+    }
+
+    override fun onRefreshFcmFailure() {
+        TODO("Not yet implemented")
     }
 }

@@ -54,7 +54,7 @@ class MenuFragment(): Fragment(), MenuListRVAdapter.onListener, SignoutView {
         }
 
         binding.tvMenuSignout.setOnClickListener {
-            RetrofitService().signout(this)
+            RetrofitService().signout(GlobalApplication.prefs.getFcmtoken()!!, this)
         }
 
 
@@ -91,6 +91,7 @@ class MenuFragment(): Fragment(), MenuListRVAdapter.onListener, SignoutView {
 
     override fun onSignoutSuccess() {
         GlobalApplication.prefs.delJwt()
+        GlobalApplication.prefs.delFcmtoken()
 
         val intent = Intent(MainFragmentManager.baseActivity, LoginActivity::class.java)
         startActivity(intent)

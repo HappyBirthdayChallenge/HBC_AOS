@@ -10,6 +10,7 @@ class PreferenceUtil(context: Context) {
     val refreshJwtKey = "refreshJwt"
     val realAccessJwtKey = "realAccessJwt"
     val realRefreshJwtKey = "realRefreshJwt"
+    val fcmToken = "fcmToken"
     val prefs= context.getSharedPreferences(prefsName, 0)
 
     private fun jwtToString(jwt: Jwt): String {
@@ -63,6 +64,17 @@ class PreferenceUtil(context: Context) {
             .commit()
     }
 
+    fun setFcmtoken(data: String) {
+        prefs.edit().putString(fcmToken, data).apply()
+    }
+
+    fun getFcmtoken(): String? {
+        return prefs.getString(fcmToken, "")
+    }
+
+    fun delFcmtoken() {
+        prefs.edit().remove(fcmToken).commit()
+    }
 
 //    var jwt: String?
 //        get() = prefs.getString(accessJwtKey, "")

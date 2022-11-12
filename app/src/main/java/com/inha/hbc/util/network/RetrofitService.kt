@@ -1,6 +1,7 @@
 package com.inha.hbc.util.network
 
 import android.util.Log
+import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -8,6 +9,7 @@ import com.inha.hbc.data.remote.req.*
 import com.inha.hbc.data.remote.resp.*
 import com.inha.hbc.ui.login.view.*
 import com.inha.hbc.ui.menu.view.SignoutView
+import com.inha.hbc.util.sharedpreference.GlobalApplication
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -66,10 +68,10 @@ class RetrofitService {
 
         })
     }
-    fun kakaoSignin(provider: String, token: String, view: KakaoLoginView) {
+    fun kakaoSignin(data: KakaoSigninInfo, view: KakaoLoginView) {
         kakaoLoginView = view
 
-        callRetro().kakaoSignin(provider, token).enqueue(object: Callback<List<KakaoSignin>> {
+        callRetro().kakaoSignin(data).enqueue(object: Callback<List<KakaoSignin>> {
             override fun onResponse(
                 call: Call<List<KakaoSignin>>,
                 response: Response<List<KakaoSignin>>
@@ -365,9 +367,10 @@ class RetrofitService {
         })
     }
 
-    fun signout(view: SignoutView) {
+    fun signout(data: String, view: SignoutView) {
         signoutView = view
-        callRetro().signout().enqueue(object: Callback<List<Signout>> {
+
+        callRetro().signout(data).enqueue(object: Callback<List<Signout>> {
             override fun onResponse(call: Call<List<Signout>>, response: Response<List<Signout>>) {
                 if (response.isSuccessful) {
                     val resp= response.body()!![0] as SignoutSuccess
@@ -441,6 +444,20 @@ class RetrofitService {
 
             override fun onFailure(call: Call<List<GetMyInfo>>, t: Throwable) {
                 TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+    fun refreshFcm(data: String) {
+        callRetro().refreshFcm(data).enqueue(object: Callback<List<GetRefreshFcm>> {
+            override fun onResponse(
+                call: Call<List<GetRefreshFcm>>,
+                response: Response<List<GetRefreshFcm>>
+            ) {
+            }
+
+            override fun onFailure(call: Call<List<GetRefreshFcm>>, t: Throwable) {
             }
 
         })

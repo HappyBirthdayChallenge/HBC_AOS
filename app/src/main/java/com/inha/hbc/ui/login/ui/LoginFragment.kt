@@ -12,12 +12,10 @@ import androidx.fragment.app.Fragment
 import com.google.gson.Gson
 import com.inha.hbc.R
 import com.inha.hbc.data.local.Jwt
+import com.inha.hbc.data.remote.req.KakaoSigninInfo
 import com.inha.hbc.data.remote.resp.*
 import com.inha.hbc.databinding.FragmentLoginBinding
-import com.inha.hbc.ui.login.view.CheckTokenView
-import com.inha.hbc.ui.login.view.GetMyInfoView
-import com.inha.hbc.ui.login.view.GetTokenView
-import com.inha.hbc.ui.login.view.KakaoLoginView
+import com.inha.hbc.ui.login.view.*
 import com.inha.hbc.ui.main.MainActivity
 import com.inha.hbc.util.firebase.FirebaseMessagingService
 import com.inha.hbc.util.fragmentmanager.NormLoginFragmentManager
@@ -27,7 +25,7 @@ import com.inha.hbc.util.network.RetrofitService
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 
-class LoginFragment: Fragment(), KakaoLoginView, GetTokenView, CheckTokenView, GetMyInfoView {
+class LoginFragment: Fragment(), KakaoLoginView, GetTokenView, CheckTokenView, GetMyInfoView, RefreshFcmView {
 
     lateinit var binding: FragmentLoginBinding
     override fun onCreateView(
@@ -114,7 +112,9 @@ class LoginFragment: Fragment(), KakaoLoginView, GetTokenView, CheckTokenView, G
 
     fun getToken(token: OAuthToken) {
         binding.lavLoginLoading.visibility = View.VISIBLE
-        RetrofitService().kakaoSignin("KAKAO", token.accessToken, this)
+        val data = KakaoSigninInfo(GlobalApplication.prefs.getFcmtoken()!!,
+        token.accessToken, "KAKAO")
+        RetrofitService().kakaoSignin(data, this)
 
     }
 
@@ -145,8 +145,6 @@ class LoginFragment: Fragment(), KakaoLoginView, GetTokenView, CheckTokenView, G
         return true
     }
 
-    fun fire() {
-    }
     override fun onKakaoLoginSuccess(data: Data) {
         decodeJwt(data)
         RetrofitService().getMyInfo(this)
@@ -162,6 +160,7 @@ class LoginFragment: Fragment(), KakaoLoginView, GetTokenView, CheckTokenView, G
     override fun onGetTokenSuccess(resp: GetTokenSuccess) {
         decodeJwt(resp.data!!)
         binding.lavLoginLoading.visibility = View.GONE
+        RetrofitService().refreshFcm(GlobalApplication.prefs.getFcmtoken()!!)
         val intent = Intent(requireActivity(), MainActivity::class.java)
         startActivity(intent)
         requireActivity().finish()
@@ -173,6 +172,7 @@ class LoginFragment: Fragment(), KakaoLoginView, GetTokenView, CheckTokenView, G
 
     override fun onCheckTokenSuccess() {
         binding.lavLoginLoading.visibility = View.GONE
+        RetrofitService().refreshFcm(GlobalApplication.prefs.getFcmtoken()!!)
         val intent = Intent(requireActivity(), MainActivity::class.java)
         startActivity(intent)
         requireActivity().finish()
@@ -190,6 +190,7 @@ class LoginFragment: Fragment(), KakaoLoginView, GetTokenView, CheckTokenView, G
 
     override fun onGetMyInfoSuccess(resp: GetMyInfoSuccess) {
         if (isBirthAvailable(resp.data!!.birth_date)) {
+            RetrofitService().refreshFcm(GlobalApplication.prefs.getFcmtoken()!!)
             val intent = Intent(requireActivity(), MainActivity::class.java)
             startActivity(intent)
             requireActivity().finish()
@@ -204,4 +205,13 @@ class LoginFragment: Fragment(), KakaoLoginView, GetTokenView, CheckTokenView, G
     override fun onGetMyInfoFailure() {
         TODO("Not yet implemented")
     }
+
+    override fun onRefreshFcmSuccess() {
+    }
+
+    override fun onRefreshFcmFailure() {
+        TODO("Not yet implemented")
+    }
+
+
 }

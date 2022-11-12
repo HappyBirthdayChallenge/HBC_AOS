@@ -3,7 +3,6 @@ package com.inha.hbc.ui.login.ui
 import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -13,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.inha.hbc.databinding.ActivityLoginBinding
+import com.inha.hbc.util.firebase.FirebaseMessagingService
 import com.inha.hbc.util.fragmentmanager.NormLoginFragmentManager
 import com.inha.hbc.util.fragmentmanager.SignupFragmentManager
 
@@ -27,6 +27,7 @@ class LoginActivity: AppCompatActivity() {
 
 
         askNotificationPermission()
+        val fms = FirebaseMessagingService().searchToken()
 
         SignupFragmentManager.setManager(supportFragmentManager, binding.fcLogin.id, this)
         NormLoginFragmentManager.setManager(supportFragmentManager, binding.fcLogin.id, this)
