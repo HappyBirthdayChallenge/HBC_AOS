@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1081563866814",
+    "project_id": "push-8c2a6",
+    "storage_bucket": "push-8c2a6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081563866814:android:c8cea212177d8678a7a0ef",
+        "android_client_info": {
+          "package_name": "com.inha.hbc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1081563866814-k4qfhb725j8g8meioufj2jguodp9iq69.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbuKUmRn78v0KlNI5v__-ubLK55osnvCU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1081563866814-k4qfhb725j8g8meioufj2jguodp9iq69.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

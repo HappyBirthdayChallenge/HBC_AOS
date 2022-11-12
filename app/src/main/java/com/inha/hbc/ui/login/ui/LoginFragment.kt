@@ -19,6 +19,7 @@ import com.inha.hbc.ui.login.view.GetMyInfoView
 import com.inha.hbc.ui.login.view.GetTokenView
 import com.inha.hbc.ui.login.view.KakaoLoginView
 import com.inha.hbc.ui.main.MainActivity
+import com.inha.hbc.util.firebase.FirebaseMessagingService
 import com.inha.hbc.util.fragmentmanager.NormLoginFragmentManager
 import com.inha.hbc.util.sharedpreference.GlobalApplication
 import com.inha.hbc.util.fragmentmanager.SignupFragmentManager
@@ -144,6 +145,8 @@ class LoginFragment: Fragment(), KakaoLoginView, GetTokenView, CheckTokenView, G
         return true
     }
 
+    fun fire() {
+    }
     override fun onKakaoLoginSuccess(data: Data) {
         decodeJwt(data)
         RetrofitService().getMyInfo(this)

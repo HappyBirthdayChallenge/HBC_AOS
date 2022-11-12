@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/> <!--저장소 읽기 권한-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/><!--저장소 쓰기 권한-->
     <uses-permission android:name="android.permission.RECORD_AUDIO" /><!--녹음권한-->
-
+    
     <application
         android:name=".util.sharedpreference.GlobalApplication"
         android:allowBackup="true"
@@ -20,6 +20,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HBC"
         tools:targetApi="33">
+
+        <service
+            android:name=".util.firebase.FirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
 
         <provider
             android:authorities="com.inha.hbc.fileprovider"

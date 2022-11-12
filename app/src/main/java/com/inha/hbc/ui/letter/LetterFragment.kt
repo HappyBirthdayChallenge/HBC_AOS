@@ -93,9 +93,9 @@ class LetterFragment: Fragment() {
 
 
     fun initListener() {
-        binding.ivLetterClose.setOnClickListener {
-            MainFragmentManager.letterClose(this@LetterFragment)
-        }
+//        binding.ivLetterClose.setOnClickListener {
+//            MainFragmentManager.letterClose(this@LetterFragment)
+//        }
 
         binding.fabLetterAdd.setOnClickListener {
             binding.fabLetterAdd.hide()
