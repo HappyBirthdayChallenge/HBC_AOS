@@ -2,6 +2,7 @@ package com.inha.hbc.util.fragmentmanager
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.inha.hbc.ui.letter.LetterBaseFragment
 import com.inha.hbc.ui.letter.LetterFragment
 import com.inha.hbc.ui.letter.ObjectSelectionFragment
 import com.inha.hbc.ui.main.MainActivity
@@ -12,6 +13,7 @@ object MainFragmentManager {
     lateinit var manager: FragmentManager
     lateinit var mainPage: MainFragment
     lateinit var baseActivity: MainActivity
+    lateinit var letterBaseFragment: LetterBaseFragment
     var id = 0
 
     lateinit var objectPageType: String
@@ -35,7 +37,8 @@ object MainFragmentManager {
 
     fun transToLetter() {
         manager.beginTransaction().hide(mainPage).commit()
-        manager.beginTransaction().add(id, LetterFragment()).commit()
+        letterBaseFragment = LetterBaseFragment()
+        manager.beginTransaction().add(id, letterBaseFragment).commit()
     }
 
     fun menuClose(menu: Fragment) {
@@ -43,8 +46,8 @@ object MainFragmentManager {
         manager.beginTransaction().show(mainPage).commit()
     }
 
-    fun letterClose(letter: Fragment) {
-        manager.beginTransaction().remove(letter).commit()
+    fun letterClose() {
+        manager.beginTransaction().remove(letterBaseFragment).commit()
         manager.beginTransaction().show(mainPage).commit()
     }
 
@@ -56,4 +59,5 @@ object MainFragmentManager {
     fun objectClose(page: Fragment) {
         manager.beginTransaction().remove(page).commit()
     }
+
 }

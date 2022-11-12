@@ -12,7 +12,7 @@ import com.inha.hbc.databinding.ItemLetterObjectBinding
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 
 
-class LetterObjectRVAdapter: RecyclerView.Adapter<LetterObjectRVAdapter.ObjectHolder>() {
+class LetterObjectRVAdapter(pos: Int): RecyclerView.Adapter<LetterObjectRVAdapter.ObjectHolder>() {
 
     interface Clistener {
         fun onClick(title: String)
