@@ -88,6 +88,8 @@ class LetterBaseFragment: Fragment() {
         val text = SpannableString(binding.tlLetterBase.getTabAt(0)!!.text)
         text.setSpan(UnderlineSpan(), 0, text.length, 0)
         binding.tlLetterBase.getTabAt(0)!!.text = text
+
+        binding.vpLetterBase.isUserInputEnabled = false
     }
 
     fun initArr() {

@@ -15,7 +15,7 @@
         app:layout_constraintBottom_toTopOf="@id/vp_main"
         android:paddingVertical="16dp"
         android:paddingHorizontal="34dp"
-        android:background="#feedf0"
+        android:background="@color/main_color"
         android:elevation="10dp">
         <ImageView
             android:id="@+id/iv_message_menu"
@@ -24,7 +24,7 @@
             app:layout_constraintTop_toTopOf="@id/tv_main_title"
             app:layout_constraintBottom_toBottomOf="@id/tv_main_title"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:src="@drawable/chat2">
+            android:src="@drawable/ic_mutable_menu">
         </ImageView>
         <TextView
             android:id="@+id/tv_main_title"
@@ -37,7 +37,7 @@
             android:text="someone name"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@color/main_color">
+            android:textColor="@color/sub_color">
         </TextView>
         <ImageView
             android:id="@+id/iv_main_profile_menu"
@@ -46,19 +46,9 @@
             app:layout_constraintTop_toTopOf="@id/tv_main_title"
             app:layout_constraintBottom_toBottomOf="@id/tv_main_title"
             app:layout_constraintRight_toRightOf="parent"
-            android:src="@drawable/account_circle2">
+            android:src="@drawable/ic_general_menu">
         </ImageView>
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_main"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:src="@drawable/ic_write_paper"
-        android:layout_margin="16dp">
-    </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp_main"

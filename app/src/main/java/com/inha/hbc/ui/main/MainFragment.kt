@@ -36,11 +36,9 @@ class MainFragment: Fragment() {
         }
 
         binding.tvMainTitle.setOnClickListener {
-        }
-
-        binding.fabMain.setOnClickListener {
             MainFragmentManager.transToLetter()
         }
+
     }
 
     fun initView() {
