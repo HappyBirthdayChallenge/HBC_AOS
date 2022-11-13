@@ -46,7 +46,8 @@
         app:layout_constraintTop_toBottomOf="@id/vp_letter_base"
         app:layout_constraintBottom_toBottomOf="parent"
         app:tabTextColor="@color/hint_text"
-        app:tabSelectedTextColor="@color/main_color">
+        app:tabSelectedTextColor="@color/main_color"
+        app:tabIndicatorHeight="0dp">
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -58,7 +59,6 @@
             android:text="효과">
         </com.google.android.material.tabs.TabItem>
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/ti_letter_base"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="편지">

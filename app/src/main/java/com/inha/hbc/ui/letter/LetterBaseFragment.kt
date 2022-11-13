@@ -2,24 +2,31 @@ package com.inha.hbc.ui.letter
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.content.res.Resources.Theme
+import android.graphics.Paint
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.SpannableString
+import android.text.style.UnderlineSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material3.Text
+import androidx.compose.ui.graphics.Color
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.inha.hbc.R
 import com.inha.hbc.databinding.FragmentLetterBaseBinding
+import com.inha.hbc.databinding.ItemTabSelectedBinding
 import com.inha.hbc.ui.adapter.LetterBaseVPAdapter
 import com.inha.hbc.ui.adapter.LetterMenuRVAdapter
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
@@ -68,12 +75,19 @@ class LetterBaseFragment: Fragment() {
         initArr()
         initListener()
         initRv()
+        initView()
     }
 
     override fun onResume() {
         super.onResume()
 
         MainFragmentManager.viewWidth = binding.clLetterBase.rootView.width
+    }
+
+    fun initView() {
+        val text = SpannableString(binding.tlLetterBase.getTabAt(0)!!.text)
+        text.setSpan(UnderlineSpan(), 0, text.length, 0)
+        binding.tlLetterBase.getTabAt(0)!!.text = text
     }
 
     fun initArr() {
@@ -105,17 +119,36 @@ class LetterBaseFragment: Fragment() {
         binding.tlLetterBase.addOnTabSelectedListener(object: OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab) {
                 if (step[tab.position]) {
+
+                    tab.customView = null
+                    tab.customView = LayoutInflater.from(MainFragmentManager.baseActivity.baseContext)
+                        .inflate(R.layout.item_tab_selected, null)
+                    val tabBinding = ItemTabSelectedBinding.bind(tab.customView!!)
+
                     binding.vpLetterBase.currentItem = tab.position
-                    binding.tlLetterBase.setSelectedTabIndicatorColor(resources.getColor(R.color.main_color, null))
+                    tabBinding.tvItemTab.setTextColor(MainFragmentManager.baseActivity.getColor(R.color.main_color))
+                    tabBinding.tvItemTab.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+                }
+                else {
+                    tab.parent!!.selectTab(tab.parent!!.getTabAt(binding.vpLetterBase.currentItem))
+                    Toast.makeText(MainFragmentManager.baseActivity.baseContext, "이전단계를 완료해주세요!", Toast.LENGTH_SHORT).show()
                 }
             }
 
-            override fun onTabUnselected(tab: TabLayout.Tab?) {
-                TODO("Not yet implemented")
+            override fun onTabUnselected(tab: TabLayout.Tab) {
+                tab.customView = null
+                tab.customView = LayoutInflater.from(MainFragmentManager.baseActivity.baseContext)
+                    .inflate(R.layout.item_tab_selected, null)
+                val tabBinding = ItemTabSelectedBinding.bind(tab.customView!!)
+
+                tabBinding.tvItemTab.setTextColor(MainFragmentManager.baseActivity.getColor(R.color.hint_text))
+                tabBinding.tvItemTab.text = tab.parent!!.getTabAt(tab.position)!!.text
             }
 
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-                TODO("Not yet implemented")
+            override fun onTabReselected(tab: TabLayout.Tab) {
+                tab.customView = null
+                tab.customView = LayoutInflater.from(MainFragmentManager.baseActivity.baseContext)
+                    .inflate(R.layout.item_tab_selected, null)
             }
 
         })

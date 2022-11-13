@@ -33,7 +33,6 @@ class LetterFragment(val binding: FragmentLetterBinding): RecyclerView.ViewHolde
 
     var step = 1
 
-    lateinit var mainContext: Context
 
     lateinit var menuRVAdapter: LetterMenuRVAdapter
 
@@ -95,7 +94,7 @@ class LetterFragment(val binding: FragmentLetterBinding): RecyclerView.ViewHolde
     fun checkPermission(permissions: Array<String>, flag: Int):Boolean {
         val unPremList = ArrayList<String>()
         for (i in permissions) {
-            if (mainContext.checkSelfPermission(i) != PackageManager.PERMISSION_GRANTED) {
+            if (MainFragmentManager.baseActivity.checkSelfPermission(i) != PackageManager.PERMISSION_GRANTED) {
                 unPremList.add(i)
             }
         }
