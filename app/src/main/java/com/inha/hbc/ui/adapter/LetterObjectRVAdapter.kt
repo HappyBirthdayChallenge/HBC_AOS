@@ -22,17 +22,16 @@ class LetterObjectRVAdapter(pos: Int): RecyclerView.Adapter<LetterObjectRVAdapte
     lateinit var binding: ItemLetterObjectBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ObjectHolder {
         binding = ItemLetterObjectBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ObjectHolder(binding)
+        return ObjectHolder(binding, clistener)
     }
 
     override fun onBindViewHolder(holder: ObjectHolder, position: Int) {
         holder.bind(position)
-        holder.initListener(clistener, position)
     }
 
     override fun getItemCount(): Int = 5
 
-    class ObjectHolder(val binding: ItemLetterObjectBinding): RecyclerView.ViewHolder(binding.root) {
+    class ObjectHolder(val binding: ItemLetterObjectBinding, val clistener: Clistener): RecyclerView.ViewHolder(binding.root) {
         fun bind(pos: Int) {
 
             val lp = binding.root.layoutParams
@@ -66,9 +65,11 @@ class LetterObjectRVAdapter(pos: Int): RecyclerView.Adapter<LetterObjectRVAdapte
                     binding.tvItemLetterCount.text = "10"
                 }
             }
+
+            initListener(pos)
         }
 
-        fun initListener(clistener: Clistener, pos: Int) {
+        fun initListener(pos: Int) {
             binding.root.setOnClickListener {
                 clistener.onClick(
                     when (pos) {

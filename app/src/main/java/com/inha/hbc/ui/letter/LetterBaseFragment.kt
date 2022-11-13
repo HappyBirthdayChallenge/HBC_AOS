@@ -90,6 +90,8 @@ class LetterBaseFragment: Fragment() {
         binding.tlLetterBase.getTabAt(0)!!.text = text
 
         binding.vpLetterBase.isUserInputEnabled = false
+
+
     }
 
     fun initArr() {
@@ -130,6 +132,7 @@ class LetterBaseFragment: Fragment() {
                     binding.vpLetterBase.currentItem = tab.position
                     tabBinding.tvItemTab.setTextColor(MainFragmentManager.baseActivity.getColor(R.color.main_color))
                     tabBinding.tvItemTab.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+                    tabBinding.tvItemTab.text = getTabText(tab.position)
                 }
                 else {
                     tab.parent!!.selectTab(tab.parent!!.getTabAt(binding.vpLetterBase.currentItem))
@@ -138,19 +141,21 @@ class LetterBaseFragment: Fragment() {
             }
 
             override fun onTabUnselected(tab: TabLayout.Tab) {
-                tab.customView = null
-                tab.customView = LayoutInflater.from(MainFragmentManager.baseActivity.baseContext)
-                    .inflate(R.layout.item_tab_selected, null)
-                val tabBinding = ItemTabSelectedBinding.bind(tab.customView!!)
+                if (step[tab.position]) {
+                    tab.customView = null
+                    tab.customView = LayoutInflater.from(MainFragmentManager.baseActivity.baseContext)
+                        .inflate(R.layout.item_tab_selected, null)
+                    val tabBinding = ItemTabSelectedBinding.bind(tab.customView!!)
+                    tabBinding.tvItemTab.setTextColor(MainFragmentManager.baseActivity.getColor(R.color.black))
+                    tabBinding.tvItemTab.text = getTabText(tab.position)
+                }
+                else {
 
-                tabBinding.tvItemTab.setTextColor(MainFragmentManager.baseActivity.getColor(R.color.hint_text))
-                tabBinding.tvItemTab.text = tab.parent!!.getTabAt(tab.position)!!.text
+                }
+
             }
 
             override fun onTabReselected(tab: TabLayout.Tab) {
-                tab.customView = null
-                tab.customView = LayoutInflater.from(MainFragmentManager.baseActivity.baseContext)
-                    .inflate(R.layout.item_tab_selected, null)
             }
 
         })
@@ -165,6 +170,14 @@ class LetterBaseFragment: Fragment() {
 //            binding.fabLetterAdd.show()
         }
 
+    }
+
+    fun getTabText(pos: Int): String {
+        return when(pos) {
+            0-> "장식품"
+            1-> "효과"
+            else -> "편지"
+        }
     }
 
 
@@ -193,6 +206,18 @@ class LetterBaseFragment: Fragment() {
 
         val vpAdapter = LetterBaseVPAdapter(fragmentArr)
         binding.vpLetterBase.adapter = vpAdapter
+    }
+
+    fun getObject() {
+        step[1] = true
+        binding.vpLetterBase.currentItem = 1
+        binding.tlLetterBase.selectTab(binding.tlLetterBase.getTabAt(1))
+    }
+
+    fun getAnime() {
+        step[2] = true
+        binding.vpLetterBase.currentItem = 2
+        binding.tlLetterBase.selectTab(binding.tlLetterBase.getTabAt(2))
     }
 
 
@@ -264,10 +289,12 @@ class LetterBaseFragment: Fragment() {
 
                 else if (binding.vpLetterBase.currentItem == 2) {
                     binding.vpLetterBase.currentItem = 1
+                    binding.tlLetterBase.selectTab(binding.tlLetterBase.getTabAt(1))
 
                 }
                 else if (binding.vpLetterBase.currentItem == 1) {
                     binding.vpLetterBase.currentItem = 0
+                    binding.tlLetterBase.selectTab(binding.tlLetterBase.getTabAt(0))
                 }
                 else {
                     MainFragmentManager.letterClose()

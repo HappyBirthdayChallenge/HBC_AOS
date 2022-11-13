@@ -39,16 +39,15 @@ class LetterObjectSelectionRVAdapter: RecyclerView.Adapter<LetterObjectSelection
         fun bind(pos: Int) {
             binding.cvItemLetterObject.radius = 20F
             var lp = binding.root.layoutParams
-            (lp as FlexboxLayoutManager.LayoutParams).flexBasisPercent = "0.19".toFloat()
+            (lp as FlexboxLayoutManager.LayoutParams).flexBasisPercent = "0.24".toFloat()
             lp.height = MainFragmentManager.viewWidth / 3
 
             lp = binding.cvItemLetterObject.layoutParams as ViewGroup.MarginLayoutParams
-            lp.updateMargins(5, 5, 5, 5)
-
-            lp = binding.ivItemLetterObject.layoutParams
-            binding.ivItemLetterObject.setPadding(5, 5, 5, 5)
+            lp.setMargins(20, 20, 20, 10)
+            binding.cvItemLetterObject.layoutParams = lp
 
             binding.ivItemLetterObject.setImageResource(selectionAssist(MainFragmentManager.objectPageType, pos))
+            binding.ivItemLetterObject.setPadding(20, 20, 20, 20)
         }
 
 

@@ -64,8 +64,16 @@ object MainFragmentManager {
         }
     }
 
-    fun objectClose(page: Fragment) {
+    fun objectClose(page: Fragment, selected: Boolean) {
         manager.beginTransaction().remove(page).commit()
+        if (selected) {
+            letterBaseFragment.getObject()
+        }
+    }
+
+    fun animeSelected(title: String) {
+        letterData.animeId = title
+        letterBaseFragment.getAnime()
     }
 
 }
