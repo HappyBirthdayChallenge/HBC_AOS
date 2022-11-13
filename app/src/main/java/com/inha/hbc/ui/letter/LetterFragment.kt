@@ -24,6 +24,7 @@ import com.google.android.flexbox.JustifyContent
 import com.inha.hbc.databinding.FragmentLetterBinding
 import com.inha.hbc.ui.adapter.LetterMenuRVAdapter
 import com.inha.hbc.ui.adapter.LetterObjectRVAdapter
+import com.inha.hbc.ui.adapter.LetterRVAdapter
 import com.inha.hbc.ui.dialog.LetterDialog
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import java.io.File
@@ -31,15 +32,8 @@ import java.util.Date
 
 class LetterFragment(val binding: FragmentLetterBinding): RecyclerView.ViewHolder(binding.root) {
 
-    var step = 1
-
-
-    lateinit var menuRVAdapter: LetterMenuRVAdapter
-
-    lateinit var viewData: ArrayList<Int>
-    lateinit var menuData: ArrayList<String>
-
-
+    var rvArr = ArrayList<String>()
+    lateinit var adapter: LetterRVAdapter
     val PERMISSIONS = arrayOf(
         Manifest.permission.CAMERA,
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -47,18 +41,23 @@ class LetterFragment(val binding: FragmentLetterBinding): RecyclerView.ViewHolde
     )
     val PERMISSIONS_REQUEST = 100
 
-
-
     fun bind() {
-        checkPermission(PERMISSIONS, PERMISSIONS_REQUEST)
 
         initListener()
+        initView()
+
 
     }
 
 
-
-
+    fun initView() {
+        rvArr.apply {
+            add("")
+            add("")
+        }
+        adapter = LetterRVAdapter(rvArr)
+        binding.rvLetterWriteMedia.adapter = adapter
+    }
 
     fun initListener() {
 
@@ -72,16 +71,20 @@ class LetterFragment(val binding: FragmentLetterBinding): RecyclerView.ViewHolde
         binding.fabLetterSend.setOnClickListener {
 
         }
+
     }
 
+    fun notifyUpdate() {
+        checkPermission(PERMISSIONS, PERMISSIONS_REQUEST)
+        adapter.notifyItemRangeChanged(0, 2)
+    }
 
-
-
-
-
+    fun updateData() {
+        adapter.notifyItemInserted(rvArr.size)
+    }
 
     fun btnVisible(hidden: Boolean) {
-        if (hidden) {
+        if (!hidden) {
             binding.fabLetterSend.hide()
             binding.fabLetterAdd.hide()
         }

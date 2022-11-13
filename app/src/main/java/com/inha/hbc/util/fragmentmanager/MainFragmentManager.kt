@@ -2,7 +2,9 @@ package com.inha.hbc.util.fragmentmanager
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.inha.hbc.R
 import com.inha.hbc.data.local.LetterData
+import com.inha.hbc.ui.assist.selectionAssist
 import com.inha.hbc.ui.letter.LetterBaseFragment
 import com.inha.hbc.ui.letter.LetterFragment
 import com.inha.hbc.ui.letter.ObjectSelectionFragment
@@ -19,13 +21,17 @@ object MainFragmentManager {
 
     var objectPageType = 0
     var letterData = LetterData("", "", "")
+    var objectId = R.drawable.img_deco_drink_1
     var viewWidth = 0
+
+    lateinit var letterFragment: LetterFragment
 
     fun init(manager: FragmentManager, id: Int, base: MainActivity) {
         this.manager = manager
         this.id = id
         mainPage = MainFragment()
         baseActivity = base
+        letterData.animeId = "json_deco_anime_1.json"
     }
 
     fun start() {

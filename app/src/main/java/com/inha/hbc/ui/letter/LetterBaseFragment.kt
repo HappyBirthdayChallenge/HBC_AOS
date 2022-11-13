@@ -21,7 +21,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material3.Text
 import androidx.compose.ui.graphics.Color
 import androidx.core.content.FileProvider
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.findFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.inha.hbc.R
@@ -133,6 +135,10 @@ class LetterBaseFragment: Fragment() {
                     tabBinding.tvItemTab.setTextColor(MainFragmentManager.baseActivity.getColor(R.color.main_color))
                     tabBinding.tvItemTab.paintFlags = Paint.UNDERLINE_TEXT_FLAG
                     tabBinding.tvItemTab.text = getTabText(tab.position)
+
+                    if (tab.position == 2) {
+                        MainFragmentManager.letterFragment.notifyUpdate()
+                    }
                 }
                 else {
                     tab.parent!!.selectTab(tab.parent!!.getTabAt(binding.vpLetterBase.currentItem))
@@ -216,6 +222,7 @@ class LetterBaseFragment: Fragment() {
 
     fun getAnime() {
         step[2] = true
+        MainFragmentManager.letterFragment.notifyUpdate()
         binding.vpLetterBase.currentItem = 2
         binding.tlLetterBase.selectTab(binding.tlLetterBase.getTabAt(2))
     }

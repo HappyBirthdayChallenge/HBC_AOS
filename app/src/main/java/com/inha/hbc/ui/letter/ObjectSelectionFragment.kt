@@ -12,6 +12,7 @@ import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.inha.hbc.databinding.FragmentObjectSelectionBinding
 import com.inha.hbc.ui.adapter.LetterObjectSelectionRVAdapter
+import com.inha.hbc.ui.assist.selectionAssist
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import com.inha.hbc.util.fragmentmanager.SignupFragmentManager
 
@@ -47,6 +48,7 @@ class ObjectSelectionFragment: Fragment() {
         adapter.myListener = object : LetterObjectSelectionRVAdapter.MyListener {
             override fun onClick(pos: Int) {
                 MainFragmentManager.letterData.objectId += pos.toString()
+                MainFragmentManager.objectId = selectionAssist(MainFragmentManager.objectPageType, pos)
                 MainFragmentManager.objectClose(this@ObjectSelectionFragment, true)
             }
         }

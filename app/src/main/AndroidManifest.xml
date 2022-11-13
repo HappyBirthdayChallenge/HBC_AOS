@@ -45,7 +45,8 @@
         <activity
             android:name=".ui.main.MainActivity"
             android:screenOrientation="portrait"
-            android:exported="true" >
+            android:exported="true"
+            android:windowSoftInputMode="adjustResize">
         </activity>
         <activity android:name=".ui.login.ui.LoginActivity"
             android:exported="true"

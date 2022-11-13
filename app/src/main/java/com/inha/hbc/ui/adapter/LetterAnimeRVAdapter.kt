@@ -43,7 +43,7 @@ class LetterAnimeRVAdapter:RecyclerView.Adapter<LetterAnimeRVAdapter.AnimeHolder
 
         fun initListener(pos: Int) {
             binding.root.setOnClickListener {
-                myListener.onClick("json_deco_anime_$pos")
+                myListener.onClick("json_deco_anime_${pos+1}.json")
             }
         }
 
