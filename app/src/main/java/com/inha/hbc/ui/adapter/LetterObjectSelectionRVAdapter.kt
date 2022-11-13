@@ -15,21 +15,27 @@ import com.inha.hbc.ui.assist.selectionCount
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 
 class LetterObjectSelectionRVAdapter: RecyclerView.Adapter<LetterObjectSelectionRVAdapter.ObjectHolder>() {
+
+    interface MyListener {
+        fun onClick(pos: Int)
+    }
+    lateinit var myListener: MyListener
     lateinit var binding: ItemLetterObjectBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ObjectHolder {
 
         binding = ItemLetterObjectBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ObjectHolder(binding)
+        return ObjectHolder(binding, myListener)
     }
 
     override fun onBindViewHolder(holder: ObjectHolder, position: Int) {
         holder.bind(position)
+        holder.initListener(position)
     }
 
     override fun getItemCount(): Int {
         return selectionCount(MainFragmentManager.objectPageType)
     }
-    class ObjectHolder(val binding: ItemLetterObjectBinding): RecyclerView.ViewHolder(binding.root) {
+    class ObjectHolder(val binding: ItemLetterObjectBinding, val myListener: MyListener): RecyclerView.ViewHolder(binding.root) {
         fun bind(pos: Int) {
             binding.cvItemLetterObject.radius = 20F
             var lp = binding.root.layoutParams
@@ -42,10 +48,14 @@ class LetterObjectSelectionRVAdapter: RecyclerView.Adapter<LetterObjectSelection
             lp = binding.ivItemLetterObject.layoutParams
             binding.ivItemLetterObject.setPadding(5, 5, 5, 5)
 
-
-
-
             binding.ivItemLetterObject.setImageResource(selectionAssist(MainFragmentManager.objectPageType, pos))
+        }
+
+
+        fun initListener(pos: Int) {
+            binding.root.setOnClickListener {
+                myListener.onClick(pos)
+            }
         }
     }
 

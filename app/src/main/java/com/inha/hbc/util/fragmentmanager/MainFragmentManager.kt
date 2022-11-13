@@ -2,6 +2,7 @@ package com.inha.hbc.util.fragmentmanager
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.inha.hbc.data.local.LetterData
 import com.inha.hbc.ui.letter.LetterBaseFragment
 import com.inha.hbc.ui.letter.LetterFragment
 import com.inha.hbc.ui.letter.ObjectSelectionFragment
@@ -16,7 +17,8 @@ object MainFragmentManager {
     lateinit var letterBaseFragment: LetterBaseFragment
     var id = 0
 
-    lateinit var objectPageType: String
+    var objectPageType = 0
+    var letterData = LetterData("", "", "")
     var viewWidth = 0
 
     fun init(manager: FragmentManager, id: Int, base: MainActivity) {
@@ -53,7 +55,13 @@ object MainFragmentManager {
 
     fun objectOpen(type: String) {
         manager.beginTransaction().add(id, ObjectSelectionFragment()).commit()
-        objectPageType = type
+        objectPageType = when(type) {
+            "img_deco_gift_" -> 0
+            "img_deco_drink_" -> 1
+            "img_deco_toy_" -> 2
+            "img_pic_" -> 3
+            else -> 4//음식
+        }
     }
 
     fun objectClose(page: Fragment) {

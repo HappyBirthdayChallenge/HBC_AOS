@@ -28,6 +28,16 @@
         android:textStyle="bold"
         android:layout_marginLeft="15dp">
     </TextView>
+    <TextView
+        android:id="@+id/tv_object_selection_pic"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_object_selection_title"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="고민해봅시다"
+        android:visibility="gone">
+    </TextView>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_object_selection"
         android:layout_width="match_parent"

@@ -28,6 +28,32 @@
             android:padding="20dp">
         </ImageView>
     </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_item_letter_anime"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/tv_item_letter_title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:backgroundTint="#E4E4E4"
+        app:cardCornerRadius="40dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:elevation="10dp">
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lav_item_letter_object"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:padding="20dp"
+            app:lottie_fileName="login_loading.json"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            android:background="@color/white">
+        </com.airbnb.lottie.LottieAnimationView>
+    </androidx.cardview.widget.CardView>
     <TextView
         android:id="@+id/tv_item_letter_title"
         android:layout_width="wrap_content"

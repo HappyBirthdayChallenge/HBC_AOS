@@ -70,7 +70,15 @@ class LetterObjectRVAdapter(pos: Int): RecyclerView.Adapter<LetterObjectRVAdapte
 
         fun initListener(clistener: Clistener, pos: Int) {
             binding.root.setOnClickListener {
-                clistener.onClick(binding.tvItemLetterTitle.text.toString())
+                clistener.onClick(
+                    when (pos) {
+                        0 -> "img_deco_gift_"
+                        1 -> "img_deco_drink_"
+                        2 -> "img_deco_toy_"
+                        3 -> "img_pic_"
+                        else -> "img_deco_food_"
+                    }
+                )
             }
         }
     }

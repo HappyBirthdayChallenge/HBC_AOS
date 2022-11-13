@@ -25,11 +25,33 @@ class ObjectSelectionFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.rvObjectSelection.adapter = LetterObjectSelectionRVAdapter()
+
+        initRv()
+
+        initView()
+
+    }
+
+    private fun initRv() {
+        if (MainFragmentManager.objectPageType == 3) {
+            binding.tvObjectSelectionPic.visibility = View.VISIBLE
+            binding.rvObjectSelection.visibility = View.GONE
+            return
+        }
+        val adapter = LetterObjectSelectionRVAdapter()
+        adapter.myListener = object : LetterObjectSelectionRVAdapter.MyListener {
+            override fun onClick(pos: Int) {
+                MainFragmentManager.letterData.objectId += pos.toString()
+            }
+        }
+        binding.rvObjectSelection.adapter = adapter
 
         val selectLayoutManager = FlexboxLayoutManager(context)
         selectLayoutManager.alignItems = AlignItems.FLEX_START
         binding.rvObjectSelection.layoutManager = selectLayoutManager
+    }
+
+    fun initView() {
 
     }
 
