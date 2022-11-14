@@ -27,8 +27,16 @@ class Signup2Fragment: Fragment() {
         initListener()
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (hidden) {
+            binding.tvSignup2Error.text = ""
+        }
+    }
+
     fun initListener() {
         binding.ivSignup2Back.setOnClickListener {
+            binding.tvSignup2Error.text = ""
             SignupFragmentManager.transaction(2, 1)
         }
 
@@ -37,6 +45,7 @@ class Signup2Fragment: Fragment() {
             val result = checkValid()
             if (result == 1) {
                 SignupFragmentManager.signupData.pw = pw
+                binding.tvSignup2Error.text = ""
                 SignupFragmentManager.transaction(2, 3)
             }
             else if (result == 2) {

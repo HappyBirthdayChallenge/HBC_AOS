@@ -25,7 +25,7 @@ import com.inha.hbc.util.network.RetrofitService
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 
-class LoginFragment: Fragment(), KakaoLoginView, GetTokenView, CheckTokenView, GetMyInfoView, RefreshFcmView {
+class LoginFragment(val isBackBirth: Boolean): Fragment(), KakaoLoginView, GetTokenView, CheckTokenView, GetMyInfoView, RefreshFcmView {
 
     lateinit var binding: FragmentLoginBinding
     override fun onCreateView(
@@ -40,7 +40,9 @@ class LoginFragment: Fragment(), KakaoLoginView, GetTokenView, CheckTokenView, G
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        checkToken()
+        if (isBackBirth) {
+            checkToken()
+        }
 
         initListener()
 
@@ -159,11 +161,7 @@ class LoginFragment: Fragment(), KakaoLoginView, GetTokenView, CheckTokenView, G
 
     override fun onGetTokenSuccess(resp: GetTokenSuccess) {
         decodeJwt(resp.data!!)
-        binding.lavLoginLoading.visibility = View.GONE
-        RetrofitService().refreshFcm(GlobalApplication.prefs.getFcmtoken()!!)
-        val intent = Intent(requireActivity(), MainActivity::class.java)
-        startActivity(intent)
-        requireActivity().finish()
+        RetrofitService().getMyInfo(this)
     }
 
     override fun onGetTokenFailure() {
@@ -171,11 +169,7 @@ class LoginFragment: Fragment(), KakaoLoginView, GetTokenView, CheckTokenView, G
     }
 
     override fun onCheckTokenSuccess() {
-        binding.lavLoginLoading.visibility = View.GONE
-        RetrofitService().refreshFcm(GlobalApplication.prefs.getFcmtoken()!!)
-        val intent = Intent(requireActivity(), MainActivity::class.java)
-        startActivity(intent)
-        requireActivity().finish()
+        RetrofitService().getMyInfo(this)
     }
 
     override fun onCheckTokenFailure() {

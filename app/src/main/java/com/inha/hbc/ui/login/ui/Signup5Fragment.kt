@@ -25,6 +25,11 @@ class Signup5Fragment: Fragment() {
         initListener()
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        binding.tvSignup5Error.text = ""
+    }
+
     fun initListener() {
         binding.ivSignup5Back.setOnClickListener {
             SignupFragmentManager.backPressed()

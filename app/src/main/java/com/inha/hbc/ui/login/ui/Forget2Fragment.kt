@@ -29,6 +29,7 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
     var resend = false
     var step = false
     var id = true
+    var already= false
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -48,15 +49,16 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
+        binding.tvForget2Error.text = ""
         if (hidden) {
             if (timer != null) {
                 timer!!.cancel()
             }
-            if (!binding.tieForget2PhoneAuth.isEnabled) {
-                step = false
+            if (!step) {
                 binding.tieForget2PhoneAuth.isEnabled = true
                 binding.tvForget2Resend.isEnabled =true
                 binding.tieForget2PhoneAuth.setText("")
+                already = false
                 if (id) {
                     data.id = null
                 }
@@ -73,8 +75,11 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
             else {
                 id = data.id.isNullOrEmpty()
                 binding.tvForget2PhoneTime.visibility = View.VISIBLE
+                binding.tieForget2PhoneAuth.isEnabled = true
+                binding.tvForget2Resend.isEnabled =true
                 startTimer()
             }
+            step = false
         }
     }
 
@@ -85,7 +90,7 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
         }
         binding.tvForget2Next.setOnClickListener {
             binding.lavForget2Loading.visibility = View.VISIBLE
-            if (step) {
+            if (already) {
                 if (id) {
                     NormLoginFragmentManager.transaction(2, 3)
                 }
@@ -165,8 +170,10 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
         else {
             binding.lavForget2Loading.visibility = View.GONE
 
-            NormLoginFragmentManager.transaction(3, 4)
             step = true
+            already = true
+
+            NormLoginFragmentManager.transaction(3, 4)
         }
     }
 
@@ -188,8 +195,9 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
     override fun onFindIdSuccess(respData: FindIdSuccess) {
         NormLoginFragmentManager.data.id = respData.data!!.username
         binding.lavForget2Loading.visibility = View.GONE
-        NormLoginFragmentManager.transaction(2, 3)
         step = true
+        already = true
+        NormLoginFragmentManager.transaction(2, 3)
     }
 
     override fun onFindIdFailure() {

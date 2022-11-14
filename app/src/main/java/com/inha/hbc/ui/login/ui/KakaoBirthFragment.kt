@@ -37,7 +37,7 @@ class KakaoBirthFragment: Fragment(), CheckBirthView, RefreshFcmView {
 
     fun initListener() {
         binding.ivKakaoBirthBack.setOnClickListener {
-            parentFragmentManager.beginTransaction().replace(NormLoginFragmentManager.frameId, LoginFragment()).commit()
+            parentFragmentManager.beginTransaction().replace(NormLoginFragmentManager.frameId, LoginFragment(true)).commit()
         }
 
         binding.npKakaoBirthYear.apply {
@@ -93,7 +93,7 @@ class KakaoBirthFragment: Fragment(), CheckBirthView, RefreshFcmView {
         super.onAttach(context)
         callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                parentFragmentManager.beginTransaction().replace(NormLoginFragmentManager.frameId, LoginFragment()).commit()
+                parentFragmentManager.beginTransaction().replace(NormLoginFragmentManager.frameId, LoginFragment(true)).commit()
             }
 
         }

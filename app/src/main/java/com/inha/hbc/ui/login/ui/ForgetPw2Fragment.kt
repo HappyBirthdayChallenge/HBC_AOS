@@ -29,6 +29,11 @@ class ForgetPw2Fragment: Fragment(), FindPwView {
         initListener()
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        binding.tvForgetPw2Error.text = ""
+    }
+
     fun initListener() {
         binding.ivForgetPw2Back.setOnClickListener {
             NormLoginFragmentManager.forgetBackPressed()

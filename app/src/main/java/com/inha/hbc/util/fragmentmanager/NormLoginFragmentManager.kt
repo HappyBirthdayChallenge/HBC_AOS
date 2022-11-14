@@ -105,6 +105,6 @@ object NormLoginFragmentManager {
     }
 
     fun baseBackPressed() {
-        fragmentManager.beginTransaction().replace(frameId, LoginFragment()).commit()
+        fragmentManager.beginTransaction().replace(frameId, LoginFragment(false)).commit()
     }
 }

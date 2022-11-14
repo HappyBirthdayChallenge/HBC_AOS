@@ -43,6 +43,7 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
+        binding.tvSignup4Error.text = ""
         if (hidden) {
             if (already && !goNext) {
                 SignupFragmentManager.signupData.phone = ""

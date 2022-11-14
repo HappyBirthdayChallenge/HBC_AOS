@@ -31,6 +31,11 @@ class ForgetPw1Fragment: Fragment(), CheckIdView {
         initListener()
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        binding.tvForgetPw1Error.text = ""
+    }
+
     fun initListener() {
         binding.ivForgetPw1Back.setOnClickListener {
             NormLoginFragmentManager.forgetBackPressed()
@@ -41,6 +46,10 @@ class ForgetPw1Fragment: Fragment(), CheckIdView {
             if (checkValid()) {
                 binding.lavForgetPw1Loading.visibility = View.VISIBLE
                 RetrofitService().checkId(id, this)
+            }
+            else {
+                binding.tvForgetPw1Error.visibility = View.VISIBLE
+                binding.tvForgetPw1Error.text = "아이디는 5~20자의 영문 대/소문자, 숫자만 사용하여 작성해 주세요."
             }
         }
     }

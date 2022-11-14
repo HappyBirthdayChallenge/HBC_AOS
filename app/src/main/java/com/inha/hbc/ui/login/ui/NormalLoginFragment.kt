@@ -67,12 +67,16 @@ class NormalLoginFragment(): Fragment(), NormLoginView, RefreshFcmView {
                 return@setOnClickListener
             }
             if (!checkIdValid(id)) {
-                binding.tvNormalLoginError.text = "입력하신 아이디 또는 비밀번호가 일치하지 않아요"
+                binding.tvNormalLoginError.text = "아이디는 5~20자의 영문 대/소문자, 숫자만 사용하여 입력해 주세요."
+                if(!checkPwValid(pw)){
+                    binding.tvNormalLoginError.text = "비밀번호는 10~20자의 영문 대/소문자, 숫자, 특수문자(`~!@#\$%^&*())를 조합하여 입력해 주세요."
+                    return@setOnClickListener
+                }
                 return@setOnClickListener
             }
 
             if(!checkPwValid(pw)){
-                binding.tvNormalLoginError.text = "입력하신 아이디 또는 비밀번호가 일치하지 않아요"
+                binding.tvNormalLoginError.text = "비밀번호는 10~20자의 영문 대/소문자, 숫자, 특수문자(`~!@#\$%^&*())를 조합하여 입력해 주세요."
                 return@setOnClickListener
             }
             binding.lavNormalLoginLoading.visibility = View.VISIBLE

@@ -64,6 +64,7 @@ class Signup1Fragment: Fragment(), CheckIdView {
         SignupFragmentManager.signupData.id = id
 
         binding.lavSignup1Loading.visibility = View.GONE
+        binding.tvSignup1Error.text = ""
         SignupFragmentManager.transaction(1, 2)
     }
 

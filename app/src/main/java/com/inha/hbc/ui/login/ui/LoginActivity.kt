@@ -32,7 +32,7 @@ class LoginActivity: AppCompatActivity() {
         SignupFragmentManager.setManager(supportFragmentManager, binding.fcLogin.id, this)
         NormLoginFragmentManager.setManager(supportFragmentManager, binding.fcLogin.id, this)
 
-        supportFragmentManager.beginTransaction().add(binding.fcLogin.id, LoginFragment()).commit()
+        supportFragmentManager.beginTransaction().add(binding.fcLogin.id, LoginFragment(false)).commit()
     }
 
     fun hideKeyboard() {

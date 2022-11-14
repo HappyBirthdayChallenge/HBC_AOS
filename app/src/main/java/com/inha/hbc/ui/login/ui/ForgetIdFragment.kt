@@ -28,6 +28,7 @@ class ForgetIdFragment: Fragment() {
 
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
+        binding.tvForgetIdError.text = ""
         initView()
     }
     fun initView() {

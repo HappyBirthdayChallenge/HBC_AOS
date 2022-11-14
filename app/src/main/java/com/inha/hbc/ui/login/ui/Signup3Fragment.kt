@@ -25,6 +25,13 @@ class Signup3Fragment: Fragment() {
         initListener()
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (hidden) {
+            binding.tvSignup3Error.text = ""
+        }
+    }
+
     fun initListener() {
         binding.ivSignup3Back.setOnClickListener {
             SignupFragmentManager.transaction(3, 2)

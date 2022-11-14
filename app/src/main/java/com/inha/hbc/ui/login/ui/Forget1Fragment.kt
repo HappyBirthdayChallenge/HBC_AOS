@@ -39,6 +39,11 @@ class Forget1Fragment: Fragment(), IsMeView, SendCodeView {
         initListener()
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        binding.tvForget1Error.text = ""
+    }
+
     fun initListener() {
         binding.ivForget1Back.setOnClickListener {
             NormLoginFragmentManager.forgetBackPressed()
@@ -50,7 +55,7 @@ class Forget1Fragment: Fragment(), IsMeView, SendCodeView {
             phone = binding.tieForget1PwPhone.text.toString()
 
             if (!checkValid(name)) {
-                binding.tvForget1Error.text = "이름이 규칙에 맞지 않습니다."
+                binding.tvForget1Error.text = "이름은 2~20자의 한글, 영문 대/소문자, 숫자만 사용하여 입력해 주세요."
                 return@setOnClickListener
             }
 

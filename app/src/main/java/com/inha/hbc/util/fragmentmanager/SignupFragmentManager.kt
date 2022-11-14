@@ -43,7 +43,7 @@ object SignupFragmentManager {
 
     fun end() {
         activity.hideKeyboard()
-        fragmentManager.beginTransaction().replace(frameId, LoginFragment()).commit()
+        fragmentManager.beginTransaction().replace(frameId, LoginFragment(false)).commit()
         fragmentManager.popBackStackImmediate(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         signupData = SignupData()
         signupCurrentPage = 0
