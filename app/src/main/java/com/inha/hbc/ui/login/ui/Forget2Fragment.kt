@@ -54,7 +54,7 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
             if (timer != null) {
                 timer!!.cancel()
             }
-            if (!step) {
+            if (!step && already) {//아이디까지 다 봤는데 더 뒤로가는 경우
                 binding.tieForget2PhoneAuth.isEnabled = true
                 binding.tvForget2Resend.isEnabled =true
                 binding.tieForget2PhoneAuth.setText("")
@@ -86,11 +86,13 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
     fun initListener() {
         binding.ivForget2Back.setOnClickListener {
             step = false
+            already = false
             NormLoginFragmentManager.forgetBackPressed()
         }
         binding.tvForget2Next.setOnClickListener {
             binding.lavForget2Loading.visibility = View.VISIBLE
             if (already) {
+                step = true
                 if (id) {
                     NormLoginFragmentManager.transaction(2, 3)
                 }
