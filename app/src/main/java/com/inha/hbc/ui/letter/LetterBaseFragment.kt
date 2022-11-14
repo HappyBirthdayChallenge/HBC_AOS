@@ -54,10 +54,12 @@ class LetterBaseFragment: Fragment() {
     val gal =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             imgURI = it.data?.data!!
+            MainFragmentManager.letterFragment.updateData(imgURI)
             Log.d("imgUri", imgURI.toString())
         }
 
     val cam = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        MainFragmentManager.letterFragment.updateData(imgURI)
         Log.d("imgUri", imgURI.toString())
     }
 
@@ -172,8 +174,7 @@ class LetterBaseFragment: Fragment() {
             binding.tvLetterBaseAddBackground.visibility = View.GONE
             binding.rvLetterBaseAddMenu.visibility = View.GONE
 
-//            binding.fabLetterSend.show()
-//            binding.fabLetterAdd.show()
+            MainFragmentManager.letterFragment.btnVisible(false)
         }
 
     }
@@ -192,8 +193,6 @@ class LetterBaseFragment: Fragment() {
         menuRVAdapter.onlistener = object : LetterMenuRVAdapter.OnListener {
             override fun onClick(pos: Int) {
                 closeList()
-
-
                 when (menuData[pos]) {
                     "카메라" -> {
                         openCamera()
@@ -236,10 +235,12 @@ class LetterBaseFragment: Fragment() {
     fun closeList() {
         binding.tvLetterBaseAddBackground.visibility = View.GONE
         binding.rvLetterBaseAddMenu.visibility = View.GONE
+
+        MainFragmentManager.letterFragment.btnVisible(false)
     }
 
     fun openRecord() {
-
+        binding.tvLetterBaseAddBackground.visibility = View.VISIBLE
     }
 
     fun openCamera() {
@@ -290,8 +291,7 @@ class LetterBaseFragment: Fragment() {
                     binding.tvLetterBaseAddBackground.visibility = View.GONE
                     binding.rvLetterBaseAddMenu.visibility = View.GONE
 
-//                    binding.fabLetterSend.show()
-//                    binding.fabLetterAdd.show()
+                    MainFragmentManager.letterFragment.btnVisible(false)
                 }
 
                 else if (binding.vpLetterBase.currentItem == 2) {

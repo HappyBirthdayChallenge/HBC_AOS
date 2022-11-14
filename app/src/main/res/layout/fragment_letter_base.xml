@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
     android:id="@+id/cl_letter_base">
     <ImageView
         android:id="@+id/iv_letter_base_close"
@@ -89,4 +90,64 @@
         android:elevation="1dp"
         android:background="@color/white">
     </androidx.recyclerview.widget.RecyclerView>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_letter_base_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:visibility="gone">
+        <TextView
+            android:id="@+id/tv_letter_base_record_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tv_letter_base_record_subtitle"
+            android:text="녹음"
+            android:textSize="24sp"
+            android:textStyle="bold">
+        </TextView>
+        <TextView
+            android:id="@+id/tv_letter_base_record_subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tv_letter_base_record_title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:text="버튼을 눌러서 녹음을 시작해보세요."
+            android:textSize="14sp">
+        </TextView>
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lav_letter_base_record_recording"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_letter_base_record_subtitle"
+            app:layout_constraintBottom_toTopOf="@id/lav_letter_base_record_start">
+        </com.airbnb.lottie.LottieAnimationView>
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lav_letter_base_record_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lav_letter_base_record_recording"
+            app:layout_constraintBottom_toTopOf="@id/tv_letter_base_record_submit">
+        </com.airbnb.lottie.LottieAnimationView>
+        <TextView
+            android:id="@+id/tv_letter_base_record_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TextView>
+        <TextView
+            android:id="@+id/tv_letter_base_record_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        </TextView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

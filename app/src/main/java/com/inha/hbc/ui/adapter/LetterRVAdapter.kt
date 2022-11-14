@@ -3,6 +3,7 @@ package com.inha.hbc.ui.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.inha.hbc.databinding.ItemLetterBinding
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
@@ -11,7 +12,7 @@ class LetterRVAdapter(var idData: ArrayList<String>): RecyclerView.Adapter<Lette
     lateinit var binding: ItemLetterBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): LetterHolder {
         binding = ItemLetterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return LetterHolder(binding)
+        return LetterHolder(binding, idData)
     }
 
     override fun onBindViewHolder(holder: LetterHolder, position: Int) {
@@ -20,7 +21,7 @@ class LetterRVAdapter(var idData: ArrayList<String>): RecyclerView.Adapter<Lette
 
     override fun getItemCount(): Int = idData.size
 
-    class LetterHolder(val binding: ItemLetterBinding): RecyclerView.ViewHolder(binding.root) {
+    class LetterHolder(val binding: ItemLetterBinding, var idData: ArrayList<String>): RecyclerView.ViewHolder(binding.root) {
         fun init(pos: Int) {
             if(pos == 0) {
                 binding.ivItemLetter.setImageResource(MainFragmentManager.objectId)
@@ -34,7 +35,7 @@ class LetterRVAdapter(var idData: ArrayList<String>): RecyclerView.Adapter<Lette
                 }
             }
             else {
-                //사진이나 동영상썸네일이나 음성파일모양
+                binding.ivItemLetter.setImageURI(idData[pos].toUri())
             }
         }
     }

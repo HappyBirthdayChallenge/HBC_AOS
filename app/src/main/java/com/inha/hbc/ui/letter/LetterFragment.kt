@@ -37,7 +37,8 @@ class LetterFragment(val binding: FragmentLetterBinding): RecyclerView.ViewHolde
     val PERMISSIONS = arrayOf(
         Manifest.permission.CAMERA,
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.READ_EXTERNAL_STORAGE
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.RECORD_AUDIO
     )
     val PERMISSIONS_REQUEST = 100
 
@@ -79,12 +80,13 @@ class LetterFragment(val binding: FragmentLetterBinding): RecyclerView.ViewHolde
         adapter.notifyItemRangeChanged(0, 2)
     }
 
-    fun updateData() {
+    fun updateData(uri: Uri) {
+        rvArr.add(uri.toString())
         adapter.notifyItemInserted(rvArr.size)
     }
 
     fun btnVisible(hidden: Boolean) {
-        if (!hidden) {
+        if (hidden) {
             binding.fabLetterSend.hide()
             binding.fabLetterAdd.hide()
         }
