@@ -27,7 +27,44 @@
 
 
     <TextView
+        android:id="@+id/tv_letter_record_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+    </TextView>
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lav_letter_record_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </com.airbnb.lottie.LottieAnimationView>
+    <ImageView
+        android:id="@+id/iv_letter_record_play"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </ImageView>
+
+
+
+    <ImageView
+        android:id="@+id/iv_letter_record_reset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </ImageView>
+    <ImageView
+        android:id="@+id/iv_letter_record_recording"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </ImageView>
+    <ImageView
+        android:id="@+id/iv_letter_record_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+    </ImageView>
+
+
+    <TextView
+        android:id="@+id/tv_letter_Record_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="첨부하기">
     </TextView>
 </androidx.constraintlayout.widget.ConstraintLayout>

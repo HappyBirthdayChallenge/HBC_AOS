@@ -120,7 +120,7 @@ class LetterBaseFragment: Fragment() {
     }
 
     fun initListener() {
-        binding.ivLetterBaseClose.setOnClickListener {
+        binding.ivLetterBaseBack.setOnClickListener {
             MainFragmentManager.letterClose()
         }
 
