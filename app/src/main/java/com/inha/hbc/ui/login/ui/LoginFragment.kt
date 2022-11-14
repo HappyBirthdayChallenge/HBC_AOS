@@ -28,6 +28,7 @@ import com.kakao.sdk.user.UserApiClient
 class LoginFragment(val isBackBirth: Boolean): Fragment(), KakaoLoginView, GetTokenView, CheckTokenView, GetMyInfoView, RefreshFcmView {
 
     lateinit var binding: FragmentLoginBinding
+    var auto = true
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -40,7 +41,7 @@ class LoginFragment(val isBackBirth: Boolean): Fragment(), KakaoLoginView, GetTo
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (isBackBirth) {
+        if (!isBackBirth) {
             checkToken()
         }
 
@@ -50,6 +51,7 @@ class LoginFragment(val isBackBirth: Boolean): Fragment(), KakaoLoginView, GetTo
     }
     fun initListener() {
         binding.clLoginKakaoLogin.setOnClickListener {
+            auto = false
             kakaologin()
         }
 
@@ -191,8 +193,10 @@ class LoginFragment(val isBackBirth: Boolean): Fragment(), KakaoLoginView, GetTo
         }
         else {
             binding.lavLoginLoading.visibility = View.GONE
+            if (!auto) {
+                parentFragmentManager.beginTransaction().replace(NormLoginFragmentManager.frameId, KakaoBirthFragment()).commit()
+            }
 
-            parentFragmentManager.beginTransaction().replace(NormLoginFragmentManager.frameId, KakaoBirthFragment()).commit()
         }
     }
 
