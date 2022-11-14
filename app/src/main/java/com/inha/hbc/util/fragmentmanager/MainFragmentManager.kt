@@ -7,6 +7,7 @@ import com.inha.hbc.data.local.LetterData
 import com.inha.hbc.ui.assist.selectionAssist
 import com.inha.hbc.ui.letter.LetterBaseFragment
 import com.inha.hbc.ui.letter.LetterFragment
+import com.inha.hbc.ui.letter.LetterRecordFragment
 import com.inha.hbc.ui.letter.ObjectSelectionFragment
 import com.inha.hbc.ui.main.MainActivity
 import com.inha.hbc.ui.main.MainFragment
@@ -82,4 +83,7 @@ object MainFragmentManager {
         letterBaseFragment.getAnime()
     }
 
+    fun openRecording() {
+        manager.beginTransaction().add(id, LetterRecordFragment()).commit()
+    }
 }

@@ -17,7 +17,7 @@
         android:id="@+id/tv_letter_record_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="편지쓰기"
+        android:text="음성녹음"
         android:textSize="20sp"
         app:layout_constraintTop_toTopOf="@id/iv_letter_record_back"
         app:layout_constraintBottom_toBottomOf="@id/iv_letter_record_back"
@@ -29,35 +29,68 @@
     <TextView
         android:id="@+id/tv_letter_record_state"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/lav_letter_record_state"
+        android:text="버튼을 눌러\n녹음을 시작해주세요"
+        android:textSize="32sp"
+        android:textAlignment="center"
+        android:layout_marginBottom="-80dp">
     </TextView>
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lav_letter_record_state"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/iv_letter_record_recording"
+        app:layout_constraintLeft_toRightOf="@id/iv_letter_record_play"
+        android:layout_marginBottom="44dp"
+        android:layout_marginHorizontal="50dp"
+        app:lottie_fileName="letter_record.json">
     </com.airbnb.lottie.LottieAnimationView>
     <ImageView
         android:id="@+id/iv_letter_record_play"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        app:layout_constraintTop_toTopOf="@id/lav_letter_record_state"
+        app:layout_constraintBottom_toBottomOf="@id/lav_letter_record_state"
+        app:layout_constraintRight_toLeftOf="@id/lav_letter_record_state"
+        android:src="@drawable/ic_letter_record_play">
     </ImageView>
 
 
 
     <ImageView
         android:id="@+id/iv_letter_record_reset"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toTopOf="@id/iv_letter_record_recording"
+        app:layout_constraintBottom_toBottomOf="@id/iv_letter_record_recording"
+        app:layout_constraintRight_toLeftOf="@id/iv_letter_record_recording"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:src="@drawable/ic_letter_record_reset">
     </ImageView>
     <ImageView
         android:id="@+id/iv_letter_record_recording"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        app:layout_constraintLeft_toRightOf="@id/iv_letter_record_reset"
+        app:layout_constraintRight_toLeftOf="@id/iv_letter_record_stop"
+        app:layout_constraintBottom_toTopOf="@id/tv_letter_Record_submit"
+        android:src="@drawable/ic_letter_record_start"
+        android:layout_marginBottom="43dp">
     </ImageView>
     <ImageView
         android:id="@+id/iv_letter_record_stop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        app:layout_constraintTop_toTopOf="@id/iv_letter_record_recording"
+        app:layout_constraintBottom_toBottomOf="@id/iv_letter_record_recording"
+        app:layout_constraintLeft_toRightOf="@id/iv_letter_record_recording"
+        app:layout_constraintRight_toRightOf="parent"
+        android:src="@drawable/ic_letter_record_stop">
     </ImageView>
 
 
@@ -65,6 +98,12 @@
         android:id="@+id/tv_letter_Record_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="첨부하기">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="32dp"
+        android:text="첨부하기"
+        android:textSize="18sp"
+        android:textColor="@color/main_color">
     </TextView>
 </androidx.constraintlayout.widget.ConstraintLayout>

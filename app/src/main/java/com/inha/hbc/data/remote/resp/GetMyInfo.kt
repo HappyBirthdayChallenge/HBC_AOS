@@ -33,7 +33,7 @@ data class GetMyInfoData(
     val id: Int,
     val image_url: String,
     val name: String,
-    val phone: String,
+    val phone: String?,
     val username: String
 )
 

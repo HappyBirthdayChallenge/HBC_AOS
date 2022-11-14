@@ -1,4 +1,8 @@
 package com.inha.hbc.ui.letter
 
-class LetterRecordFragment {
+import androidx.fragment.app.Fragment
+
+class LetterRecordFragment: Fragment() {
+
+
 }
