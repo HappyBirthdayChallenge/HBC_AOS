@@ -85,6 +85,8 @@ class LetterRecordFragment: Fragment() {
                     binding.ivLetterRecordRecording.setImageResource(R.drawable.ic_letter_record_pause)
                     binding.lavLetterRecordState.setPadding(0, 0, 0, 0)
                     binding.ivLetterRecordPlay.visibility = View.GONE
+                    binding.ivLetterRecordReset.isEnabled = false
+                    binding.ivLetterRecordStop.isEnabled = true
                 }
                 RecordingState.PAUSE_RECORDING -> {
                     recorder.resume()
@@ -97,6 +99,7 @@ class LetterRecordFragment: Fragment() {
                     binding.lavLetterRecordState.setPadding(0, 0, 0, 0)
                     binding.ivLetterRecordPlay.visibility = View.GONE
                     binding.ivLetterRecordReset.isEnabled = false
+                    binding.ivLetterRecordStop.isEnabled = true
                 }
                 RecordingState.AFTER_RECORDING -> {
                     recorder.start()
@@ -108,6 +111,8 @@ class LetterRecordFragment: Fragment() {
                     binding.ivLetterRecordRecording.setImageResource(R.drawable.ic_letter_record_pause)
                     binding.lavLetterRecordState.setPadding(0, 0, 0, 0)
                     binding.ivLetterRecordPlay.visibility = View.GONE
+                    binding.ivLetterRecordReset.isEnabled = false
+                    binding.ivLetterRecordStop.isEnabled = true
                 }
                 else -> {//일시정지
                     recorder.pause()
@@ -120,11 +125,13 @@ class LetterRecordFragment: Fragment() {
                     binding.lavLetterRecordState.setPadding(dpToPx(35), 0, 0, 0)
                     binding.ivLetterRecordPlay.visibility = View.VISIBLE
                     binding.ivLetterRecordReset.isEnabled = true
+                    binding.ivLetterRecordStop.isEnabled = true
                 }
             }
         }
         binding.ivLetterRecordReset.setOnClickListener {
             recorder.reset()
+            initRecorder()
 
             state = RecordingState.BEFORE_RECORDING
             binding.tvLetterRecordState.text = "버튼을 눌러\n녹음을 시작해주세요"
@@ -134,6 +141,7 @@ class LetterRecordFragment: Fragment() {
             binding.lavLetterRecordState.setPadding(0, 0, 0, 0)
             binding.ivLetterRecordPlay.visibility = View.GONE
             binding.ivLetterRecordReset.isEnabled = false
+            binding.ivLetterRecordStop.isEnabled = false
         }
 
         binding.ivLetterRecordStop.setOnClickListener {
@@ -145,10 +153,11 @@ class LetterRecordFragment: Fragment() {
             binding.lavLetterRecordState.repeatCount = LottieDrawable.INFINITE
             binding.ivLetterRecordRecording.setImageResource(R.drawable.ic_letter_record_start)
             binding.lavLetterRecordState.setPadding(dpToPx(35), 0, 0, 0)
-            binding.ivLetterRecordPlay.visibility = View.GONE
+            binding.ivLetterRecordPlay.visibility = View.VISIBLE
             binding.ivLetterRecordStop.isEnabled = false
-
-
+            binding.ivLetterRecordReset.isEnabled = true
+        }
+        binding.ivLetterRecordPlay.setOnClickListener {
         }
     }
 

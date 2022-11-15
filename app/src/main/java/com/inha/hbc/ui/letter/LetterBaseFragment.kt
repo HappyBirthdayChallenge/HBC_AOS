@@ -53,14 +53,18 @@ class LetterBaseFragment: Fragment() {
 
     val gal =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            imgURI = it.data?.data!!
-            MainFragmentManager.letterFragment.updateData(imgURI)
-            Log.d("imgUri", imgURI.toString())
+            if (it.data?.data != null) {
+                imgURI = it.data?.data!!
+                MainFragmentManager.letterFragment.updateData(imgURI)
+                Log.d("imgUri", imgURI.toString())
+            }
         }
 
     val cam = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        MainFragmentManager.letterFragment.updateData(imgURI)
-        Log.d("imgUri", imgURI.toString())
+        if (imgURI != null) {
+            MainFragmentManager.letterFragment.updateData(imgURI)
+            Log.d("imgUri", imgURI.toString())
+        }
     }
 
 
