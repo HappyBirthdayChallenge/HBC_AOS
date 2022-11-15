@@ -87,8 +87,6 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
 
     fun initListener() {
         binding.ivForget2Back.setOnClickListener {
-            step = false
-            already = false
             NormLoginFragmentManager.forgetBackPressed()
         }
         binding.tvForget2Next.setOnClickListener {
