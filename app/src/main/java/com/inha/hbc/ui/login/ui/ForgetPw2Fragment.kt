@@ -1,9 +1,12 @@
 package com.inha.hbc.ui.login.ui
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.inha.hbc.data.remote.req.FindPwData
 import com.inha.hbc.databinding.FragmentForgetPw2Binding
@@ -60,6 +63,30 @@ class ForgetPw2Fragment: Fragment(), FindPwView {
             }
 
         }
+
+        binding.tieForgetPw2Pw.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                val pw = binding.tieForgetPw2Pw.text.toString()
+                val pwConfirm = binding.tieForgetPw2PwConfirm.text.toString()
+
+                val result = checkValid(pw, pwConfirm)
+                if (result == 0) {
+                    binding.tvForgetPw2Error.text = "비밀번호가 일치하지 않아요."
+                }
+                else if (result == 1) {
+                    binding.tvForgetPw2Error.text = ""
+                }
+                else {
+                    binding.tvForgetPw2Error.text = "비밀번호는 10~20자의 영문 대/소문자, 숫자, 특수문자(`~!@#\$%^&*())를 조합하여 설정해 주세요."
+                }
+            }
+        })
     }
 
 

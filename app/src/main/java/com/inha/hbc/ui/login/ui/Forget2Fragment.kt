@@ -1,6 +1,8 @@
 package com.inha.hbc.ui.login.ui
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -129,6 +131,23 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
                 RetrofitService().reqCode(data.phone!!, this, "FIND_PW")
             }
         }
+        binding.tieForget2PhoneAuth.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                auth = binding.tieForget2PhoneAuth.text.toString()
+                if (auth.length == 6) {
+                    binding.tvForget2Error.text = ""
+                }
+                else {
+                    binding.tvForget2Error.text = "인증 코드를 잘못 입력했어요"
+                }
+            }
+        })
     }
 
 

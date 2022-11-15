@@ -3,6 +3,8 @@ package com.inha.hbc.ui.login.ui
 import android.content.Context
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -49,7 +51,35 @@ class Forget1Fragment: Fragment(), IsMeView, SendCodeView {
             NormLoginFragmentManager.forgetBackPressed()
         }
 
-        binding.tieForget1PwPhone.addTextChangedListener( PhoneNumberFormattingTextWatcher() )
+        binding.tieForget1PwPhone.addTextChangedListener(object: PhoneNumberFormattingTextWatcher(){
+            override fun afterTextChanged(s: Editable?) {
+                super.afterTextChanged(s)
+                phone = binding.tieForget1PwPhone.text.toString()
+                if (!checkPhone(phone)) {
+                    binding.tvForget1Error.text = "휴대폰 번호를 정확하게 입력해주세요."
+                }
+                else {
+                    binding.tvForget1Error.text = ""
+                }
+            }
+        })
+        binding.tieForget1Name.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                name = binding.tieForget1Name.text.toString()
+                if (!checkValid(name)) {
+                    binding.tvForget1Error.text = "이름은 2~20자의 한글, 영문 대/소문자, 숫자만 사용하여 입력해 주세요."
+                }
+                else {
+                    binding.tvForget1Error.text = ""
+                }
+            }
+        })
         binding.tvForget1Next.setOnClickListener {
             name = binding.tieForget1Name.text.toString()
             phone = binding.tieForget1PwPhone.text.toString()
@@ -60,7 +90,7 @@ class Forget1Fragment: Fragment(), IsMeView, SendCodeView {
             }
 
             if (!checkPhone(phone)) {
-                binding.tvForget1Error.text = " 휴대폰 번호를 정확하게 입력해주세요."
+                binding.tvForget1Error.text = "휴대폰 번호를 정확하게 입력해주세요."
                 return@setOnClickListener
             }
 

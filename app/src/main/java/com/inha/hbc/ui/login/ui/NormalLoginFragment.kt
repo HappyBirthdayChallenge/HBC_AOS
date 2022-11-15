@@ -3,6 +3,8 @@ package com.inha.hbc.ui.login.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -106,6 +108,42 @@ class NormalLoginFragment(): Fragment(), NormLoginView, RefreshFcmView {
 
             NormLoginFragmentManager.pwstart()
         }
+        binding.tieNormalLoginId.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                val id = binding.tieNormalLoginId.text.toString()
+                if (!checkIdValid(id)) {
+                    binding.tvNormalLoginError.text = "아이디는 5~20자의 영문 대/소문자, 숫자만 사용하여 입력해 주세요."
+                }
+                else {
+                    binding.tvNormalLoginError.text = ""
+                }
+            }
+        })
+
+        binding.tieNormalLoginPw.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                val pw = binding.tieNormalLoginPw.text.toString()
+                if(!checkPwValid(pw)) {
+                    binding.tvNormalLoginError.text =
+                        "비밀번호는 10~20자의 영문 대/소문자, 숫자, 특수문자(`~!@#\$%^&*())를 조합하여 입력해 주세요."
+                }
+                else {
+                    binding.tvNormalLoginError.text = ""
+                }
+            }
+        })
     }
 
     fun checkIdValid(id: String): Boolean {

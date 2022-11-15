@@ -1,6 +1,8 @@
 package com.inha.hbc.ui.login.ui
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -47,6 +49,25 @@ class Signup3Fragment: Fragment() {
                 binding.tvSignup3Error.text = "이름은 2~20자의 한글, 영문 대/소문자, 숫자만 사용하여 설정해 주세요."
             }
         }
+
+        binding.tieSignup3Name.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                val name = binding.tieSignup3Name.text.toString()
+                if (!checkValid(name)) {
+                    binding.tvSignup3Error.text = "이름은 2~20자의 한글, 영문 대/소문자, 숫자만 사용하여 설정해 주세요."
+                }
+                else {
+                    binding.tvSignup3Error.text = ""
+                }
+            }
+
+        })
     }
 
     fun checkValid(name: String):Boolean {

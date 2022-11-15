@@ -2,6 +2,8 @@ package com.inha.hbc.ui.login.ui
 
 import android.os.Bundle
 import android.telephony.PhoneNumberFormattingTextWatcher
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -82,7 +84,18 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
     }
 
     fun initListener() {
-        binding.tieSignup4Phone.addTextChangedListener(PhoneNumberFormattingTextWatcher())
+        binding.tieSignup4Phone.addTextChangedListener(object: PhoneNumberFormattingTextWatcher(){
+            override fun afterTextChanged(s: Editable?) {
+                super.afterTextChanged(s)
+                phone = binding.tieSignup4Phone.text.toString()
+                if (checkPhone(phone)){
+                    binding.tvSignup4Error.text = ""
+                }
+                else {
+                    binding.tvSignup4Error.text = "휴대폰 번호를 정확하게 입력해주세요."
+                }
+            }
+        })
 
         binding.ivSignup4Back.setOnClickListener {
             SignupFragmentManager.backPressed()
@@ -122,6 +135,24 @@ class Signup4Fragment: Fragment(), CheckPhoneView, CheckCodeView, SendCodeView {
             binding.lavSignup4Loading.visibility = View.VISIBLE
             RetrofitService().checkPhone(phone, this)
         }
+
+        binding.tieSignup4PhoneAuth.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                val code = binding.tieSignup4PhoneAuth.text.toString()
+                if (code.length == 6) {
+                    binding.tvSignup4Error.text = ""
+                }
+                else {
+                    binding.tvSignup4Error.text = "인증 코드를 잘못 입력했어요"
+                }
+            }
+        })
     }
 
     fun checkPhone(phone: String): Boolean {

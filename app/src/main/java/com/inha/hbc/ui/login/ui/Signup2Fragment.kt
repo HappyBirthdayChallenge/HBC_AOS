@@ -1,6 +1,8 @@
 package com.inha.hbc.ui.login.ui
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,6 +54,45 @@ class Signup2Fragment: Fragment() {
                 binding.tvSignup2Error.text = "비밀번호는 10~20자의 영문 대/소문자, 숫자, 특수문자(`~!@#\$%^&*())를 조합하여 설정해 주세요."
             }
         }
+        binding.tieSignup2Pw.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                val result = checkValid()
+                if(result == 1) {
+                    binding.tvSignup2Error.text = ""
+                }
+                else if (result == 2) {
+                    binding.tvSignup2Error.text = "비밀번호는 10~20자의 영문 대/소문자, 숫자, 특수문자(`~!@#\$%^&*())를 조합하여 설정해 주세요."
+                }
+                else {
+                }
+            }
+        })
+        binding.tieSignup2PwConfirm.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                val result = checkValid()
+                if(result == 1) {
+                    binding.tvSignup2Error.text = ""
+                }
+                else if (result == 2) {
+                    binding.tvSignup2Error.text = "비밀번호는 10~20자의 영문 대/소문자, 숫자, 특수문자(`~!@#\$%^&*())를 조합하여 설정해 주세요."
+                }
+                else {
+                }
+            }
+
+        })
     }
 
     fun checkValid():Int {
