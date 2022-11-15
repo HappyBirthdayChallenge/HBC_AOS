@@ -201,7 +201,7 @@ class LetterBaseFragment: Fragment() {
                         openGallery()
                     }
                     else -> {
-                        openRecord()
+                        MainFragmentManager.openRecording()
                     }
                 }
             }
