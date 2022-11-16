@@ -36,6 +36,7 @@ class LetterRecordFragment: Fragment() {
     var time = 0
 
     var state = RecordingState.BEFORE_RECORDING
+
     var playing = false
     lateinit var filename:String
     lateinit var filePath :String
@@ -151,8 +152,6 @@ class LetterRecordFragment: Fragment() {
             else {
                 "$m"
             }
-
-
 
             activity?.runOnUiThread {
                 binding.tvLetterRecordTime.text = "$mm:$ss"
