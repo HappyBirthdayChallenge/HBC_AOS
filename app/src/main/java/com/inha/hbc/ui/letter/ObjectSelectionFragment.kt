@@ -39,11 +39,6 @@ class ObjectSelectionFragment: Fragment() {
     }
 
     private fun initRv() {
-        if (MainFragmentManager.objectPageType == 3) {
-            binding.tvObjectSelectionPic.visibility = View.VISIBLE
-            binding.rvObjectSelection.visibility = View.GONE
-            return
-        }
         val adapter = LetterObjectSelectionRVAdapter()
         adapter.myListener = object : LetterObjectSelectionRVAdapter.MyListener {
             override fun onClick(pos: Int) {

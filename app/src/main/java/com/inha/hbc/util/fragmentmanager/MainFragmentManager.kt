@@ -67,7 +67,6 @@ object MainFragmentManager {
     }
 
     fun objectOpen(type: String) {
-        manager.beginTransaction().add(id, ObjectSelectionFragment()).commit()
         objectPageType = when(type) {
             "img_deco_gift_" -> 0
             "img_deco_drink_" -> 1
@@ -75,6 +74,8 @@ object MainFragmentManager {
             "img_pic_" -> 3
             else -> 4//음식
         }
+
+        manager.beginTransaction().add(id, ObjectSelectionFragment()).commit()
     }
 
     fun objectClose(page: Fragment, selected: Boolean) {

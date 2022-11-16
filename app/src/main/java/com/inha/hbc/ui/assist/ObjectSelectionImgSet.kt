@@ -42,6 +42,22 @@ fun selectionAssist(type: Int, pos: Int): Int {
                 else -> R.drawable.img_deco_drink_20
             }
         }
+        2 -> {
+            return when(pos) {
+                0 -> R.drawable.img_deco_toy_1
+                1 -> R.drawable.img_deco_toy_2
+                2 -> R.drawable.img_deco_toy_3
+                3 -> R.drawable.img_deco_toy_4
+                4 -> R.drawable.img_deco_toy_5
+                5 -> R.drawable.img_deco_toy_6
+                6 -> R.drawable.img_deco_toy_7
+                7 -> R.drawable.img_deco_toy_8
+                else -> R.drawable.img_deco_toy_9
+            }
+        }
+        3 -> {
+            return R.drawable.img_photo_content
+        }
         4 -> {
             return when(pos) {
                 0 -> R.drawable.img_deco_food_1
@@ -65,7 +81,8 @@ fun selectionCount(type: Int): Int {
     return when(type) {
         0 -> 10//선물
         1 -> 20//음료
-        2 -> 10//장난감
+        2 -> 9//장난감
+        3 -> 1//사진
         else -> 10//음식(4)
     }
 }
