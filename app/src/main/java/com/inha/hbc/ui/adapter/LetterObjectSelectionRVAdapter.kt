@@ -1,6 +1,7 @@
 package com.inha.hbc.ui.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.marginBottom
 import androidx.core.view.setMargins
@@ -38,6 +39,8 @@ class LetterObjectSelectionRVAdapter: RecyclerView.Adapter<LetterObjectSelection
     class ObjectHolder(val binding: ItemLetterObjectBinding, val myListener: MyListener): RecyclerView.ViewHolder(binding.root) {
         fun bind(pos: Int) {
             binding.cvItemLetterObject.radius = 20F
+            binding.tvItemLetterTitle.visibility = View.GONE
+            binding.tvItemLetterCount.visibility = View.GONE
             var lp = binding.root.layoutParams
             (lp as FlexboxLayoutManager.LayoutParams).flexBasisPercent = "0.24".toFloat()
             lp.height = MainFragmentManager.viewWidth / 3

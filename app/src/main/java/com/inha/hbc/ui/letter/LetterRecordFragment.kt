@@ -1,6 +1,7 @@
 package com.inha.hbc.ui.letter
 
 import android.content.ContentValues
+import android.content.Context
 import android.media.MediaPlayer
 import android.media.MediaPlayer.OnCompletionListener
 import android.media.MediaRecorder
@@ -15,6 +16,8 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieDrawable
 import com.inha.hbc.R
@@ -28,6 +31,7 @@ import kotlin.concurrent.timer
 
 class LetterRecordFragment: Fragment() {
     lateinit var binding: FragmentLetterRecordBinding
+    lateinit var backPressedCallback: OnBackPressedCallback
     var timer: Timer? = null
     var time = 0
 
@@ -118,7 +122,7 @@ class LetterRecordFragment: Fragment() {
 
                         activity?.runOnUiThread {
                             time = 0
-                            binding.tvLetterRecordTime.text = "0:00"
+                            binding.tvLetterRecordTime.text = "00:00"
                             binding.tvLetterRecordSize.text = "0.00/50mb"
                         }
                         break
@@ -282,6 +286,10 @@ class LetterRecordFragment: Fragment() {
                 MainFragmentManager.recordClose(fileUri, this)
             }
         }
+
+        binding.ivLetterRecordBack.setOnClickListener {
+            MainFragmentManager.recordClose(this)
+        }
     }
 
     fun dpToPx(int: Int): Int {
@@ -296,4 +304,24 @@ class LetterRecordFragment: Fragment() {
 
         fileUri = activity?.contentResolver!!.insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, value)!!
     }
+
+    fun beforeCheck() {
+    }
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        backPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                MainFragmentManager.recordClose(this@LetterRecordFragment)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, backPressedCallback)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        backPressedCallback.remove()
+    }
+
 }

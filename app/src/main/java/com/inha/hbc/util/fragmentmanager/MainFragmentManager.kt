@@ -101,8 +101,8 @@ object MainFragmentManager {
         manager.beginTransaction().remove(page).commit()
     }
 
-    fun recordDisable() {
-
+    fun recordClose(view: Fragment) {
+        manager.beginTransaction().remove(view).commit()
     }
 
     fun updateData(uri: Uri, type: Int, path: String) {

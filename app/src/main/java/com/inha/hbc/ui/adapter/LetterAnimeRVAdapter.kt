@@ -28,6 +28,8 @@ class LetterAnimeRVAdapter:RecyclerView.Adapter<LetterAnimeRVAdapter.AnimeHolder
     class AnimeHolder(val binding: ItemLetterObjectBinding, val myListener: MyListener): RecyclerView.ViewHolder(binding.root) {
         fun init(pos: Int) {
             binding.cvItemLetterAnime.visibility = View.VISIBLE
+            binding.tvItemLetterTitle.visibility = View.GONE
+            binding.tvItemLetterCount.visibility = View.GONE
 
             binding.lavItemLetterObject.setAnimation("json_deco_anime_${pos+1}.json")
 
