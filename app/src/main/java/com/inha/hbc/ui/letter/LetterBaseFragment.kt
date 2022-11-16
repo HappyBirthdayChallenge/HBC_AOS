@@ -17,6 +17,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material3.Text
 import androidx.compose.ui.graphics.Color
@@ -55,14 +56,15 @@ class LetterBaseFragment: Fragment() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.data?.data != null) {
                 imgURI = it.data?.data!!
-                MainFragmentManager.letterFragment.updateData(imgURI)
+                MainFragmentManager.updateData(imgURI, 0)
                 Log.d("imgUri", imgURI.toString())
             }
         }
 
     val cam = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (imgURI != null) {
-            MainFragmentManager.letterFragment.updateData(imgURI)
+        val fileSize = File(imgPath).length().toInt()
+        if (fileSize != 0) {
+            MainFragmentManager.updateData(imgURI, 0)
             Log.d("imgUri", imgURI.toString())
         }
     }
@@ -116,7 +118,8 @@ class LetterBaseFragment: Fragment() {
         }
 
         menuData.apply {
-            add("카메라")
+            add("사진")
+            add("동영상")
             add("앨범")
             add("녹음")
         }
@@ -142,7 +145,13 @@ class LetterBaseFragment: Fragment() {
                     tabBinding.tvItemTab.paintFlags = Paint.UNDERLINE_TEXT_FLAG
                     tabBinding.tvItemTab.text = getTabText(tab.position)
 
+
+                    binding.tvLetterBaseSend.visibility = View.GONE
+                    binding.ivLetterBaseSend.visibility = View.GONE
+
                     if (tab.position == 2) {
+                        binding.tvLetterBaseSend.visibility = View.VISIBLE
+                        binding.ivLetterBaseSend.visibility = View.VISIBLE
                         MainFragmentManager.letterFragment.notifyUpdate()
                     }
                 }
@@ -178,7 +187,6 @@ class LetterBaseFragment: Fragment() {
             binding.tvLetterBaseAddBackground.visibility = View.GONE
             binding.rvLetterBaseAddMenu.visibility = View.GONE
 
-            MainFragmentManager.letterFragment.btnVisible(false)
         }
 
     }
@@ -198,10 +206,13 @@ class LetterBaseFragment: Fragment() {
             override fun onClick(pos: Int) {
                 closeList()
                 when (menuData[pos]) {
-                    "카메라" -> {
+                    "사진" -> {
                         openCamera()
                     }
                     "앨범" -> {
+                        openGallery()
+                    }
+                    "동영상" -> {
                         openGallery()
                     }
                     else -> {
@@ -240,7 +251,6 @@ class LetterBaseFragment: Fragment() {
         binding.tvLetterBaseAddBackground.visibility = View.GONE
         binding.rvLetterBaseAddMenu.visibility = View.GONE
 
-        MainFragmentManager.letterFragment.btnVisible(false)
     }
 
     fun openRecord() {
@@ -263,6 +273,7 @@ class LetterBaseFragment: Fragment() {
         imgURI = FileProvider.getUriForFile(
             requireContext(), "com.inha.hbc.fileprovider", photoFile
         )
+        imgPath = photoFile.absolutePath
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imgURI)
         cam.launch(intent)
     }
@@ -270,7 +281,7 @@ class LetterBaseFragment: Fragment() {
     fun openGallery() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = MediaStore.Images.Media.CONTENT_TYPE
-        intent.type = "image/*"
+        intent.type = "image/* video/*"
         gal.launch(intent)
     }
 
@@ -295,7 +306,6 @@ class LetterBaseFragment: Fragment() {
                     binding.tvLetterBaseAddBackground.visibility = View.GONE
                     binding.rvLetterBaseAddMenu.visibility = View.GONE
 
-                    MainFragmentManager.letterFragment.btnVisible(false)
                 }
 
                 else if (binding.vpLetterBase.currentItem == 2) {

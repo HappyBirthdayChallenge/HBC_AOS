@@ -1,9 +1,11 @@
 package com.inha.hbc.util.fragmentmanager
 
+import android.net.Uri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.inha.hbc.R
 import com.inha.hbc.data.local.LetterData
+import com.inha.hbc.ui.adapter.LetterMediaListRVAdapter
 import com.inha.hbc.ui.assist.selectionAssist
 import com.inha.hbc.ui.letter.LetterBaseFragment
 import com.inha.hbc.ui.letter.LetterFragment
@@ -25,6 +27,11 @@ object MainFragmentManager {
     var objectId = R.drawable.img_deco_drink_1
     var viewWidth = 0
 
+    var uriArr = ArrayList<Uri>()
+    var typeArr = ArrayList<Int>() // 0 사진 1 동영상 2 음성
+
+    lateinit var mediaAdapter: LetterMediaListRVAdapter
+
     lateinit var letterFragment: LetterFragment
 
     fun init(manager: FragmentManager, id: Int, base: MainActivity) {
@@ -32,7 +39,7 @@ object MainFragmentManager {
         this.id = id
         mainPage = MainFragment()
         baseActivity = base
-        letterData.animeId = "json_deco_anime_1.json"
+        letterData.animeName = "json_deco_anime_1.json"
     }
 
     fun start() {
@@ -79,11 +86,24 @@ object MainFragmentManager {
     }
 
     fun animeSelected(title: String) {
-        letterData.animeId = title
+        letterData.animeName = title
         letterBaseFragment.getAnime()
     }
 
     fun openRecording() {
         manager.beginTransaction().add(id, LetterRecordFragment()).commit()
+    }
+
+    fun recordClose(uri: Uri, page: Fragment) {
+        uriArr.add(uri)
+        typeArr.add(2)
+        mediaAdapter.notifyItemInserted(uriArr.size)
+        manager.beginTransaction().remove(page).commit()
+    }
+
+    fun updateData(uri: Uri, type: Int) {
+        uriArr.add(uri)
+        typeArr.add(type)
+        mediaAdapter.notifyItemInserted(uriArr.size)
     }
 }

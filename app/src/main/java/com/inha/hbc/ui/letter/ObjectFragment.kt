@@ -29,7 +29,7 @@ class ObjectFragment(val binding: FragmentObjectBinding): RecyclerView.ViewHolde
             val objectAdapter = LetterObjectRVAdapter(pos)
             objectAdapter.clistener = object: LetterObjectRVAdapter.Clistener {
                 override fun onClick(title: String) {
-                    MainFragmentManager.letterData.objectId = title
+                    MainFragmentManager.letterData.objectName = title
                     MainFragmentManager.objectOpen(title)
                 }
             }

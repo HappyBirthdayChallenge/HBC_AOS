@@ -47,7 +47,7 @@ class ObjectSelectionFragment: Fragment() {
         val adapter = LetterObjectSelectionRVAdapter()
         adapter.myListener = object : LetterObjectSelectionRVAdapter.MyListener {
             override fun onClick(pos: Int) {
-                MainFragmentManager.letterData.objectId += pos.toString()
+                MainFragmentManager.letterData.objectName += pos.toString()
                 MainFragmentManager.objectId = selectionAssist(MainFragmentManager.objectPageType, pos)
                 MainFragmentManager.objectClose(this@ObjectSelectionFragment, true)
             }

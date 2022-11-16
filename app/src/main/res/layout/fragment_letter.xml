@@ -7,46 +7,45 @@
     android:clickable="true"
     android:layout_marginHorizontal="@dimen/login_margin">
 
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_letter_write_media"
-            android:layout_width="match_parent"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tl_letter"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/vp_letter"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/et_letter"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:orientation="horizontal">
-        </androidx.recyclerview.widget.RecyclerView>
+            app:tabTextColor="@color/black"
+            app:tabSelectedTextColor="@color/main_color"
+            app:tabIndicatorHeight="0dp"
+            app:tabMode="scrollable">
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="장식 및 효과">
+                </com.google.android.material.tabs.TabItem>
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="미디어">
+                </com.google.android.material.tabs.TabItem>
+        </com.google.android.material.tabs.TabLayout>
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_letter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tl_letter"
+            app:layout_constraintBottom_toTopOf="@id/et_letter">
+        </androidx.viewpager2.widget.ViewPager2>
+
         <EditText
             android:id="@+id/et_letter"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/rv_letter_write_media"
+            app:layout_constraintTop_toBottomOf="@id/vp_letter"
             app:layout_constraintBottom_toBottomOf="parent"
             android:background="@color/transparent"
             android:layout_marginTop="20dp"
             android:gravity="top | left">
         </EditText>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fab_letter_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/fab_letter_send"
-            android:layout_marginBottom="16dp"
-            android:src="@drawable/ic_add_component">
-        </com.google.android.material.floatingactionbutton.FloatingActionButton>
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/fab_letter_send"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="30dp"
-            style="?attr/extendedFloatingActionButtonStyle"
-            app:icon="@drawable/ic_send_letter"
-            android:text="send">
-        </com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,7 +1,7 @@
 package com.inha.hbc.data.local
 
 data class LetterData(
-    var objectId: String,
-    var animeId: String,
+    var objectName: String,
+    var animeName: String,
     var letterText: String
 )

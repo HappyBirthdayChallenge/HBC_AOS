@@ -27,6 +27,30 @@
         app:layout_constraintLeft_toRightOf="@id/iv_letter_base_back"
         android:layout_marginLeft="24dp">
     </TextView>
+    <ImageView
+        android:id="@+id/iv_letter_base_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@id/tv_letter_base_send"
+        app:layout_constraintBottom_toBottomOf="@id/tv_letter_base_send"
+        app:layout_constraintRight_toLeftOf="@id/tv_letter_base_send"
+        android:src="@drawable/ic_letter_send"
+        android:layout_marginRight="5dp"
+        android:visibility="gone">
+    </ImageView>
+    <TextView
+        android:id="@+id/tv_letter_base_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="보내기"
+        android:textSize="18sp"
+        android:textColor="@color/main_color"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="25dp"
+        android:visibility="gone">
+    </TextView>
 
 
 

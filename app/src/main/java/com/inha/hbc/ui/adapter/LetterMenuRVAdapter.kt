@@ -34,7 +34,8 @@ class LetterMenuRVAdapter(val menuData: ArrayList<String>): RecyclerView.Adapter
             binding.ivItemLetterMenu.setImageResource(
                 when(pos) {
                     0 -> R.drawable.ic_letter_menu_camera
-                    1 -> R.drawable.ic_letter_menu_gallary
+                    1 -> R.drawable.ic_letter_menu_video
+                    2 -> R.drawable.ic_letter_menu_gallary
                     else -> R.drawable.ic_letter_menu_record
                 }
             )

@@ -1,39 +1,18 @@
 package com.inha.hbc.ui.letter
 
 import android.Manifest
-import android.content.Context
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Bundle
-import android.os.Environment
-import android.provider.MediaStore
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.FileProvider
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.flexbox.AlignItems
-import com.google.android.flexbox.FlexboxLayout
-import com.google.android.flexbox.FlexboxLayoutManager
-import com.google.android.flexbox.JustifyContent
+import com.google.android.material.tabs.TabLayoutMediator
 import com.inha.hbc.databinding.FragmentLetterBinding
-import com.inha.hbc.ui.adapter.LetterMenuRVAdapter
-import com.inha.hbc.ui.adapter.LetterObjectRVAdapter
-import com.inha.hbc.ui.adapter.LetterRVAdapter
-import com.inha.hbc.ui.dialog.LetterDialog
+import com.inha.hbc.ui.adapter.LetterMediaListRVAdapter
+import com.inha.hbc.ui.adapter.LetterVPAdapter
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
-import java.io.File
-import java.util.Date
 
 class LetterFragment(val binding: FragmentLetterBinding): RecyclerView.ViewHolder(binding.root) {
 
-    var rvArr = ArrayList<String>()
-    lateinit var adapter: LetterRVAdapter
+    lateinit var adapter: LetterVPAdapter
     val PERMISSIONS = arrayOf(
         Manifest.permission.CAMERA,
         Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -52,26 +31,20 @@ class LetterFragment(val binding: FragmentLetterBinding): RecyclerView.ViewHolde
 
 
     fun initView() {
-        rvArr.apply {
-            add("")
-            add("")
+        adapter = LetterVPAdapter()
+        binding.vpLetter.adapter = adapter
+        TabLayoutMediator(binding.tlLetter, binding.vpLetter) { tab, position -> tab.text =
+        if (position == 0) {
+            "장식 및 효과"
         }
-        adapter = LetterRVAdapter(rvArr)
-        binding.rvLetterWriteMedia.adapter = adapter
+        else {
+            "미디어"
+        }}.attach()
+
+        binding.vpLetter.isUserInputEnabled = false
     }
 
     fun initListener() {
-
-        binding.fabLetterAdd.setOnClickListener {
-            binding.fabLetterAdd.hide()
-            binding.fabLetterSend.hide()
-
-            MainFragmentManager.letterBaseFragment.openList()
-        }
-
-        binding.fabLetterSend.setOnClickListener {
-
-        }
 
     }
 
@@ -80,21 +53,6 @@ class LetterFragment(val binding: FragmentLetterBinding): RecyclerView.ViewHolde
         adapter.notifyItemRangeChanged(0, 2)
     }
 
-    fun updateData(uri: Uri) {
-        rvArr.add(uri.toString())
-        adapter.notifyItemInserted(rvArr.size)
-    }
-
-    fun btnVisible(hidden: Boolean) {
-        if (hidden) {
-            binding.fabLetterSend.hide()
-            binding.fabLetterAdd.hide()
-        }
-        else {
-            binding.fabLetterSend.show()
-            binding.fabLetterAdd.show()
-        }
-    }
 
     fun checkPermission(permissions: Array<String>, flag: Int):Boolean {
         val unPremList = ArrayList<String>()
