@@ -62,6 +62,9 @@ object MainFragmentManager {
     }
 
     fun letterClose() {
+        pathArr.clear()
+        uriArr.clear()
+        typeArr.clear()
         manager.beginTransaction().remove(letterBaseFragment).commit()
         manager.beginTransaction().show(mainPage).commit()
     }
