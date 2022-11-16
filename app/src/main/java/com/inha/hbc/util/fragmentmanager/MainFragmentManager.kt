@@ -1,5 +1,6 @@
 package com.inha.hbc.util.fragmentmanager
 
+import android.graphics.Bitmap
 import android.net.Uri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -27,6 +28,7 @@ object MainFragmentManager {
     var objectId = R.drawable.img_deco_drink_1
     var viewWidth = 0
 
+    var pathArr = ArrayList<String>()
     var uriArr = ArrayList<Uri>()
     var typeArr = ArrayList<Int>() // 0 사진 1 동영상 2 음성
 
@@ -97,13 +99,15 @@ object MainFragmentManager {
     fun recordClose(uri: Uri, page: Fragment) {
         uriArr.add(uri)
         typeArr.add(2)
+        pathArr.add("")
         mediaAdapter.notifyItemInserted(uriArr.size)
         manager.beginTransaction().remove(page).commit()
     }
 
-    fun updateData(uri: Uri, type: Int) {
+    fun updateData(uri: Uri, type: Int, path: String) {
         uriArr.add(uri)
         typeArr.add(type)
+        pathArr.add(path)
         mediaAdapter.notifyItemInserted(uriArr.size)
     }
 }

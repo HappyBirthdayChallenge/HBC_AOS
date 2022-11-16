@@ -1,13 +1,18 @@
 package com.inha.hbc.ui.adapter
 
+import android.content.Context
+import android.database.Cursor
+import android.graphics.Bitmap
+import android.media.MediaMetadataRetriever
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.inha.hbc.R
 import com.inha.hbc.databinding.ItemLetterBinding
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
+
 
 class LetterMediaListRVAdapter(): RecyclerView.Adapter<LetterMediaListRVAdapter.LetterHolder>() {
     lateinit var binding: ItemLetterBinding
@@ -38,6 +43,9 @@ class LetterMediaListRVAdapter(): RecyclerView.Adapter<LetterMediaListRVAdapter.
                     }
                     1 -> {
 
+                        binding.ivItemLetter.setImageBitmap(setThumbnail(MainFragmentManager.pathArr[pos - 1]))
+                        binding.ivItemLetterAttach.setImageResource(R.drawable.ic_letter_record_play)
+                        binding.ivItemLetterAttach.visibility = View.VISIBLE
                     }
                     else -> {
                         binding.ivItemLetterAttach.setImageResource(R.drawable.ic_letter_menu_record)
@@ -62,9 +70,16 @@ class LetterMediaListRVAdapter(): RecyclerView.Adapter<LetterMediaListRVAdapter.
             binding.ivItemLetterDel.setOnClickListener {
                 MainFragmentManager.typeArr.removeAt(pos- 1)
                 MainFragmentManager.uriArr.removeAt(pos - 1)
+                MainFragmentManager.pathArr.removeAt(pos - 1)
 
                 MainFragmentManager.mediaAdapter.notifyDataSetChanged()
             }
+        }
+
+        fun setThumbnail(path: String): Bitmap? {
+            val retriever = MediaMetadataRetriever()
+            retriever.setDataSource(path)
+            return retriever.getFrameAtTime((1 * 1000000).toLong(), MediaMetadataRetriever.OPTION_CLOSEST)
         }
     }
 }

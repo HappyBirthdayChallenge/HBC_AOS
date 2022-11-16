@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.content.res.Resources.Theme
+import android.graphics.Bitmap
 import android.graphics.Paint
+import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -56,16 +58,23 @@ class LetterBaseFragment: Fragment() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.data?.data != null) {
                 imgURI = it.data?.data!!
-                MainFragmentManager.updateData(imgURI, 0)
+                MainFragmentManager.updateData(imgURI, 0, "")
                 Log.d("imgUri", imgURI.toString())
             }
         }
 
     val cam = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        val fileSize = File(imgPath).length().toInt()
+        val file = File(imgPath)
+        val fileSize = file.length().toInt()
+        val fileType = file.path.substring(file.path.length - 3, file.path.length)
         if (fileSize != 0) {
-            MainFragmentManager.updateData(imgURI, 0)
-            Log.d("imgUri", imgURI.toString())
+            if (fileType == "mp4") {
+                MainFragmentManager.updateData(imgURI, 1, imgPath)
+            }
+            else {
+                MainFragmentManager.updateData(imgURI, 0, imgPath)
+                Log.d("imgUri", imgURI.toString())
+            }
         }
     }
 
@@ -213,7 +222,7 @@ class LetterBaseFragment: Fragment() {
                         openGallery()
                     }
                     "동영상" -> {
-                        openGallery()
+                        openVideo()
                     }
                     else -> {
                         MainFragmentManager.openRecording()
@@ -253,9 +262,6 @@ class LetterBaseFragment: Fragment() {
 
     }
 
-    fun openRecord() {
-        binding.tvLetterBaseAddBackground.visibility = View.VISIBLE
-    }
 
     fun openCamera() {
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
@@ -284,6 +290,29 @@ class LetterBaseFragment: Fragment() {
         intent.type = "image/* video/*"
         gal.launch(intent)
     }
+
+    fun openVideo() {
+        val intent = Intent(MediaStore.ACTION_VIDEO_CAPTURE)
+        val sdf = java.text.SimpleDateFormat("yyyyMMdd_HHmmss")
+        val filename = sdf.format(System.currentTimeMillis()) + ".mp4"
+        //val photoFile = createTmpFile()!!
+        val photoFile = File(
+            File(requireContext().filesDir.toString() + "/video").apply{
+                if (!this.exists()) {
+                    this.mkdirs()
+                }
+            },
+            filename
+        )
+        imgURI = FileProvider.getUriForFile(
+            requireContext(), "com.inha.hbc.fileprovider", photoFile
+        )
+        imgPath = photoFile.absolutePath
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, imgURI)
+        cam.launch(intent)
+    }
+
+
 
     fun createTmpFile(): File? {
         val timeStamp = java.text.SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
