@@ -59,10 +59,10 @@ class LetterMediaListRVAdapter(): RecyclerView.Adapter<LetterMediaListRVAdapter.
             binding.cvItemLetter.setOnClickListener {
                 when (pos) {
                     0 -> {
-                            MainFragmentManager.letterBaseFragment.openList()
+                        MainFragmentManager.letterBaseFragment.openList()
                     }
                     else -> {
-
+                        MainFragmentManager.openShow(pos)
                     }
                 }
             }

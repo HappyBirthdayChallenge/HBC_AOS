@@ -8,10 +8,7 @@ import com.inha.hbc.R
 import com.inha.hbc.data.local.LetterData
 import com.inha.hbc.ui.adapter.LetterMediaListRVAdapter
 import com.inha.hbc.ui.assist.selectionAssist
-import com.inha.hbc.ui.letter.LetterBaseFragment
-import com.inha.hbc.ui.letter.LetterFragment
-import com.inha.hbc.ui.letter.LetterRecordFragment
-import com.inha.hbc.ui.letter.ObjectSelectionFragment
+import com.inha.hbc.ui.letter.*
 import com.inha.hbc.ui.main.MainActivity
 import com.inha.hbc.ui.main.MainFragment
 import com.inha.hbc.ui.menu.ui.MenuFragment
@@ -104,10 +101,23 @@ object MainFragmentManager {
         manager.beginTransaction().remove(page).commit()
     }
 
+    fun recordDisable() {
+
+    }
+
     fun updateData(uri: Uri, type: Int, path: String) {
         uriArr.add(uri)
         typeArr.add(type)
         pathArr.add(path)
         mediaAdapter.notifyItemInserted(uriArr.size)
     }
+
+    fun openShow(pos: Int) {
+        manager.beginTransaction().add(id, LetterShowFragment(pos - 1)).commit()
+    }
+
+    fun closeShow(view: Fragment) {
+        manager.beginTransaction().remove(view).commit()
+    }
+
 }

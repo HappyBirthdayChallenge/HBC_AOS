@@ -58,8 +58,28 @@ class LetterBaseFragment: Fragment() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
             if (it.data?.data != null) {
                 imgURI = it.data?.data!!
-                MainFragmentManager.updateData(imgURI, 0, "")
-                Log.d("imgUri", imgURI.toString())
+
+                var columnIdx = 0
+                val proj = arrayOf(MediaStore.Images.Media.DATA)
+                val cursor = MainFragmentManager.baseActivity.contentResolver.query(imgURI, proj, null, null, null)
+                if (cursor!!.moveToFirst()) {
+                    columnIdx = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+                }
+                imgPath = cursor.getString(columnIdx)
+                cursor.close()
+
+
+                val fileType = imgPath.substring(imgPath.length - 3, imgPath.length)
+                if (fileType == "mp4") {
+                    MainFragmentManager.updateData(imgURI, 1, imgPath)
+                }
+                else if (fileType == "jpg" || fileType == "png" || fileType == "peg" || fileType == "gif"){
+                    MainFragmentManager.updateData(imgURI, 0, imgPath)
+                    Log.d("imgUri", imgURI.toString())
+                }
+                else {
+
+                }
             }
         }
 
