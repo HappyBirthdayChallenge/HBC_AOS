@@ -123,7 +123,6 @@ class LetterRecordFragment: Fragment() {
                         activity?.runOnUiThread {
                             time = 0
                             binding.tvLetterRecordTime.text = "00:00"
-                            binding.tvLetterRecordSize.text = "0.00/50mb"
                         }
                         break
                     }
@@ -154,14 +153,9 @@ class LetterRecordFragment: Fragment() {
             }
 
 
-            var kbSize = (File(filePath).length()/1024).toDouble()
-            var mbSize: Double = kbSize/1024
-            var mbSizeStr = String.format("%.2f", mbSize)
-
 
             activity?.runOnUiThread {
                 binding.tvLetterRecordTime.text = "$mm:$ss"
-                binding.tvLetterRecordSize.text = "$mbSizeStr/50mb"
             }
         }
     }
