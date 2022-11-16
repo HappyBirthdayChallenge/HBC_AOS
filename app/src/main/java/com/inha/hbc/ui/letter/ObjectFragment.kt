@@ -14,7 +14,6 @@ class ObjectFragment(val binding: FragmentObjectBinding): RecyclerView.ViewHolde
     fun bind(pos: Int) {
         initRv(pos)
     }
-
     fun initRv(pos: Int) {
         if (pos == 1) {
             val animeAdapter = LetterAnimeRVAdapter()

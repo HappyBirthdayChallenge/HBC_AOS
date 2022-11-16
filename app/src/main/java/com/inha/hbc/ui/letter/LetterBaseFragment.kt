@@ -157,7 +157,24 @@ class LetterBaseFragment: Fragment() {
 
     fun initListener() {
         binding.ivLetterBaseBack.setOnClickListener {
-            MainFragmentManager.letterClose()
+            if (binding.tvLetterBaseAddBackground.visibility == View.VISIBLE) {
+                binding.tvLetterBaseAddBackground.visibility = View.GONE
+                binding.rvLetterBaseAddMenu.visibility = View.GONE
+
+            }
+
+            else if (binding.vpLetterBase.currentItem == 2) {
+                binding.vpLetterBase.currentItem = 1
+                binding.tlLetterBase.selectTab(binding.tlLetterBase.getTabAt(1))
+
+            }
+            else if (binding.vpLetterBase.currentItem == 1) {
+                binding.vpLetterBase.currentItem = 0
+                binding.tlLetterBase.selectTab(binding.tlLetterBase.getTabAt(0))
+            }
+            else {
+                MainFragmentManager.letterClose()
+            }
         }
 
         binding.tlLetterBase.addOnTabSelectedListener(object: OnTabSelectedListener{
