@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">생일축하\n챌린지</string>
+    <string name="app_name">생일 축하\n챌린지</string>
     <string name="id">아이디</string>
     <string name="pw">비밀번호</string>
     <string name="pw_confirm">비밀번호 확인</string>
