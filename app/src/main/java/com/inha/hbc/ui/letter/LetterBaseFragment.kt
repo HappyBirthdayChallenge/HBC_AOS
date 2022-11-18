@@ -60,27 +60,56 @@ class LetterBaseFragment: Fragment() {
                 imgURI = it.data?.data!!
 
                 var columnIdx = 0
-                val proj = arrayOf(MediaStore.Images.Media.DATA)
+                var sizIdx = 0
+                val proj = if (it.data!!.type == "image/*") {
+                    arrayOf(MediaStore.Images.Media.DATA)
+                    }
+                else {
+                    arrayOf(MediaStore.Video.Media.SIZE, MediaStore.Video.Media.DATA)
+                    }
                 val cursor = MainFragmentManager.baseActivity.contentResolver.query(imgURI, proj, null, null, null)
                 if (cursor!!.moveToFirst()) {
-                    columnIdx = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+                    sizIdx = if (it.data!!.type == "image/*") {
+                        cursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE)
+                    }
+                    else {
+                        cursor.getColumnIndexOrThrow(proj[0])
+                    }
+                    columnIdx = if (it.data!!.type == "image/*") {
+                        cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+                    }
+                    else {
+                        cursor.getColumnIndexOrThrow(MediaStore.Video.Media.DATA)
+                    }
                 }
                 imgPath = cursor.getString(columnIdx)
+                val fileSize = cursor.getLong(sizIdx).toInt()
                 cursor.close()
 
 
-                MediaMetadataRetriever().setDataSource(imgPath)
+//                MediaMetadataRetriever().setDataSource(imgPath)
 
                 val fileType = imgPath.substring(imgPath.length - 3, imgPath.length)
+
                 if (fileType == "mp4") {
-                    MainFragmentManager.updateData(imgURI, 1, imgPath)
+                    if (fileSize/1024 <= 300 * 1024) {
+                        MainFragmentManager.updateData(imgURI, 1, imgPath)
+                    }
+                    else {
+                        Toast.makeText(requireContext(), "지원용량을 초과했어요!", Toast.LENGTH_SHORT).show()
+                    }
                 }
                 else if (fileType == "jpg" || fileType == "png" || fileType == "peg" || fileType == "gif"){
-                    MainFragmentManager.updateData(imgURI, 0, imgPath)
-                    Log.d("imgUri", imgURI.toString())
+                    if (fileSize/1024 <= 10 * 1024) {
+                        MainFragmentManager.updateData(imgURI, 0, imgPath)
+                        Log.d("imgUri", imgURI.toString())
+                    }
+                    else {
+                        Toast.makeText(requireContext(), "지원용량을 초과했어요!", Toast.LENGTH_SHORT).show()
+                    }
                 }
                 else {
-
+                    Toast.makeText(requireContext(), "지원되지 않는 형식이에요!", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -291,6 +320,10 @@ class LetterBaseFragment: Fragment() {
 
 
     fun openList() {
+        if (MainFragmentManager.typeArr.size > 10) {
+            Toast.makeText(requireContext(), "최대 첨부개수 10개를 초과했어요!", Toast.LENGTH_SHORT).show()
+            return
+        }
         binding.tvLetterBaseAddBackground.visibility = View.VISIBLE
         binding.rvLetterBaseAddMenu.visibility = View.VISIBLE
     }
@@ -308,13 +341,14 @@ class LetterBaseFragment: Fragment() {
         val filename = sdf.format(System.currentTimeMillis()) + ".jpg"
         //val photoFile = createTmpFile()!!
         val photoFile = File(
-            File(requireContext().filesDir.toString() + "/image").apply{
+            File(requireContext().cacheDir.toString() + "/image").apply{
                 if (!this.exists()) {
                     this.mkdirs()
                 }
             },
             filename
         )
+        photoFile.deleteOnExit()
         imgURI = FileProvider.getUriForFile(
             requireContext(), "com.inha.hbc.fileprovider", photoFile
         )
@@ -336,13 +370,14 @@ class LetterBaseFragment: Fragment() {
         val filename = sdf.format(System.currentTimeMillis()) + ".mp4"
         //val photoFile = createTmpFile()!!
         val photoFile = File(
-            File(requireContext().filesDir.toString() + "/video").apply{
+            File(requireContext().cacheDir.toString() + "/video").apply{
                 if (!this.exists()) {
                     this.mkdirs()
                 }
             },
             filename
         )
+        photoFile.deleteOnExit()
         imgURI = FileProvider.getUriForFile(
             requireContext(), "com.inha.hbc.fileprovider", photoFile
         )
@@ -350,7 +385,6 @@ class LetterBaseFragment: Fragment() {
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imgURI)
         cam.launch(intent)
     }
-
 
 
     fun createTmpFile(): File? {

@@ -279,8 +279,13 @@ class LetterRecordFragment: Fragment() {
 
         binding.tvLetterRecordSubmit.setOnClickListener {
             if (state == RecordingState.AFTER_RECORDING) {
-                makeUri()
-                MainFragmentManager.recordClose(fileUri, this)
+                if (file.length()/1024 <= 10 * 1024) {
+                    makeUri()
+                    MainFragmentManager.recordClose(fileUri, this)
+                }
+                else {
+                    Toast.makeText(requireContext(), "지원용량을 초과했어요!", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
@@ -301,10 +306,6 @@ class LetterRecordFragment: Fragment() {
 
         fileUri = activity?.contentResolver!!.insert(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, value)!!
     }
-
-    fun beforeCheck() {
-    }
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
