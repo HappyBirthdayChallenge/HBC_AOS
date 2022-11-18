@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.compose.runtime.Composable
 import androidx.fragment.app.Fragment
 import com.inha.hbc.data.remote.resp.CheckIdFailure
 import com.inha.hbc.data.remote.resp.CheckIdSuccess
