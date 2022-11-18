@@ -69,6 +69,8 @@ class LetterBaseFragment: Fragment() {
                 cursor.close()
 
 
+                MediaMetadataRetriever().setDataSource(imgPath)
+
                 val fileType = imgPath.substring(imgPath.length - 3, imgPath.length)
                 if (fileType == "mp4") {
                     MainFragmentManager.updateData(imgURI, 1, imgPath)

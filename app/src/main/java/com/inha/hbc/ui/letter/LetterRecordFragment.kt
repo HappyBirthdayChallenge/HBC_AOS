@@ -121,8 +121,8 @@ class LetterRecordFragment: Fragment() {
                 while(true) {
                     if (state == RecordingState.AFTER_RESET) {
 
+                        time = 0
                         activity?.runOnUiThread {
-                            time = 0
                             binding.tvLetterRecordTime.text = "00:00"
                         }
                         break
@@ -224,7 +224,7 @@ class LetterRecordFragment: Fragment() {
                     binding.lavLetterRecordState.pauseAnimation()
                     binding.lavLetterRecordState.repeatCount = LottieDrawable.INFINITE
                     binding.ivLetterRecordRecording.setImageResource(R.drawable.ic_letter_record_start)
-                    binding.lavLetterRecordState.setPadding(dpToPx(35), 0, 0, 0)
+                    binding.lavLetterRecordState.setPadding(0, 0, 0, 0)
                     binding.ivLetterRecordPlay.visibility = View.GONE
                     binding.ivLetterRecordReset.isEnabled = true
                     binding.ivLetterRecordStop.isEnabled = true
