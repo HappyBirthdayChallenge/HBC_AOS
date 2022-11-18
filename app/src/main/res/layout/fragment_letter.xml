@@ -45,7 +45,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             android:background="@color/transparent"
             android:textColorHint="@color/hint_text"
-            android:hint="여기를 탭해서 친구를 위한 편지를 작성해보세요!"
+            android:hint="여기를 탭해서 생일 축하 메시지를 남겨보세요!"
             android:layout_marginTop="20dp"
             android:gravity="top | left">
         </EditText>
