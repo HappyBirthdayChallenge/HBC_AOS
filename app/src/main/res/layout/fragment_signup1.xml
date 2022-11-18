@@ -68,7 +68,8 @@
         android:layout_marginHorizontal="@dimen/login_textfield_margin"
         android:layout_marginTop="@dimen/login_subtitle_to_textfield"
         android:hint="@string/id"
-        android:textColorHint="@color/hint_text">
+        android:textColorHint="@color/hint_text"
+        app:hintTextColor="@color/main_color">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tie_signup1_id"
             android:layout_height="wrap_content"
