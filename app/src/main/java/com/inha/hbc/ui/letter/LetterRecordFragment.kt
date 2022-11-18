@@ -41,6 +41,7 @@ class LetterRecordFragment: Fragment() {
     lateinit var filename:String
     lateinit var filePath :String
     lateinit var fileUri: Uri
+    lateinit var file: File
     private val recorder = if (Build.VERSION.SDK_INT >= 31) {
         MediaRecorder(MainFragmentManager.baseActivity.baseContext)
     }
@@ -73,14 +74,16 @@ class LetterRecordFragment: Fragment() {
             setAudioEncoder(AudioEncoder.AAC_ELD)
             val sdf = java.text.SimpleDateFormat("yyyyMMdd_HHmmss")
             filename = sdf.format(System.currentTimeMillis()) + ".m4a"
-            filePath = File(
-                File(requireContext().filesDir.toString() + "/record").apply {
+            file = File(
+                File(requireContext().cacheDir.toString() + "/record").apply {
                     if (!this.exists()) {
                         this.mkdirs()
                     }
                 },
                 filename
-            ).toString()
+            )
+            file.deleteOnExit()
+            filePath = file.toString()
             setOutputFile(filePath)
             prepare()
         }
@@ -233,6 +236,7 @@ class LetterRecordFragment: Fragment() {
         }
         binding.ivLetterRecordReset.setOnClickListener {
             recorder.reset()
+
             initRecorder()
 
             state = RecordingState.AFTER_RESET
