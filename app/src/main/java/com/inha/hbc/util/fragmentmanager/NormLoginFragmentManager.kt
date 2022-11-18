@@ -1,5 +1,7 @@
 package com.inha.hbc.util.fragmentmanager
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.inha.hbc.data.local.SignupData
@@ -90,6 +92,14 @@ object NormLoginFragmentManager {
 
     fun forgetBackPressed() {
         if (currentPage > 1) {
+            if (currentPage == 3 && isId) {
+                popupAuth()
+                return
+            }
+            if (currentPage == 4 && !isId) {
+                popupAuth()
+                return
+            }
             fragmentManager.beginTransaction().hide(forgetArr[currentPage - 1]).commit()
             fragmentManager.beginTransaction().show(forgetArr[currentPage - 2]).commit()
             activity.hideKeyboard()
@@ -106,5 +116,26 @@ object NormLoginFragmentManager {
 
     fun baseBackPressed() {
         fragmentManager.beginTransaction().replace(frameId, LoginFragment(false)).commit()
+    }
+
+
+    fun popupAuth() {
+        val builder = AlertDialog.Builder(SignupFragmentManager.activity)
+        builder.setTitle("사용자 인증을 취소하시겠어요?")
+            .setMessage("사용자 인증을 취소하시면 전화번호 인증부터 다시 진행하게 됩니다.")
+            .setPositiveButton("네, 취소할게요",
+                DialogInterface.OnClickListener { dialog, id ->
+                    if (isId) {
+                        transaction(3, 1)
+                    }
+                    else {
+                        transaction(4, 2)
+                    }
+                })
+            .setNegativeButton("아니요",
+                DialogInterface.OnClickListener { dialog, id ->
+                    dialog.dismiss()
+                })
+        builder.show()
     }
 }

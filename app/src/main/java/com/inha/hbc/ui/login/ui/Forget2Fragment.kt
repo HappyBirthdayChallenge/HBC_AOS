@@ -29,9 +29,7 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
     lateinit var data: SignupData
     lateinit var binding: FragementForget2Binding
     var resend = false
-    var step = false
     var id = true
-    var already= false
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -56,32 +54,15 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
             if (timer != null) {
                 timer!!.cancel()
             }
-            if (!step && already) {//아이디까지 다 봤는데 더 뒤로가는 경우
-                binding.tieForget2PhoneAuth.isEnabled = true
-                binding.tvForget2Resend.isEnabled =true
-                binding.tieForget2PhoneAuth.setText("")
-                already = false
-                if (id) {
-                    data.id = null
-                }
+            binding.tieForget2PhoneAuth.setText("")
+            if (id) {
+                data.id = null
             }
             time = 0
         }
         else {
-            if (step) {
-                binding.tvForget2PhoneTime.visibility = View.GONE
-                binding.tieForget2PhoneAuth.isEnabled = false
-                binding.tvForget2Resend.isEnabled =false
-                binding.tvForget2Error.text = ""
-            }
-            else {
-                id = data.id.isNullOrEmpty()
-                binding.tvForget2PhoneTime.visibility = View.VISIBLE
-                binding.tieForget2PhoneAuth.isEnabled = true
-                binding.tvForget2Resend.isEnabled =true
-                startTimer()
-            }
-            step = false
+            id = data.id.isNullOrEmpty()
+            startTimer()
         }
     }
 
@@ -91,15 +72,6 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
         }
         binding.tvForget2Next.setOnClickListener {
             binding.lavForget2Loading.visibility = View.VISIBLE
-            if (already) {
-                step = true
-                if (id) {
-                    NormLoginFragmentManager.transaction(2, 3)
-                }
-                else {
-                    NormLoginFragmentManager.transaction(3, 4)
-                }
-            }
             auth = binding.tieForget2PhoneAuth.text.toString()
             if (!auth.isNullOrEmpty()) {
                 val reqData = if (id) {
@@ -189,8 +161,6 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
         else {
             binding.lavForget2Loading.visibility = View.GONE
 
-            step = true
-            already = true
 
             NormLoginFragmentManager.transaction(3, 4)
         }
@@ -214,8 +184,6 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
     override fun onFindIdSuccess(respData: FindIdSuccess) {
         NormLoginFragmentManager.data.id = respData.data!!.username
         binding.lavForget2Loading.visibility = View.GONE
-        step = true
-        already = true
         NormLoginFragmentManager.transaction(2, 3)
     }
 
