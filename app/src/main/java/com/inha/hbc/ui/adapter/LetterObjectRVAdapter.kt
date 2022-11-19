@@ -50,7 +50,7 @@ class LetterObjectRVAdapter(pos: Int): RecyclerView.Adapter<LetterObjectRVAdapte
                     binding.tvItemLetterCount.text = "20"
                 }
                 2-> {
-                    binding.ivItemLetterObject.setImageResource(R.drawable.img_deco_drink_2)
+                    binding.ivItemLetterObject.setImageResource(R.drawable.img_deco_toy_1)
                     binding.tvItemLetterTitle.text = "장난감"
                     binding.tvItemLetterCount.text = "9"
                 }
