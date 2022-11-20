@@ -7,16 +7,19 @@ import com.inha.hbc.R
 import com.inha.hbc.data.local.LetterData
 import com.inha.hbc.ui.adapter.LetterMediaListRVAdapter
 import com.inha.hbc.ui.letter.ui.*
-import com.inha.hbc.ui.main.MainActivity
-import com.inha.hbc.ui.main.MainFragment
+import com.inha.hbc.ui.letter.view.CreateMessageView
+import com.inha.hbc.ui.main.ui.MainActivity
+import com.inha.hbc.ui.main.ui.MainFragment
 import com.inha.hbc.ui.menu.ui.MenuFragment
+import com.inha.hbc.util.network.message.MessageRetrofitService
 
-object MainFragmentManager {
+object MainFragmentManager: CreateMessageView {
     lateinit var manager: FragmentManager
     lateinit var mainPage: MainFragment
     lateinit var baseActivity: MainActivity
     lateinit var letterBaseFragment: LetterBaseFragment
     var id = 0
+    var roomId = 0
 
     var objectPageType = 0
     var letterData = LetterData("", "", "")
@@ -49,9 +52,7 @@ object MainFragmentManager {
     }
 
     fun transToLetter() {
-        manager.beginTransaction().hide(mainPage).commit()
-        letterBaseFragment = LetterBaseFragment()
-        manager.beginTransaction().add(id, letterBaseFragment).commit()
+        MessageRetrofitService().createMessage(roomId.toString(), this)
     }
 
     fun menuClose(menu: Fragment) {
@@ -120,6 +121,15 @@ object MainFragmentManager {
 
     fun closeShow(view: Fragment) {
         manager.beginTransaction().remove(view).commit()
+    }
+
+    override fun onCreateMessageSuccess() {
+        manager.beginTransaction().hide(mainPage).commit()
+        letterBaseFragment = LetterBaseFragment()
+        manager.beginTransaction().add(id, letterBaseFragment).commit()
+    }
+
+    override fun onCreateMessageFailure() {
     }
 
 }

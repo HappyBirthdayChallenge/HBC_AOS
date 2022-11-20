@@ -2,13 +2,12 @@ package com.inha.hbc.util.network.message
 
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import com.inha.hbc.data.remote.resp.CheckTokenSuccess
 import com.inha.hbc.data.remote.resp.message.CreateMessage
 import com.inha.hbc.data.remote.resp.message.CreateMessageSuccess
 import com.inha.hbc.data.remote.resp.message.RoomInfo
 import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.ui.letter.view.CreateMessageView
-import com.inha.hbc.ui.letter.view.RoomInfoView
+import com.inha.hbc.ui.main.view.RoomInfoView
 import com.inha.hbc.util.network.NetworkModule
 import retrofit2.Call
 import retrofit2.Callback
@@ -66,7 +65,7 @@ class MessageRetrofitService {
                 if (response.isSuccessful) {
                     val resp = response.body()!![0] as RoomInfoSuccess
                     if (resp.code == "R-R001") {
-                        roomInfoView.onRoomInfoSuccess()
+                        roomInfoView.onRoomInfoSuccess(resp)
                     }
                     else {
                         roomInfoView.onRoomInfoFailure()

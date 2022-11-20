@@ -12,7 +12,7 @@ sealed class RoomInfo
 @Serializable
 @SerialName("R")
 data class RoomInfoSuccess(
-    val data: RoomInfoData?,
+    val data: List<RoomInfoData>?,
     val message: String,
     val code: String,
     val status: Int

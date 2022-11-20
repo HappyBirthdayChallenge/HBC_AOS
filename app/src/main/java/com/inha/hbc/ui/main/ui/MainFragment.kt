@@ -1,4 +1,4 @@
-package com.inha.hbc.ui.main
+package com.inha.hbc.ui.main.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.inha.hbc.databinding.FragmentMainBinding
 import com.inha.hbc.ui.adapter.MainPageAdapter
-import com.inha.hbc.ui.letter.view.RoomInfoView
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import com.inha.hbc.util.network.message.MessageRetrofitService
 import com.inha.hbc.util.sharedpreference.GlobalApplication
 
-class MainFragment: Fragment(), RoomInfoView {
+class MainFragment: Fragment()  {
     lateinit var binding : FragmentMainBinding
+    var pageData = ArrayList<Int>()//0 왼쪽 1 가운데 2 내용 3 오른쪽
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -45,16 +45,15 @@ class MainFragment: Fragment(), RoomInfoView {
     }
 
     fun initView() {
-        val adapter = MainPageAdapter()
+        pageData.apply{
+            add(0)
+            add(1)
+            add(3)
+        }
+        val adapter = MainPageAdapter(pageData)
         binding.vpMain.adapter = adapter
+        binding.vpMain.currentItem = 1
 
-        MessageRetrofitService().roomInfo(GlobalApplication.prefs.getInfo()!!.id.toString(),  this)
     }
 
-    override fun onRoomInfoSuccess() {
-    }
-
-    override fun onRoomInfoFailure() {
-        TODO("Not yet implemented")
-    }
 }

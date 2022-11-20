@@ -85,7 +85,7 @@ class PreferenceUtil(context: Context) {
             putString("name", info.name).commit()
             putString("phone", info.phone).commit()
             putString("image", info.image_url).commit()
-            putString("birth", "${info.birth_date.year}+!${info.birth_date.month}+!${info.birth_date.date}+!${info.birth_date.type}").commit()
+            putString("birth", "${info.birth_date.year}!${info.birth_date.month}!${info.birth_date.date}!${info.birth_date.type}").commit()
             var authorities: String = ""
             for(i in 0 until info.authorities.size) {
                 if (i == info.authorities.size - 1) {
@@ -113,6 +113,17 @@ class PreferenceUtil(context: Context) {
         name = prefs.getString("name", "")!!,
         username = prefs.getString("username", "")!!,
         id = prefs.getString("id", "")!!.toInt())
+    }
+
+    fun setScreen(h: Int, w: Int) {
+        prefs.edit().putString("height", h.toString()).commit()
+        prefs.edit().putString("width", w.toString()).commit()
+    }
+
+    fun getScreen(): List<Int> {
+        val h = prefs.getString("height", "")!!.toInt()
+        val w = prefs.getString("width", "")!!.toInt()
+        return listOf(h, w)
     }
 //    var jwt: String?
 //        get() = prefs.getString(accessJwtKey, "")

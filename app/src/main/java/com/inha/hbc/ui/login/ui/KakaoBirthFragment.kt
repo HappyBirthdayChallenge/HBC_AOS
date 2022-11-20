@@ -12,7 +12,7 @@ import com.inha.hbc.data.remote.req.CheckBirthData
 import com.inha.hbc.databinding.FragmentKakaoBirthBinding
 import com.inha.hbc.ui.login.view.CheckBirthView
 import com.inha.hbc.ui.login.view.RefreshFcmView
-import com.inha.hbc.ui.main.MainActivity
+import com.inha.hbc.ui.main.ui.MainActivity
 import com.inha.hbc.util.fragmentmanager.NormLoginFragmentManager
 import com.inha.hbc.util.network.RetrofitService
 import com.inha.hbc.util.sharedpreference.GlobalApplication

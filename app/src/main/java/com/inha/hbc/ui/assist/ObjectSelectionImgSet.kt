@@ -77,6 +77,22 @@ fun selectionAssist(type: Int, pos: Int): Int {
 
 }
 
+fun cakeSelectionAssist(type: Int): Int {
+    return when(type) {
+        1 -> R.drawable.img_deco_cake_1
+        2 -> R.drawable.img_deco_cake_2
+        3 -> R.drawable.img_deco_cake_3
+        4 -> R.drawable.img_deco_cake_4
+        5 -> R.drawable.img_deco_cake_5
+        6 -> R.drawable.img_deco_cake_6
+        7 -> R.drawable.img_deco_cake_7
+        8 -> R.drawable.img_deco_cake_8
+        9 -> R.drawable.img_deco_cake_9
+        10 -> R.drawable.img_deco_cake_10
+        else -> R.drawable.img_deco_cake_11
+    }
+}
+
 fun selectionCount(type: Int): Int {
     return when(type) {
         0 -> 10//선물

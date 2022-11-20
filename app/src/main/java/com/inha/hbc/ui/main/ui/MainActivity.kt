@@ -1,4 +1,4 @@
-package com.inha.hbc.ui.main
+package com.inha.hbc.ui.main.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
