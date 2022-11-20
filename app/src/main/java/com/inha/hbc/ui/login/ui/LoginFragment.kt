@@ -15,6 +15,7 @@ import com.inha.hbc.data.local.Jwt
 import com.inha.hbc.data.remote.req.KakaoSigninInfo
 import com.inha.hbc.data.remote.resp.*
 import com.inha.hbc.databinding.FragmentLoginBinding
+import com.inha.hbc.ui.letter.view.RoomInfoView
 import com.inha.hbc.ui.login.view.*
 import com.inha.hbc.ui.main.MainActivity
 import com.inha.hbc.util.firebase.FirebaseMessagingService
@@ -22,6 +23,7 @@ import com.inha.hbc.util.fragmentmanager.NormLoginFragmentManager
 import com.inha.hbc.util.sharedpreference.GlobalApplication
 import com.inha.hbc.util.fragmentmanager.SignupFragmentManager
 import com.inha.hbc.util.network.RetrofitService
+import com.inha.hbc.util.network.message.MessageRetrofitService
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 
@@ -186,6 +188,7 @@ class LoginFragment(val isBackBirth: Boolean): Fragment(), KakaoLoginView, GetTo
 
     override fun onGetMyInfoSuccess(resp: GetMyInfoSuccess) {
         if (isBirthAvailable(resp.data!!.birth_date)) {
+            GlobalApplication.prefs.setInfo(resp.data!!)
             RetrofitService().refreshFcm(GlobalApplication.prefs.getFcmtoken()!!)
             val intent = Intent(requireActivity(), MainActivity::class.java)
             startActivity(intent)
