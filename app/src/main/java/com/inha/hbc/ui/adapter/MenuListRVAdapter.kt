@@ -11,9 +11,7 @@ class MenuListRVAdapter(val menuList: ArrayList<String>): RecyclerView.Adapter<M
     interface onListener {
         fun onClick(menu: String)
     }
-    fun setListener(data: onListener) {
-        onlistener = data
-    }
+
     lateinit var onlistener: onListener
     lateinit var binding: ItemMenuListBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MenuHolder {
@@ -34,10 +32,12 @@ class MenuListRVAdapter(val menuList: ArrayList<String>): RecyclerView.Adapter<M
         fun bind(pos: Int) {
             binding.tvItemMenuTitle.text = menuList[pos]
             setIcon(binding.tvItemMenuTitle.text.toString())
-            initListener()
+            initListener(pos)
+
+            initView()
         }
 
-        fun initListener() {
+        fun initListener(pos: Int) {
             binding.root.setOnClickListener {
                 onlistener.onClick(binding.tvItemMenuTitle.text.toString())
             }
@@ -58,6 +58,10 @@ class MenuListRVAdapter(val menuList: ArrayList<String>): RecyclerView.Adapter<M
                     }
                 }
             )
+        }
+
+        fun initView() {
+
         }
     }
 

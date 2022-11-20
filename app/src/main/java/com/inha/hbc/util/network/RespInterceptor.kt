@@ -14,7 +14,9 @@ class RespInterceptor: Interceptor {
             origin.url.encodedPath.equals("/members/accounts/me", true) ||
             origin.url.encodedPath.equals("/members/accounts/signout", true) ||
             origin.url.encodedPath.equals("/token/fcm/refresh", true) ||
-            origin.url.encodedPath.equals("/rooms", true)) {
+            origin.url.encodedPath.equals("/rooms", true) ||
+            origin.url.encodedPath.equals("/messages/create", true) ||
+            origin.url.encodedPath.equals("/members/friends", true)) {
             chain.proceed(origin.newBuilder().apply {
                 addHeader(
                     "Authorization",

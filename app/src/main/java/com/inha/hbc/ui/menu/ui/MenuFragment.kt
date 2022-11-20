@@ -16,7 +16,7 @@ import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import com.inha.hbc.util.network.RetrofitService
 import com.inha.hbc.util.sharedpreference.GlobalApplication
 
-class MenuFragment(): Fragment(), MenuListRVAdapter.onListener, SignoutView {
+class MenuFragment(): Fragment(), SignoutView {
 
     lateinit var binding: FragmentMenuBinding
     lateinit var rvAdapter: MenuListRVAdapter
@@ -32,15 +32,8 @@ class MenuFragment(): Fragment(), MenuListRVAdapter.onListener, SignoutView {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        var menuList = ArrayList<String>()
-        menuList.add("친구목록")
-        menuList.add("알림함")
-        rvAdapter = MenuListRVAdapter(menuList)
-        rvAdapter.setListener(this)
-        binding.rvMenu.adapter = rvAdapter
-
         initListener()
+        initAdapter()
     }
 
     override fun onAttach(context: Context) {
@@ -60,34 +53,26 @@ class MenuFragment(): Fragment(), MenuListRVAdapter.onListener, SignoutView {
 
     }
 
+    fun initAdapter() {
+        var menuList = ArrayList<String>()
+        menuList.add("친구목록")
+        menuList.add("알림함")
+        rvAdapter = MenuListRVAdapter(menuList)
+        rvAdapter.onlistener = object: MenuListRVAdapter.onListener{
+            override fun onClick(menu: String) {
+                when (menu) {
+                    "친구목록" -> {
+                        MainFragmentManager.manager.beginTransaction().add(MainFragmentManager.id, FriendListFragment()).commit()
+                    }
+                    else -> {
 
-    override fun onClick(menu: String) {//recyclerview 클릭리스너
-        var menuString =
-            when(menu) {
-                "친구목록" -> {
-                    "friendlist"
-                }
-                "알림함" -> {
-                    "notify"
-                }
-                else -> {
-                    ""
+                    }
                 }
             }
-//        val downFragment: Fragment? =
-//            when(menu) {
-//                "친구목록" -> {
-//                    FriendListFragment()
-//                }
-//                "알림함" -> {
-//                    NotifyFragment()
-//                }
-//                else -> {
-//                    null
-//                }
-//            }
-//        parentFragmentManager.beginTransaction().addToBackStack(menuString).add(flid, downFragment!!).commit()
+
         }
+        binding.rvMenu.adapter = rvAdapter
+    }
 
     override fun onSignoutSuccess() {
         GlobalApplication.prefs.delJwt()
