@@ -29,5 +29,6 @@ class FirebaseMessagingService: FirebaseMessagingService() {
         GlobalApplication.prefs.setFcmtoken(token)
         RetrofitService().refreshFcm(GlobalApplication.prefs.getFcmtoken()!!)
     }
+    
 
 }

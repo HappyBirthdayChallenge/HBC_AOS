@@ -40,6 +40,7 @@ class ObjectSelectionFragment: Fragment() {
 
     private fun initRv() {
         val adapter = LetterObjectSelectionRVAdapter()
+        adapter.setHasStableIds(true)
         adapter.myListener = object : LetterObjectSelectionRVAdapter.MyListener {
             override fun onClick(pos: Int) {
                 MainFragmentManager.letterData.objectName += pos.toString()
