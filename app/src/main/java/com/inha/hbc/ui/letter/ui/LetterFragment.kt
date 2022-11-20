@@ -1,12 +1,10 @@
-package com.inha.hbc.ui.letter
+package com.inha.hbc.ui.letter.ui
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.net.Uri
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayoutMediator
 import com.inha.hbc.databinding.FragmentLetterBinding
-import com.inha.hbc.ui.adapter.LetterMediaListRVAdapter
 import com.inha.hbc.ui.adapter.LetterVPAdapter
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 

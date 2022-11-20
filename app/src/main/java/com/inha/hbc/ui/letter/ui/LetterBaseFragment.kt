@@ -1,12 +1,8 @@
-package com.inha.hbc.ui.letter
+package com.inha.hbc.ui.letter.ui
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.content.res.Resources.Theme
-import android.graphics.Bitmap
 import android.graphics.Paint
-import android.media.MediaMetadataRetriever
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -19,14 +15,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.material3.Text
-import androidx.compose.ui.graphics.Color
 import androidx.core.content.FileProvider
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.findFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.inha.hbc.R
@@ -36,8 +27,6 @@ import com.inha.hbc.ui.adapter.LetterBaseVPAdapter
 import com.inha.hbc.ui.adapter.LetterMenuRVAdapter
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import java.io.File
-import java.lang.reflect.Modifier
-import java.net.URI
 import java.util.*
 import kotlin.collections.ArrayList
 

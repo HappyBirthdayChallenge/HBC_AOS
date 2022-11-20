@@ -1,14 +1,12 @@
 package com.inha.hbc.util.fragmentmanager
 
-import android.graphics.Bitmap
 import android.net.Uri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.inha.hbc.R
 import com.inha.hbc.data.local.LetterData
 import com.inha.hbc.ui.adapter.LetterMediaListRVAdapter
-import com.inha.hbc.ui.assist.selectionAssist
-import com.inha.hbc.ui.letter.*
+import com.inha.hbc.ui.letter.ui.*
 import com.inha.hbc.ui.main.MainActivity
 import com.inha.hbc.ui.main.MainFragment
 import com.inha.hbc.ui.menu.ui.MenuFragment

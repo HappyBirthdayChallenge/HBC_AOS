@@ -1,4 +1,4 @@
-package com.inha.hbc.ui.letter
+package com.inha.hbc.ui.letter.ui
 
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.flexbox.AlignItems

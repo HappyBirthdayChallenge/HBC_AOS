@@ -1,9 +1,8 @@
-package com.inha.hbc.ui.letter
+package com.inha.hbc.ui.letter.ui
 
 import android.content.ContentValues
 import android.content.Context
 import android.media.MediaPlayer
-import android.media.MediaPlayer.OnCompletionListener
 import android.media.MediaRecorder
 import android.media.MediaRecorder.AudioEncoder
 import android.media.MediaRecorder.AudioSource
@@ -11,7 +10,6 @@ import android.media.MediaRecorder.OutputFormat
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.Environment
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
@@ -25,7 +23,6 @@ import com.inha.hbc.data.local.RecordingState
 import com.inha.hbc.databinding.FragmentLetterRecordBinding
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import java.io.File
-import java.sql.Timestamp
 import java.util.Timer
 import kotlin.concurrent.timer
 

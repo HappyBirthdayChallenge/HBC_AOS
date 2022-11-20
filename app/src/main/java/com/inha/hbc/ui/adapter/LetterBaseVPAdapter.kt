@@ -5,8 +5,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.inha.hbc.databinding.FragmentLetterBinding
 import com.inha.hbc.databinding.FragmentObjectBinding
-import com.inha.hbc.ui.letter.LetterFragment
-import com.inha.hbc.ui.letter.ObjectFragment
+import com.inha.hbc.ui.letter.ui.LetterFragment
+import com.inha.hbc.ui.letter.ui.ObjectFragment
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 
 class LetterBaseVPAdapter(val typeData: ArrayList<Int>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {

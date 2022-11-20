@@ -1,4 +1,4 @@
-package com.inha.hbc.ui.letter
+package com.inha.hbc.ui.letter.ui
 
 import android.content.Context
 import android.media.MediaPlayer
