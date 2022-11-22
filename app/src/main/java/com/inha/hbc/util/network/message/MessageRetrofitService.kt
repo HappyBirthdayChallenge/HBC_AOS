@@ -45,7 +45,7 @@ class MessageRetrofitService {
                 if (response.isSuccessful) {
                     val resp = response.body()!![0] as CreateMessageSuccess
                     if (resp.code == "R-RM002") {
-                        createMessageView.onCreateMessageSuccess()
+                        createMessageView.onCreateMessageSuccess(resp)
                     }
                     else {
                         createMessageView.onCreateMessageFailure()

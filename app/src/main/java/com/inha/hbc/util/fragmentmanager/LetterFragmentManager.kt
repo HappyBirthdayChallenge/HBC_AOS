@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.inha.hbc.R
 import com.inha.hbc.data.local.LetterData
+import com.inha.hbc.data.remote.resp.message.CreateMessageSuccess
 import com.inha.hbc.ui.adapter.LetterMediaListRVAdapter
 import com.inha.hbc.ui.letter.ui.*
 import com.inha.hbc.ui.letter.view.CreateMessageView
@@ -21,6 +22,7 @@ object LetterFragmentManager: CreateMessageView {
     var objectPageType = 0
     var letterData = LetterData("", "", "")
     var objectId = R.drawable.img_deco_drink_1
+    var letterID = 0
     var viewWidth = 0
 
     lateinit var mediaAdapter: LetterMediaListRVAdapter
@@ -29,6 +31,7 @@ object LetterFragmentManager: CreateMessageView {
     var pathArr = ArrayList<String>()
     var uriArr = ArrayList<Uri>()
     var typeArr = ArrayList<Int>() // 0 사진 1 동영상 2 음성
+    var letterId = 0
 
     fun init(manager: FragmentManager, mainPage: MainFragment, id: Int) {
         this.manager = manager
@@ -109,7 +112,8 @@ object LetterFragmentManager: CreateMessageView {
         manager.beginTransaction().remove(view).commit()
     }
 
-    override fun onCreateMessageSuccess() {
+    override fun onCreateMessageSuccess(resp: CreateMessageSuccess) {
+        letterId = resp!!.data.message_id
     }
 
     override fun onCreateMessageFailure() {
