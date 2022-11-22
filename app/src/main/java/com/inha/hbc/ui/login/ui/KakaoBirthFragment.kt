@@ -9,16 +9,21 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.inha.hbc.data.remote.req.CheckBirthData
+import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.databinding.FragmentKakaoBirthBinding
+import com.inha.hbc.ui.assist.cakeSelectionAssist
 import com.inha.hbc.ui.login.view.CheckBirthView
 import com.inha.hbc.ui.login.view.RefreshFcmView
 import com.inha.hbc.ui.main.ui.MainActivity
+import com.inha.hbc.ui.main.view.RoomInfoView
+import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import com.inha.hbc.util.fragmentmanager.NormLoginFragmentManager
 import com.inha.hbc.util.network.RetrofitService
+import com.inha.hbc.util.network.message.MessageRetrofitService
 import com.inha.hbc.util.sharedpreference.GlobalApplication
 import java.util.Calendar
 
-class KakaoBirthFragment: Fragment(), CheckBirthView, RefreshFcmView {
+class KakaoBirthFragment: Fragment(), CheckBirthView, RefreshFcmView, RoomInfoView {
     lateinit var callback: OnBackPressedCallback
     lateinit var binding: FragmentKakaoBirthBinding
     override fun onCreateView(
@@ -80,10 +85,8 @@ class KakaoBirthFragment: Fragment(), CheckBirthView, RefreshFcmView {
     }
 
     override fun onBirthSuccess() {
-        RetrofitService().refreshFcm(GlobalApplication.prefs.getFcmtoken()!!)
-        val intent = Intent(requireActivity(), MainActivity::class.java)
-        startActivity(intent)
-        requireActivity().finish()
+
+        MessageRetrofitService().roomInfo(GlobalApplication.prefs.getInfo()!!.id.toString(), this)
     }
 
     override fun onBirthFailure() {
@@ -110,6 +113,24 @@ class KakaoBirthFragment: Fragment(), CheckBirthView, RefreshFcmView {
     }
 
     override fun onRefreshFcmFailure() {
+    }
+
+    override fun onRoomInfoSuccess(resp: RoomInfoSuccess) {
+        val arr = resp.data!![0].cake_type.split("E")
+        val cakeType = arr[arr.size - 1].toString().toInt()
+
+        RetrofitService().refreshFcm(GlobalApplication.prefs.getFcmtoken()!!)
+        val intent = Intent(requireActivity(), MainActivity::class.java).apply {
+            putExtra("caketype", cakeSelectionAssist(cakeType))
+            putExtra("roomId", resp.data!![0].room_id)
+            putExtra("year", resp.data!![0].year)
+        }
+        startActivity(intent)
+        requireActivity().finish()
+    }
+
+    override fun onRoomInfoFailure() {
+        TODO("Not yet implemented")
     }
 
 }

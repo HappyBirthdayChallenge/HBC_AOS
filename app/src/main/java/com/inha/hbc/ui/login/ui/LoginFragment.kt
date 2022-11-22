@@ -14,17 +14,22 @@ import com.inha.hbc.R
 import com.inha.hbc.data.local.Jwt
 import com.inha.hbc.data.remote.req.KakaoSigninInfo
 import com.inha.hbc.data.remote.resp.*
+import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.databinding.FragmentLoginBinding
+import com.inha.hbc.ui.assist.cakeSelectionAssist
 import com.inha.hbc.ui.login.view.*
 import com.inha.hbc.ui.main.ui.MainActivity
+import com.inha.hbc.ui.main.view.RoomInfoView
+import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import com.inha.hbc.util.fragmentmanager.NormLoginFragmentManager
 import com.inha.hbc.util.sharedpreference.GlobalApplication
 import com.inha.hbc.util.fragmentmanager.SignupFragmentManager
 import com.inha.hbc.util.network.RetrofitService
+import com.inha.hbc.util.network.message.MessageRetrofitService
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.user.UserApiClient
 
-class LoginFragment(val isBackBirth: Boolean): Fragment(), KakaoLoginView, GetTokenView, CheckTokenView, GetMyInfoView, RefreshFcmView {
+class LoginFragment(val isBackBirth: Boolean): Fragment(), KakaoLoginView, GetTokenView, CheckTokenView, GetMyInfoView, RefreshFcmView, RoomInfoView {
 
     lateinit var binding: FragmentLoginBinding
     var auto = true
@@ -188,10 +193,8 @@ class LoginFragment(val isBackBirth: Boolean): Fragment(), KakaoLoginView, GetTo
     override fun onGetMyInfoSuccess(resp: GetMyInfoSuccess) {
         if (isBirthAvailable(resp.data!!.birth_date)) {
             GlobalApplication.prefs.setInfo(resp.data!!)
-            RetrofitService().refreshFcm(GlobalApplication.prefs.getFcmtoken()!!)
-            val intent = Intent(requireActivity(), MainActivity::class.java)
-            startActivity(intent)
-            requireActivity().finish()
+            MessageRetrofitService().roomInfo(GlobalApplication.prefs.getInfo()!!.id.toString(), this)
+
         }
         else {
             binding.lavLoginLoading.visibility = View.GONE
@@ -200,6 +203,25 @@ class LoginFragment(val isBackBirth: Boolean): Fragment(), KakaoLoginView, GetTo
             }
 
         }
+    }
+
+    override fun onRoomInfoSuccess(data: RoomInfoSuccess) {
+        val arr = data.data!![0].cake_type.split("E")
+        val cakeType = arr[arr.size - 1].toString().toInt()
+
+        RetrofitService().refreshFcm(GlobalApplication.prefs.getFcmtoken()!!)
+        val intent = Intent(requireActivity(), MainActivity::class.java).apply {
+            putExtra("caketype", cakeSelectionAssist(cakeType))
+            putExtra("roomId", data.data!![0].room_id)
+            putExtra("year", data.data!![0].year)
+        }
+        startActivity(intent)
+        requireActivity().finish()
+
+    }
+
+    override fun onRoomInfoFailure() {
+        TODO("Not yet implemented")
     }
 
     override fun onGetMyInfoFailure() {

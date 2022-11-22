@@ -22,6 +22,8 @@ object MainFragmentManager: CreateMessageView {
     lateinit var letterBaseFragment: LetterBaseFragment
     var id = 0
     var roomId = 0
+    var roomYear = 0
+    var cakeId = 0
 
     var objectPageType = 0
     var letterData = LetterData("", "", "")
@@ -36,12 +38,15 @@ object MainFragmentManager: CreateMessageView {
 
     lateinit var letterFragment: LetterFragment
 
-    fun init(manager: FragmentManager, id: Int, base: MainActivity) {
+    fun init(manager: FragmentManager, id: Int, cakeType: Int, year: Int, roomId: Int, base: MainActivity) {
         this.manager = manager
         this.id = id
         mainPage = MainFragment()
         baseActivity = base
         letterData.animeName = "json_deco_anime_1.json"
+        cakeId = cakeType
+        roomYear = year
+        this.roomId = roomId
     }
 
     fun start() {

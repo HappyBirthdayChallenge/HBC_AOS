@@ -5,13 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.databinding.FragmentMainBinding
-import com.inha.hbc.ui.adapter.MainPageAdapter
+import com.inha.hbc.ui.adapter.MainVPAdapter
+import com.inha.hbc.ui.assist.cakeSelectionAssist
+import com.inha.hbc.ui.main.view.RoomInfoView
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import com.inha.hbc.util.network.message.MessageRetrofitService
 import com.inha.hbc.util.sharedpreference.GlobalApplication
 
-class MainFragment: Fragment()  {
+class MainFragment: Fragment() {
     lateinit var binding : FragmentMainBinding
     var pageData = ArrayList<Int>()//0 왼쪽 1 가운데 2 내용 3 오른쪽
     override fun onCreateView(
@@ -51,10 +54,9 @@ class MainFragment: Fragment()  {
             add(1)
             add(3)
         }
-        val adapter = MainPageAdapter(pageData)
+        val adapter = MainVPAdapter(pageData)
         binding.vpMain.adapter = adapter
         binding.vpMain.currentItem = 1
 
     }
-
 }

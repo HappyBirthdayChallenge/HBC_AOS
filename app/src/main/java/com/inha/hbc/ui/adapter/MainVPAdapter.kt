@@ -15,7 +15,7 @@ import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import com.inha.hbc.util.network.message.MessageRetrofitService
 import com.inha.hbc.util.sharedpreference.GlobalApplication
 
-class MainPageAdapter(var pageData: ArrayList<Int>): RecyclerView.Adapter<MainPageAdapter.PageHolder>() {
+class MainVPAdapter(var pageData: ArrayList<Int>): RecyclerView.Adapter<MainVPAdapter.PageHolder>() {
 
     lateinit var binding: ItemMainPageBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PageHolder {
@@ -29,8 +29,7 @@ class MainPageAdapter(var pageData: ArrayList<Int>): RecyclerView.Adapter<MainPa
 
     override fun getItemCount(): Int = pageData.size
 
-    class PageHolder(val binding: ItemMainPageBinding, val pageData: ArrayList<Int>): RecyclerView.ViewHolder(binding.root),
-        RoomInfoView {
+    class PageHolder(val binding: ItemMainPageBinding, val pageData: ArrayList<Int>): RecyclerView.ViewHolder(binding.root) {
 
         val bgOptions = RequestOptions().fitCenter()
             .skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -55,20 +54,8 @@ class MainPageAdapter(var pageData: ArrayList<Int>): RecyclerView.Adapter<MainPa
         }
 
         fun initObject(pos: Int) {
-            MessageRetrofitService().roomInfo(GlobalApplication.prefs.getInfo()!!.id.toString(), this)
+            binding.ivItemMainCake.setImageResource(MainFragmentManager.cakeId)
         }
 
-        override fun onRoomInfoSuccess(data: RoomInfoSuccess) {
-            MainFragmentManager.roomId = data.data!![0].room_id
-
-            val arr = data.data[0].cake_type.split("E")
-            val cakeType = arr[arr.size - 1].toString().toInt()
-            val cakeId= cakeSelectionAssist(cakeType)
-
-            binding.ivItemMainCake.setImageResource(cakeId)
-        }
-
-        override fun onRoomInfoFailure() {
-        }
     }
 }

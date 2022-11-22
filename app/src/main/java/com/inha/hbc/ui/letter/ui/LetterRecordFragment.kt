@@ -62,6 +62,8 @@ class LetterRecordFragment: Fragment() {
         initRecorder()
         initTimer()
         initListener()
+
+        val a = resources.assets.open("json_deco_anime_1.json")
     }
 
     fun initRecorder() {
