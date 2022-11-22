@@ -25,9 +25,13 @@ object MenuFragmentManager {
     }
 
 
-    fun close(menu: Fragment) {
+    fun close() {
         manager.beginTransaction().remove(menuPage).commit()
         manager.beginTransaction().show(mainPage).commit()
+    }
+
+    fun openMenu(menu: String) {
+
     }
 
 }

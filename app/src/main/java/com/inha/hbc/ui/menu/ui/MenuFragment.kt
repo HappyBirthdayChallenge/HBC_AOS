@@ -44,7 +44,7 @@ class MenuFragment(): Fragment(), SignoutView {
 
     fun initListener() {
         binding.ivMenuClose.setOnClickListener {
-            MenuFragmentManager.close(this)
+            MenuFragmentManager.close()
         }
 
         binding.tvMenuSignout.setOnClickListener {
