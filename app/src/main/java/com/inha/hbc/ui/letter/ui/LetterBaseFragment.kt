@@ -21,17 +21,20 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.inha.hbc.R
+import com.inha.hbc.data.remote.resp.message.UploadSuccess
 import com.inha.hbc.databinding.FragmentLetterBaseBinding
 import com.inha.hbc.databinding.ItemTabSelectedBinding
 import com.inha.hbc.ui.adapter.LetterBaseVPAdapter
 import com.inha.hbc.ui.adapter.LetterMenuRVAdapter
+import com.inha.hbc.ui.letter.view.UploadView
 import com.inha.hbc.util.fragmentmanager.LetterFragmentManager
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
+import com.inha.hbc.util.network.message.MessageRetrofitService
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
-class LetterBaseFragment: Fragment() {
+class LetterBaseFragment: Fragment(), UploadView {
     lateinit var binding: FragmentLetterBaseBinding
     var fragmentArr = ArrayList<Int>()
     var step = ArrayList<Boolean>()
@@ -84,6 +87,7 @@ class LetterBaseFragment: Fragment() {
                 if (fileType == "mp4") {
                     if (fileSize/1024 <= 300 * 1024) {
                         LetterFragmentManager.updateData(imgURI, 1, imgPath)
+                        MessageRetrofitService().videoUpload(imgPath, LetterFragmentManager.letterId, this)
                     }
                     else {
                         Toast.makeText(requireContext(), "지원용량을 초과했어요!", Toast.LENGTH_SHORT).show()
@@ -92,6 +96,7 @@ class LetterBaseFragment: Fragment() {
                 else if (fileType == "jpg" || fileType == "png" || fileType == "peg" || fileType == "gif"){
                     if (fileSize/1024 <= 10 * 1024) {
                         LetterFragmentManager.updateData(imgURI, 0, imgPath)
+                        MessageRetrofitService().imgUpload(imgPath, LetterFragmentManager.letterId, this)
                         Log.d("imgUri", imgURI.toString())
                     }
                     else {
@@ -111,9 +116,11 @@ class LetterBaseFragment: Fragment() {
         if (fileSize != 0) {
             if (fileType == "mp4") {
                 LetterFragmentManager.updateData(imgURI, 1, imgPath)
+                MessageRetrofitService().videoUpload(imgPath, LetterFragmentManager.letterId, this)
             }
             else {
                 LetterFragmentManager.updateData(imgURI, 0, imgPath)
+                MessageRetrofitService().imgUpload(imgPath, LetterFragmentManager.letterId, this)
                 Log.d("imgUri", imgURI.toString())
             }
         }
@@ -420,5 +427,11 @@ class LetterBaseFragment: Fragment() {
     override fun onDetach() {
         super.onDetach()
         backPressedCallback.remove()
+    }
+
+    override fun onAudioUploadSuccess(resp: UploadSuccess) {
+    }
+
+    override fun onAudioUploadFailure() {
     }
 }

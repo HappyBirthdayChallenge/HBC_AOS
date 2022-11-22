@@ -17,7 +17,9 @@ class RespInterceptor: Interceptor {
             origin.url.encodedPath.equals("/rooms", true) ||
             origin.url.encodedPath.equals("/messages/create", true) ||
             origin.url.encodedPath.equals("/members/friends", true) ||
-            origin.url.encodedPath.equals("/files/upload/audio", true)) {
+            origin.url.encodedPath.equals("/files/upload/audio", true) ||
+            origin.url.encodedPath.equals("/files/upload/video", true) ||
+            origin.url.encodedPath.equals("/files/upload/image", true)) {
             chain.proceed(origin.newBuilder().apply {
                 addHeader(
                     "Authorization",

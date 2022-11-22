@@ -98,7 +98,7 @@ class MessageRetrofitService {
         )
         val id = messageId.toString().toRequestBody("text/plain".toMediaTypeOrNull())
 
-        callRetro().audioUpload(mp, id).enqueue(object: Callback<List<Upload>> {
+        callRetro().imgUpload(mp, id).enqueue(object: Callback<List<Upload>> {
             override fun onResponse(call: Call<List<Upload>>, response: Response<List<Upload>>) {if (response.isSuccessful) {
                 val resp = response.body()!![0] as UploadSuccess
                 if (resp.code == "R-FI001") {
@@ -128,7 +128,7 @@ class MessageRetrofitService {
         )
         val id = messageId.toString().toRequestBody("text/plain".toMediaTypeOrNull())
 
-        callRetro().audioUpload(mp, id).enqueue(object: Callback<List<Upload>> {
+        callRetro().videoUpload(mp, id).enqueue(object: Callback<List<Upload>> {
             override fun onResponse(call: Call<List<Upload>>, response: Response<List<Upload>>) {if (response.isSuccessful) {
                 val resp = response.body()!![0] as UploadSuccess
                 if (resp.code == "R-FI003") {
