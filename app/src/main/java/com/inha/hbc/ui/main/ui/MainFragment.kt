@@ -39,7 +39,7 @@ class MainFragment: Fragment() {
             MainFragmentManager.transToMenu()
         }
 
-        binding.ivMessageMenu.setOnClickListener {
+        binding.ivMainSend.setOnClickListener {
         }
 
         binding.tvMainTitle.setOnClickListener {
@@ -58,5 +58,7 @@ class MainFragment: Fragment() {
         binding.vpMain.adapter = adapter
         binding.vpMain.currentItem = 1
 
+
+        binding.tvMainTitle.text = GlobalApplication.prefs.getInfo()!!.name
     }
 }
