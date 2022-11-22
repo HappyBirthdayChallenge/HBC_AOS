@@ -51,7 +51,7 @@ object LetterFragmentManager: CreateMessageView {
         uriArr.clear()
         typeArr.clear()
         manager.beginTransaction().remove(letterBaseFragment).commit()
-        manager.beginTransaction().show(MainFragmentManager.mainPage).commit()
+        manager.beginTransaction().show(mainPage).commit()
     }
 
     fun objectOpen(type: String) {
@@ -113,6 +113,8 @@ object LetterFragmentManager: CreateMessageView {
     }
 
     override fun onCreateMessageFailure() {
+        manager.beginTransaction().remove(letterBaseFragment).commit()
+        manager.beginTransaction().show(mainPage).commit()
     }
 
 
