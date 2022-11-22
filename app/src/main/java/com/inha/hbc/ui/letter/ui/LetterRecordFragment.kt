@@ -22,7 +22,7 @@ import com.inha.hbc.R
 import com.inha.hbc.data.local.RecordingState
 import com.inha.hbc.data.remote.resp.message.UploadSuccess
 import com.inha.hbc.databinding.FragmentLetterRecordBinding
-import com.inha.hbc.ui.letter.view.AudioUploadView
+import com.inha.hbc.ui.letter.view.UploadView
 import com.inha.hbc.util.fragmentmanager.LetterFragmentManager
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import com.inha.hbc.util.network.message.MessageRetrofitService
@@ -30,7 +30,7 @@ import java.io.File
 import java.util.Timer
 import kotlin.concurrent.timer
 
-class LetterRecordFragment: Fragment(), AudioUploadView {
+class LetterRecordFragment: Fragment(), UploadView {
     lateinit var binding: FragmentLetterRecordBinding
     lateinit var backPressedCallback: OnBackPressedCallback
     var timer: Timer? = null

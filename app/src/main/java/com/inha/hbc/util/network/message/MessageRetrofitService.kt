@@ -1,21 +1,14 @@
 package com.inha.hbc.util.network.message
 
-import android.net.Uri
-import android.os.Environment
-import android.provider.MediaStore
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.inha.hbc.data.remote.resp.message.*
-import com.inha.hbc.ui.letter.view.AudioUploadView
+import com.inha.hbc.ui.letter.view.UploadView
 import com.inha.hbc.ui.letter.view.CreateMessageView
 import com.inha.hbc.ui.main.view.RoomInfoView
-import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import com.inha.hbc.util.network.NetworkModule
-import okhttp3.MediaType
-import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
-import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
@@ -37,7 +30,7 @@ class MessageRetrofitService {
 
     lateinit var createMessageView: CreateMessageView
     lateinit var roomInfoView: RoomInfoView
-    lateinit var audioUploadView: AudioUploadView
+    lateinit var uploadView: UploadView
 
     fun createMessage(id: String, view: CreateMessageView) {
         createMessageView = view
@@ -67,8 +60,8 @@ class MessageRetrofitService {
         })
     }
 
-    fun audioUpload(path: String, messageId: Int, view: AudioUploadView) {
-        audioUploadView = view
+    fun audioUpload(path: String, messageId: Int, view: UploadView) {
+        uploadView = view
 
         val mp = MultipartBody.Part.createFormData("audio", File(path).name + ".m4a",
             File(path).asRequestBody("audio/m4a".toMediaTypeOrNull())
@@ -79,14 +72,14 @@ class MessageRetrofitService {
             override fun onResponse(call: Call<List<Upload>>, response: Response<List<Upload>>) {if (response.isSuccessful) {
                 val resp = response.body()!![0] as UploadSuccess
                 if (resp.code == "R-FI003") {
-                    audioUploadView.onAudioUploadSuccess(resp)
+                    uploadView.onAudioUploadSuccess(resp)
                 }
                 else {
-                    audioUploadView.onAudioUploadFailure()
+                    uploadView.onAudioUploadFailure()
                 }
             }
             else {
-                audioUploadView.onAudioUploadFailure()
+                uploadView.onAudioUploadFailure()
             }
             }
 
@@ -96,6 +89,67 @@ class MessageRetrofitService {
         })
 
     }
+
+    fun imgUpload(path: String, messageId: Int, view: UploadView) {
+        uploadView = view
+
+        val mp = MultipartBody.Part.createFormData("image", File(path).name,
+            File(path).asRequestBody("image/*".toMediaTypeOrNull())
+        )
+        val id = messageId.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+
+        callRetro().audioUpload(mp, id).enqueue(object: Callback<List<Upload>> {
+            override fun onResponse(call: Call<List<Upload>>, response: Response<List<Upload>>) {if (response.isSuccessful) {
+                val resp = response.body()!![0] as UploadSuccess
+                if (resp.code == "R-FI001") {
+                    uploadView.onAudioUploadSuccess(resp)
+                }
+                else {
+                    uploadView.onAudioUploadFailure()
+                }
+            }
+            else {
+                uploadView.onAudioUploadFailure()
+            }
+            }
+
+            override fun onFailure(call: Call<List<Upload>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+        })
+
+    }
+
+    fun videoUpload(path: String, messageId: Int, view: UploadView) {
+        uploadView = view
+
+        val mp = MultipartBody.Part.createFormData("video", File(path).name,
+            File(path).asRequestBody("video/*".toMediaTypeOrNull())
+        )
+        val id = messageId.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+
+        callRetro().audioUpload(mp, id).enqueue(object: Callback<List<Upload>> {
+            override fun onResponse(call: Call<List<Upload>>, response: Response<List<Upload>>) {if (response.isSuccessful) {
+                val resp = response.body()!![0] as UploadSuccess
+                if (resp.code == "R-FI003") {
+                    uploadView.onAudioUploadSuccess(resp)
+                }
+                else {
+                    uploadView.onAudioUploadFailure()
+                }
+            }
+            else {
+                uploadView.onAudioUploadFailure()
+            }
+            }
+
+            override fun onFailure(call: Call<List<Upload>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+        })
+
+    }
+
 
     fun roomInfo(memberId: String, view: RoomInfoView) {
         roomInfoView = view
