@@ -25,6 +25,7 @@ import com.inha.hbc.databinding.FragmentLetterBaseBinding
 import com.inha.hbc.databinding.ItemTabSelectedBinding
 import com.inha.hbc.ui.adapter.LetterBaseVPAdapter
 import com.inha.hbc.ui.adapter.LetterMenuRVAdapter
+import com.inha.hbc.util.fragmentmanager.LetterFragmentManager
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import java.io.File
 import java.util.*
@@ -82,7 +83,7 @@ class LetterBaseFragment: Fragment() {
 
                 if (fileType == "mp4") {
                     if (fileSize/1024 <= 300 * 1024) {
-                        MainFragmentManager.updateData(imgURI, 1, imgPath)
+                        LetterFragmentManager.updateData(imgURI, 1, imgPath)
                     }
                     else {
                         Toast.makeText(requireContext(), "지원용량을 초과했어요!", Toast.LENGTH_SHORT).show()
@@ -90,7 +91,7 @@ class LetterBaseFragment: Fragment() {
                 }
                 else if (fileType == "jpg" || fileType == "png" || fileType == "peg" || fileType == "gif"){
                     if (fileSize/1024 <= 10 * 1024) {
-                        MainFragmentManager.updateData(imgURI, 0, imgPath)
+                        LetterFragmentManager.updateData(imgURI, 0, imgPath)
                         Log.d("imgUri", imgURI.toString())
                     }
                     else {
@@ -109,10 +110,10 @@ class LetterBaseFragment: Fragment() {
         val fileType = file.path.substring(file.path.length - 3, file.path.length)
         if (fileSize != 0) {
             if (fileType == "mp4") {
-                MainFragmentManager.updateData(imgURI, 1, imgPath)
+                LetterFragmentManager.updateData(imgURI, 1, imgPath)
             }
             else {
-                MainFragmentManager.updateData(imgURI, 0, imgPath)
+                LetterFragmentManager.updateData(imgURI, 0, imgPath)
                 Log.d("imgUri", imgURI.toString())
             }
         }
@@ -140,7 +141,7 @@ class LetterBaseFragment: Fragment() {
     override fun onResume() {
         super.onResume()
 
-        MainFragmentManager.viewWidth = binding.clLetterBase.rootView.width
+        LetterFragmentManager.viewWidth = binding.clLetterBase.rootView.width
     }
 
     fun initView() {
@@ -193,7 +194,7 @@ class LetterBaseFragment: Fragment() {
                 binding.tlLetterBase.selectTab(binding.tlLetterBase.getTabAt(0))
             }
             else {
-                MainFragmentManager.letterClose()
+                LetterFragmentManager.letterClose()
             }
         }
 
@@ -218,7 +219,7 @@ class LetterBaseFragment: Fragment() {
                     if (tab.position == 2) {
                         binding.tvLetterBaseSend.visibility = View.VISIBLE
                         binding.ivLetterBaseSend.visibility = View.VISIBLE
-                        MainFragmentManager.letterFragment.notifyUpdate()
+                        LetterFragmentManager.letterFragment.notifyUpdate()
                     }
                 }
                 else {
@@ -282,7 +283,7 @@ class LetterBaseFragment: Fragment() {
                         openVideo()
                     }
                     else -> {
-                        MainFragmentManager.openRecording()
+                        LetterFragmentManager.openRecording()
                     }
                 }
             }
@@ -302,14 +303,14 @@ class LetterBaseFragment: Fragment() {
 
     fun getAnime() {
         step[2] = true
-        MainFragmentManager.letterFragment.notifyUpdate()
+        LetterFragmentManager.letterFragment.notifyUpdate()
         binding.vpLetterBase.currentItem = 2
         binding.tlLetterBase.selectTab(binding.tlLetterBase.getTabAt(2))
     }
 
 
     fun openList() {
-        if (MainFragmentManager.typeArr.size > 10) {
+        if (LetterFragmentManager.typeArr.size > 10) {
             Toast.makeText(requireContext(), "최대 첨부개수 10개를 초과했어요!", Toast.LENGTH_SHORT).show()
             return
         }
@@ -409,7 +410,7 @@ class LetterBaseFragment: Fragment() {
                     binding.tlLetterBase.selectTab(binding.tlLetterBase.getTabAt(0))
                 }
                 else {
-                    MainFragmentManager.letterClose()
+                    LetterFragmentManager.letterClose()
                 }
             }
         }

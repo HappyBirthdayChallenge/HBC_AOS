@@ -21,6 +21,7 @@ import com.airbnb.lottie.LottieDrawable
 import com.inha.hbc.R
 import com.inha.hbc.data.local.RecordingState
 import com.inha.hbc.databinding.FragmentLetterRecordBinding
+import com.inha.hbc.util.fragmentmanager.LetterFragmentManager
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import java.io.File
 import java.util.Timer
@@ -280,7 +281,7 @@ class LetterRecordFragment: Fragment() {
             if (state == RecordingState.AFTER_RECORDING) {
                 if (file.length()/1024 <= 10 * 1024) {
                     makeUri()
-                    MainFragmentManager.recordClose(fileUri, this)
+                    LetterFragmentManager.recordClose(fileUri, this)
                 }
                 else {
                     Toast.makeText(requireContext(), "지원용량을 초과했어요!", Toast.LENGTH_SHORT).show()
@@ -289,7 +290,7 @@ class LetterRecordFragment: Fragment() {
         }
 
         binding.ivLetterRecordBack.setOnClickListener {
-            MainFragmentManager.recordClose(this)
+            LetterFragmentManager.recordClose(this)
         }
     }
 
@@ -310,7 +311,7 @@ class LetterRecordFragment: Fragment() {
         super.onAttach(context)
         backPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                MainFragmentManager.recordClose(this@LetterRecordFragment)
+                LetterFragmentManager.recordClose(this@LetterRecordFragment)
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, backPressedCallback)

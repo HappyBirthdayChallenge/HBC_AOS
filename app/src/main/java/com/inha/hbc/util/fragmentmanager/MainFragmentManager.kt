@@ -18,35 +18,21 @@ import com.inha.hbc.util.network.RetrofitService
 import com.inha.hbc.util.network.message.MessageRetrofitService
 import com.inha.hbc.util.sharedpreference.GlobalApplication
 
-object MainFragmentManager: CreateMessageView {
+object MainFragmentManager {
     lateinit var manager: FragmentManager
     lateinit var mainPage: MainFragment
     lateinit var baseActivity: MainActivity
-    lateinit var letterBaseFragment: LetterBaseFragment
     var id = 0
     var roomId = 0
     var roomYear = 0
     var cakeId = 0
 
-    var objectPageType = 0
-    var letterData = LetterData("", "", "")
-    var objectId = R.drawable.img_deco_drink_1
-    var viewWidth = 0
-
-    var pathArr = ArrayList<String>()
-    var uriArr = ArrayList<Uri>()
-    var typeArr = ArrayList<Int>() // 0 사진 1 동영상 2 음성
-
-    lateinit var mediaAdapter: LetterMediaListRVAdapter
-
-    lateinit var letterFragment: LetterFragment
 
     fun init(manager: FragmentManager, id: Int, cakeType: Int, year: Int, roomId: Int, base: MainActivity) {
         this.manager = manager
         this.id = id
         mainPage = MainFragment()
         baseActivity = base
-        letterData.animeName = "json_deco_anime_1.json"
         cakeId = cakeType
         roomYear = year
         this.roomId = roomId
@@ -62,71 +48,10 @@ object MainFragmentManager: CreateMessageView {
     }
 
     fun transToLetter() {
-        MessageRetrofitService().createMessage(roomId.toString(), this)
+        LetterFragmentManager.init(manager, mainPage, id)
+        LetterFragmentManager.start()
     }
 
-    fun letterClose() {
-        pathArr.clear()
-        uriArr.clear()
-        typeArr.clear()
-        manager.beginTransaction().remove(letterBaseFragment).commit()
-        manager.beginTransaction().show(mainPage).commit()
-    }
-
-    fun objectOpen(type: String) {
-        objectPageType = when(type) {
-            "img_deco_gift_" -> 0
-            "img_deco_drink_" -> 1
-            "img_deco_toy_" -> 2
-            "img_pic_" -> 3
-            else -> 4//음식
-        }
-
-        manager.beginTransaction().add(id, ObjectSelectionFragment()).commit()
-    }
-
-    fun objectClose(page: Fragment, selected: Boolean) {
-        manager.beginTransaction().remove(page).commit()
-        if (selected) {
-            letterBaseFragment.getObject()
-        }
-    }
-
-    fun animeSelected(title: String) {
-        letterData.animeName = title
-        letterBaseFragment.getAnime()
-    }
-
-    fun openRecording() {
-        manager.beginTransaction().add(id, LetterRecordFragment()).commit()
-    }
-
-    fun recordClose(uri: Uri, page: Fragment) {
-        uriArr.add(uri)
-        typeArr.add(2)
-        pathArr.add("")
-        mediaAdapter.notifyItemInserted(uriArr.size)
-        manager.beginTransaction().remove(page).commit()
-    }
-
-    fun recordClose(view: Fragment) {
-        manager.beginTransaction().remove(view).commit()
-    }
-
-    fun updateData(uri: Uri, type: Int, path: String) {
-        uriArr.add(uri)
-        typeArr.add(type)
-        pathArr.add(path)
-        mediaAdapter.notifyItemInserted(uriArr.size)
-    }
-
-    fun openShow(pos: Int) {
-        manager.beginTransaction().add(id, LetterShowFragment(pos - 1)).commit()
-    }
-
-    fun closeShow(view: Fragment) {
-        manager.beginTransaction().remove(view).commit()
-    }
 
     fun refreshPartyRoom(resp: RoomInfoSuccess) {
         val arr = resp.data!![0].cake_type.split("E")
@@ -144,13 +69,5 @@ object MainFragmentManager: CreateMessageView {
     }
 
 
-    override fun onCreateMessageSuccess() {
-        manager.beginTransaction().hide(mainPage).commit()
-        letterBaseFragment = LetterBaseFragment()
-        manager.beginTransaction().add(id, letterBaseFragment).commit()
-    }
-
-    override fun onCreateMessageFailure() {
-    }
 
 }

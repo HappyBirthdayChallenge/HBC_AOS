@@ -11,6 +11,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.inha.hbc.R
 import com.inha.hbc.databinding.FragmentLetterShowBinding
+import com.inha.hbc.util.fragmentmanager.LetterFragmentManager
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 
 
@@ -36,8 +37,8 @@ class LetterShowFragment(val pos: Int): Fragment() {
     }
 
     fun initView() {
-        val type = MainFragmentManager.typeArr[pos]
-        val uri = MainFragmentManager.uriArr[pos]
+        val type = LetterFragmentManager.typeArr[pos]
+        val uri = LetterFragmentManager.uriArr[pos]
         when(type) {
             1 -> {//비디오
                 binding.ivLetterShow.visibility = View.GONE
@@ -82,7 +83,7 @@ class LetterShowFragment(val pos: Int): Fragment() {
 
     fun initListener() {
         binding.ivLetterShowBack.setOnClickListener{
-            MainFragmentManager.closeShow(this)
+            LetterFragmentManager.closeShow(this)
         }
 
         binding.ivLetterShowPlay.setOnClickListener {
@@ -100,7 +101,7 @@ class LetterShowFragment(val pos: Int): Fragment() {
 
     fun startPlayer() {
         player = MediaPlayer()
-        player.setDataSource(MainFragmentManager.baseActivity.baseContext, MainFragmentManager.uriArr[pos])
+        player.setDataSource(MainFragmentManager.baseActivity.baseContext, LetterFragmentManager.uriArr[pos])
         player.start()
         playing = true
         binding.ivLetterShowPlay.setImageResource(R.drawable.ic_letter_record_pause)
@@ -117,7 +118,7 @@ class LetterShowFragment(val pos: Int): Fragment() {
         super.onAttach(context)
         backPressedCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                MainFragmentManager.closeShow(this@LetterShowFragment)
+                LetterFragmentManager.closeShow(this@LetterShowFragment)
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(this, backPressedCallback)

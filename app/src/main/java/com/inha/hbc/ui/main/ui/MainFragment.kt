@@ -40,10 +40,10 @@ class MainFragment: Fragment() {
         }
 
         binding.ivMainSend.setOnClickListener {
+            MainFragmentManager.transToLetter()
         }
 
         binding.tvMainTitle.setOnClickListener {
-            MainFragmentManager.transToLetter()
         }
 
     }
