@@ -43,8 +43,6 @@ object MenuFragmentManager {
     }
 
     fun goPartyRoom(resp: RoomInfoSuccess) {
-        manager.beginTransaction().replace(id, mainPage).commit()
-        manager.beginTransaction().show(mainPage).commit()
         MainFragmentManager.refreshPartyRoom(resp)
     }
 

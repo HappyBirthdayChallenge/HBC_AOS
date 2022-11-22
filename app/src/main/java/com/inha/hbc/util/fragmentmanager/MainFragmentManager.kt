@@ -138,6 +138,9 @@ object MainFragmentManager: CreateMessageView {
 
 
         mainPage.binding.vpMain.adapter!!.notifyDataSetChanged()
+
+        manager.beginTransaction().replace(id, mainPage).commit()
+        manager.beginTransaction().show(mainPage).commit()
     }
 
 
