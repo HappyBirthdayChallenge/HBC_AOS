@@ -1,8 +1,8 @@
 package com.inha.hbc.util.fragmentmanager
 
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.inha.hbc.ui.main.ui.MainFragment
+import com.inha.hbc.ui.menu.ui.FriendListFragment
 import com.inha.hbc.ui.menu.ui.MenuFragment
 
 object MenuFragmentManager {
@@ -31,7 +31,14 @@ object MenuFragmentManager {
     }
 
     fun openMenu(menu: String) {
+        when (menu) {
+            "친구목록" -> {
+                manager.beginTransaction().add(id, FriendListFragment()).commit()
+            }
+            else -> {
 
+            }
+        }
     }
 
 }

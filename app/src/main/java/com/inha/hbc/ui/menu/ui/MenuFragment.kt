@@ -52,6 +52,7 @@ class MenuFragment(): Fragment(), SignoutView {
         }
 
 
+
     }
 
     fun initAdapter() {
@@ -61,14 +62,7 @@ class MenuFragment(): Fragment(), SignoutView {
         rvAdapter = MenuListRVAdapter(menuList)
         rvAdapter.onlistener = object: MenuListRVAdapter.onListener{
             override fun onClick(menu: String) {
-                when (menu) {
-                    "친구목록" -> {
-                        MainFragmentManager.manager.beginTransaction().add(MainFragmentManager.id, FriendListFragment()).commit()
-                    }
-                    else -> {
-
-                    }
-                }
+                MenuFragmentManager.openMenu(menu)
             }
 
         }
