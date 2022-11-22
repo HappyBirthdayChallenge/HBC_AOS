@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.inha.hbc.R
 import com.inha.hbc.data.local.LetterData
+import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.ui.adapter.LetterMediaListRVAdapter
 import com.inha.hbc.ui.letter.ui.*
 import com.inha.hbc.ui.letter.view.CreateMessageView
@@ -12,6 +13,7 @@ import com.inha.hbc.ui.main.ui.MainActivity
 import com.inha.hbc.ui.main.ui.MainFragment
 import com.inha.hbc.ui.menu.ui.MenuFragment
 import com.inha.hbc.util.network.message.MessageRetrofitService
+import com.inha.hbc.util.sharedpreference.GlobalApplication
 
 object MainFragmentManager: CreateMessageView {
     lateinit var manager: FragmentManager
@@ -121,6 +123,13 @@ object MainFragmentManager: CreateMessageView {
 
     fun closeShow(view: Fragment) {
         manager.beginTransaction().remove(view).commit()
+    }
+
+    fun goRoom(resp: RoomInfoSuccess) {
+        roomId = resp.data!![0].room_id
+        mainPage.binding.vpMain.adapter!!.notifyDataSetChanged()
+        manager.beginTransaction().show(mainPage).commit()
+
     }
 
     override fun onCreateMessageSuccess() {

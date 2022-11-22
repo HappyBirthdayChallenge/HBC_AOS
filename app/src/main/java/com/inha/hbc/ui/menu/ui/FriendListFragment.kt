@@ -10,12 +10,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.inha.hbc.data.remote.resp.menu.Content
 import com.inha.hbc.data.remote.resp.menu.FriendlistSuccess
+import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.databinding.FragmentMenuFriendlistBinding
 import com.inha.hbc.ui.adapter.MenuFriendListRVAdapter
+import com.inha.hbc.ui.main.view.RoomInfoView
 import com.inha.hbc.ui.menu.view.FriendListView
+import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import com.inha.hbc.util.network.menu.MenuRetroService
+import com.inha.hbc.util.network.message.MessageRetrofitService
 
-class FriendListFragment: Fragment(), FriendListView {
+class FriendListFragment: Fragment(), FriendListView, RoomInfoView {
     lateinit var binding: FragmentMenuFriendlistBinding
     var friendList =  ArrayList<Content?>()
     var listSize = 0
@@ -65,6 +69,12 @@ class FriendListFragment: Fragment(), FriendListView {
 
     fun initRv() {
         adapter = MenuFriendListRVAdapter(friendList)
+        adapter.cstListener = object: MenuFriendListRVAdapter.CstListener{
+            override fun onClick(pos: Int) {
+                MessageRetrofitService().roomInfo(friendList[pos]!!.member.id.toString(), this@FriendListFragment)
+            }
+
+        }
         binding.rvMenuFriendlist.adapter= adapter
     }
 
@@ -89,6 +99,14 @@ class FriendListFragment: Fragment(), FriendListView {
     }
 
     override fun onFriendListFailure() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onRoomInfoSuccess(resp: RoomInfoSuccess) {
+        MainFragmentManager.goRoom(resp)
+    }
+
+    override fun onRoomInfoFailure() {
         TODO("Not yet implemented")
     }
 }

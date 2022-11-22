@@ -11,10 +11,10 @@ import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 
 class MenuFriendListRVAdapter(val friendList: ArrayList<Content?>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    interface cstListener(
-        fun onClick()
-    )
-
+    interface CstListener{
+        fun onClick(pos: Int)
+    }
+    lateinit var cstListener: CstListener
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return  if (viewType == 0) {
             val binding = ItemMenuListBinding.inflate(
@@ -22,7 +22,7 @@ class MenuFriendListRVAdapter(val friendList: ArrayList<Content?>): RecyclerView
                 parent,
                 false
             )
-            FriendHolder(binding, friendList)
+            FriendHolder(binding, friendList, cstListener)
         }
         else {
             val binding = ItemMenuFriendlistLoadingBinding.inflate(
@@ -57,17 +57,17 @@ class MenuFriendListRVAdapter(val friendList: ArrayList<Content?>): RecyclerView
 
 
 
-    class FriendHolder(val binding: ItemMenuListBinding, val data: ArrayList<Content?>): RecyclerView.ViewHolder(binding.root) {
+    class FriendHolder(val binding: ItemMenuListBinding, val data: ArrayList<Content?>, val listener: CstListener): RecyclerView.ViewHolder(binding.root) {
         fun init(pos: Int) {
             binding.tvItemMenuTitle.text = data[pos]!!.member.name
             Glide.with(MainFragmentManager.baseActivity.applicationContext).load(data[pos]!!.member.image_url).into(binding.ivItemMenuIcon)
 
-            initListener()
+            initListener(pos)
         }
 
-        fun initListener() {
+        fun initListener(pos: Int) {
             binding.root.setOnClickListener {
-
+                listener.onClick(pos)
             }
         }
 
