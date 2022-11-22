@@ -7,6 +7,7 @@ import com.inha.hbc.databinding.FragmentLetterBinding
 import com.inha.hbc.databinding.FragmentObjectBinding
 import com.inha.hbc.ui.letter.ui.LetterFragment
 import com.inha.hbc.ui.letter.ui.ObjectFragment
+import com.inha.hbc.util.fragmentmanager.LetterFragmentManager
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 
 class LetterBaseVPAdapter(val typeData: ArrayList<Int>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -18,8 +19,8 @@ class LetterBaseVPAdapter(val typeData: ArrayList<Int>): RecyclerView.Adapter<Re
             ObjectFragment(objectBinding)
         } else {
             letterBinding = FragmentLetterBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            MainFragmentManager.letterFragment = LetterFragment(letterBinding)
-            MainFragmentManager.letterFragment
+            LetterFragmentManager.letterFragment = LetterFragment(letterBinding)
+            LetterFragmentManager.letterFragment
 
         }
     }

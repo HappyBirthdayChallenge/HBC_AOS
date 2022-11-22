@@ -9,6 +9,7 @@ import com.google.android.flexbox.AlignSelf
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.inha.hbc.R
 import com.inha.hbc.databinding.ItemLetterObjectBinding
+import com.inha.hbc.util.fragmentmanager.LetterFragmentManager
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 
 
@@ -36,7 +37,7 @@ class LetterObjectRVAdapter(pos: Int): RecyclerView.Adapter<LetterObjectRVAdapte
 
             val lp = binding.root.layoutParams
             (lp as FlexboxLayoutManager.LayoutParams).flexBasisPercent = "0.5".toFloat()
-            lp.height = MainFragmentManager.viewWidth / 2
+            lp.height = LetterFragmentManager.viewWidth / 2
 
             when (pos) {
                 0 -> {

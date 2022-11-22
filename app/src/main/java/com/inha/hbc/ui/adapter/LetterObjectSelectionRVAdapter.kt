@@ -13,6 +13,7 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import com.inha.hbc.databinding.ItemLetterObjectBinding
 import com.inha.hbc.ui.assist.selectionAssist
 import com.inha.hbc.ui.assist.selectionCount
+import com.inha.hbc.util.fragmentmanager.LetterFragmentManager
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 
 class LetterObjectSelectionRVAdapter: RecyclerView.Adapter<LetterObjectSelectionRVAdapter.ObjectHolder>() {
@@ -34,7 +35,7 @@ class LetterObjectSelectionRVAdapter: RecyclerView.Adapter<LetterObjectSelection
     }
 
     override fun getItemCount(): Int {
-        return selectionCount(MainFragmentManager.objectPageType)
+        return selectionCount(LetterFragmentManager.objectPageType)
     }
     class ObjectHolder(val binding: ItemLetterObjectBinding, val myListener: MyListener): RecyclerView.ViewHolder(binding.root) {
         fun bind(pos: Int) {
@@ -43,13 +44,13 @@ class LetterObjectSelectionRVAdapter: RecyclerView.Adapter<LetterObjectSelection
             binding.tvItemLetterCount.visibility = View.GONE
             var lp = binding.root.layoutParams
             (lp as FlexboxLayoutManager.LayoutParams).flexBasisPercent = "0.24".toFloat()
-            lp.height = MainFragmentManager.viewWidth / 3
+            lp.height = LetterFragmentManager.viewWidth / 3
 
             lp = binding.cvItemLetterObject.layoutParams as ViewGroup.MarginLayoutParams
             lp.setMargins(20, 20, 20, 10)
             binding.cvItemLetterObject.layoutParams = lp
 
-            binding.ivItemLetterObject.setImageResource(selectionAssist(MainFragmentManager.objectPageType, pos))
+            binding.ivItemLetterObject.setImageResource(selectionAssist(LetterFragmentManager.objectPageType, pos))
             binding.ivItemLetterObject.setPadding(20, 20, 20, 20)
         }
 

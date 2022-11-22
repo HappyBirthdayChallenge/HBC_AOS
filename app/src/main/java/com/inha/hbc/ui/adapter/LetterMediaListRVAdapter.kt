@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.inha.hbc.R
 import com.inha.hbc.databinding.ItemLetterBinding
+import com.inha.hbc.util.fragmentmanager.LetterFragmentManager
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 
 
@@ -25,7 +26,7 @@ class LetterMediaListRVAdapter(): RecyclerView.Adapter<LetterMediaListRVAdapter.
         holder.init(position)
     }
 
-    override fun getItemCount(): Int = MainFragmentManager.uriArr.size + 1
+    override fun getItemCount(): Int = LetterFragmentManager.uriArr.size + 1
 
     class LetterHolder(val binding: ItemLetterBinding): RecyclerView.ViewHolder(binding.root) {
         fun init(pos: Int) {
@@ -36,14 +37,14 @@ class LetterMediaListRVAdapter(): RecyclerView.Adapter<LetterMediaListRVAdapter.
             }
             else {
                 binding.ivItemLetterDel.visibility = View.VISIBLE
-                val uri = MainFragmentManager.uriArr[pos - 1]
-                when(MainFragmentManager.typeArr[pos - 1]) { // 0 사진 1 동영상 2 음성
+                val uri = LetterFragmentManager.uriArr[pos - 1]
+                when(LetterFragmentManager.typeArr[pos - 1]) { // 0 사진 1 동영상 2 음성
                     0 -> {
                         binding.ivItemLetter.setImageURI(uri)
                     }
                     1 -> {
 
-                        binding.ivItemLetter.setImageBitmap(setThumbnail(MainFragmentManager.pathArr[pos - 1]))
+                        binding.ivItemLetter.setImageBitmap(setThumbnail(LetterFragmentManager.pathArr[pos - 1]))
                         binding.ivItemLetterAttach.setImageResource(R.drawable.ic_letter_record_play)
                         binding.ivItemLetterAttach.visibility = View.VISIBLE
                     }
@@ -59,20 +60,20 @@ class LetterMediaListRVAdapter(): RecyclerView.Adapter<LetterMediaListRVAdapter.
             binding.cvItemLetter.setOnClickListener {
                 when (pos) {
                     0 -> {
-                        MainFragmentManager.letterBaseFragment.openList()
+                        LetterFragmentManager.letterBaseFragment.openList()
                     }
                     else -> {
-                        MainFragmentManager.openShow(pos)
+                        LetterFragmentManager.openShow(pos)
                     }
                 }
             }
 
             binding.ivItemLetterDel.setOnClickListener {
-                MainFragmentManager.typeArr.removeAt(pos- 1)
-                MainFragmentManager.uriArr.removeAt(pos - 1)
-                MainFragmentManager.pathArr.removeAt(pos - 1)
+                LetterFragmentManager.typeArr.removeAt(pos- 1)
+                LetterFragmentManager.uriArr.removeAt(pos - 1)
+                LetterFragmentManager.pathArr.removeAt(pos - 1)
 
-                MainFragmentManager.mediaAdapter.notifyDataSetChanged()
+                LetterFragmentManager.mediaAdapter.notifyDataSetChanged()
             }
         }
 

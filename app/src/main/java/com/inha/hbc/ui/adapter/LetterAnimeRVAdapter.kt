@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.inha.hbc.databinding.ItemLetterObjectBinding
+import com.inha.hbc.util.fragmentmanager.LetterFragmentManager
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 
 class LetterAnimeRVAdapter:RecyclerView.Adapter<LetterAnimeRVAdapter.AnimeHolder>() {
@@ -37,7 +38,7 @@ class LetterAnimeRVAdapter:RecyclerView.Adapter<LetterAnimeRVAdapter.AnimeHolder
             binding.cvItemLetterAnime.radius = 20F
             var lp = binding.root.layoutParams
             (lp as FlexboxLayoutManager.LayoutParams).flexBasisPercent = "0.5".toFloat()
-            lp.height = MainFragmentManager.viewWidth/2
+            lp.height = LetterFragmentManager.viewWidth/2
             binding.root.layoutParams = lp
 
             initListener(pos)

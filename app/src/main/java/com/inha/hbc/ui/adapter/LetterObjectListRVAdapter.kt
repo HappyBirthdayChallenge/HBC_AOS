@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.inha.hbc.R
 import com.inha.hbc.databinding.ItemLetterBinding
+import com.inha.hbc.util.fragmentmanager.LetterFragmentManager
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 
 class LetterObjectListRVAdapter: RecyclerView.Adapter<LetterObjectListRVAdapter.LetterObjectListHolder>() {
@@ -24,11 +25,11 @@ class LetterObjectListRVAdapter: RecyclerView.Adapter<LetterObjectListRVAdapter.
         fun init(pos: Int) {
             if(pos == 0) {
                 binding.ivItemLetter.setPadding(10, 10, 10, 10)
-                binding.ivItemLetter.setImageResource(MainFragmentManager.objectId)
+                binding.ivItemLetter.setImageResource(LetterFragmentManager.objectId)
             }
             else {
                 binding.lavItemLetter.visibility = View.VISIBLE
-                binding.lavItemLetter.setAnimation(MainFragmentManager.letterData.animeName)
+                binding.lavItemLetter.setAnimation(LetterFragmentManager.letterData.animeName)
             }
         }
     }

@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.inha.hbc.databinding.FragmentLetterListBinding
+import com.inha.hbc.util.fragmentmanager.LetterFragmentManager
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 
 class LetterVPAdapter: RecyclerView.Adapter<LetterVPAdapter.LetterListHolder>() {
@@ -27,8 +28,8 @@ class LetterVPAdapter: RecyclerView.Adapter<LetterVPAdapter.LetterListHolder>() 
                 LetterObjectListRVAdapter()
             }
             else {
-                MainFragmentManager.mediaAdapter = LetterMediaListRVAdapter()
-                MainFragmentManager.mediaAdapter
+                LetterFragmentManager.mediaAdapter = LetterMediaListRVAdapter()
+                LetterFragmentManager.mediaAdapter
             }
         }
     }
