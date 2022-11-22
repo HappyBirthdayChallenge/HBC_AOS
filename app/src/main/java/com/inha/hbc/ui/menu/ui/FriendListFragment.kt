@@ -13,6 +13,7 @@ import com.inha.hbc.data.remote.resp.menu.FriendlistSuccess
 import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.databinding.FragmentMenuFriendlistBinding
 import com.inha.hbc.ui.adapter.MenuFriendListRVAdapter
+import com.inha.hbc.ui.adapter.MenuFriendPageVPAdapter
 import com.inha.hbc.ui.main.view.RoomInfoView
 import com.inha.hbc.ui.menu.view.FriendListView
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
@@ -36,6 +37,7 @@ class FriendListFragment: Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initListener()
+        initView()
     }
 
    fun initListener() {
@@ -43,5 +45,10 @@ class FriendListFragment: Fragment() {
            parentFragmentManager.beginTransaction().remove(this).commit()
        }
    }
+
+    fun initView() {
+        val adapter = MenuFriendPageVPAdapter()
+        binding.vpMenuFriendlist.adapter = adapter
+    }
 
 }
