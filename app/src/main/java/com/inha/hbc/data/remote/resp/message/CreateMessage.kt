@@ -13,7 +13,7 @@ sealed class CreateMessage
 @Serializable
 @SerialName("R")
 data class CreateMessageSuccess(
-    val data: Key,
+    val data: MessageId,
     val message: String,
     val code: String,
     val status: Int
@@ -27,3 +27,8 @@ data class CreateMessageFailure (
     val message: String,
     val status: Int?
         ): CreateMessage()
+
+@Serializable
+data class MessageId(
+    val message_id: Int
+)
