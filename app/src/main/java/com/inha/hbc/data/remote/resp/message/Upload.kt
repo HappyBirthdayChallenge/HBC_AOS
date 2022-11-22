@@ -12,7 +12,7 @@ sealed class Upload
 @Serializable
 @SerialName("R")
 data class UploadSuccess(
-    val data: List<RoomInfoData>?,
+    val data: FileId,
     val message: String,
     val code: String,
     val status: Int

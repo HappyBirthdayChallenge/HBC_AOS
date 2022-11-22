@@ -22,7 +22,6 @@ object LetterFragmentManager: CreateMessageView {
     var objectPageType = 0
     var letterData = LetterData("", "", "")
     var objectId = R.drawable.img_deco_drink_1
-    var letterID = 0
     var viewWidth = 0
 
     lateinit var mediaAdapter: LetterMediaListRVAdapter
@@ -91,6 +90,8 @@ object LetterFragmentManager: CreateMessageView {
         pathArr.add("")
         mediaAdapter.notifyItemInserted(uriArr.size)
         manager.beginTransaction().remove(page).commit()
+
+        letterId = -1
     }
 
     fun recordClose(view: Fragment) {

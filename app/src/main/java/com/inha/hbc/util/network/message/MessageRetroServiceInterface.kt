@@ -4,6 +4,7 @@ import com.inha.hbc.data.remote.resp.message.CreateMessage
 import com.inha.hbc.data.remote.resp.message.RoomInfo
 import com.inha.hbc.data.remote.resp.message.Upload
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Multipart
@@ -26,6 +27,6 @@ interface MessageRetroServiceInterface {
     @POST("/files/upload/audio")
     fun audioUpload(
         @Part audio: MultipartBody.Part,
-        @Part message_id: MultipartBody.Part
+        @Part ("message_id") message_id: RequestBody
     ): Call<List<Upload>>
 }

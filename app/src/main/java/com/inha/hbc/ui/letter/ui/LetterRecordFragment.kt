@@ -20,14 +20,17 @@ import androidx.fragment.app.Fragment
 import com.airbnb.lottie.LottieDrawable
 import com.inha.hbc.R
 import com.inha.hbc.data.local.RecordingState
+import com.inha.hbc.data.remote.resp.message.UploadSuccess
 import com.inha.hbc.databinding.FragmentLetterRecordBinding
+import com.inha.hbc.ui.letter.view.AudioUploadView
 import com.inha.hbc.util.fragmentmanager.LetterFragmentManager
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
+import com.inha.hbc.util.network.message.MessageRetrofitService
 import java.io.File
 import java.util.Timer
 import kotlin.concurrent.timer
 
-class LetterRecordFragment: Fragment() {
+class LetterRecordFragment: Fragment(), AudioUploadView {
     lateinit var binding: FragmentLetterRecordBinding
     lateinit var backPressedCallback: OnBackPressedCallback
     var timer: Timer? = null
@@ -75,14 +78,13 @@ class LetterRecordFragment: Fragment() {
             val sdf = java.text.SimpleDateFormat("yyyyMMdd_HHmmss")
             filename = sdf.format(System.currentTimeMillis()) + ".m4a"
             file = File(
-                File(requireContext().cacheDir.toString() + "/record").apply {
+                File(requireContext().filesDir.toString() + "/record").apply {
                     if (!this.exists()) {
                         this.mkdirs()
                     }
                 },
                 filename
             )
-            file.deleteOnExit()
             filePath = file.toString()
             setOutputFile(filePath)
             prepare()
@@ -281,6 +283,7 @@ class LetterRecordFragment: Fragment() {
             if (state == RecordingState.AFTER_RECORDING) {
                 if (file.length()/1024 <= 10 * 1024) {
                     makeUri()
+                    MessageRetrofitService().audioUpload(filePath, LetterFragmentManager.letterId, this)
                     LetterFragmentManager.recordClose(fileUri, this)
                 }
                 else {
@@ -320,6 +323,13 @@ class LetterRecordFragment: Fragment() {
     override fun onDetach() {
         super.onDetach()
         backPressedCallback.remove()
+    }
+
+    override fun onAudioUploadSuccess(resp: UploadSuccess) {
+    }
+
+    override fun onAudioUploadFailure() {
+        TODO("Not yet implemented")
     }
 
 }

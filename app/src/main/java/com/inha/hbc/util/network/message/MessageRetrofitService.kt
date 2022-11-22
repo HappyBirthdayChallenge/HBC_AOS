@@ -1,17 +1,19 @@
 package com.inha.hbc.util.network.message
 
 import android.net.Uri
-import androidx.core.net.toFile
+import android.os.Environment
+import android.provider.MediaStore
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.inha.hbc.data.remote.resp.message.*
 import com.inha.hbc.ui.letter.view.AudioUploadView
 import com.inha.hbc.ui.letter.view.CreateMessageView
 import com.inha.hbc.ui.main.view.RoomInfoView
-import com.inha.hbc.util.fragmentmanager.LetterFragmentManager
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import com.inha.hbc.util.network.NetworkModule
+import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
@@ -19,6 +21,8 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.File
+
 
 class MessageRetrofitService {
     fun callRetro(): MessageRetroServiceInterface {
@@ -63,14 +67,18 @@ class MessageRetrofitService {
         })
     }
 
-    fun audioUpload(uri: Uri, messageId: Int, view: AudioUploadView) {
+    fun audioUpload(path: String, messageId: Int, view: AudioUploadView) {
         audioUploadView = view
-        val mp = MultipartBody.Part.create(uri.toFile().asRequestBody("audio/*".toMediaType()))
-        val id = MultipartBody.Part.create(messageId.toString().toRequestBody())
+
+        val mp = MultipartBody.Part.createFormData("audio", File(path).name + ".m4a",
+            File(path).asRequestBody("audio/m4a".toMediaTypeOrNull())
+        )
+        val id = messageId.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+
         callRetro().audioUpload(mp, id).enqueue(object: Callback<List<Upload>> {
             override fun onResponse(call: Call<List<Upload>>, response: Response<List<Upload>>) {if (response.isSuccessful) {
                 val resp = response.body()!![0] as UploadSuccess
-                if (resp.code == "R-M001") {
+                if (resp.code == "R-FI003") {
                     audioUploadView.onAudioUploadSuccess(resp)
                 }
                 else {
