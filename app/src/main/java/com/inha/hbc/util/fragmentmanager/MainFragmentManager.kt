@@ -120,12 +120,11 @@ object MainFragmentManager: CreateMessageView {
         manager.beginTransaction().remove(view).commit()
     }
 
-    fun goRoom(resp: RoomInfoSuccess) {
-        roomId = resp.data!![0].room_id
+    fun refreshPartyRoom(roomId: Int) {
+        this.roomId = roomId
         mainPage.binding.vpMain.adapter!!.notifyDataSetChanged()
-        manager.beginTransaction().show(mainPage).commit()
-
     }
+
 
     override fun onCreateMessageSuccess() {
         manager.beginTransaction().hide(mainPage).commit()

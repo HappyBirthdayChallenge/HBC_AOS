@@ -1,6 +1,7 @@
 package com.inha.hbc.util.fragmentmanager
 
 import androidx.fragment.app.FragmentManager
+import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.ui.main.ui.MainFragment
 import com.inha.hbc.ui.menu.ui.FriendListFragment
 import com.inha.hbc.ui.menu.ui.MenuFragment
@@ -39,6 +40,11 @@ object MenuFragmentManager {
 
             }
         }
+    }
+
+    fun goPartyRoom(resp: RoomInfoSuccess) {
+        close()
+        MainFragmentManager.refreshPartyRoom(resp.data!![0].room_id)
     }
 
 }
