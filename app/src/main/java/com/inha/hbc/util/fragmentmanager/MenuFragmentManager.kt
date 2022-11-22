@@ -43,8 +43,8 @@ object MenuFragmentManager {
     }
 
     fun goPartyRoom(resp: RoomInfoSuccess) {
+        MainFragmentManager.refreshPartyRoom(resp)
         close()
-        MainFragmentManager.refreshPartyRoom(resp.data!![0].room_id)
     }
 
 }

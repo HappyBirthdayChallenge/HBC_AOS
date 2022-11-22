@@ -40,6 +40,7 @@ class MenuFriendPageVPAdapter: RecyclerView.Adapter<MenuFriendPageVPAdapter.Frie
         fun init() {
             initListener()
             initRv()
+            initView()
         }
         fun initListener() {
             binding.rvMenuFriendlist.addOnScrollListener(object: RecyclerView.OnScrollListener() {
