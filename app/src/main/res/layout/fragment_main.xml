@@ -13,7 +13,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/vp_main"
-        android:paddingHorizontal="34dp"
+        android:paddingHorizontal="15dp"
         android:background="@color/main_color"
         app:layout_constraintVertical_weight="1"
         android:elevation="10dp">

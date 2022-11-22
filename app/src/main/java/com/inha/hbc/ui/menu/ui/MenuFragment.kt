@@ -13,6 +13,7 @@ import com.inha.hbc.ui.adapter.MenuListRVAdapter
 import com.inha.hbc.ui.login.ui.LoginActivity
 import com.inha.hbc.ui.menu.view.SignoutView
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
+import com.inha.hbc.util.fragmentmanager.MenuFragmentManager
 import com.inha.hbc.util.network.RetrofitService
 import com.inha.hbc.util.sharedpreference.GlobalApplication
 
@@ -43,7 +44,7 @@ class MenuFragment(): Fragment(), SignoutView {
 
     fun initListener() {
         binding.ivMenuClose.setOnClickListener {
-            MainFragmentManager.menuClose(this)
+            MenuFragmentManager.close(this)
         }
 
         binding.tvMenuSignout.setOnClickListener {

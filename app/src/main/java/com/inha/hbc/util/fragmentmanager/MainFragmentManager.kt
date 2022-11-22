@@ -49,17 +49,12 @@ object MainFragmentManager: CreateMessageView {
     }
 
     fun transToMenu() {
-        manager.beginTransaction().hide(mainPage).commit()
-        manager.beginTransaction().add(id, MenuFragment()).commit()
+        MenuFragmentManager.init(manager, id)
+        MenuFragmentManager.start(mainPage)
     }
 
     fun transToLetter() {
         MessageRetrofitService().createMessage(roomId.toString(), this)
-    }
-
-    fun menuClose(menu: Fragment) {
-        manager.beginTransaction().remove(menu).commit()
-        manager.beginTransaction().show(mainPage).commit()
     }
 
     fun letterClose() {
