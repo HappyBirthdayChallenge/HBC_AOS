@@ -37,21 +37,21 @@ object LetterFragmentManager: CreateMessageView {
         letterData.animeName = "json_deco_anime_1.json"
     }
 
-    fun start() {
+    fun start(roomId: String) {
         letterBaseFragment = LetterBaseFragment()
 
         manager.beginTransaction().hide(mainPage).commit()
         manager.beginTransaction().add(frameId, letterBaseFragment).commit()
 
-        MessageRetrofitService().createMessage(MainFragmentManager.roomId.toString(), this)
+        MessageRetrofitService().createMessage(roomId, this)
     }
 
     fun letterClose() {
         pathArr.clear()
         uriArr.clear()
         typeArr.clear()
-        MainFragmentManager.manager.beginTransaction().remove(letterBaseFragment).commit()
-        MainFragmentManager.manager.beginTransaction().show(MainFragmentManager.mainPage).commit()
+        manager.beginTransaction().remove(letterBaseFragment).commit()
+        manager.beginTransaction().show(MainFragmentManager.mainPage).commit()
     }
 
     fun objectOpen(type: String) {
@@ -63,7 +63,7 @@ object LetterFragmentManager: CreateMessageView {
             else -> 4//음식
         }
 
-        MainFragmentManager.manager.beginTransaction().add(MainFragmentManager.id, ObjectSelectionFragment()).commit()
+        manager.beginTransaction().add(MainFragmentManager.id, ObjectSelectionFragment()).commit()
     }
 
     fun objectClose(page: Fragment, selected: Boolean) {
@@ -79,7 +79,7 @@ object LetterFragmentManager: CreateMessageView {
     }
 
     fun openRecording() {
-        MainFragmentManager.manager.beginTransaction().add(MainFragmentManager.id, LetterRecordFragment()).commit()
+        manager.beginTransaction().add(MainFragmentManager.id, LetterRecordFragment()).commit()
     }
 
     fun recordClose(uri: Uri, page: Fragment) {
@@ -87,11 +87,11 @@ object LetterFragmentManager: CreateMessageView {
         typeArr.add(2)
         pathArr.add("")
         mediaAdapter.notifyItemInserted(uriArr.size)
-        MainFragmentManager.manager.beginTransaction().remove(page).commit()
+        manager.beginTransaction().remove(page).commit()
     }
 
     fun recordClose(view: Fragment) {
-        MainFragmentManager.manager.beginTransaction().remove(view).commit()
+        manager.beginTransaction().remove(view).commit()
     }
 
     fun updateData(uri: Uri, type: Int, path: String) {
@@ -102,11 +102,11 @@ object LetterFragmentManager: CreateMessageView {
     }
 
     fun openShow(pos: Int) {
-        MainFragmentManager.manager.beginTransaction().add(MainFragmentManager.id, LetterShowFragment(pos - 1)).commit()
+        manager.beginTransaction().add(frameId, LetterShowFragment(pos - 1)).commit()
     }
 
     fun closeShow(view: Fragment) {
-        MainFragmentManager.manager.beginTransaction().remove(view).commit()
+        manager.beginTransaction().remove(view).commit()
     }
 
     override fun onCreateMessageSuccess() {

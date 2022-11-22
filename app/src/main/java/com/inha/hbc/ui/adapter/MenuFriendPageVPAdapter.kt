@@ -11,9 +11,8 @@ import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.databinding.ItemMenuFriendpageBinding
 import com.inha.hbc.ui.main.view.RoomInfoView
 import com.inha.hbc.ui.menu.view.FriendListView
-import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import com.inha.hbc.util.fragmentmanager.MenuFragmentManager
-import com.inha.hbc.util.network.menu.MenuRetroService
+import com.inha.hbc.util.network.menu.MenuRetrofitService
 import com.inha.hbc.util.network.message.MessageRetrofitService
 
 class MenuFriendPageVPAdapter: RecyclerView.Adapter<MenuFriendPageVPAdapter.FriendPageHolder>() {
@@ -54,7 +53,7 @@ class MenuFriendPageVPAdapter: RecyclerView.Adapter<MenuFriendPageVPAdapter.Frie
                         friendList.add(null)
                         listSize++
                         adapter.notifyItemInserted(listSize - 1)
-                        MenuRetroService().friendList((page+1).toString(), 10.toString(), this@FriendPageHolder)
+                        MenuRetrofitService().friendList((page+1).toString(), 10.toString(), this@FriendPageHolder)
 
                     }
                 }
@@ -77,7 +76,7 @@ class MenuFriendPageVPAdapter: RecyclerView.Adapter<MenuFriendPageVPAdapter.Frie
             friendList.add(null)
             listSize++
             adapter.notifyItemInserted(listSize - 1)
-            MenuRetroService().friendList((page+1).toString(), 10.toString(), this)
+            MenuRetrofitService().friendList((page+1).toString(), 10.toString(), this)
         }
 
 

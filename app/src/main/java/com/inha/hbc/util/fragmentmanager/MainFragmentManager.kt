@@ -49,13 +49,13 @@ object MainFragmentManager {
 
     fun transToLetter() {
         LetterFragmentManager.init(manager, mainPage, id)
-        LetterFragmentManager.start()
+        LetterFragmentManager.start(roomId.toString())
     }
 
 
     fun refreshPartyRoom(resp: RoomInfoSuccess) {
         val arr = resp.data!![0].cake_type.split("E")
-        val cakeType = arr[arr.size - 1].toString().toInt()
+        val cakeType = arr[arr.size - 1].toInt()
 
         cakeId = cakeSelectionAssist(cakeType)
         roomId = resp.data!![0].room_id
@@ -67,7 +67,5 @@ object MainFragmentManager {
         manager.beginTransaction().replace(id, mainPage).commit()
         manager.beginTransaction().show(mainPage).commit()
     }
-
-
 
 }

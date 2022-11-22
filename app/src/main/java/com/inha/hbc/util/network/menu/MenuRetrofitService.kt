@@ -4,15 +4,13 @@ import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.inha.hbc.data.remote.resp.menu.Friendlist
 import com.inha.hbc.data.remote.resp.menu.FriendlistSuccess
-import com.inha.hbc.data.remote.resp.message.CreateMessageSuccess
 import com.inha.hbc.ui.menu.view.FriendListView
 import com.inha.hbc.util.network.NetworkModule
-import com.inha.hbc.util.network.message.MessageRetroServiceInterface
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MenuRetroService {
+class MenuRetrofitService {
     fun callRetro(): MenuRetroServiceInterface {
         return NetworkModule.getRetrofit().create(MenuRetroServiceInterface::class.java)
     }
