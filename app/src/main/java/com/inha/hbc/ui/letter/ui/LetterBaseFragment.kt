@@ -205,6 +205,14 @@ class LetterBaseFragment: Fragment(), UploadView {
             }
         }
 
+        binding.ivLetterBaseSend.setOnClickListener {
+            LetterFragmentManager.letterClose()
+        }
+
+        binding.tvLetterBaseSend.setOnClickListener {
+            LetterFragmentManager.letterClose()
+        }
+
         binding.tlLetterBase.addOnTabSelectedListener(object: OnTabSelectedListener{
             override fun onTabSelected(tab: TabLayout.Tab) {
                 if (step[tab.position]) {
