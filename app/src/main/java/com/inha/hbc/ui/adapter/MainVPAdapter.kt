@@ -1,6 +1,7 @@
 package com.inha.hbc.ui.adapter
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -54,7 +55,12 @@ class MainVPAdapter(var pageData: ArrayList<Int>): RecyclerView.Adapter<MainVPAd
         }
 
         fun initObject(pos: Int) {
-            binding.ivItemMainCake.setImageResource(MainFragmentManager.cakeId)
+            if (pos == 1) {
+                binding.ivItemMainCake.setImageResource(MainFragmentManager.cakeId)
+            }
+            else {
+                binding.ivItemMainCake.visibility = View.GONE
+            }
         }
 
     }

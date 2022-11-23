@@ -52,6 +52,7 @@ class MainFragment: Fragment() {
         pageData.apply{
             add(0)
             add(1)
+            add(2)
             add(3)
         }
         val adapter = MainVPAdapter(pageData)
