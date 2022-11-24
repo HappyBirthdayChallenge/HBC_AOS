@@ -2,9 +2,11 @@ package com.inha.hbc.util.network.message
 
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import com.inha.hbc.data.remote.req.message.MessageData
 import com.inha.hbc.data.remote.resp.message.*
 import com.inha.hbc.ui.letter.view.UploadView
 import com.inha.hbc.ui.letter.view.CreateMessageView
+import com.inha.hbc.ui.letter.view.UploadMessageView
 import com.inha.hbc.ui.main.view.RoomInfoView
 import com.inha.hbc.util.network.NetworkModule
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -31,6 +33,7 @@ class MessageRetrofitService {
     lateinit var createMessageView: CreateMessageView
     lateinit var roomInfoView: RoomInfoView
     lateinit var uploadView: UploadView
+    lateinit var uploadMessageView: UploadMessageView
 
     fun createMessage(id: String, view: CreateMessageView) {
         createMessageView = view
@@ -150,6 +153,32 @@ class MessageRetrofitService {
 
     }
 
+    fun uploadMessage(data: MessageData, view: UploadMessageView) {
+        uploadMessageView = view
+        callRetro().messageUpload(data).enqueue(object : Callback<List<UploadMessage>>{
+            override fun onResponse(
+                call: Call<List<UploadMessage>>,
+                response: Response<List<UploadMessage>>
+            ) {
+                if (response.isSuccessful) {
+                    val resp = response.body()!![0] as UploadMessageSuccess
+                    if (resp.code == "R-R001") {
+                        uploadMessageView.onUploadMessageSuccess(resp)
+                    }
+                    else {
+                        uploadMessageView.onUploadMessageFailure()
+                    }
+                }
+                else {
+                    uploadMessageView.onUploadMessageFailure()
+                }
+            }
+
+            override fun onFailure(call: Call<List<UploadMessage>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
 
     fun roomInfo(memberId: String, view: RoomInfoView) {
         roomInfoView = view
@@ -178,6 +207,8 @@ class MessageRetrofitService {
 
         })
     }
+
+
 
 
 }

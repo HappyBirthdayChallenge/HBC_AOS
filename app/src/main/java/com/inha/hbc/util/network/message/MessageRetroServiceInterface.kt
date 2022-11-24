@@ -1,11 +1,14 @@
 package com.inha.hbc.util.network.message
 
+import com.inha.hbc.data.remote.req.message.MessageData
 import com.inha.hbc.data.remote.resp.message.CreateMessage
 import com.inha.hbc.data.remote.resp.message.RoomInfo
 import com.inha.hbc.data.remote.resp.message.Upload
+import com.inha.hbc.data.remote.resp.message.UploadMessage
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
@@ -43,4 +46,9 @@ interface MessageRetroServiceInterface {
         @Part video: MultipartBody.Part,
         @Part ("message_id") message_id: RequestBody
     ): Call<List<Upload>>
+
+    @POST("/messages/upload")
+    fun messageUpload(
+        @Body request: MessageData
+    ): Call<List<UploadMessage>>
 }
