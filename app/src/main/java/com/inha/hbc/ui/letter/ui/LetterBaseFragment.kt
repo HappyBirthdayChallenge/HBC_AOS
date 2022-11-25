@@ -87,7 +87,8 @@ class LetterBaseFragment: Fragment(), UploadView {
                 if (fileType == "mp4") {
                     if (fileSize/1024 <= 300 * 1024) {
                         LetterFragmentManager.updateData(imgURI, 1, imgPath)
-                        MessageRetrofitService().videoUpload(imgPath, LetterFragmentManager.letterId, this)
+                        LetterFragmentManager.mediaAdapter.notifyItemChanged(9)
+                        MessageRetrofitService().videoUpload(imgPath, LetterFragmentManager.letterId, LetterFragmentManager.fileId, this)
                     }
                     else {
                         Toast.makeText(requireContext(), "지원용량을 초과했어요!", Toast.LENGTH_SHORT).show()
@@ -96,8 +97,6 @@ class LetterBaseFragment: Fragment(), UploadView {
                 else if (fileType == "jpg" || fileType == "png" || fileType == "peg" || fileType == "gif"){
                     if (fileSize/1024 <= 10 * 1024) {
                         LetterFragmentManager.updateData(imgURI, 0, imgPath)
-                        MessageRetrofitService().imgUpload(imgPath, LetterFragmentManager.letterId, this)
-                        Log.d("imgUri", imgURI.toString())
                     }
                     else {
                         Toast.makeText(requireContext(), "지원용량을 초과했어요!", Toast.LENGTH_SHORT).show()
@@ -116,11 +115,9 @@ class LetterBaseFragment: Fragment(), UploadView {
         if (fileSize != 0) {
             if (fileType == "mp4") {
                 LetterFragmentManager.updateData(imgURI, 1, imgPath)
-                MessageRetrofitService().videoUpload(imgPath, LetterFragmentManager.letterId, this)
             }
             else {
                 LetterFragmentManager.updateData(imgURI, 0, imgPath)
-                MessageRetrofitService().imgUpload(imgPath, LetterFragmentManager.letterId, this)
                 Log.d("imgUri", imgURI.toString())
             }
         }
@@ -325,7 +322,7 @@ class LetterBaseFragment: Fragment(), UploadView {
 
 
     fun openList() {
-        if (LetterFragmentManager.typeArr.size > 10) {
+        if (LetterFragmentManager.fileInfo.size > 10) {
             Toast.makeText(requireContext(), "최대 첨부개수 10개를 초과했어요!", Toast.LENGTH_SHORT).show()
             return
         }
@@ -437,9 +434,9 @@ class LetterBaseFragment: Fragment(), UploadView {
         backPressedCallback.remove()
     }
 
-    override fun onAudioUploadSuccess(resp: UploadSuccess) {
+    override fun onUploadSuccess(resp: UploadSuccess) {
     }
 
-    override fun onAudioUploadFailure() {
+    override fun onUploadFailure() {
     }
 }

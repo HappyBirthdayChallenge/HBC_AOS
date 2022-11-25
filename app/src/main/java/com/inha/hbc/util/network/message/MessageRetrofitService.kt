@@ -63,26 +63,28 @@ class MessageRetrofitService {
         })
     }
 
-    fun audioUpload(path: String, messageId: Int, view: UploadView) {
+    fun audioUpload(path: String, messageId: Int, clientId: Int, view: UploadView) {
         uploadView = view
 
         val mp = MultipartBody.Part.createFormData("audio", File(path).name + ".m4a",
             File(path).asRequestBody("audio/m4a".toMediaTypeOrNull())
         )
         val id = messageId.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+        val clId = clientId.toString().toRequestBody("text/plain".toMediaTypeOrNull())
 
-        callRetro().audioUpload(mp, id).enqueue(object: Callback<List<Upload>> {
+
+        callRetro().audioUpload(mp, id, clId).enqueue(object: Callback<List<Upload>> {
             override fun onResponse(call: Call<List<Upload>>, response: Response<List<Upload>>) {if (response.isSuccessful) {
                 val resp = response.body()!![0] as UploadSuccess
                 if (resp.code == "R-FI003") {
-                    uploadView.onAudioUploadSuccess(resp)
+                    uploadView.onUploadSuccess(resp)
                 }
                 else {
-                    uploadView.onAudioUploadFailure()
+                    uploadView.onUploadFailure()
                 }
             }
             else {
-                uploadView.onAudioUploadFailure()
+                uploadView.onUploadFailure()
             }
             }
 
@@ -93,26 +95,28 @@ class MessageRetrofitService {
 
     }
 
-    fun imgUpload(path: String, messageId: Int, view: UploadView) {
+    fun imgUpload(path: String, messageId: Int, clientId: Int, view: UploadView) {
         uploadView = view
 
         val mp = MultipartBody.Part.createFormData("image", File(path).name,
             File(path).asRequestBody("image/*".toMediaTypeOrNull())
         )
         val id = messageId.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+        val clId = clientId.toString().toRequestBody("text/plain".toMediaTypeOrNull())
 
-        callRetro().imgUpload(mp, id).enqueue(object: Callback<List<Upload>> {
+
+        callRetro().imgUpload(mp, id, clId).enqueue(object: Callback<List<Upload>> {
             override fun onResponse(call: Call<List<Upload>>, response: Response<List<Upload>>) {if (response.isSuccessful) {
                 val resp = response.body()!![0] as UploadSuccess
                 if (resp.code == "R-FI001") {
-                    uploadView.onAudioUploadSuccess(resp)
+                    uploadView.onUploadSuccess(resp)
                 }
                 else {
-                    uploadView.onAudioUploadFailure()
+                    uploadView.onUploadFailure()
                 }
             }
             else {
-                uploadView.onAudioUploadFailure()
+                uploadView.onUploadFailure()
             }
             }
 
@@ -123,26 +127,27 @@ class MessageRetrofitService {
 
     }
 
-    fun videoUpload(path: String, messageId: Int, view: UploadView) {
+    fun videoUpload(path: String, messageId: Int, clientId: Int, view: UploadView) {
         uploadView = view
 
         val mp = MultipartBody.Part.createFormData("video", File(path).name,
             File(path).asRequestBody("video/*".toMediaTypeOrNull())
         )
         val id = messageId.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+        val clId = clientId.toString().toRequestBody("text/plain".toMediaTypeOrNull())
 
-        callRetro().videoUpload(mp, id).enqueue(object: Callback<List<Upload>> {
+        callRetro().videoUpload(mp, id, clId).enqueue(object: Callback<List<Upload>> {
             override fun onResponse(call: Call<List<Upload>>, response: Response<List<Upload>>) {if (response.isSuccessful) {
                 val resp = response.body()!![0] as UploadSuccess
                 if (resp.code == "R-FI003") {
-                    uploadView.onAudioUploadSuccess(resp)
+                    uploadView.onUploadSuccess(resp)
                 }
                 else {
-                    uploadView.onAudioUploadFailure()
+                    uploadView.onUploadFailure()
                 }
             }
             else {
-                uploadView.onAudioUploadFailure()
+                uploadView.onUploadFailure()
             }
             }
 

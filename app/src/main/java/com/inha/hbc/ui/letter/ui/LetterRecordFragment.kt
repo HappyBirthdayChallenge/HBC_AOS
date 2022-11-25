@@ -283,8 +283,7 @@ class LetterRecordFragment: Fragment(), UploadView {
             if (state == RecordingState.AFTER_RECORDING) {
                 if (file.length()/1024 <= 10 * 1024) {
                     makeUri()
-                    MessageRetrofitService().audioUpload(filePath, LetterFragmentManager.letterId, this)
-                    LetterFragmentManager.recordClose(fileUri, this)
+                    LetterFragmentManager.recordClose(filePath, fileUri, this)
                 }
                 else {
                     Toast.makeText(requireContext(), "지원용량을 초과했어요!", Toast.LENGTH_SHORT).show()
@@ -325,10 +324,10 @@ class LetterRecordFragment: Fragment(), UploadView {
         backPressedCallback.remove()
     }
 
-    override fun onAudioUploadSuccess(resp: UploadSuccess) {
+    override fun onUploadSuccess(resp: UploadSuccess) {
     }
 
-    override fun onAudioUploadFailure() {
+    override fun onUploadFailure() {
         TODO("Not yet implemented")
     }
 

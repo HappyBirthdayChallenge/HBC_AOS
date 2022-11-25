@@ -26,7 +26,7 @@ class LetterMediaListRVAdapter(): RecyclerView.Adapter<LetterMediaListRVAdapter.
         holder.init(position)
     }
 
-    override fun getItemCount(): Int = LetterFragmentManager.uriArr.size + 1
+    override fun getItemCount(): Int = LetterFragmentManager.fileInfo.size + 1
 
     class LetterHolder(val binding: ItemLetterBinding): RecyclerView.ViewHolder(binding.root) {
         fun init(pos: Int) {
@@ -36,15 +36,22 @@ class LetterMediaListRVAdapter(): RecyclerView.Adapter<LetterMediaListRVAdapter.
                 binding.ivItemLetterAttach.visibility = View.VISIBLE
             }
             else {
-                binding.ivItemLetterDel.visibility = View.VISIBLE
-                val uri = LetterFragmentManager.uriArr[pos - 1]
-                when(LetterFragmentManager.typeArr[pos - 1]) { // 0 사진 1 동영상 2 음성
+                if (!LetterFragmentManager.fileInfo[pos - 1].success) {
+                    binding.lavItemLetter.setAnimation("letter_file_loading.json")
+                    binding.lavItemLetter.visibility = View.VISIBLE
+                }
+                else {
+                    binding.lavItemLetter.visibility = View.GONE
+                    binding.ivItemLetterDel.visibility = View.VISIBLE
+                }
+                val uri = LetterFragmentManager.fileInfo[pos - 1].uri
+                when(LetterFragmentManager.fileInfo[pos - 1].type) { // 0 사진 1 동영상 2 음성
                     0 -> {
                         binding.ivItemLetter.setImageURI(uri)
                     }
                     1 -> {
 
-                        binding.ivItemLetter.setImageBitmap(setThumbnail(LetterFragmentManager.pathArr[pos - 1]))
+                        binding.ivItemLetter.setImageBitmap(setThumbnail(LetterFragmentManager.fileInfo[pos - 1].path))
                         binding.ivItemLetterAttach.setImageResource(R.drawable.ic_letter_record_play)
                         binding.ivItemLetterAttach.visibility = View.VISIBLE
                     }
@@ -69,9 +76,7 @@ class LetterMediaListRVAdapter(): RecyclerView.Adapter<LetterMediaListRVAdapter.
             }
 
             binding.ivItemLetterDel.setOnClickListener {
-                LetterFragmentManager.typeArr.removeAt(pos- 1)
-                LetterFragmentManager.uriArr.removeAt(pos - 1)
-                LetterFragmentManager.pathArr.removeAt(pos - 1)
+                LetterFragmentManager.fileInfo.removeAt(pos - 1)
 
                 LetterFragmentManager.mediaAdapter.notifyDataSetChanged()
             }

@@ -30,21 +30,24 @@ interface MessageRetroServiceInterface {
     @POST("/files/upload/audio")
     fun audioUpload(
         @Part audio: MultipartBody.Part,
-        @Part ("message_id") message_id: RequestBody
+        @Part ("message_id") message_id: RequestBody,
+        @Part ("client_id") client_id: RequestBody
     ): Call<List<Upload>>
 
     @Multipart
     @POST("/files/upload/image")
     fun imgUpload(
         @Part img: MultipartBody.Part,
-        @Part ("message_id") message_id: RequestBody
+        @Part ("message_id") message_id: RequestBody,
+        @Part ("client_id") client_id: RequestBody
     ): Call<List<Upload>>
 
     @Multipart
     @POST("/files/upload/video")
     fun videoUpload(
         @Part video: MultipartBody.Part,
-        @Part ("message_id") message_id: RequestBody
+        @Part ("message_id") message_id: RequestBody,
+        @Part ("client_id") client_id: RequestBody
     ): Call<List<Upload>>
 
     @POST("/messages/upload")

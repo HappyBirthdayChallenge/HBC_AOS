@@ -37,8 +37,8 @@ class LetterShowFragment(val pos: Int): Fragment() {
     }
 
     fun initView() {
-        val type = LetterFragmentManager.typeArr[pos]
-        val uri = LetterFragmentManager.uriArr[pos]
+        val type = LetterFragmentManager.fileInfo[pos].type
+        val uri = LetterFragmentManager.fileInfo[pos].uri
         when(type) {
             1 -> {//비디오
                 binding.ivLetterShow.visibility = View.GONE
@@ -101,7 +101,7 @@ class LetterShowFragment(val pos: Int): Fragment() {
 
     fun startPlayer() {
         player = MediaPlayer()
-        player.setDataSource(MainFragmentManager.baseActivity.baseContext, LetterFragmentManager.uriArr[pos])
+        player.setDataSource(MainFragmentManager.baseActivity.baseContext, LetterFragmentManager.fileInfo[pos].uri)
         player.start()
         playing = true
         binding.ivLetterShowPlay.setImageResource(R.drawable.ic_letter_record_pause)

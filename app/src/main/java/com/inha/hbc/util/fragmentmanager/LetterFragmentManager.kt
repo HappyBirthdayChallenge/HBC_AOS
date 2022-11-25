@@ -4,15 +4,18 @@ import android.net.Uri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.inha.hbc.R
+import com.inha.hbc.data.local.FileInfo
 import com.inha.hbc.data.local.LetterData
 import com.inha.hbc.data.remote.resp.message.CreateMessageSuccess
+import com.inha.hbc.data.remote.resp.message.UploadSuccess
 import com.inha.hbc.ui.adapter.LetterMediaListRVAdapter
 import com.inha.hbc.ui.letter.ui.*
 import com.inha.hbc.ui.letter.view.CreateMessageView
+import com.inha.hbc.ui.letter.view.UploadView
 import com.inha.hbc.ui.main.ui.MainFragment
 import com.inha.hbc.util.network.message.MessageRetrofitService
 
-object LetterFragmentManager: CreateMessageView {
+object LetterFragmentManager: CreateMessageView, UploadView {
     lateinit var manager: FragmentManager
     lateinit var mainPage: MainFragment
     lateinit var letterBaseFragment: LetterBaseFragment
@@ -27,16 +30,16 @@ object LetterFragmentManager: CreateMessageView {
     lateinit var mediaAdapter: LetterMediaListRVAdapter
 
 
-    var pathArr = ArrayList<String>()
-    var uriArr = ArrayList<Uri>()
-    var typeArr = ArrayList<Int>() // 0 사진 1 동영상 2 음성
+    var fileInfo = ArrayList<FileInfo>()
     var letterId = 0
+    var fileId = 0
 
     fun init(manager: FragmentManager, mainPage: MainFragment, id: Int) {
         this.manager = manager
         this.mainPage = mainPage
         this.frameId = id
         letterData.animeName = "json_deco_anime_1.json"
+        fileId++
     }
 
     fun start(roomId: String) {
@@ -49,11 +52,11 @@ object LetterFragmentManager: CreateMessageView {
     }
 
     fun letterClose() {
-        pathArr.clear()
-        uriArr.clear()
-        typeArr.clear()
+        fileInfo.clear()
         manager.beginTransaction().remove(letterBaseFragment).commit()
         manager.beginTransaction().show(mainPage).commit()
+
+        letterId = -1
     }
 
     fun objectOpen(type: String) {
@@ -84,14 +87,12 @@ object LetterFragmentManager: CreateMessageView {
         manager.beginTransaction().add(MainFragmentManager.id, LetterRecordFragment()).commit()
     }
 
-    fun recordClose(uri: Uri, page: Fragment) {
-        uriArr.add(uri)
-        typeArr.add(2)
-        pathArr.add("")
-        mediaAdapter.notifyItemInserted(uriArr.size)
+    fun recordClose(path: String, uri: Uri, page: Fragment) {
+        fileId++
+        fileInfo.add(FileInfo(path, uri, 2, fileId, false))
+        mediaAdapter.notifyItemInserted(fileInfo.size)
+        uploadFile(2)
         manager.beginTransaction().remove(page).commit()
-
-        letterId = -1
     }
 
     fun recordClose(view: Fragment) {
@@ -99,12 +100,25 @@ object LetterFragmentManager: CreateMessageView {
     }
 
     fun updateData(uri: Uri, type: Int, path: String) {
-        uriArr.add(uri)
-        typeArr.add(type)
-        pathArr.add(path)
-        mediaAdapter.notifyItemInserted(uriArr.size)
+        fileId++
+        fileInfo.add(FileInfo(path, uri, type, fileId, false))
+        uploadFile(type)
+        mediaAdapter.notifyItemInserted(fileInfo.size)
     }
 
+    fun uploadFile(type: Int) {
+        when (type) {
+            2 -> {//음성 2
+                MessageRetrofitService().audioUpload(fileInfo[fileInfo.size - 1].path, letterId, fileId, this)
+            }
+            0 -> {//사진 0
+                MessageRetrofitService().imgUpload(fileInfo[fileInfo.size - 1].path, letterId, fileId, this)
+            }
+            else -> {//동영상 1
+                MessageRetrofitService().videoUpload(fileInfo[fileInfo.size - 1].path, letterId, fileId, this)
+            }
+        }
+    }
     fun openShow(pos: Int) {
         manager.beginTransaction().add(frameId, LetterShowFragment(pos - 1)).commit()
     }
@@ -120,6 +134,14 @@ object LetterFragmentManager: CreateMessageView {
     override fun onCreateMessageFailure() {
         manager.beginTransaction().remove(letterBaseFragment).commit()
         manager.beginTransaction().show(mainPage).commit()
+    }
+
+    override fun onUploadSuccess(resp: UploadSuccess) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onUploadFailure() {
+        TODO("Not yet implemented")
     }
 
 
