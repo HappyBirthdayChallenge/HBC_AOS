@@ -139,7 +139,7 @@ class MessageRetrofitService {
         callRetro().videoUpload(mp, id, clId).enqueue(object: Callback<List<Upload>> {
             override fun onResponse(call: Call<List<Upload>>, response: Response<List<Upload>>) {if (response.isSuccessful) {
                 val resp = response.body()!![0] as UploadSuccess
-                if (resp.code == "R-FI003") {
+                if (resp.code == "R-FI002") {
                     uploadView.onUploadSuccess(resp)
                 }
                 else {
@@ -167,7 +167,7 @@ class MessageRetrofitService {
             ) {
                 if (response.isSuccessful) {
                     val resp = response.body()!![0] as UploadMessageSuccess
-                    if (resp.code == "R-R001") {
+                    if (resp.code == "R-RM001") {
                         uploadMessageView.onUploadMessageSuccess(resp)
                     }
                     else {

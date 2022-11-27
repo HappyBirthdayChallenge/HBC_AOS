@@ -6,9 +6,12 @@ import androidx.fragment.app.FragmentManager
 import com.inha.hbc.R
 import com.inha.hbc.data.local.FileInfo
 import com.inha.hbc.data.local.LetterData
+import com.inha.hbc.data.remote.req.message.MessageData
 import com.inha.hbc.data.remote.resp.message.CreateMessageSuccess
 import com.inha.hbc.data.remote.resp.message.UploadSuccess
 import com.inha.hbc.ui.adapter.LetterMediaListRVAdapter
+import com.inha.hbc.ui.assist.convertAnime
+import com.inha.hbc.ui.assist.convertDeco
 import com.inha.hbc.ui.letter.ui.*
 import com.inha.hbc.ui.letter.view.CreateMessageView
 import com.inha.hbc.ui.letter.view.UploadView
@@ -89,7 +92,7 @@ object LetterFragmentManager: CreateMessageView, UploadView {
 
     fun recordClose(path: String, uri: Uri, page: Fragment) {
         fileId++
-        fileInfo.add(FileInfo(path, uri, 2, fileId, false))
+        fileInfo.add(FileInfo(path, uri, 2, fileId, false, null))
         mediaAdapter.notifyItemInserted(fileInfo.size)
         uploadFile(2)
         manager.beginTransaction().remove(page).commit()
@@ -101,7 +104,7 @@ object LetterFragmentManager: CreateMessageView, UploadView {
 
     fun updateData(uri: Uri, type: Int, path: String) {
         fileId++
-        fileInfo.add(FileInfo(path, uri, type, fileId, false))
+        fileInfo.add(FileInfo(path, uri, type, fileId, false, null))
         uploadFile(type)
         mediaAdapter.notifyItemInserted(fileInfo.size)
     }
@@ -127,6 +130,18 @@ object LetterFragmentManager: CreateMessageView, UploadView {
         manager.beginTransaction().remove(view).commit()
     }
 
+    fun getMessageData(): MessageData? {
+        var fileIds = ArrayList<Int>()
+        for (i in fileInfo) {
+            if (!i.success) {
+                return null
+            }
+            fileIds.add(i.realId!!.toInt())
+        }
+        letterData.letterText = letterFragment.binding.etLetter.toString()
+        return MessageData(convertAnime(letterData.animeName), letterData.letterText, convertDeco(letterData.objectName), fileIds.toList(), letterId)
+    }
+
     override fun onCreateMessageSuccess(resp: CreateMessageSuccess) {
         letterId = resp!!.data.message_id
     }
@@ -137,7 +152,17 @@ object LetterFragmentManager: CreateMessageView, UploadView {
     }
 
     override fun onUploadSuccess(resp: UploadSuccess) {
-        TODO("Not yet implemented")
+        var arrPos = 1
+        for (i in fileInfo) {
+            if(resp.data!!.client_id == i.id) {
+                i.success = true
+                i.realId = resp.data.file_id.toString()
+                break
+            }
+            arrPos++
+        }
+
+        mediaAdapter.notifyItemChanged(arrPos)
     }
 
     override fun onUploadFailure() {

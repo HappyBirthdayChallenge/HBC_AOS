@@ -21,20 +21,23 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.inha.hbc.R
+import com.inha.hbc.data.remote.resp.message.UploadMessageSuccess
 import com.inha.hbc.data.remote.resp.message.UploadSuccess
 import com.inha.hbc.databinding.FragmentLetterBaseBinding
 import com.inha.hbc.databinding.ItemTabSelectedBinding
 import com.inha.hbc.ui.adapter.LetterBaseVPAdapter
 import com.inha.hbc.ui.adapter.LetterMenuRVAdapter
+import com.inha.hbc.ui.letter.view.UploadMessageView
 import com.inha.hbc.ui.letter.view.UploadView
 import com.inha.hbc.util.fragmentmanager.LetterFragmentManager
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
+import com.inha.hbc.util.network.RetrofitService
 import com.inha.hbc.util.network.message.MessageRetrofitService
 import java.io.File
 import java.util.*
 import kotlin.collections.ArrayList
 
-class LetterBaseFragment: Fragment(), UploadView {
+class LetterBaseFragment: Fragment(), UploadView, UploadMessageView {
     lateinit var binding: FragmentLetterBaseBinding
     var fragmentArr = ArrayList<Int>()
     var step = ArrayList<Boolean>()
@@ -203,11 +206,25 @@ class LetterBaseFragment: Fragment(), UploadView {
         }
 
         binding.ivLetterBaseSend.setOnClickListener {
-            LetterFragmentManager.letterClose()
+            binding.tvLetterBaseBackground.visibility = View.VISIBLE
+            binding.clLetterBase.visibility = View.VISIBLE
+        }
+
+        binding.tvLetterBaseConfirmGoBack.setOnClickListener {
+            binding.tvLetterBaseBackground.visibility = View.GONE
+            binding.clLetterBase.visibility = View.GONE
+        }
+
+        binding.tvLetterBaseConfirmSend.setOnClickListener {
+            val data = LetterFragmentManager.getMessageData()
+            if (data!=null) {
+                MessageRetrofitService().uploadMessage(data, this)
+            }
         }
 
         binding.tvLetterBaseSend.setOnClickListener {
-            LetterFragmentManager.letterClose()
+            binding.tvLetterBaseBackground.visibility = View.VISIBLE
+            binding.clLetterBase.visibility = View.VISIBLE
         }
 
         binding.tlLetterBase.addOnTabSelectedListener(object: OnTabSelectedListener{
@@ -266,6 +283,11 @@ class LetterBaseFragment: Fragment(), UploadView {
             binding.tvLetterBaseAddBackground.visibility = View.GONE
             binding.rvLetterBaseAddMenu.visibility = View.GONE
 
+        }
+
+        binding.tvLetterBaseBackground.setOnClickListener {
+            binding.tvLetterBaseBackground.visibility = View.GONE
+            binding.clLetterBase.visibility = View.GONE
         }
 
     }
@@ -438,5 +460,13 @@ class LetterBaseFragment: Fragment(), UploadView {
     }
 
     override fun onUploadFailure() {
+    }
+
+    override fun onUploadMessageSuccess(resp: UploadMessageSuccess) {
+        LetterFragmentManager.letterClose()
+    }
+
+    override fun onUploadMessageFailure() {
+        TODO("Not yet implemented")
     }
 }

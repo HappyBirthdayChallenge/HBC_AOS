@@ -12,7 +12,7 @@ sealed class Upload
 @Serializable
 @SerialName("R")
 data class UploadSuccess(
-    val data: FileId,
+    val data: FileId?,
     val message: String,
     val code: String,
     val status: Int
@@ -29,5 +29,7 @@ data class UploadFailure(
 
 @Serializable
 data class FileId(
-    val file_id: String
+    val client_id: Int,
+    val file_id: Int
 )
+
