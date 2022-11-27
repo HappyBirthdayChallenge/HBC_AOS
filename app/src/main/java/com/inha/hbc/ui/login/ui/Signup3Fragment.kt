@@ -46,7 +46,7 @@ class Signup3Fragment: Fragment() {
                 SignupFragmentManager.transaction(3, 4)
             }
             else {
-                binding.tvSignup3Error.text = "이름은 2~20자의 한글, 영문 대/소문자, 숫자만 사용하여 설정해 주세요."
+                binding.tvSignup3Error.text = "이름은 2~10자의 한글, 영문 대/소문자, 숫자만 사용하여 설정해 주세요."
             }
         }
 
@@ -60,7 +60,7 @@ class Signup3Fragment: Fragment() {
             override fun afterTextChanged(p0: Editable?) {
                 val name = binding.tieSignup3Name.text.toString()
                 if (!checkValid(name)) {
-                    binding.tvSignup3Error.text = "이름은 2~20자의 한글, 영문 대/소문자, 숫자만 사용하여 설정해 주세요."
+                    binding.tvSignup3Error.text = "이름은 2~10자의 한글, 영문 대/소문자, 숫자만 사용하여 설정해 주세요."
                 }
                 else {
                     binding.tvSignup3Error.text = ""
@@ -71,7 +71,7 @@ class Signup3Fragment: Fragment() {
     }
 
     fun checkValid(name: String):Boolean {
-        val namePattern = "^[가-힣A-Za-z\\d]{2,20}\$"
+        val namePattern = "^[가-힣A-Za-z\\d]{2,10}\$"
         val pattern = Pattern.compile(namePattern)
         val matcher = pattern.matcher(name)
         return matcher.find()

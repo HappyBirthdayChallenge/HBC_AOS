@@ -73,7 +73,7 @@ class Forget1Fragment: Fragment(), IsMeView, SendCodeView {
             override fun afterTextChanged(p0: Editable?) {
                 name = binding.tieForget1Name.text.toString()
                 if (!checkValid(name)) {
-                    binding.tvForget1Error.text = "이름은 2~20자의 한글, 영문 대/소문자, 숫자만 사용하여 입력해 주세요."
+                    binding.tvForget1Error.text = "이름은 2~10자의 한글, 영문 대/소문자, 숫자만 사용하여 입력해 주세요."
                 }
                 else {
                     binding.tvForget1Error.text = ""
@@ -85,7 +85,7 @@ class Forget1Fragment: Fragment(), IsMeView, SendCodeView {
             phone = binding.tieForget1PwPhone.text.toString()
 
             if (!checkValid(name)) {
-                binding.tvForget1Error.text = "이름은 2~20자의 한글, 영문 대/소문자, 숫자만 사용하여 입력해 주세요."
+                binding.tvForget1Error.text = "이름은 2~10자의 한글, 영문 대/소문자, 숫자만 사용하여 입력해 주세요."
                 return@setOnClickListener
             }
 
@@ -101,7 +101,7 @@ class Forget1Fragment: Fragment(), IsMeView, SendCodeView {
     }
 
     fun checkValid(name: String):Boolean {
-        val namePattern = "^[가-힣A-Za-z\\d]{2,20}\$"
+        val namePattern = "^[가-힣A-Za-z\\d]{2,10}\$"
         val pattern = Pattern.compile(namePattern)
         val matcher = pattern.matcher(name)
         return matcher.find()

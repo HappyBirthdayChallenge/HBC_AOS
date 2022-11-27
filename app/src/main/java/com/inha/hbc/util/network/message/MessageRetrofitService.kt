@@ -180,7 +180,6 @@ class MessageRetrofitService {
             }
 
             override fun onFailure(call: Call<List<UploadMessage>>, t: Throwable) {
-                TODO("Not yet implemented")
             }
         })
     }
