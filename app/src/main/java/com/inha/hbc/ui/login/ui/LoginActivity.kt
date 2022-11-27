@@ -2,6 +2,8 @@ package com.inha.hbc.ui.login.ui
 
 import android.Manifest
 import android.app.AlertDialog
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
@@ -26,9 +28,10 @@ class LoginActivity: AppCompatActivity() {
         setContentView(binding.root)
 
 
-        askNotificationPermission()
         val fms = FirebaseMessagingService().searchToken()
 
+
+        setNotiChannel()
         SignupFragmentManager.setManager(supportFragmentManager, binding.fcLogin.id, this)
         NormLoginFragmentManager.setManager(supportFragmentManager, binding.fcLogin.id, this)
 
@@ -47,7 +50,20 @@ class LoginActivity: AppCompatActivity() {
         if (isGranted) {
             // FCM SDK (and your app) can post notifications.
         } else {
+            askNotificationPermission()
             Toast.makeText(applicationContext, "알림수신불가", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun setNotiChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "my-notification-channel"
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channelId = "${applicationContext.packageName}-$name"
+            val channel = NotificationChannel(channelId, name, importance)
+            channel.description = "my notification channel description"
+            val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
         }
     }
 
@@ -58,7 +74,8 @@ class LoginActivity: AppCompatActivity() {
                 PackageManager.PERMISSION_GRANTED
             ) {
                 // FCM SDK (and your app) can post notifications.
-            } else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
+            }
+            else if (shouldShowRequestPermissionRationale(Manifest.permission.POST_NOTIFICATIONS)) {
                 val builder = AlertDialog.Builder(this)
                 builder.setTitle("알림채널 동의")
                     .setMessage("알림채널 동의 메시지")
@@ -75,7 +92,8 @@ class LoginActivity: AppCompatActivity() {
                 //       by them granting the POST_NOTIFICATION permission. This UI should provide the user
                 //       "OK" and "No thanks" buttons. If the user selects "OK," directly request the permission.
                 //       If the user selects "No thanks," allow the user to continue without notifications.
-            } else {
+            }
+            else {
                 // Directly ask for the permission
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }

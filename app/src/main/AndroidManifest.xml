@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/> <!--저장소 읽기 권한-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/><!--저장소 쓰기 권한-->
     <uses-permission android:name="android.permission.RECORD_AUDIO" /><!--녹음권한-->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/><!--안드13이상 녹음권한-->
     
     <application
         android:name=".util.sharedpreference.GlobalApplication"
