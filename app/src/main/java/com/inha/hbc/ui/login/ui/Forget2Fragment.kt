@@ -55,9 +55,6 @@ class Forget2Fragment: Fragment(), CheckCodeView, FindIdView, SendCodeView {
                 timer!!.cancel()
             }
             binding.tieForget2PhoneAuth.setText("")
-            if (id) {
-                data.id = null
-            }
             time = 0
         }
         else {

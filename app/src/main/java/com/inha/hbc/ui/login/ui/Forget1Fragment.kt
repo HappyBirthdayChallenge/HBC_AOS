@@ -44,6 +44,8 @@ class Forget1Fragment: Fragment(), IsMeView, SendCodeView {
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         binding.tvForget1Error.text = ""
+        binding.tieForget1Name.setText("")
+        binding.tieForget1PwPhone.setText("")
     }
 
     fun initListener() {

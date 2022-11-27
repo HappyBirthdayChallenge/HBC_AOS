@@ -96,7 +96,7 @@ object NormLoginFragmentManager {
                 popupAuth()
                 return
             }
-            if (currentPage == 4 && !isId) {
+            if (currentPage == 5 && !isId) {
                 popupAuth()
                 return
             }
@@ -127,9 +127,10 @@ object NormLoginFragmentManager {
                 DialogInterface.OnClickListener { dialog, id ->
                     if (isId) {
                         transaction(3, 1)
+                        data.id = null
                     }
                     else {
-                        transaction(4, 2)
+                        transaction(5, 2)
                     }
                 })
             .setNegativeButton("아니요",

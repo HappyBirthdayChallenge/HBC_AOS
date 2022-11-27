@@ -35,6 +35,8 @@ class ForgetPw2Fragment: Fragment(), FindPwView {
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         binding.tvForgetPw2Error.text = ""
+        binding.tieForgetPw2Pw.setText("")
+        binding.tieForgetPw2PwConfirm.setText("")
     }
 
     fun initListener() {
