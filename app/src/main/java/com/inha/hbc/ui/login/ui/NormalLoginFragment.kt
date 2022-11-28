@@ -14,11 +14,13 @@ import com.google.gson.Gson
 import com.inha.hbc.data.local.Jwt
 import com.inha.hbc.data.remote.req.NormSigninInfo
 import com.inha.hbc.data.remote.resp.Data
+import com.inha.hbc.data.remote.resp.GetMyInfoSuccess
 import com.inha.hbc.data.remote.resp.NormFailure
 import com.inha.hbc.data.remote.resp.NormSuccess
 import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.databinding.FragmentNormalLoginBinding
 import com.inha.hbc.ui.assist.cakeSelectionAssist
+import com.inha.hbc.ui.login.view.GetMyInfoView
 import com.inha.hbc.ui.login.view.NormLoginView
 import com.inha.hbc.ui.login.view.RefreshFcmView
 import com.inha.hbc.ui.main.ui.MainActivity
@@ -29,7 +31,7 @@ import com.inha.hbc.util.network.RetrofitService
 import com.inha.hbc.util.network.message.MessageRetrofitService
 import java.util.regex.Pattern
 
-class NormalLoginFragment(): Fragment(), NormLoginView, RefreshFcmView, RoomInfoView {
+class NormalLoginFragment(): Fragment(), NormLoginView, RefreshFcmView, RoomInfoView, GetMyInfoView {
     lateinit var callback: OnBackPressedCallback
     private lateinit var binding: FragmentNormalLoginBinding
     override fun onCreateView(
@@ -187,7 +189,7 @@ class NormalLoginFragment(): Fragment(), NormLoginView, RefreshFcmView, RoomInfo
     override fun onNormLoginSuccess(data: NormSuccess) {
 
         decodeJwt(data.token)
-        MessageRetrofitService().roomInfo(GlobalApplication.prefs.getInfo()!!.id.toString(), this)
+        RetrofitService().getMyInfo(this)
     }
 
     override fun onNormLoginFailure(data: NormSuccess) {
@@ -245,6 +247,15 @@ class NormalLoginFragment(): Fragment(), NormLoginView, RefreshFcmView, RoomInfo
     }
 
     override fun onRoomInfoFailure() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onGetMyInfoSuccess(resp: GetMyInfoSuccess) {
+        GlobalApplication.prefs.setInfo(resp.data!!)
+        MessageRetrofitService().roomInfo(GlobalApplication.prefs.getInfo()!!.id.toString(), this)
+    }
+
+    override fun onGetMyInfoFailure() {
         TODO("Not yet implemented")
     }
 }
