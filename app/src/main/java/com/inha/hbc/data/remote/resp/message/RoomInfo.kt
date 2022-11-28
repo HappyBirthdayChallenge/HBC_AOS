@@ -1,6 +1,7 @@
 package com.inha.hbc.data.remote.resp.message
 
 import com.inha.hbc.data.remote.resp.Error
+import com.inha.hbc.data.remote.resp.menu.BirthDate
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonClassDiscriminator
@@ -32,5 +33,5 @@ data class RoomInfoData(
     val cake_type: String,
     val room_id: Int,
     val room_type: String,
-    val year: Int
+    val birth_date: BirthDate
 )

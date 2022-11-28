@@ -59,7 +59,7 @@ object MainFragmentManager {
 
         cakeId = cakeSelectionAssist(cakeType)
         roomId = resp.data!![0].room_id
-        roomYear = resp.data!![0].year
+        roomYear = resp.data!![0].birth_date.year
 
 
         mainPage.binding.vpMain.adapter!!.notifyDataSetChanged()

@@ -238,7 +238,7 @@ class NormalLoginFragment(): Fragment(), NormLoginView, RefreshFcmView, RoomInfo
         val intent = Intent(requireActivity(), MainActivity::class.java).apply {
             putExtra("caketype", cakeSelectionAssist(cakeType))
             putExtra("roomId", resp.data!![0].room_id)
-            putExtra("year", resp.data!![0].year)
+            putExtra("year", resp.data!![0].birth_date.year)
         }
         startActivity(intent)
         requireActivity().finish()
