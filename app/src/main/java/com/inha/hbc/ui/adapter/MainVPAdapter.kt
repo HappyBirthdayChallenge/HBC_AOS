@@ -40,6 +40,7 @@ class MainVPAdapter(var pageData: ArrayList<Int>): RecyclerView.Adapter<MainVPAd
             initBg(pos)
             initCake(pos)
             initObjectPos()
+            initObject(pos)
         }
         fun initBg(pos: Int) {
             if (pageData[pos] == 0) {
@@ -81,12 +82,21 @@ class MainVPAdapter(var pageData: ArrayList<Int>): RecyclerView.Adapter<MainVPAd
                 }
                 binding.ivItemMainCandleFirst.setImageResource(selectionCandle(birthString[0].toString().toInt(), isBirth))
                 binding.ivItemMainCandleLast.setImageResource(selectionCandle(birthString[1].toString().toInt(), isBirth))
+
+                binding.clItemMainBackLine.visibility = View.GONE
+                binding.clItemMainFrontLine.visibility = View.GONE
+                binding.clItemMainFoodBack.visibility = View.GONE
+                binding.clItemMainFoodFront.visibility = View.GONE
             }
             else {
                 binding.ivItemMainCake.visibility = View.GONE
                 binding.ivItemMainCandleLast.visibility = View.GONE
                 binding.ivItemMainCandleFirst.visibility = View.GONE
             }
+        }
+
+        fun initObject(pos:Int) {
+
         }
 
         fun initObjectPos() {
