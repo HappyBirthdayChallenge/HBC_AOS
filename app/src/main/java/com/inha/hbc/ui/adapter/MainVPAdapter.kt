@@ -65,6 +65,10 @@ class MainVPAdapter(var pageData: ArrayList<Int>): RecyclerView.Adapter<MainVPAd
         }
 
         override fun onSearchDecoSuccess(resp: SearchDecoSuccess) {
+            binding.ivItemMainCake.visibility = View.GONE
+            binding.ivItemMainCandleLast.visibility = View.GONE
+            binding.ivItemMainCandleFirst.visibility = View.GONE
+
             initObjectPos()
             initObject(pos, resp)
             binding.lavPageLoading.visibility = View.GONE
@@ -119,22 +123,45 @@ class MainVPAdapter(var pageData: ArrayList<Int>): RecyclerView.Adapter<MainVPAd
         }
 
         fun initObject(pos:Int, resp: SearchDecoSuccess) {
+            binding.clItemMainFoodBack.visibility = View.VISIBLE
+            binding.clItemMainFoodFront.visibility = View.VISIBLE
+            binding.clItemMainBackLine.visibility = View.VISIBLE
+            binding.clItemMainFrontLine.visibility = View.VISIBLE
             val dollArr = arrayListOf(binding.ivItemMainBackObj1, binding.ivItemMainFrontObj2, binding.ivItemMainFrontObj3, binding.ivItemMainBackObj4)
             val giftArr = arrayListOf(binding.ivItemMainFrontObj1, binding.ivItemMainBackObj2, binding.ivItemMainBackObj3, binding.ivItemMainFrontObj4)
             val foodArr = arrayListOf(binding.ivItemMainFoodFrontObj1, binding.ivItemMainFoodBackObj2, binding.ivItemMainFoodBackObj3, binding.ivItemMainFoodFrontObj4)
             val drinkArr = arrayListOf(binding.ivItemMainFoodBackObj1, binding.ivItemMainFoodFrontObj2, binding.ivItemMainFoodFrontObj3, binding.ivItemMainFoodBackObj4)
 
             for (i in 0 until resp.data!!.dolls.size) {
+                dollArr[i].visibility = View.VISIBLE
                 dollArr[i].setImageResource(serverDecoToId(resp.data!!.dolls[i].decoration_type))
+                dollArr[i].setOnClickListener {
+
+                }
+            }
+            for (i in resp.data!!.dolls.size until 4) {
+                dollArr[i].visibility = View.INVISIBLE
             }
             for (i in 0 until resp.data!!.gifts.size) {
+                giftArr[i].visibility = View.VISIBLE
                 giftArr[i].setImageResource(serverDecoToId(resp.data!!.gifts[i].decoration_type))
             }
+            for (i in resp.data!!.gifts.size until 4) {
+                giftArr[i].visibility = View.INVISIBLE
+            }
             for (i in 0 until resp.data!!.foods.size) {
+                foodArr[i].visibility = View.VISIBLE
                 foodArr[i].setImageResource(serverDecoToId(resp.data!!.foods[i].decoration_type))
             }
+            for (i in resp.data!!.foods.size until 4) {
+                foodArr[i].visibility = View.INVISIBLE
+            }
             for (i in 0 until resp.data!!.drinks.size) {
+                drinkArr[i].visibility = View.VISIBLE
                 drinkArr[i].setImageResource(serverDecoToId(resp.data!!.drinks[i].decoration_type))
+            }
+            for (i in resp.data!!.drinks.size until 4) {
+                drinkArr[i].visibility = View.INVISIBLE
             }
         }
 

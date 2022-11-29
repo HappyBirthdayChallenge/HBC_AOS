@@ -40,6 +40,7 @@ class MainFragment: Fragment(), SearchDecoView {
     override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
         binding.tvMainTitle.text = MainFragmentManager.personInfo.data!!.username
+        initView()
     }
 
     fun initListener() {
