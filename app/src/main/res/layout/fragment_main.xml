@@ -28,17 +28,30 @@
         </ImageView>
         <TextView
             android:id="@+id/tv_main_title"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toRightOf="@id/iv_main_send"
             app:layout_constraintTop_toTopOf="@id/iv_main_send"
             app:layout_constraintBottom_toBottomOf="@id/iv_main_send"
+            app:layout_constraintRight_toLeftOf="@id/iv_main_notify"
             android:layout_marginLeft="10dp"
             android:text="someone name"
-            android:textSize="24sp"
+            android:textAlignment="textStart"
+            android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/sub_color">
         </TextView>
+        <ImageView
+            android:id="@+id/iv_main_notify"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_main_notify"
+            app:layout_constraintRight_toLeftOf="@id/iv_main_search"
+            app:layout_constraintTop_toTopOf="@id/iv_main_profile_menu"
+            app:layout_constraintBottom_toBottomOf="@id/iv_main_profile_menu"
+            app:layout_constraintLeft_toRightOf="@id/tv_main_title"
+            android:layout_marginRight="10dp">
+        </ImageView>
         <ImageView
             android:id="@+id/iv_main_search"
             android:layout_width="30dp"
