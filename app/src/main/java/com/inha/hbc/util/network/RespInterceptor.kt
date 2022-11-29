@@ -9,29 +9,25 @@ import org.json.JSONObject
 class RespInterceptor: Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val origin = chain.request()
-        val response = if (origin.url.encodedPath.equals("/members/accounts/birthday", true) ||
-            origin.url.encodedPath.equals("/token/jwt/check", true) ||
-            origin.url.encodedPath.equals("/members/accounts/me", true) ||
-            origin.url.encodedPath.equals("/members/accounts/signout", true) ||
-            origin.url.encodedPath.equals("/token/fcm/refresh", true) ||
-            origin.url.encodedPath.equals("/rooms", true) ||
-            origin.url.encodedPath.equals("/messages/create", true) ||
-            origin.url.encodedPath.equals("/members/friends", true) ||
-            origin.url.encodedPath.equals("/files/upload/audio", true) ||
-            origin.url.encodedPath.equals("/files/upload/video", true) ||
-            origin.url.encodedPath.equals("/files/upload/image", true) ||
-            origin.url.encodedPath.equals("/messages/upload", true) ||
-            origin.url.encodedPath.equals("/message/cancel", true)
-                ) {
+        val response = if (origin.url.encodedPath.equals("/auth/check/phone", true) ||
+            origin.url.encodedPath.equals("/auth/check/username", true) ||
+            origin.url.encodedPath.equals("/auth/find/password", true) ||
+            origin.url.encodedPath.equals("/auth/find/username", true) ||
+            origin.url.encodedPath.equals("/auth/identify", true) ||
+            origin.url.encodedPath.equals("/auth/send/code", true) ||
+            origin.url.encodedPath.equals("/auth/signin", true) ||
+            origin.url.encodedPath.equals("/auth/signup", true) ||
+            origin.url.encodedPath.equals("/auth/verify/code", true) ||
+            origin.url.encodedPath.equals("/oauth2/signin", true)) {
+            chain.proceed(origin)
+        }
+        else {
             chain.proceed(origin.newBuilder().apply {
                 addHeader(
                     "Authorization",
                     "Bearer " + GlobalApplication.prefs.getRealAccessJwt().toString()
                 )
             }.build())
-        }
-        else {
-            chain.proceed(origin)
         }
 
         val respJson = response.Json()

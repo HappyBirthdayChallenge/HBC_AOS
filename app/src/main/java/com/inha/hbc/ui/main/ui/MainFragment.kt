@@ -6,15 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
+import com.inha.hbc.data.remote.resp.message.SearchDecoSuccess
 import com.inha.hbc.databinding.FragmentMainBinding
 import com.inha.hbc.ui.adapter.MainVPAdapter
 import com.inha.hbc.ui.assist.cakeSelectionAssist
 import com.inha.hbc.ui.main.view.RoomInfoView
+import com.inha.hbc.ui.main.view.SearchDecoView
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import com.inha.hbc.util.network.message.MessageRetrofitService
+import com.inha.hbc.util.network.room.RoomRetrofitService
 import com.inha.hbc.util.sharedpreference.GlobalApplication
 
-class MainFragment: Fragment() {
+class MainFragment: Fragment(), SearchDecoView {
     lateinit var binding : FragmentMainBinding
     var pageData = ArrayList<Int>()//0 왼쪽 1 가운데 2 내용 3 오른쪽
     override fun onCreateView(
@@ -54,17 +57,35 @@ class MainFragment: Fragment() {
     }
 
     fun initView() {
+        binding.lavMainLoading.visibility = View.VISIBLE
+        RoomRetrofitService().searchDeco(1.toString(), MainFragmentManager.roomId.toString(), this)
+    }
+
+    override fun onSearchDecoSuccess(resp: SearchDecoSuccess) {
+        pageData.clear()
+
         pageData.apply{
-            add(0)
-            add(1)
-            add(2)
-            add(3)
+            add(0)//왼
+            add(1)//메인
         }
+
+        for (i in 0 until resp.data!!.total_pages) {
+            pageData.add(2)
+        }
+
+        pageData.add(3)
+
         val adapter = MainVPAdapter(pageData)
         binding.vpMain.adapter = adapter
         binding.vpMain.currentItem = 1
 
 
         binding.tvMainTitle.text = GlobalApplication.prefs.getInfo()!!.name
+
+        binding.lavMainLoading.visibility = View.GONE
+    }
+
+    override fun onSearchDecoFailure() {
+        TODO("Not yet implemented")
     }
 }
