@@ -12,7 +12,10 @@ import com.bumptech.glide.request.RequestOptions
 import com.inha.hbc.R
 import com.inha.hbc.databinding.ItemMainPageBinding
 import com.inha.hbc.ui.assist.dpToPx
+import com.inha.hbc.ui.assist.selectionCandle
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
+import com.inha.hbc.util.sharedpreference.GlobalApplication
+import java.util.Calendar
 
 class MainVPAdapter(var pageData: ArrayList<Int>): RecyclerView.Adapter<MainVPAdapter.PageHolder>() {
 
@@ -36,7 +39,7 @@ class MainVPAdapter(var pageData: ArrayList<Int>): RecyclerView.Adapter<MainVPAd
         fun init(pos: Int) {
             initBg(pos)
             initCake(pos)
-            initObject(pos)
+            initObjectPos()
         }
         fun initBg(pos: Int) {
             if (pageData[pos] == 0) {
@@ -56,13 +59,35 @@ class MainVPAdapter(var pageData: ArrayList<Int>): RecyclerView.Adapter<MainVPAd
         fun initCake(pos: Int) {
             if (pos == 1) {
                 binding.ivItemMainCake.setImageResource(MainFragmentManager.cakeId)
+                val date = GlobalApplication.prefs.getInfo()!!.birth_date.date
+                val month = GlobalApplication.prefs.getInfo()!!.birth_date.month
+
+                val cal = Calendar.getInstance()
+                val mon = cal.get(Calendar.MONTH) + 1
+                val day = cal.get(Calendar.DATE)
+
+                var isBirth = false
+                if (mon == month && date== day) {
+                    isBirth = true
+                }
+
+                val birth =  cal.get(Calendar.YEAR) - GlobalApplication.prefs.getInfo()!!.birth_date.year + 1
+                var birthString = ""
+                if (birth < 10) {
+                    birthString = "0$birth"
+                }
+                else {
+                    birthString = "$birth"
+                }
+                binding.ivItemMainCandleFirst.setImageResource(selectionCandle(birthString[0].toString().toInt(), isBirth))
+                binding.ivItemMainCandleLast.setImageResource(selectionCandle(birthString[1].toString().toInt(), isBirth))
             }
             else {
                 binding.ivItemMainCake.visibility = View.GONE
             }
         }
 
-        fun initObject(pos: Int) {
+        fun initObjectPos() {
             binding.ivItemMainBackObj1.setPadding(dpToPx(genRand()),dpToPx(genRand())/2,dpToPx(genRand()), dpToPx(genRand()))
             binding.ivItemMainBackObj2.setPadding(dpToPx(genRand()),dpToPx(genRand())/2,dpToPx(genRand()), dpToPx(genRand()))
             binding.ivItemMainBackObj3.setPadding(dpToPx(genRand()),dpToPx(genRand())/2,dpToPx(genRand()), dpToPx(genRand()))

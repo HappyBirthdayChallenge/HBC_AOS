@@ -83,7 +83,7 @@
         app:layout_constraintBottom_toTopOf="@id/sp_item_main_cake_bottom"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:src="@drawable/img_deco_cake_7"
+        android:src="@drawable/img_deco_cake_1"
         app:layout_constraintVertical_weight="0.7">
     </ImageView>
     <Space
@@ -151,7 +151,7 @@
             android:id="@+id/iv_item_main_back_obj_4"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:src="@drawable/img_deco_toy_4"
+            android:src="@drawable/img_deco_toy_7"
             app:layout_constraintLeft_toRightOf="@id/iv_item_main_back_obj_3"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintHorizontal_weight="1">
