@@ -138,7 +138,7 @@ object LetterFragmentManager: CreateMessageView, UploadView {
             }
             fileIds.add(i.realId!!.toInt())
         }
-        letterData.letterText = letterFragment.binding.etLetter.toString()
+        letterData.letterText = letterFragment.binding.etLetter.text.toString()
         return MessageData(convertAnime(letterData.animeName), letterData.letterText, convertDeco(letterData.objectName), fileIds.toList(), letterId)
     }
 
