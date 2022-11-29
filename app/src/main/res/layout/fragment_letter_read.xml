@@ -5,62 +5,70 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/cl_letter_show_app_bar"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintBottom_toTopOf="@id/vp_main"
-    android:paddingHorizontal="15dp"
-    android:background="@color/main_color"
-    app:layout_constraintVertical_weight="1"
-    android:elevation="10dp">
-    <ImageView
-        android:id="@+id/iv_letter_show_send"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:id="@+id/cl_letter_read_app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:src="@drawable/ic_main_send">
-    </ImageView>
-    <TextView
-        android:id="@+id/tv_letter_show_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintLeft_toRightOf="@id/iv_main_send"
-        app:layout_constraintTop_toTopOf="@id/iv_main_send"
-        app:layout_constraintBottom_toBottomOf="@id/iv_main_send"
-        app:layout_constraintRight_toLeftOf="@id/iv_main_notify"
-        android:layout_marginLeft="10dp"
-        android:text="someone name"
-        android:textAlignment="textStart"
-        android:autoSizeTextType="uniform"
-        android:autoSizeMaxTextSize="24sp"
-        android:autoSizeMinTextSize="15sp"
-        android:textStyle="bold"
-        android:textColor="@color/sub_color">
-    </TextView>
-    <ImageView
-        android:id="@+id/iv_letter_show_search"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:layout_constraintRight_toLeftOf="@id/iv_main_profile_menu"
-        app:layout_constraintTop_toTopOf="@id/iv_main_profile_menu"
-        app:layout_constraintBottom_toBottomOf="@id/iv_main_profile_menu"
-        android:src="@drawable/ic_main_search"
-        android:layout_marginRight="10dp">
-    </ImageView>
-    <ImageView
-        android:id="@+id/iv_letter_show_profile_menu"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:src="@drawable/ic_general_menu">
-    </ImageView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintBottom_toTopOf="@id/cl_letter_read"
+        android:paddingHorizontal="15dp"
+        app:layout_constraintVertical_weight="1"
+        android:elevation="10dp">
+        <ImageView
+            android:id="@+id/iv_letter_read_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:src="@drawable/ic_back">
+        </ImageView>
+        <TextView
+            android:id="@+id/tv_letter_read_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toRightOf="@id/iv_letter_read_back"
+            app:layout_constraintTop_toTopOf="@id/iv_letter_read_back"
+            app:layout_constraintBottom_toBottomOf="@id/iv_letter_read_back"
+            app:layout_constraintRight_toLeftOf="@id/iv_letter_read_heart"
+            android:layout_marginLeft="10dp"
+            android:text="someone name"
+            android:textAlignment="textStart"
+            android:autoSizeTextType="uniform"
+            android:autoSizeMaxTextSize="24sp"
+            android:autoSizeMinTextSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@color/sub_color">
+        </TextView>
+        <ImageView
+            android:id="@+id/iv_letter_read_heart"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintRight_toLeftOf="@id/iv_letter_read_menu"
+            app:layout_constraintTop_toTopOf="@id/iv_letter_read_menu"
+            app:layout_constraintBottom_toBottomOf="@id/iv_letter_read_menu"
+            android:src="@drawable/ic_main_search"
+            android:layout_marginRight="10dp">
+        </ImageView>
+        <ImageView
+            android:id="@+id/iv_letter_read_menu"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:src="@drawable/ic_general_menu">
+        </ImageView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_letter_read"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/cl_letter_read_app_bar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_weight="12">
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
