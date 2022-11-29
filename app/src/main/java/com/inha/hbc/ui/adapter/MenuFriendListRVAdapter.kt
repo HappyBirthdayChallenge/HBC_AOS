@@ -12,7 +12,7 @@ import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 class MenuFriendListRVAdapter(val friendList: ArrayList<Content?>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     interface CstListener{
-        fun onClick(pos: Int)
+        fun onClick(pos: Int, content: Content)
     }
     lateinit var cstListener: CstListener
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -62,12 +62,12 @@ class MenuFriendListRVAdapter(val friendList: ArrayList<Content?>): RecyclerView
             binding.tvItemMenuTitle.text = data[pos]!!.member.name
             Glide.with(MainFragmentManager.baseActivity.applicationContext).load(data[pos]!!.member.image_url).into(binding.ivItemMenuIcon)
 
-            initListener(pos)
+            initListener(pos, data[pos]!!)
         }
 
-        fun initListener(pos: Int) {
+        fun initListener(pos: Int, content: Content) {
             binding.root.setOnClickListener {
-                listener.onClick(pos)
+                listener.onClick(pos, content)
             }
         }
 

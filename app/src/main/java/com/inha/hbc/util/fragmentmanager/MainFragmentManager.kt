@@ -6,7 +6,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.inha.hbc.R
 import com.inha.hbc.data.local.LetterData
+import com.inha.hbc.data.remote.resp.GetMyInfoBirth
+import com.inha.hbc.data.remote.resp.GetMyInfoData
 import com.inha.hbc.data.remote.resp.GetMyInfoSuccess
+import com.inha.hbc.data.remote.resp.menu.Content
 import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.ui.adapter.LetterMediaListRVAdapter
 import com.inha.hbc.ui.assist.cakeSelectionAssist
@@ -61,7 +64,7 @@ object MainFragmentManager {
     }
 
 
-    fun refreshPartyRoom(resp: RoomInfoSuccess) {
+    fun refreshPartyRoom(resp: RoomInfoSuccess, content: Content) {
         val arr = resp.data!![0].cake_type.split("E")
         val cakeType = arr[arr.size - 1].toInt()
 
@@ -70,6 +73,14 @@ object MainFragmentManager {
         roomYear = resp.data!![0].birth_date.year
 
         roominfo = resp
+        personInfo = GetMyInfoSuccess(1, GetMyInfoData(authorities = listOf(""),
+        birth_date = GetMyInfoBirth(date = content.member.birth_date.date, month = content.member.birth_date.month, year = content.member.birth_date.year, type = content.member.birth_date.type),
+            id = content.member.id,
+            image_url = content.member.image_url,
+            name = content.member.name,
+            phone = "",
+            username = content.member.username
+        ), "", "")
 
         mainPage.binding.vpMain.adapter!!.notifyDataSetChanged()
 

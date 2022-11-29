@@ -33,6 +33,7 @@ class MenuFriendPageVPAdapter: RecyclerView.Adapter<MenuFriendPageVPAdapter.Frie
         var listSize = 0
         var page = 0
         var initV = true
+        lateinit var selectedInfo: Content
         lateinit var adapter: MenuFriendListRVAdapter
 
 
@@ -63,7 +64,8 @@ class MenuFriendPageVPAdapter: RecyclerView.Adapter<MenuFriendPageVPAdapter.Frie
         fun initRv() {
             adapter = MenuFriendListRVAdapter(friendList)
             adapter.cstListener = object: MenuFriendListRVAdapter.CstListener{
-                override fun onClick(pos: Int) {
+                override fun onClick(pos: Int, content: Content) {
+                    selectedInfo = content
                     MessageRetrofitService().roomInfo(friendList[pos]!!.member.id.toString(), this@FriendPageHolder)
                 }
 
@@ -99,7 +101,7 @@ class MenuFriendPageVPAdapter: RecyclerView.Adapter<MenuFriendPageVPAdapter.Frie
 
 
         override fun onRoomInfoSuccess(resp: RoomInfoSuccess) {
-            MenuFragmentManager.goPartyRoom(resp)
+            MenuFragmentManager.goPartyRoom(resp, selectedInfo)
         }
 
         override fun onRoomInfoFailure() {

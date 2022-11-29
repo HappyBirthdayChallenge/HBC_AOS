@@ -34,6 +34,11 @@ class MainFragment: Fragment() {
         initListener()
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        binding.tvMainTitle.text = MainFragmentManager.personInfo.data!!.username
+    }
+
     fun initListener() {
         binding.ivMainProfileMenu.setOnClickListener {
             MainFragmentManager.transToMenu()
