@@ -24,7 +24,7 @@
         app:layout_constraintLeft_toRightOf="@id/iv_letter_show_back"
         app:layout_constraintTop_toTopOf="@id/iv_letter_show_back"
         app:layout_constraintBottom_toBottomOf="@id/iv_letter_show_back"
-        android:text="미디어"
+        android:text="id"
         android:textSize="20sp"
         android:textStyle="bold"
         android:layout_marginLeft="15dp">

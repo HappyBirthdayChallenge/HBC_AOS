@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.inha.hbc.R
 import com.inha.hbc.data.local.LetterData
+import com.inha.hbc.data.remote.resp.GetMyInfoSuccess
 import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.ui.adapter.LetterMediaListRVAdapter
 import com.inha.hbc.ui.assist.cakeSelectionAssist
@@ -26,16 +27,23 @@ object MainFragmentManager {
     var roomId = 0
     var roomYear = 0
     var cakeId = 0
+    lateinit var roominfo: RoomInfoSuccess
+    lateinit var personInfo: GetMyInfoSuccess
 
 
-    fun init(manager: FragmentManager, id: Int, cakeType: Int, year: Int, roomId: Int, base: MainActivity) {
+    fun init(manager: FragmentManager, id: Int, data: RoomInfoSuccess, info: GetMyInfoSuccess, base: MainActivity) {
+        val arr = data.data!![0].cake_type.split("E")
+        val cakeType = arr[arr.size - 1].toString().toInt()
+
         this.manager = manager
         this.id = id
         mainPage = MainFragment()
         baseActivity = base
-        cakeId = cakeType
-        roomYear = year
-        this.roomId = roomId
+        cakeId =  cakeSelectionAssist(cakeType)
+        roomYear = data.data!![0].birth_date.year
+        this.roomId = data.data!![0].room_id
+        roominfo = data
+        personInfo = info
     }
 
     fun start() {
@@ -61,6 +69,7 @@ object MainFragmentManager {
         roomId = resp.data!![0].room_id
         roomYear = resp.data!![0].birth_date.year
 
+        roominfo = resp
 
         mainPage.binding.vpMain.adapter!!.notifyDataSetChanged()
 

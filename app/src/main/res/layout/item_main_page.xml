@@ -28,7 +28,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:elevation="1dp"
-        android:rotation="-17"
         android:paddingRight="-10dp"
         android:src="@drawable/img_deco_candle_0"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -44,7 +43,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:elevation="1dp"
-        android:rotation="17"
         android:paddingLeft="-10dp"
         android:src="@drawable/img_deco_candle_0"
         app:layout_constraintLeft_toRightOf="@id/iv_item_main_candle_first"
@@ -191,15 +189,16 @@
             app:layout_constraintRight_toLeftOf="@id/iv_item_main_front_obj_2"
             app:layout_constraintHorizontal_weight="1">
         </ImageView>
+
         <ImageView
             android:id="@+id/iv_item_main_front_obj_2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:src="@drawable/img_deco_gift_1"
-            app:layout_constraintRight_toLeftOf="@id/iv_item_main_front_obj_3"
-            app:layout_constraintLeft_toRightOf="@id/iv_item_main_front_obj_1"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_weight="1">
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintLeft_toRightOf="@id/iv_item_main_front_obj_1"
+            app:layout_constraintRight_toLeftOf="@id/iv_item_main_front_obj_3">
         </ImageView>
         <ImageView
             android:id="@+id/iv_item_main_front_obj_3"

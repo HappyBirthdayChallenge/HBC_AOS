@@ -1,6 +1,8 @@
 package com.inha.hbc.data.remote.resp.menu
 
+import android.os.Parcelable
 import com.inha.hbc.data.remote.resp.Error
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonClassDiscriminator
@@ -79,9 +81,10 @@ data class Member(
 )
 
 @Serializable
+@Parcelize
 data class BirthDate(
     val date: Int,
     val month: Int,
     val type: String,
     val year: Int
-)
+): Parcelable

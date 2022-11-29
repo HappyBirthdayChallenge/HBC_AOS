@@ -59,8 +59,8 @@ class MainVPAdapter(var pageData: ArrayList<Int>): RecyclerView.Adapter<MainVPAd
         fun initCake(pos: Int) {
             if (pos == 1) {
                 binding.ivItemMainCake.setImageResource(MainFragmentManager.cakeId)
-                val date = GlobalApplication.prefs.getInfo()!!.birth_date.date
-                val month = GlobalApplication.prefs.getInfo()!!.birth_date.month
+                val date = MainFragmentManager.roominfo.data!![0].birth_date.date
+                val month = MainFragmentManager.roominfo.data!![0].birth_date.month
 
                 val cal = Calendar.getInstance()
                 val mon = cal.get(Calendar.MONTH) + 1
@@ -71,7 +71,7 @@ class MainVPAdapter(var pageData: ArrayList<Int>): RecyclerView.Adapter<MainVPAd
                     isBirth = true
                 }
 
-                val birth =  cal.get(Calendar.YEAR) - GlobalApplication.prefs.getInfo()!!.birth_date.year + 1
+                val birth =  cal.get(Calendar.YEAR) - MainFragmentManager.roominfo.data!![0].birth_date.year + 1
                 var birthString = ""
                 if (birth < 10) {
                     birthString = "0$birth"
@@ -84,6 +84,8 @@ class MainVPAdapter(var pageData: ArrayList<Int>): RecyclerView.Adapter<MainVPAd
             }
             else {
                 binding.ivItemMainCake.visibility = View.GONE
+                binding.ivItemMainCandleLast.visibility = View.GONE
+                binding.ivItemMainCandleFirst.visibility = View.GONE
             }
         }
 

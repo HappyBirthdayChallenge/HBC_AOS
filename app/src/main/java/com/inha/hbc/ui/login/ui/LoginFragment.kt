@@ -32,6 +32,7 @@ import com.kakao.sdk.user.UserApiClient
 class LoginFragment(val isBackBirth: Boolean): Fragment(), KakaoLoginView, GetTokenView, CheckTokenView, GetMyInfoView, RefreshFcmView, RoomInfoView {
 
     lateinit var binding: FragmentLoginBinding
+    lateinit var myInfo: GetMyInfoSuccess
     var auto = true
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -193,27 +194,27 @@ class LoginFragment(val isBackBirth: Boolean): Fragment(), KakaoLoginView, GetTo
     override fun onGetMyInfoSuccess(resp: GetMyInfoSuccess) {
         if (isBirthAvailable(resp.data!!.birth_date)) {
             GlobalApplication.prefs.setInfo(resp.data!!)
+            myInfo = resp
             MessageRetrofitService().roomInfo(GlobalApplication.prefs.getInfo()!!.id.toString(), this)
 
         }
         else {
             binding.lavLoginLoading.visibility = View.GONE
             if (!auto) {
-                parentFragmentManager.beginTransaction().replace(NormLoginFragmentManager.frameId, KakaoBirthFragment()).commit()
+                parentFragmentManager.beginTransaction().replace(NormLoginFragmentManager.frameId, KakaoBirthFragment(myInfo)).commit()
             }
 
         }
     }
 
     override fun onRoomInfoSuccess(data: RoomInfoSuccess) {
-        val arr = data.data!![0].cake_type.split("E")
-        val cakeType = arr[arr.size - 1].toString().toInt()
 
+        val parArr = arrayListOf(data)
+        val infArr = arrayListOf(myInfo)
         RetrofitService().refreshFcm(GlobalApplication.prefs.getFcmtoken()!!)
         val intent = Intent(requireActivity(), MainActivity::class.java).apply {
-            putExtra("caketype", cakeSelectionAssist(cakeType))
-            putExtra("roomId", data.data!![0].room_id)
-            putExtra("year", data.data!![0].birth_date.year)
+            putParcelableArrayListExtra("data", parArr)
+            putParcelableArrayListExtra("info", infArr)
         }
         startActivity(intent)
         requireActivity().finish()

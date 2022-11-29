@@ -34,6 +34,7 @@ import java.util.regex.Pattern
 class NormalLoginFragment(): Fragment(), NormLoginView, RefreshFcmView, RoomInfoView, GetMyInfoView {
     lateinit var callback: OnBackPressedCallback
     private lateinit var binding: FragmentNormalLoginBinding
+    lateinit var myInfo: GetMyInfoSuccess
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -233,14 +234,12 @@ class NormalLoginFragment(): Fragment(), NormLoginView, RefreshFcmView, RoomInfo
     }
 
     override fun onRoomInfoSuccess(resp: RoomInfoSuccess) {
-        val arr = resp.data!![0].cake_type.split("E")
-        val cakeType = arr[arr.size - 1].toString().toInt()
-
+        val parArr = arrayListOf(resp)
+        val infArr = arrayListOf(myInfo)
         RetrofitService().refreshFcm(GlobalApplication.prefs.getFcmtoken()!!)
         val intent = Intent(requireActivity(), MainActivity::class.java).apply {
-            putExtra("caketype", cakeSelectionAssist(cakeType))
-            putExtra("roomId", resp.data!![0].room_id)
-            putExtra("year", resp.data!![0].birth_date.year)
+            putParcelableArrayListExtra("data", parArr)
+            putParcelableArrayListExtra("info", infArr)
         }
         startActivity(intent)
         requireActivity().finish()
@@ -252,6 +251,7 @@ class NormalLoginFragment(): Fragment(), NormLoginView, RefreshFcmView, RoomInfo
 
     override fun onGetMyInfoSuccess(resp: GetMyInfoSuccess) {
         GlobalApplication.prefs.setInfo(resp.data!!)
+        myInfo = resp
         MessageRetrofitService().roomInfo(GlobalApplication.prefs.getInfo()!!.id.toString(), this)
     }
 

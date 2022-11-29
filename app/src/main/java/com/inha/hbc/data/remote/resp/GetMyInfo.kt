@@ -1,5 +1,7 @@
 package com.inha.hbc.data.remote.resp
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonClassDiscriminator
@@ -10,12 +12,13 @@ sealed class GetMyInfo
 
 @Serializable
 @SerialName("R")
+@Parcelize
 data class GetMyInfoSuccess(
     val status: Int,
     val data: GetMyInfoData?,
     val code: String,
     val message: String
-): GetMyInfo()
+): GetMyInfo(), Parcelable
 
 @Serializable
 @SerialName("E")
@@ -27,6 +30,7 @@ data class GetMyInfoFailure(
 ): GetMyInfo()
 
 @Serializable
+@Parcelize
 data class GetMyInfoData(
     val authorities: List<String>,
     val birth_date: GetMyInfoBirth,
@@ -35,12 +39,13 @@ data class GetMyInfoData(
     val name: String,
     val phone: String?,
     val username: String
-)
+): Parcelable
 
 @Serializable
+@Parcelize
 data class GetMyInfoBirth (
     val date: Int,
     val month: Int,
     val type: String,
     val year: Int
-)
+):Parcelable

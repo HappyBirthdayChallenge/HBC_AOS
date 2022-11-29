@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.inha.hbc.data.remote.req.CheckBirthData
+import com.inha.hbc.data.remote.resp.GetMyInfoSuccess
 import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.databinding.FragmentKakaoBirthBinding
 import com.inha.hbc.ui.assist.cakeSelectionAssist
@@ -23,7 +24,7 @@ import com.inha.hbc.util.network.message.MessageRetrofitService
 import com.inha.hbc.util.sharedpreference.GlobalApplication
 import java.util.Calendar
 
-class KakaoBirthFragment: Fragment(), CheckBirthView, RefreshFcmView, RoomInfoView {
+class KakaoBirthFragment(val myInfo: GetMyInfoSuccess): Fragment(), CheckBirthView, RefreshFcmView, RoomInfoView {
     lateinit var callback: OnBackPressedCallback
     lateinit var binding: FragmentKakaoBirthBinding
     override fun onCreateView(
@@ -116,14 +117,13 @@ class KakaoBirthFragment: Fragment(), CheckBirthView, RefreshFcmView, RoomInfoVi
     }
 
     override fun onRoomInfoSuccess(resp: RoomInfoSuccess) {
-        val arr = resp.data!![0].cake_type.split("E")
-        val cakeType = arr[arr.size - 1].toString().toInt()
 
+        val parArr = arrayListOf(resp)
+        val infArr = arrayListOf(myInfo)
         RetrofitService().refreshFcm(GlobalApplication.prefs.getFcmtoken()!!)
         val intent = Intent(requireActivity(), MainActivity::class.java).apply {
-            putExtra("caketype", cakeSelectionAssist(cakeType))
-            putExtra("roomId", resp.data!![0].room_id)
-            putExtra("year", resp.data!![0].birth_date.year)
+            putParcelableArrayListExtra("data", parArr)
+            putParcelableArrayListExtra("info", infArr)
         }
         startActivity(intent)
         requireActivity().finish()
