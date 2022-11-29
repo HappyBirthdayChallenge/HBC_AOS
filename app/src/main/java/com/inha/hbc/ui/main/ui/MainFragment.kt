@@ -80,7 +80,7 @@ class MainFragment: Fragment(), SearchDecoView {
         binding.vpMain.currentItem = 1
 
 
-        binding.tvMainTitle.text = GlobalApplication.prefs.getInfo()!!.name
+        binding.tvMainTitle.text = MainFragmentManager.personInfo.data!!.username
 
         binding.lavMainLoading.visibility = View.GONE
     }
