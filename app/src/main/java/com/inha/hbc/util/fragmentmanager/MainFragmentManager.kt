@@ -2,6 +2,7 @@ package com.inha.hbc.util.fragmentmanager
 
 import android.content.Intent
 import android.net.Uri
+import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.inha.hbc.R
@@ -10,6 +11,7 @@ import com.inha.hbc.data.remote.resp.GetMyInfoBirth
 import com.inha.hbc.data.remote.resp.GetMyInfoData
 import com.inha.hbc.data.remote.resp.GetMyInfoSuccess
 import com.inha.hbc.data.remote.resp.menu.Content
+import com.inha.hbc.data.remote.resp.message.GetMessageSuccess
 import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.ui.adapter.LetterMediaListRVAdapter
 import com.inha.hbc.ui.assist.cakeSelectionAssist
@@ -17,12 +19,13 @@ import com.inha.hbc.ui.letter.ui.*
 import com.inha.hbc.ui.letter.view.CreateMessageView
 import com.inha.hbc.ui.main.ui.MainActivity
 import com.inha.hbc.ui.main.ui.MainFragment
+import com.inha.hbc.ui.main.view.GetMessageView
 import com.inha.hbc.ui.menu.ui.MenuFragment
 import com.inha.hbc.util.network.RetrofitService
 import com.inha.hbc.util.network.message.MessageRetrofitService
 import com.inha.hbc.util.sharedpreference.GlobalApplication
 
-object MainFragmentManager {
+object MainFragmentManager: GetMessageView{
     lateinit var manager: FragmentManager
     lateinit var mainPage: MainFragment
     lateinit var baseActivity: MainActivity
@@ -86,6 +89,22 @@ object MainFragmentManager {
 
         manager.beginTransaction().replace(id, mainPage).commit()
         manager.beginTransaction().show(mainPage).commit()
+    }
+
+    fun openLetter(messageId: Int) {
+        MessageRetrofitService().getMessage(messageId.toString(), this)
+        mainPage.binding.lavMainLoading.visibility = View.VISIBLE
+
+
+    }
+
+    override fun onGetMessageSuccess(resp: GetMessageSuccess) {
+        mainPage.binding.lavMainLoading.visibility = View.GONE
+        manager.beginTransaction().hide(mainPage).commit()
+        manager.beginTransaction().add(id, LetterReadFragment(resp)).commit()
+    }
+
+    override fun onGetMessageFailure() {
     }
 
 }

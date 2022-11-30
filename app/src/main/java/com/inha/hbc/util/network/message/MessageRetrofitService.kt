@@ -7,6 +7,7 @@ import com.inha.hbc.data.remote.resp.message.*
 import com.inha.hbc.ui.letter.view.UploadView
 import com.inha.hbc.ui.letter.view.CreateMessageView
 import com.inha.hbc.ui.letter.view.UploadMessageView
+import com.inha.hbc.ui.main.view.GetMessageView
 import com.inha.hbc.ui.main.view.RoomInfoView
 import com.inha.hbc.util.network.NetworkModule
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -34,6 +35,7 @@ class MessageRetrofitService {
     lateinit var roomInfoView: RoomInfoView
     lateinit var uploadView: UploadView
     lateinit var uploadMessageView: UploadMessageView
+    lateinit var getMessageView: GetMessageView
 
     fun createMessage(id: String, view: CreateMessageView) {
         createMessageView = view
@@ -213,6 +215,33 @@ class MessageRetrofitService {
     }
 
 
+    fun getMessage(messageId: String, view: GetMessageView) {
+        getMessageView = view
+        callRetro().getMessage(messageId).enqueue(object: Callback<List<GetMessage>>{
+            override fun onResponse(
+                call: Call<List<GetMessage>>,
+                response: Response<List<GetMessage>>
+            ) {
+                if (response.isSuccessful) {
+                    val resp = response.body()!![0] as GetMessageSuccess
+                    if (resp.code == "R-RM003") {
+                        getMessageView.onGetMessageSuccess(resp)
+                    }
+                    else {
+                        getMessageView.onGetMessageFailure()
+                    }
+                }
+                else {
+                    getMessageView.onGetMessageFailure()
+                }
+            }
+
+            override fun onFailure(call: Call<List<GetMessage>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
 
 
 }

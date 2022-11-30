@@ -136,7 +136,7 @@ class MainVPAdapter(var pageData: ArrayList<Int>): RecyclerView.Adapter<MainVPAd
                 dollArr[i].visibility = View.VISIBLE
                 dollArr[i].setImageResource(serverDecoToId(resp.data!!.dolls[i].decoration_type))
                 dollArr[i].setOnClickListener {
-
+                    MainFragmentManager.openLetter(resp.data!!.dolls[i].message_id)
                 }
             }
             for (i in resp.data!!.dolls.size until 4) {
@@ -159,6 +159,9 @@ class MainVPAdapter(var pageData: ArrayList<Int>): RecyclerView.Adapter<MainVPAd
             for (i in 0 until resp.data!!.drinks.size) {
                 drinkArr[i].visibility = View.VISIBLE
                 drinkArr[i].setImageResource(serverDecoToId(resp.data!!.drinks[i].decoration_type))
+                drinkArr[i].setOnClickListener {
+                    MainFragmentManager.openLetter(resp.data!!.drinks[i].message_id)
+                }
             }
             for (i in resp.data!!.drinks.size until 4) {
                 drinkArr[i].visibility = View.INVISIBLE

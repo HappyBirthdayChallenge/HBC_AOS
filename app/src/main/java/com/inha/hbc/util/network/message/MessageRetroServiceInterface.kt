@@ -1,10 +1,7 @@
 package com.inha.hbc.util.network.message
 
 import com.inha.hbc.data.remote.req.message.MessageData
-import com.inha.hbc.data.remote.resp.message.CreateMessage
-import com.inha.hbc.data.remote.resp.message.RoomInfo
-import com.inha.hbc.data.remote.resp.message.Upload
-import com.inha.hbc.data.remote.resp.message.UploadMessage
+import com.inha.hbc.data.remote.resp.message.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
@@ -13,6 +10,7 @@ import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MessageRetroServiceInterface {
@@ -54,4 +52,9 @@ interface MessageRetroServiceInterface {
     fun messageUpload(
         @Body request: MessageData
     ): Call<List<UploadMessage>>
+
+    @GET("/messages/{message_id}")
+    fun getMessage(
+        @Path("message_id") message_id: String
+    ): Call<List<GetMessage>>
 }

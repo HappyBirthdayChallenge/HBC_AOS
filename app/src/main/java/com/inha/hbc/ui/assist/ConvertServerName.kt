@@ -34,5 +34,5 @@ fun serverDecoToId(name: String): Int {
 fun serverAnimeToName(name: String): String {
     val arr = name.split("_")
     var num = arr[2][arr[2].length - 1].toString().toInt()
-    return "json_deco_anime_$num"
+    return "json_deco_anime_$num.json"
 }
