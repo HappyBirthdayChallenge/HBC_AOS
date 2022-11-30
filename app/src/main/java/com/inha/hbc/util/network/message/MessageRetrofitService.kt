@@ -6,6 +6,7 @@ import com.inha.hbc.data.remote.req.message.MessageData
 import com.inha.hbc.data.remote.resp.message.*
 import com.inha.hbc.ui.letter.view.UploadView
 import com.inha.hbc.ui.letter.view.CreateMessageView
+import com.inha.hbc.ui.letter.view.MessageLikeView
 import com.inha.hbc.ui.letter.view.UploadMessageView
 import com.inha.hbc.ui.main.view.GetMessageView
 import com.inha.hbc.ui.main.view.RoomInfoView
@@ -36,6 +37,7 @@ class MessageRetrofitService {
     lateinit var uploadView: UploadView
     lateinit var uploadMessageView: UploadMessageView
     lateinit var getMessageView: GetMessageView
+    lateinit var messagelLikeView: MessageLikeView
 
     fun createMessage(id: String, view: CreateMessageView) {
         createMessageView = view
@@ -244,4 +246,30 @@ class MessageRetrofitService {
     }
 
 
+    fun messageLike(messageId: String, view: MessageLikeView) {
+        messagelLikeView = view
+        callRetro().messageLike(messageId).enqueue(object: Callback<List<MessageLike>> {
+            override fun onResponse(
+                call: Call<List<MessageLike>>,
+                response: Response<List<MessageLike>>
+            ) {
+                if (response.isSuccessful) {
+                    val resp = response.body()!![0] as MessageLikeSuccess
+                    if (resp.code == "R-RM009") {
+                        messagelLikeView.onMessageLikeSuccess()
+                    }
+                    else {
+                        messagelLikeView.onMessageLikeFailure()
+                    }
+                }
+                else {
+                    messagelLikeView.onMessageLikeFailure()
+                }
+            }
+
+            override fun onFailure(call: Call<List<MessageLike>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
 }

@@ -8,13 +8,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.inha.hbc.R
 import com.inha.hbc.data.remote.resp.message.GetMessageSuccess
 import com.inha.hbc.databinding.FragmentLetterReadBinding
 import com.inha.hbc.ui.adapter.LetterReadRVAdapter
 import com.inha.hbc.ui.assist.serverAnimeToName
+import com.inha.hbc.ui.letter.view.MessageLikeView
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
+import com.inha.hbc.util.network.message.MessageRetrofitService
 
-class LetterReadFragment(val resp: GetMessageSuccess): Fragment() {
+class LetterReadFragment(val resp: GetMessageSuccess, var open: Boolean): Fragment(), MessageLikeView {
     lateinit var binding: FragmentLetterReadBinding
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,13 +31,14 @@ class LetterReadFragment(val resp: GetMessageSuccess): Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        anime()
         initView()
         initRv()
+        initListener()
     }
 
     fun anime() {
-        binding.lavLetterReadLoading.setAnimation(resp.data!!.animation_type)
+        binding.lavLetterReadLoading.visibility = View.VISIBLE
+        binding.lavLetterReadLoading.setAnimation(serverAnimeToName(resp.data!!.animation_type))
         Thread.sleep(500)
         binding.lavLetterReadLoading.visibility = View.GONE
     }
@@ -44,6 +48,8 @@ class LetterReadFragment(val resp: GetMessageSuccess): Fragment() {
         binding.tvLetterReadSubtitle.text = resp.data!!.member.name + "의 메시지"
 
         Glide.with(MainFragmentManager.baseActivity.applicationContext).load(resp.data!!.member.image_url).into(binding.ivLetterReadProfile)
+
+        binding.tvLetterReadContent.text = resp.data!!.content
     }
 
     fun initRv() {
@@ -54,7 +60,15 @@ class LetterReadFragment(val resp: GetMessageSuccess): Fragment() {
 
     fun initListener() {
         binding.ivLetterReadHeart.setOnClickListener {
-            
+            MessageRetrofitService().messageLike(resp.data!!.message_id.toString(), this)
         }
+    }
+
+    override fun onMessageLikeSuccess() {
+        binding.ivLetterReadHeart.setImageResource(R.drawable.ic_heart_full)
+    }
+
+    override fun onMessageLikeFailure() {
+        TODO("Not yet implemented")
     }
 }

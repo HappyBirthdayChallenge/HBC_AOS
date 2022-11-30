@@ -99,9 +99,9 @@ object MainFragmentManager: GetMessageView{
     }
 
     override fun onGetMessageSuccess(resp: GetMessageSuccess) {
-        mainPage.binding.lavMainLoading.visibility = View.GONE
+        manager.beginTransaction().add(id, LetterReadFragment(resp, true)).commit()
         manager.beginTransaction().hide(mainPage).commit()
-        manager.beginTransaction().add(id, LetterReadFragment(resp)).commit()
+        mainPage.binding.lavMainLoading.visibility = View.GONE
     }
 
     override fun onGetMessageFailure() {

@@ -8,6 +8,7 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Multipart
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
@@ -57,4 +58,9 @@ interface MessageRetroServiceInterface {
     fun getMessage(
         @Path("message_id") message_id: String
     ): Call<List<GetMessage>>
+
+    @PATCH("/messages/{message_id}/like")
+    fun messageLike(
+        @Path("message_id") message_id: String
+    ):Call<List<MessageLike>>
 }
