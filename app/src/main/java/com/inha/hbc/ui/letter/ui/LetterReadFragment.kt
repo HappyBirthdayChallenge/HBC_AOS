@@ -80,7 +80,6 @@ class LetterReadFragment(): Fragment(), MessageLikeView {
 
         if (resp.data!!.like) {
             binding.ivLetterReadHeart.setImageResource(R.drawable.ic_heart_full)
-
         }
     }
 

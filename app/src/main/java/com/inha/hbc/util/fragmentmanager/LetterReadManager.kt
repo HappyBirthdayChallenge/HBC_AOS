@@ -16,6 +16,7 @@ object LetterReadManager: GetMessageView {
     lateinit var mainPage: MainFragment
     lateinit var letterPage: LetterReadFragment
     var frameId = 0
+    var senderId = ""
 
     fun init(manager: FragmentManager, mainPage: MainFragment, id: Int) {
         this.manager = manager
@@ -33,6 +34,7 @@ object LetterReadManager: GetMessageView {
 
     override fun onGetMessageSuccess(resp: GetMessageSuccess) {
         letterPage.init(resp)
+        senderId = resp.data!!.member.name
         manager.beginTransaction().hide(mainPage).commit()
         manager.beginTransaction().show(letterPage).commit()
     }

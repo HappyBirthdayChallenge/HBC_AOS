@@ -68,6 +68,7 @@ class LetterReadObjectFragment(val url: String, val type:Int): Fragment() {
     }
 
     fun initView() {
+        binding.tvLetterShowTitle.text = LetterReadManager.senderId
         //0 동영상
         //1 사진
         //2 음성

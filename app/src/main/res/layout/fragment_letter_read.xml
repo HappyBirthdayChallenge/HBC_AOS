@@ -127,7 +127,7 @@
             android:layout_marginLeft="25dp"
             android:layout_marginTop="20dp"
             android:textStyle="bold"
-            android:textAlignment="textStart"
+            android:gravity="left | center"
             android:textSize="22sp"
             android:foregroundGravity="center"
             app:layout_constraintVertical_weight="0.7">
