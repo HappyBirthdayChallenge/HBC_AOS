@@ -59,7 +59,9 @@ class LetterReadRVAdapter(val mediaArr: List<String>): RecyclerView.Adapter<Lett
         }
 
         fun initListener() {
+            binding.root.setOnClickListener {
 
+            }
         }
     }
 }

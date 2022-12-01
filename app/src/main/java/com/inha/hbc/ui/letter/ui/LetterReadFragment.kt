@@ -3,9 +3,12 @@ package com.inha.hbc.ui.letter.ui
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.Message
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.inha.hbc.R
@@ -14,11 +17,23 @@ import com.inha.hbc.databinding.FragmentLetterReadBinding
 import com.inha.hbc.ui.adapter.LetterReadRVAdapter
 import com.inha.hbc.ui.assist.serverAnimeToName
 import com.inha.hbc.ui.letter.view.MessageLikeView
+import com.inha.hbc.util.fragmentmanager.LetterReadManager
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import com.inha.hbc.util.network.message.MessageRetrofitService
+import kotlin.concurrent.thread
+import kotlin.concurrent.timer
 
-class LetterReadFragment(val resp: GetMessageSuccess, var open: Boolean): Fragment(), MessageLikeView {
+class LetterReadFragment(): Fragment(), MessageLikeView {
     lateinit var binding: FragmentLetterReadBinding
+    lateinit var resp: GetMessageSuccess
+    var time = 0
+    val handler = object : Handler(
+        Looper.getMainLooper()) {
+        override fun handleMessage(msg: Message) {
+            super.handleMessage(msg)
+            binding.lavLetterReadLoading.visibility = View.GONE
+        }
+    }
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -28,19 +43,27 @@ class LetterReadFragment(val resp: GetMessageSuccess, var open: Boolean): Fragme
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    fun init(resp: GetMessageSuccess) {
+        this.resp = resp
         initView()
         initRv()
         initListener()
+        binding.lavLetterReadLoading.setAnimation(serverAnimeToName(resp.data!!.animation_type))
+        Log.d("frag", "fragclose")
+        anime()
     }
 
     fun anime() {
         binding.lavLetterReadLoading.visibility = View.VISIBLE
-        binding.lavLetterReadLoading.setAnimation(serverAnimeToName(resp.data!!.animation_type))
-        Thread.sleep(500)
-        binding.lavLetterReadLoading.visibility = View.GONE
+        timer(period = 1000) {
+            time++
+            Log.d("frag", "time$time")
+            if (time == 5) {
+                handler.sendEmptyMessage(0)
+                time = 0
+                this.cancel()
+            }
+        }
     }
 
     fun initView() {
@@ -61,11 +84,12 @@ class LetterReadFragment(val resp: GetMessageSuccess, var open: Boolean): Fragme
     fun initListener() {
         binding.ivLetterReadHeart.setOnClickListener {
             MessageRetrofitService().messageLike(resp.data!!.message_id.toString(), this)
+            binding.ivLetterReadHeart.setImageResource(R.drawable.ic_heart_full)
         }
     }
 
     override fun onMessageLikeSuccess() {
-        binding.ivLetterReadHeart.setImageResource(R.drawable.ic_heart_full)
+        Toast.makeText(context,"좋아요!", Toast.LENGTH_SHORT).show()
     }
 
     override fun onMessageLikeFailure() {

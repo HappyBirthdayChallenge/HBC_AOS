@@ -25,7 +25,7 @@ import com.inha.hbc.util.network.RetrofitService
 import com.inha.hbc.util.network.message.MessageRetrofitService
 import com.inha.hbc.util.sharedpreference.GlobalApplication
 
-object MainFragmentManager: GetMessageView{
+object MainFragmentManager{
     lateinit var manager: FragmentManager
     lateinit var mainPage: MainFragment
     lateinit var baseActivity: MainActivity
@@ -92,19 +92,11 @@ object MainFragmentManager: GetMessageView{
     }
 
     fun openLetter(messageId: Int) {
-        MessageRetrofitService().getMessage(messageId.toString(), this)
         mainPage.binding.lavMainLoading.visibility = View.VISIBLE
+        LetterReadManager.init(manager, mainPage, id)
+        LetterReadManager.start(messageId.toString())
 
 
-    }
-
-    override fun onGetMessageSuccess(resp: GetMessageSuccess) {
-        manager.beginTransaction().add(id, LetterReadFragment(resp, true)).commit()
-        manager.beginTransaction().hide(mainPage).commit()
-        mainPage.binding.lavMainLoading.visibility = View.GONE
-    }
-
-    override fun onGetMessageFailure() {
     }
 
 }
