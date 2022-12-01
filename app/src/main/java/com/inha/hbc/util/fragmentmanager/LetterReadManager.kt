@@ -2,9 +2,11 @@ package com.inha.hbc.util.fragmentmanager
 
 import android.util.Log
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.inha.hbc.data.remote.resp.message.GetMessageSuccess
 import com.inha.hbc.ui.letter.ui.LetterReadFragment
+import com.inha.hbc.ui.letter.ui.LetterReadObjectFragment
 import com.inha.hbc.ui.main.ui.MainFragment
 import com.inha.hbc.ui.main.view.GetMessageView
 import com.inha.hbc.util.network.message.MessageRetrofitService
@@ -39,5 +41,14 @@ object LetterReadManager: GetMessageView {
         TODO("Not yet implemented")
     }
 
+    fun closeShow(view: Fragment) {
+        manager.beginTransaction().show(letterPage).commit()
+        manager.beginTransaction().remove(view).commit()
+    }
+
+    fun openShow(url: String, type: Int) {
+        manager.beginTransaction().add(frameId, LetterReadObjectFragment(url, type)).commit()
+        manager.beginTransaction().hide(letterPage).commit()
+    }
 
 }

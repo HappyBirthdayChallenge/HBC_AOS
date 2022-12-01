@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2.OFFSCREEN_PAGE_LIMIT_DEFAULT
+import androidx.viewpager2.widget.ViewPager2.OffscreenPageLimit
 import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.data.remote.resp.message.SearchDecoSuccess
 import com.inha.hbc.databinding.FragmentMainBinding
@@ -78,7 +80,7 @@ class MainFragment: Fragment(), SearchDecoView {
 
         val adapter = MainVPAdapter(pageData)
         binding.vpMain.adapter = adapter
-        binding.vpMain.offscreenPageLimit = 3
+        binding.vpMain.offscreenPageLimit = OFFSCREEN_PAGE_LIMIT_DEFAULT
         binding.vpMain.currentItem = 1
 
 
