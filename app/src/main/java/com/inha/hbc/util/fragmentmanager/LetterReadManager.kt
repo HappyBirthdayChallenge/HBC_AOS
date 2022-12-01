@@ -55,4 +55,9 @@ object LetterReadManager: GetMessageView {
         manager.beginTransaction().add(frameId, LetterReadObjectFragment(txt, 3)).commit()
         manager.beginTransaction().hide(letterPage).commit()
     }
+
+    fun goMain() {
+        manager.beginTransaction().remove(letterPage).commit()
+        manager.beginTransaction().show(mainPage).commit()
+    }
 }

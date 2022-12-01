@@ -1,5 +1,6 @@
 package com.inha.hbc.ui.letter.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.inha.hbc.R
@@ -25,6 +27,7 @@ import kotlin.concurrent.timer
 
 class LetterReadFragment(): Fragment(), MessageLikeView {
     lateinit var binding: FragmentLetterReadBinding
+    lateinit var backPressedCallback: OnBackPressedCallback
     lateinit var resp: GetMessageSuccess
     var time = 0
     val handler = object : Handler(
@@ -107,6 +110,10 @@ class LetterReadFragment(): Fragment(), MessageLikeView {
         binding.tvLetterReadContent.setOnClickListener {
             LetterReadManager.openTextDetail(resp.data!!.content)
         }
+
+        binding.ivLetterReadBack.setOnClickListener {
+            LetterReadManager.goMain()
+        }
     }
 
     override fun onMessageLikeSuccess() {
@@ -116,4 +123,19 @@ class LetterReadFragment(): Fragment(), MessageLikeView {
     override fun onMessageLikeFailure() {
         TODO("Not yet implemented")
     }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        backPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                LetterReadManager.goMain()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, backPressedCallback)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        backPressedCallback.remove()
+    }
+
 }

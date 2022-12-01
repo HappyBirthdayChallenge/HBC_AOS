@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2.OFFSCREEN_PAGE_LIMIT_DEFAULT
 import androidx.viewpager2.widget.ViewPager2.OffscreenPageLimit
+import com.inha.hbc.R
 import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.data.remote.resp.message.SearchDecoSuccess
 import com.inha.hbc.databinding.FragmentMainBinding
@@ -22,6 +23,7 @@ import com.inha.hbc.util.sharedpreference.GlobalApplication
 class MainFragment: Fragment(), SearchDecoView {
     lateinit var binding : FragmentMainBinding
     var pageData = ArrayList<Int>()//0 왼쪽 1 가운데 2 내용 3 오른쪽
+    var where = "mine"
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -62,6 +64,10 @@ class MainFragment: Fragment(), SearchDecoView {
     fun initView() {
         binding.lavMainLoading.visibility = View.VISIBLE
         RoomRetrofitService().searchDeco(1.toString(), MainFragmentManager.roomId.toString(), this)
+
+        if (where == "mine") {
+            binding.ivMainSend.setImageResource(R.drawable.ic_main_message_list)
+        }
     }
 
     override fun onSearchDecoSuccess(resp: SearchDecoSuccess) {
