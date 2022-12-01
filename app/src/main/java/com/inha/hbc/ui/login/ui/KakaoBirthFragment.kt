@@ -86,7 +86,6 @@ class KakaoBirthFragment(val myInfo: GetMyInfoSuccess): Fragment(), CheckBirthVi
     }
 
     override fun onBirthSuccess() {
-
         MessageRetrofitService().roomInfo(GlobalApplication.prefs.getInfo()!!.id.toString(), this)
     }
 

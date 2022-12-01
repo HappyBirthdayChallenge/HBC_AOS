@@ -35,8 +35,10 @@ data class GetMessageData(
     val create_at: String,
     val decoration_type: String,
     val file_uris: List<String>,
+    val like: Boolean,
     val member: Member,
-    val message_id: Int
+    val message_id: Int,
+    val read: Boolean
 )
 
 @Serializable

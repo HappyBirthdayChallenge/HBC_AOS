@@ -2,11 +2,13 @@ package com.inha.hbc.ui.main.ui
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.inha.hbc.data.remote.resp.GetMyInfoSuccess
 import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.databinding.ActivityMainBinding
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
+import com.inha.hbc.util.sharedpreference.GlobalApplication
 import java.util.ArrayList
 
 
@@ -17,6 +19,7 @@ class MainActivity: AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        Log.d("okhttpTok", GlobalApplication.prefs.getRealAccessJwt().toString())
         val ext = intent.extras
         val data = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             ext!!.getParcelableArrayList("data", RoomInfoSuccess::class.java)
