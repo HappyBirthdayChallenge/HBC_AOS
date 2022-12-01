@@ -20,7 +20,7 @@
         app:layout_constraintRight_toLeftOf="@id/iv_item_main_candle_first"
         app:layout_constraintBottom_toTopOf="@id/iv_item_main_candle_first"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_weight="1.75"
+        app:layout_constraintHorizontal_weight="1.8"
         app:layout_constraintVertical_weight="5">
     </Space>
     <Space
@@ -31,7 +31,7 @@
         app:layout_constraintRight_toLeftOf="@id/iv_item_main_candle_last"
         app:layout_constraintBottom_toTopOf="@id/iv_item_main_candle_last"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_weight="2.25"
+        app:layout_constraintHorizontal_weight="2.2"
         app:layout_constraintVertical_weight="5">
     </Space>
     <ImageView
@@ -43,7 +43,7 @@
         app:layout_constraintRight_toLeftOf="@id/sp_item_main_candle_right_first"
         app:layout_constraintBottom_toTopOf="@id/sp_item_main_candle_right_first"
         app:layout_constraintTop_toBottomOf="@id/sp_item_main_candle_left_first"
-        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintHorizontal_weight="2"
         app:layout_constraintVertical_weight="2">
     </ImageView>
     <ImageView
@@ -55,7 +55,7 @@
         app:layout_constraintRight_toLeftOf="@id/sp_item_main_candle_right_last"
         app:layout_constraintTop_toBottomOf="@id/sp_item_main_candle_left_last"
         app:layout_constraintBottom_toTopOf="@id/sp_item_main_candle_right_last"
-        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintHorizontal_weight="2"
         app:layout_constraintVertical_weight="2">
     </ImageView>
     <Space
@@ -66,7 +66,7 @@
         app:layout_constraintLeft_toRightOf="@id/iv_item_main_candle_first"
         app:layout_constraintTop_toBottomOf="@id/iv_item_main_candle_first"
         app:layout_constraintBottom_toBottomOf="@id/iv_item_main_cake"
-        app:layout_constraintHorizontal_weight="2.25"
+        app:layout_constraintHorizontal_weight="2.2"
         app:layout_constraintVertical_weight="3">
     </Space>
     <Space
@@ -77,7 +77,7 @@
         app:layout_constraintLeft_toRightOf="@id/iv_item_main_candle_last"
         app:layout_constraintTop_toBottomOf="@id/iv_item_main_candle_last"
         app:layout_constraintBottom_toBottomOf="@id/iv_item_main_cake"
-        app:layout_constraintHorizontal_weight="1.75"
+        app:layout_constraintHorizontal_weight="1.8"
         app:layout_constraintVertical_weight="3">
     </Space>
 
