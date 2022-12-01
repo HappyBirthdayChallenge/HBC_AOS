@@ -23,6 +23,7 @@ class LetterReadObjectFragment(val url: String, val type:Int): Fragment() {
     lateinit var backPressedCallback: OnBackPressedCallback
     var playing = false
     val player = MediaPlayer()
+    var stop = true
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -50,6 +51,13 @@ class LetterReadObjectFragment(val url: String, val type:Int): Fragment() {
             else {
                 startPlayer()
             }
+        }
+
+        binding.ivLetterShowReset.setOnClickListener {
+            pausePlayer()
+            player.stop()
+            stop = true
+            binding.ivLetterShowReset.isEnabled = false
         }
 
         player.setOnCompletionListener {
@@ -99,6 +107,7 @@ class LetterReadObjectFragment(val url: String, val type:Int): Fragment() {
                 binding.lavLetterShowRecord.visibility = View.VISIBLE
 
                 binding.vvLetterShow.visibility = View.GONE
+                player.setDataSource(url)
             }
             else -> {
                 Glide.with(MainFragmentManager.baseActivity.applicationContext).load(url)
@@ -108,8 +117,11 @@ class LetterReadObjectFragment(val url: String, val type:Int): Fragment() {
     }
 
     fun startPlayer() {
-        player.setDataSource(url)
-        player.prepare()
+        binding.ivLetterShowReset.isEnabled = false
+        if (stop) {
+            player.prepare()
+            stop = false
+        }
         player.start()
         playing = true
         binding.ivLetterShowPlay.setImageResource(R.drawable.ic_letter_record_pause)
@@ -117,6 +129,7 @@ class LetterReadObjectFragment(val url: String, val type:Int): Fragment() {
     }
 
     fun pausePlayer() {
+        binding.ivLetterShowReset.isEnabled = true
         player.pause()
         playing = false
         binding.ivLetterShowPlay.setImageResource(R.drawable.ic_letter_record_play)
