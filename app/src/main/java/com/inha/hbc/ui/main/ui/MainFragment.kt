@@ -78,6 +78,7 @@ class MainFragment: Fragment(), SearchDecoView {
 
         val adapter = MainVPAdapter(pageData)
         binding.vpMain.adapter = adapter
+        binding.vpMain.offscreenPageLimit = 3
         binding.vpMain.currentItem = 1
 
 

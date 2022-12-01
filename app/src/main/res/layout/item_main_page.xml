@@ -39,7 +39,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:elevation="1dp"
-        android:src="@drawable/img_deco_candle_0"
         app:layout_constraintLeft_toRightOf="@id/sp_item_main_candle_left_first"
         app:layout_constraintRight_toLeftOf="@id/sp_item_main_candle_right_first"
         app:layout_constraintBottom_toTopOf="@id/sp_item_main_candle_right_first"
@@ -52,7 +51,6 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:elevation="1dp"
-        android:src="@drawable/img_deco_candle_0"
         app:layout_constraintLeft_toRightOf="@id/sp_item_main_candle_left_last"
         app:layout_constraintRight_toLeftOf="@id/sp_item_main_candle_right_last"
         app:layout_constraintTop_toBottomOf="@id/sp_item_main_candle_left_last"
@@ -100,7 +98,6 @@
         app:layout_constraintBottom_toTopOf="@id/sp_item_main_cake_bottom"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:src="@drawable/img_deco_cake_1"
         app:layout_constraintVertical_weight="0.7">
     </ImageView>
     <Space
@@ -139,7 +136,6 @@
             android:id="@+id/iv_item_main_back_obj_1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:src="@drawable/img_deco_gift_5"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/sp_item_main_back_1"
             app:layout_constraintRight_toLeftOf="@id/iv_item_main_back_obj_2"
@@ -149,7 +145,6 @@
             android:id="@+id/iv_item_main_back_obj_2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:src="@drawable/img_deco_toy_2"
             app:layout_constraintRight_toLeftOf="@id/iv_item_main_back_obj_3"
             app:layout_constraintLeft_toRightOf="@id/iv_item_main_back_obj_1"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -159,7 +154,6 @@
             android:id="@+id/iv_item_main_back_obj_3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:src="@drawable/img_deco_gift_10"
             app:layout_constraintLeft_toRightOf="@id/iv_item_main_back_obj_2"
             app:layout_constraintRight_toLeftOf="@id/iv_item_main_back_obj_4"
             app:layout_constraintHorizontal_weight="1">
@@ -168,7 +162,6 @@
             android:id="@+id/iv_item_main_back_obj_4"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:src="@drawable/img_deco_toy_7"
             app:layout_constraintLeft_toRightOf="@id/iv_item_main_back_obj_3"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintHorizontal_weight="1">
@@ -202,7 +195,6 @@
             android:id="@+id/iv_item_main_front_obj_1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:src="@drawable/img_deco_toy_1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/iv_item_main_front_obj_2"
@@ -213,7 +205,6 @@
             android:id="@+id/iv_item_main_front_obj_2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:src="@drawable/img_deco_gift_1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_weight="1"
             app:layout_constraintLeft_toRightOf="@id/iv_item_main_front_obj_1"
@@ -223,7 +214,6 @@
             android:id="@+id/iv_item_main_front_obj_3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:src="@drawable/img_deco_toy_3"
             app:layout_constraintLeft_toRightOf="@id/iv_item_main_front_obj_2"
             app:layout_constraintRight_toLeftOf="@id/iv_item_main_front_obj_4"
             app:layout_constraintHorizontal_weight="1">
@@ -233,7 +223,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:paddingLeft="5dp"
-            android:src="@drawable/img_deco_gift_8"
             app:layout_constraintLeft_toRightOf="@id/iv_item_main_front_obj_3"
             app:layout_constraintRight_toLeftOf="@id/sp_item_main_front_1"
             app:layout_constraintBottom_toBottomOf="@id/iv_item_main_front_obj_4"
@@ -271,7 +260,6 @@
             android:id="@+id/iv_item_main_food_back_obj_1"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:src="@drawable/img_deco_drink_10"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/sp_item_main_food_back_inner_bottom"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -290,7 +278,6 @@
             android:id="@+id/iv_item_main_food_back_obj_2"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:src="@drawable/img_deco_food_6"
             app:layout_constraintTop_toBottomOf="@id/sp_item_main_food_back_inner_top"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/iv_item_main_food_back_obj_1"
@@ -301,7 +288,6 @@
             android:id="@+id/iv_item_main_food_back_obj_3"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:src="@drawable/img_deco_food_3"
             app:layout_constraintTop_toBottomOf="@id/sp_item_main_food_back_inner_top"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@id/iv_item_main_food_back_obj_2"
@@ -312,7 +298,6 @@
             android:id="@+id/iv_item_main_food_back_obj_4"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:src="@drawable/img_deco_drink_1"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@id/sp_item_main_food_back_inner_bottom"
             app:layout_constraintLeft_toRightOf="@id/iv_item_main_food_back_obj_3"
@@ -357,7 +342,6 @@
             android:id="@+id/iv_item_main_food_front_obj_1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:src="@drawable/img_deco_food_4"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@id/iv_item_main_food_front_obj_2">
         </ImageView>
@@ -366,7 +350,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:paddingTop="20dp"
-            android:src="@drawable/img_deco_drink_11"
             app:layout_constraintLeft_toRightOf="@id/iv_item_main_food_front_obj_1"
             app:layout_constraintRight_toLeftOf="@id/iv_item_main_food_front_obj_3">
         </ImageView>
@@ -375,7 +358,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:paddingTop="20dp"
-            android:src="@drawable/img_deco_drink_4"
             app:layout_constraintLeft_toRightOf="@id/iv_item_main_food_front_obj_2"
             app:layout_constraintRight_toLeftOf="@id/iv_item_main_food_front_obj_4">
         </ImageView>
@@ -383,7 +365,6 @@
             android:id="@+id/iv_item_main_food_front_obj_4"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:src="@drawable/img_deco_food_5"
             app:layout_constraintLeft_toRightOf="@id/iv_item_main_food_front_obj_3"
             app:layout_constraintRight_toRightOf="parent">
         </ImageView>
