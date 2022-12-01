@@ -73,6 +73,12 @@ class LetterReadFragment(): Fragment(), MessageLikeView {
         Glide.with(MainFragmentManager.baseActivity.applicationContext).load(resp.data!!.member.image_url).into(binding.ivLetterReadProfile)
 
         binding.tvLetterReadContent.text = resp.data!!.content
+
+
+        if (resp.data!!.like) {
+            binding.ivLetterReadHeart.setImageResource(R.drawable.ic_heart_full)
+
+        }
     }
 
     fun initRv() {
@@ -83,13 +89,28 @@ class LetterReadFragment(): Fragment(), MessageLikeView {
 
     fun initListener() {
         binding.ivLetterReadHeart.setOnClickListener {
-            MessageRetrofitService().messageLike(resp.data!!.message_id.toString(), this)
-            binding.ivLetterReadHeart.setImageResource(R.drawable.ic_heart_full)
+            if (!resp.data!!.like) {
+                MessageRetrofitService().messageLike(resp.data!!.message_id.toString(), this)
+                binding.ivLetterReadHeart.setImageResource(R.drawable.ic_heart_full)
+            }
+            else {
+                Toast.makeText(context,"이미 좋아요를 보냈어요!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        binding.tvLetterReadTextTitle.setOnClickListener {
+            LetterReadManager.openTextDetail(resp.data!!.content)
+        }
+        binding.ivLetterReadTextGo.setOnClickListener {
+            LetterReadManager.openTextDetail(resp.data!!.content)
+        }
+        binding.tvLetterReadContent.setOnClickListener {
+            LetterReadManager.openTextDetail(resp.data!!.content)
         }
     }
 
     override fun onMessageLikeSuccess() {
-        Toast.makeText(context,"좋아요!", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context,"좋아요를 보냈어요!", Toast.LENGTH_SHORT).show()
     }
 
     override fun onMessageLikeFailure() {

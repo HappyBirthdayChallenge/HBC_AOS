@@ -71,6 +71,7 @@ class LetterReadObjectFragment(val url: String, val type:Int): Fragment() {
         //0 동영상
         //1 사진
         //2 음성
+        //3 텍스트
         when(type) {
             0 -> {//비디오
                 binding.ivLetterShow.visibility = View.GONE
@@ -82,7 +83,6 @@ class LetterReadObjectFragment(val url: String, val type:Int): Fragment() {
                 binding.clLetterShow.visibility = View.VISIBLE
 
                 binding.vvLetterShow.setVideoPath(url)
-                Log.d("urll", url)
                 binding.vvLetterShow.setMediaController(MediaController(requireContext()))
                 binding.vvLetterShow.requestFocus()
                 binding.vvLetterShow.setOnPreparedListener{mp: MediaPlayer ->
@@ -108,6 +108,10 @@ class LetterReadObjectFragment(val url: String, val type:Int): Fragment() {
 
                 binding.vvLetterShow.visibility = View.GONE
                 player.setDataSource(url)
+            }
+            3 -> {
+                binding.tvLetterShow.visibility = View.VISIBLE
+                binding.tvLetterShow.text = url
             }
             else -> {
                 Glide.with(MainFragmentManager.baseActivity.applicationContext).load(url)
