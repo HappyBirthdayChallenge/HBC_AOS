@@ -34,7 +34,7 @@ object LetterReadManager: GetMessageView {
 
     override fun onGetMessageSuccess(resp: GetMessageSuccess) {
         letterPage.init(resp)
-        senderId = resp.data!!.member.name
+        senderId = resp.data!!.writer.name
         manager.beginTransaction().hide(mainPage).commit()
         manager.beginTransaction().show(letterPage).commit()
     }

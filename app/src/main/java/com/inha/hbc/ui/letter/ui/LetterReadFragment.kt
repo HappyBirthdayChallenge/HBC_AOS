@@ -29,6 +29,7 @@ class LetterReadFragment(): Fragment(), MessageLikeView {
     lateinit var binding: FragmentLetterReadBinding
     lateinit var backPressedCallback: OnBackPressedCallback
     lateinit var resp: GetMessageSuccess
+    var like = false
     var time = 0
     val handler = object : Handler(
         Looper.getMainLooper()) {
@@ -70,16 +71,17 @@ class LetterReadFragment(): Fragment(), MessageLikeView {
     }
 
     fun initView() {
-        binding.tvLetterReadTitle.text = resp.data!!.member.name
-        binding.tvLetterReadSubtitle.text = resp.data!!.member.name + "의 메시지"
+        binding.tvLetterReadTitle.text = resp.data!!.writer.name
+        binding.tvLetterReadSubtitle.text = resp.data!!.writer.name + "의 메시지"
 
-        Glide.with(MainFragmentManager.baseActivity.applicationContext).load(resp.data!!.member.image_url).into(binding.ivLetterReadProfile)
+        Glide.with(MainFragmentManager.baseActivity.applicationContext).load(resp.data!!.writer.image_url).into(binding.ivLetterReadProfile)
 
         binding.tvLetterReadContent.text = resp.data!!.content
 
 
         if (resp.data!!.like) {
             binding.ivLetterReadHeart.setImageResource(R.drawable.ic_heart_full)
+            like = true
         }
     }
 
@@ -91,9 +93,10 @@ class LetterReadFragment(): Fragment(), MessageLikeView {
 
     fun initListener() {
         binding.ivLetterReadHeart.setOnClickListener {
-            if (!resp.data!!.like) {
+            if (!like) {
                 MessageRetrofitService().messageLike(resp.data!!.message_id.toString(), this)
                 binding.ivLetterReadHeart.setImageResource(R.drawable.ic_heart_full)
+                like = true
             }
             else {
                 Toast.makeText(context,"이미 좋아요를 보냈어요!", Toast.LENGTH_SHORT).show()

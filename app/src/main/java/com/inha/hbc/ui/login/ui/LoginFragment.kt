@@ -193,8 +193,8 @@ class LoginFragment(val isBackBirth: Boolean): Fragment(), KakaoLoginView, GetTo
 
     override fun onGetMyInfoSuccess(resp: GetMyInfoSuccess) {
         myInfo = resp
+        GlobalApplication.prefs.setInfo(resp.data!!)
         if (isBirthAvailable(resp.data!!.birth_date)) {
-            GlobalApplication.prefs.setInfo(resp.data!!)
             MessageRetrofitService().roomInfo(GlobalApplication.prefs.getInfo()!!.id.toString(), this)
 
         }

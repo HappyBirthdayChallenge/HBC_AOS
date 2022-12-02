@@ -10,6 +10,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.inha.hbc.data.remote.req.CheckBirthData
 import com.inha.hbc.data.remote.resp.GetMyInfoSuccess
+import com.inha.hbc.data.remote.resp.menu.BirthDate
 import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.databinding.FragmentKakaoBirthBinding
 import com.inha.hbc.ui.assist.cakeSelectionAssist
@@ -86,6 +87,9 @@ class KakaoBirthFragment(val myInfo: GetMyInfoSuccess): Fragment(), CheckBirthVi
     }
 
     override fun onBirthSuccess() {
+        val data = BirthDate(date = binding.npKakaoBirthDay.value,month= binding.npKakaoBirthMonth.value,
+            type= "SOLAR",year= binding.npKakaoBirthYear.value)
+        GlobalApplication.prefs.setBirth(data)
         MessageRetrofitService().roomInfo(GlobalApplication.prefs.getInfo()!!.id.toString(), this)
     }
 

@@ -36,7 +36,7 @@ data class GetMessageData(
     val decoration_type: String,
     val file_uris: List<String>,
     val like: Boolean,
-    val member: Member,
+    val writer: Member,
     val message_id: Int,
     val read: Boolean
 )

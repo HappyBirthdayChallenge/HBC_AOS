@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import com.inha.hbc.data.local.Jwt
 import com.inha.hbc.data.remote.resp.GetMyInfoBirth
 import com.inha.hbc.data.remote.resp.GetMyInfoData
+import com.inha.hbc.data.remote.resp.menu.BirthDate
 
 class PreferenceUtil(context: Context) {
     val prefsName = "prefs"
@@ -78,6 +79,11 @@ class PreferenceUtil(context: Context) {
         prefs.edit().remove(fcmToken).commit()
     }
 
+    fun setBirth(info: BirthDate) {
+        prefs.edit().apply() {
+            putString("birth", "${info.year}!${info.month}!${info.date}!${info.type}").commit()
+        }
+    }
     fun setInfo(info: GetMyInfoData) {
         prefs.edit().apply{
             putString("id", info.id.toString()).commit()
