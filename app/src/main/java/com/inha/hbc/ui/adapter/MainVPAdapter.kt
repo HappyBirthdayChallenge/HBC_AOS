@@ -112,8 +112,22 @@ class MainVPAdapter(var pageData: ArrayList<Int>): RecyclerView.Adapter<MainVPAd
                 else {
                     birthString = "$birth"
                 }
-                binding.ivItemMainCandleFirst.setImageResource(selectionCandle(birthString[0].toString().toInt(), isBirth))
-                binding.ivItemMainCandleLast.setImageResource(selectionCandle(birthString[1].toString().toInt(), isBirth))
+                if (isBirth) {
+                    binding.ivItemMainFireCandleFirst.visibility = View.VISIBLE
+                    binding.ivItemMainFireCandleLast.visibility = View.VISIBLE
+                    binding.ivItemMainFireCandleFirst.setImageResource(selectionCandle(birthString[0].toString().toInt(), isBirth))
+                    binding.ivItemMainFireCandleLast.setImageResource(selectionCandle(birthString[1].toString().toInt(), isBirth))
+                    binding.ivItemMainCandleFirst.visibility = View.GONE
+                    binding.ivItemMainCandleLast.visibility = View.GONE
+                }
+                else {
+                    binding.ivItemMainCandleFirst.visibility = View.VISIBLE
+                    binding.ivItemMainCandleLast.visibility = View.VISIBLE
+                    binding.ivItemMainCandleFirst.setImageResource(selectionCandle(birthString[0].toString().toInt(), isBirth))
+                    binding.ivItemMainCandleLast.setImageResource(selectionCandle(birthString[1].toString().toInt(), isBirth))
+                    binding.ivItemMainFireCandleFirst.visibility = View.GONE
+                    binding.ivItemMainFireCandleLast.visibility = View.GONE
+                }
 
                 binding.clItemMainBackLine.visibility = View.GONE
                 binding.clItemMainFrontLine.visibility = View.GONE
