@@ -1,5 +1,6 @@
 package com.inha.hbc.util.fragmentmanager
 
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.inha.hbc.data.remote.resp.menu.FollowerContent
 import com.inha.hbc.data.remote.resp.menu.Following
@@ -52,6 +53,11 @@ object MenuFragmentManager {
         else {
             manager.beginTransaction().add(id, FriendListFragment(1)).commit()
         }
+    }
+
+    fun closeFriendList(view: Fragment) {
+        manager.beginTransaction().remove(view).commit()
+        manager.beginTransaction().show(menuPage).commit()
     }
 
     fun goPartyRoom(resp: RoomInfoSuccess, info: FollowingContent) {
