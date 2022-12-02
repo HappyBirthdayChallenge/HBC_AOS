@@ -4,20 +4,20 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.inha.hbc.data.remote.resp.menu.Content
+import com.inha.hbc.data.remote.resp.menu.FollowingContent
 import com.inha.hbc.databinding.ItemMenuFriendlistLoadingBinding
-import com.inha.hbc.databinding.ItemMenuListBinding
+import com.inha.hbc.databinding.ItemUserListBinding
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 
-class MenuFriendListRVAdapter(val friendList: ArrayList<Content?>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class MenuFollowingListRVAdapter(val friendList: ArrayList<FollowingContent?>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     interface CstListener{
-        fun onClick(pos: Int, content: Content)
+        fun onClick(pos: Int, followingContent: FollowingContent)
     }
     lateinit var cstListener: CstListener
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return  if (viewType == 0) {
-            val binding = ItemMenuListBinding.inflate(
+            val binding = ItemUserListBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -57,17 +57,18 @@ class MenuFriendListRVAdapter(val friendList: ArrayList<Content?>): RecyclerView
 
 
 
-    class FriendHolder(val binding: ItemMenuListBinding, val data: ArrayList<Content?>, val listener: CstListener): RecyclerView.ViewHolder(binding.root) {
+    class FriendHolder(val binding: ItemUserListBinding, val data: ArrayList<FollowingContent?>, val listener: CstListener): RecyclerView.ViewHolder(binding.root) {
         fun init(pos: Int) {
-            binding.tvItemMenuTitle.text = data[pos]!!.member.name
-            Glide.with(MainFragmentManager.baseActivity.applicationContext).load(data[pos]!!.member.image_url).into(binding.ivItemMenuIcon)
+            binding.tvItemUserListName.text = data[pos]!!.following.name
+            binding.tvItemUserListId.text = data[pos]!!.following.username
+            Glide.with(MainFragmentManager.baseActivity.applicationContext).load(data[pos]!!.following.image_url).into(binding.ivItemUserList)
 
             initListener(pos, data[pos]!!)
         }
 
-        fun initListener(pos: Int, content: Content) {
+        fun initListener(pos: Int, followingContent: FollowingContent) {
             binding.root.setOnClickListener {
-                listener.onClick(pos, content)
+                listener.onClick(pos, followingContent)
             }
         }
 

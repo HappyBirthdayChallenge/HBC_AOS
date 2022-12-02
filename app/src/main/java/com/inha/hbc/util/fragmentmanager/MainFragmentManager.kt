@@ -1,29 +1,15 @@
 package com.inha.hbc.util.fragmentmanager
 
-import android.content.Intent
-import android.net.Uri
 import android.view.View
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.inha.hbc.R
-import com.inha.hbc.data.local.LetterData
 import com.inha.hbc.data.remote.resp.GetMyInfoBirth
 import com.inha.hbc.data.remote.resp.GetMyInfoData
 import com.inha.hbc.data.remote.resp.GetMyInfoSuccess
-import com.inha.hbc.data.remote.resp.menu.Content
-import com.inha.hbc.data.remote.resp.message.GetMessageSuccess
+import com.inha.hbc.data.remote.resp.menu.FollowingContent
 import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
-import com.inha.hbc.ui.adapter.LetterMediaListRVAdapter
 import com.inha.hbc.ui.assist.cakeSelectionAssist
-import com.inha.hbc.ui.letter.ui.*
-import com.inha.hbc.ui.letter.view.CreateMessageView
 import com.inha.hbc.ui.main.ui.MainActivity
 import com.inha.hbc.ui.main.ui.MainFragment
-import com.inha.hbc.ui.main.view.GetMessageView
-import com.inha.hbc.ui.menu.ui.MenuFragment
-import com.inha.hbc.util.network.RetrofitService
-import com.inha.hbc.util.network.message.MessageRetrofitService
-import com.inha.hbc.util.sharedpreference.GlobalApplication
 
 object MainFragmentManager{
     lateinit var manager: FragmentManager
@@ -67,7 +53,7 @@ object MainFragmentManager{
     }
 
 
-    fun refreshPartyRoom(resp: RoomInfoSuccess, content: Content) {
+    fun refreshPartyRoom(resp: RoomInfoSuccess, followingContent: FollowingContent) {
         val arr = resp.data!![0].cake_type.split("E")
         val cakeType = arr[arr.size - 1].toInt()
 
@@ -77,12 +63,12 @@ object MainFragmentManager{
 
         roominfo = resp
         personInfo = GetMyInfoSuccess(1, GetMyInfoData(authorities = listOf(""),
-        birth_date = GetMyInfoBirth(date = content.member.birth_date.date, month = content.member.birth_date.month, year = content.member.birth_date.year, type = content.member.birth_date.type),
-            id = content.member.id,
-            image_url = content.member.image_url,
-            name = content.member.name,
+        birth_date = GetMyInfoBirth(date = followingContent.following.birth_date.date, month = followingContent.following.birth_date.month, year = followingContent.following.birth_date.year, type = followingContent.following.birth_date.type),
+            id = followingContent.following.id,
+            image_url = followingContent.following.image_url,
+            name = followingContent.following.name,
             phone = "",
-            username = content.member.username
+            username = followingContent.following.username
         ), "", "")
 
         mainPage.binding.vpMain.adapter!!.notifyDataSetChanged()

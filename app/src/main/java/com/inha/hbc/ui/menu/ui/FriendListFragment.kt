@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.inha.hbc.databinding.FragmentMenuFriendlistBinding
 import com.inha.hbc.ui.adapter.MenuFriendPageVPAdapter
 
-class FriendListFragment: Fragment() {
+class FriendListFragment(val firstPos: Int): Fragment() {
     lateinit var binding: FragmentMenuFriendlistBinding
 
     override fun onCreateView(
@@ -35,8 +35,12 @@ class FriendListFragment: Fragment() {
    }
 
     fun initView() {
-        val adapter = MenuFriendPageVPAdapter()
+        val adapter = MenuFriendPageVPAdapter(firstPos)
         binding.vpMenuFriendlist.adapter = adapter
+
+
+        binding.vpMenuFriendlist.currentItem = firstPos
+
     }
 
 }

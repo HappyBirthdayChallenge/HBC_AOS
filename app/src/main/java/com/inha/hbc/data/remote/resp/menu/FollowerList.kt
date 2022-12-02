@@ -1,42 +1,40 @@
 package com.inha.hbc.data.remote.resp.menu
 
-import android.os.Parcelable
 import com.inha.hbc.data.remote.resp.Error
-import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonClassDiscriminator
 
 @Serializable
 @JsonClassDiscriminator("type")
-sealed class Friendlist
+sealed class FollowerList
 
 @Serializable
 @SerialName("R")
-data class FriendlistSuccess(
-    val data: PageFront,
+data class FollowerListSuccess(
+    val data: FollowerPageFront,
     val message: String,
     val code: String,
     val status: Int
-): Friendlist()
+)
 
 @Serializable
 @SerialName("E")
-data class FriendlistFailure(
+data class FollowerListFailure(
     var code: String?,
     var errors: Error?,
     var message: String?,
     var status: Int?
-): Friendlist()
-
-@Serializable
-data class PageFront(
-    val page: Page
 )
 
 @Serializable
-data class Page(
-    val content: List<Content>,
+data class FollowerPageFront(
+    val page: FollowerPage
+)
+
+@Serializable
+data class FollowerPage(
+    val content: List<FollowerContent>,
     val empty: Boolean,
     val first: Boolean,
     val last: Boolean,
@@ -50,41 +48,16 @@ data class Page(
 )
 
 @Serializable
-data class Content(
-    val member: Member
+data class FollowerContent(
+    val follow: Boolean,
+    val follower: Follower
 )
 
 @Serializable
-data class Pageable(
-    val offset: Int,
-    val pageNumber: Int,
-    val pageSize: Int,
-    val paged: Boolean,
-    val sort: SortX,
-    val unpaged: Boolean
-)
-
-@Serializable
-data class SortX(
-    val empty: Boolean,
-    val sorted: Boolean,
-    val unsorted: Boolean
-)
-
-@Serializable
-data class Member(
+data class Follower(
     val birth_date: BirthDate,
     val id: Int,
     val image_url: String,
     val name: String,
     val username: String
 )
-
-@Serializable
-@Parcelize
-data class BirthDate(
-    val date: Int,
-    val month: Int,
-    val type: String,
-    val year: Int
-): Parcelable
