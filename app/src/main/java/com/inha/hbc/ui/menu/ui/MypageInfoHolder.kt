@@ -1,11 +1,13 @@
 package com.inha.hbc.ui.menu.ui
 
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.inha.hbc.data.remote.resp.menu.GetProfileSuccess
 import com.inha.hbc.databinding.ItemMyInfoBinding
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import com.inha.hbc.util.fragmentmanager.MenuFragmentManager
+import com.inha.hbc.util.sharedpreference.GlobalApplication
 
 class MypageInfoHolder(val binding: ItemMyInfoBinding, val data: GetProfileSuccess): RecyclerView.ViewHolder(binding.root) {
     fun init() {
@@ -31,6 +33,13 @@ class MypageInfoHolder(val binding: ItemMyInfoBinding, val data: GetProfileSucce
         binding.tvItemMyInfoFollower.text = data.data.followers.toString()
 
         binding.tvItemMyInfoLike.text = data.data.message_likes.toString()
+
+        if (data.data.member.id == GlobalApplication.prefs.getInfo()!!.id) {
+            binding.cvItemMyInfoFollow.visibility = View.GONE
+        }
+        else {
+            binding.cvItemMyInfoFollow.visibility = View.VISIBLE
+        }
     }
 
     fun initListener() {

@@ -28,13 +28,12 @@ object MenuFragmentManager: GetProfileView{
 
     fun start(main: MainFragment) {
         mainPage = main
-        menuPage = MypageFragment()
         MenuRetrofitService().getProfile(GlobalApplication.prefs.getInfo()!!.id.toString(), this)
     }
     override fun onGetProfileSuccess(resp: GetProfileSuccess) {
+        menuPage = MypageFragment(resp)
         manager.beginTransaction().hide(mainPage).commit()
         manager.beginTransaction().add(id, menuPage).commit()
-        menuPage.initView(resp)
     }
 
 

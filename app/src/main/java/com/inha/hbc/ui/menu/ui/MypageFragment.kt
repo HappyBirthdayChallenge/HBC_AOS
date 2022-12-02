@@ -12,7 +12,7 @@ import com.inha.hbc.databinding.FragmentMypageBinding
 import com.inha.hbc.ui.adapter.MypageRVAdapter
 import com.inha.hbc.util.fragmentmanager.MenuFragmentManager
 
-class MypageFragment: Fragment() {
+class MypageFragment(val resp: GetProfileSuccess): Fragment() {
     lateinit var binding: FragmentMypageBinding
     lateinit var adapter: MypageRVAdapter
     lateinit var backPressedCallback: OnBackPressedCallback
@@ -25,13 +25,18 @@ class MypageFragment: Fragment() {
         return binding.root
     }
 
-    fun initView(resp: GetProfileSuccess) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+    }
+
+    fun initView() {
         binding.tvMyId.text = resp.data.member.username
-        initRv(resp)
+        initRv()
         initListener()
     }
 
-    fun initRv(resp: GetProfileSuccess) {
+    fun initRv() {
         adapter = MypageRVAdapter(resp)
         binding.rvMy.adapter = adapter
     }

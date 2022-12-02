@@ -11,8 +11,8 @@ import com.inha.hbc.util.network.menu.MenuRetrofitService
 class MypageListHolder(val binding: ItemMyListBinding, val data: GetProfileSuccess): RecyclerView.ViewHolder(binding.root) {
     lateinit var adapter :MenuMyListVPAdapter
     fun init(pos: Int) {
-        initView()
         initVp(pos)
+        initView()
     }
 
     fun initView() {
