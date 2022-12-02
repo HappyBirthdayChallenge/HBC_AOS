@@ -35,7 +35,7 @@
         app:layout_constraintRight_toLeftOf="@id/iv_item_main_fire_candle_last"
         app:layout_constraintBottom_toTopOf="@id/iv_item_main_fire_candle_last"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_weight="2.75"
+        app:layout_constraintHorizontal_weight="3"
         app:layout_constraintVertical_weight="3.5">
     </Space>
     <ImageView
@@ -70,7 +70,7 @@
         app:layout_constraintLeft_toRightOf="@id/iv_item_main_fire_candle_first"
         app:layout_constraintTop_toBottomOf="@id/iv_item_main_fire_candle_first"
         app:layout_constraintBottom_toBottomOf="@id/iv_item_main_cake"
-        app:layout_constraintHorizontal_weight="2.25"
+        app:layout_constraintHorizontal_weight="2.5"
         app:layout_constraintVertical_weight="3">
     </Space>
     <Space
@@ -107,7 +107,7 @@
         app:layout_constraintRight_toLeftOf="@id/iv_item_main_candle_last"
         app:layout_constraintBottom_toTopOf="@id/iv_item_main_candle_last"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_weight="2.25"
+        app:layout_constraintHorizontal_weight="2.5"
         app:layout_constraintVertical_weight="5">
     </Space>
     <ImageView
@@ -158,6 +158,8 @@
     </Space>
 
 
+
+
     <Space
         android:id="@+id/sp_item_main_cake_top"
         android:layout_width="match_parent"
@@ -184,6 +186,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintVertical_weight="1">
     </Space>
+
+
 
     <Space
         android:id="@+id/sp_item_main_back_top"
