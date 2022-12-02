@@ -24,7 +24,7 @@ class MypageRVAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is MypageListHolder) {
-            holder.init()
+            holder.init(position)
         }
         else (holder as MypageInfoHolder).init()
     }
