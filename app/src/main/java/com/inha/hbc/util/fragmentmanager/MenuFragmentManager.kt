@@ -5,12 +5,16 @@ import androidx.fragment.app.FragmentManager
 import com.inha.hbc.data.remote.resp.menu.FollowerContent
 import com.inha.hbc.data.remote.resp.menu.Following
 import com.inha.hbc.data.remote.resp.menu.FollowingContent
+import com.inha.hbc.data.remote.resp.menu.GetProfileSuccess
 import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.ui.main.ui.MainFragment
 import com.inha.hbc.ui.menu.ui.FriendListFragment
 import com.inha.hbc.ui.menu.ui.MypageFragment
+import com.inha.hbc.ui.menu.view.GetProfileView
+import com.inha.hbc.util.network.menu.MenuRetrofitService
+import com.inha.hbc.util.sharedpreference.GlobalApplication
 
-object MenuFragmentManager {
+object MenuFragmentManager: GetProfileView{
 
     lateinit var manager: FragmentManager
     var id = 0
@@ -25,8 +29,12 @@ object MenuFragmentManager {
     fun start(main: MainFragment) {
         mainPage = main
         menuPage = MypageFragment()
+        MenuRetrofitService().getProfile(GlobalApplication.prefs.getInfo()!!.id.toString(), this)
+    }
+    override fun onGetProfileSuccess(resp: GetProfileSuccess) {
         manager.beginTransaction().hide(mainPage).commit()
         manager.beginTransaction().add(id, menuPage).commit()
+        menuPage.initView(resp)
     }
 
 
@@ -60,10 +68,6 @@ object MenuFragmentManager {
         manager.beginTransaction().show(menuPage).commit()
     }
 
-    fun setFriendFollower(num: Int) {
-
-    }
-
     fun goPartyRoom(resp: RoomInfoSuccess, info: FollowingContent) {
         MainFragmentManager.refreshPartyRoom(resp, info)
     }
@@ -76,6 +80,23 @@ object MenuFragmentManager {
             id = info.follower.id
         ))
         MainFragmentManager.refreshPartyRoom(resp, infoo)
+    }
+
+    fun goPartyRoom(data: GetProfileSuccess) {
+        val resp = RoomInfoSuccess(code = "", data = data.data.rooms, message = "", status = 0)
+        val info = FollowingContent(Following(
+            name = data.data.member.name,
+            id = data.data.member.id,
+            image_url = data.data.member.image_url,
+            username = data.data.member.username,
+            birth_date = data.data.member.birth_date
+        ))
+        MainFragmentManager.refreshPartyRoom(resp, info)
+    }
+
+
+    override fun onGetProfileFailure() {
+        TODO("Not yet implemented")
     }
 
 }

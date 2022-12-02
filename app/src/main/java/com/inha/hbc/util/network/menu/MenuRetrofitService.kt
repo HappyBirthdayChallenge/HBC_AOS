@@ -2,12 +2,10 @@ package com.inha.hbc.util.network.menu
 
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import com.inha.hbc.data.remote.resp.menu.FollowerList
-import com.inha.hbc.data.remote.resp.menu.FollowerListSuccess
-import com.inha.hbc.data.remote.resp.menu.FollowingList
-import com.inha.hbc.data.remote.resp.menu.FollowingListSuccess
+import com.inha.hbc.data.remote.resp.menu.*
 import com.inha.hbc.ui.menu.view.FollowerListView
 import com.inha.hbc.ui.menu.view.FollowingListView
+import com.inha.hbc.ui.menu.view.GetProfileView
 import com.inha.hbc.util.network.NetworkModule
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,6 +24,7 @@ class MenuRetrofitService {
 
     lateinit var followingListView: FollowingListView
     lateinit var followerListView: FollowerListView
+    lateinit var getProfileView: GetProfileView
 
     fun getFollowingList(page: String, size: String, view: FollowingListView) {
         followingListView = view
@@ -78,6 +77,34 @@ class MenuRetrofitService {
             override fun onFailure(call: Call<List<FollowerList>>, t: Throwable) {
                 TODO("Not yet implemented")
             }
+        })
+    }
+
+    fun getProfile(memberId: String, view: GetProfileView) {
+        getProfileView = view
+        callRetro().getProfile(memberId).enqueue(object: Callback<List<GetProfile>>{
+            override fun onResponse(
+                call: Call<List<GetProfile>>,
+                response: Response<List<GetProfile>>
+            ) {
+                if (response.isSuccessful) {
+                    val resp = response.body()!![0] as GetProfileSuccess
+                    if (resp.code == "R-M022") {
+                        getProfileView.onGetProfileSuccess(resp)
+                    }
+                    else {
+                        getProfileView.onGetProfileFailure()
+                    }
+                }
+                else {
+                    getProfileView.onGetProfileFailure()
+                }
+            }
+
+            override fun onFailure(call: Call<List<GetProfile>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
         })
     }
 }

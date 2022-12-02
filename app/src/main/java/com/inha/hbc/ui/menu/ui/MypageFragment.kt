@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
+import com.inha.hbc.data.remote.resp.menu.GetProfileSuccess
 import com.inha.hbc.databinding.FragmentMypageBinding
 import com.inha.hbc.ui.adapter.MypageRVAdapter
 import com.inha.hbc.util.fragmentmanager.MenuFragmentManager
@@ -24,14 +25,14 @@ class MypageFragment: Fragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        initRv()
+    fun initView(resp: GetProfileSuccess) {
+        binding.tvMyId.text = resp.data.member.username
+        initRv(resp)
         initListener()
     }
 
-    fun initRv() {
-        adapter = MypageRVAdapter()
+    fun initRv(resp: GetProfileSuccess) {
+        adapter = MypageRVAdapter(resp)
         binding.rvMy.adapter = adapter
     }
 
