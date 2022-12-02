@@ -42,15 +42,31 @@ class FriendListFragment(val firstPos: Int): Fragment() {
        }
    }
 
+
     fun initView() {
+        adapter.setNum = object :MenuFriendPageVPAdapter.SetFriendPageVp {
+            override fun setNum(pos: Int, num: Int) {
+                binding.tlMenuFriendlist.getTabAt(pos)!!.text = if (pos == 0) {
+                    "팔로잉 ${num}명"
+                }
+                else {
+                    "팔로워 ${num}명"
+                }
+            }
+
+            override fun setCurrentPage() {
+                binding.vpMenuFriendlist.currentItem = firstPos
+            }
+
+        }
         binding.vpMenuFriendlist.adapter = adapter
+        binding.vpMenuFriendlist.offscreenPageLimit = 1
 
 
         val titles = listOf("팔로잉", "팔로워")
         TabLayoutMediator(binding.tlMenuFriendlist, binding.vpMenuFriendlist
         ) { tab, position -> tab.text = titles[position] }.attach()
 
-        binding.vpMenuFriendlist.currentItem = firstPos
     }
 
     override fun onAttach(context: Context) {

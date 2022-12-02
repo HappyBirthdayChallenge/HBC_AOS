@@ -20,8 +20,14 @@ import com.inha.hbc.util.network.message.MessageRetrofitService
 
 class MenuFriendPageVPAdapter(): RecyclerView.Adapter<MenuFriendPageVPAdapter.FollowingPageHolder>() {
 
+    interface SetFriendPageVp {
+        fun setNum(pos: Int, num: Int)
+        fun setCurrentPage()
+    }
+
+    lateinit var setNum: SetFriendPageVp
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowingPageHolder {
-        return FollowingPageHolder(ItemMenuFriendpageBinding.inflate(LayoutInflater.from(parent.context), parent,false))
+        return FollowingPageHolder(ItemMenuFriendpageBinding.inflate(LayoutInflater.from(parent.context), parent,false), setNum)
     }
 
     override fun onBindViewHolder(holder: FollowingPageHolder, position: Int) {
@@ -30,7 +36,7 @@ class MenuFriendPageVPAdapter(): RecyclerView.Adapter<MenuFriendPageVPAdapter.Fo
 
     override fun getItemCount(): Int = 2
 
-    class FollowingPageHolder(val binding: ItemMenuFriendpageBinding): RecyclerView.ViewHolder(binding.root),
+    class FollowingPageHolder(val binding: ItemMenuFriendpageBinding, val setFriendPageVp: SetFriendPageVp): RecyclerView.ViewHolder(binding.root),
         FollowingListView, FollowerListView, RoomInfoView {
         var followingList =  ArrayList<FollowingContent?>()
         var followerList =  ArrayList<FollowerContent?>()
@@ -56,6 +62,7 @@ class MenuFriendPageVPAdapter(): RecyclerView.Adapter<MenuFriendPageVPAdapter.Fo
                 initFollowerView()
                 initFollowerListener()
             }
+            setFriendPageVp.setCurrentPage()
         }
 
         fun initFollowerListener() {
@@ -143,6 +150,7 @@ class MenuFriendPageVPAdapter(): RecyclerView.Adapter<MenuFriendPageVPAdapter.Fo
             followingAdapter.notifyItemRangeInserted(listSize - 1, 10)
             listSize += 10
             initV = false
+            setFriendPageVp.setNum(0, resp.data.page.totalElements)
         }
 
         override fun onFollowingListFailure() {
@@ -174,6 +182,7 @@ class MenuFriendPageVPAdapter(): RecyclerView.Adapter<MenuFriendPageVPAdapter.Fo
             followerAdapter.notifyItemRangeInserted(listSize - 1, 10)
             listSize += 10
             initV = false
+            setFriendPageVp.setNum(1, resp.data.page.totalElements)
         }
 
         override fun onFollowerListFailure() {

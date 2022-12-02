@@ -60,6 +60,10 @@ object MenuFragmentManager {
         manager.beginTransaction().show(menuPage).commit()
     }
 
+    fun setFriendFollower(num: Int) {
+
+    }
+
     fun goPartyRoom(resp: RoomInfoSuccess, info: FollowingContent) {
         MainFragmentManager.refreshPartyRoom(resp, info)
     }
