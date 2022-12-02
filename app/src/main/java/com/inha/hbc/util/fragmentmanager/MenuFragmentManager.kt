@@ -6,13 +6,14 @@ import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.ui.main.ui.MainFragment
 import com.inha.hbc.ui.menu.ui.FriendListFragment
 import com.inha.hbc.ui.menu.ui.MenuFragment
+import com.inha.hbc.ui.menu.ui.MypageFragment
 
 object MenuFragmentManager {
 
     lateinit var manager: FragmentManager
     var id = 0
     lateinit var mainPage: MainFragment
-    lateinit var menuPage: MenuFragment
+    lateinit var menuPage: MypageFragment
 
     fun init(manager: FragmentManager, containerId: Int) {
         this.manager = manager
@@ -21,7 +22,7 @@ object MenuFragmentManager {
 
     fun start(main: MainFragment) {
         mainPage = main
-        menuPage = MenuFragment()
+        menuPage = MypageFragment()
         manager.beginTransaction().hide(mainPage).commit()
         manager.beginTransaction().add(id, menuPage).commit()
     }

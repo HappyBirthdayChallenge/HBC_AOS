@@ -10,15 +10,15 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/vp_item_my_list"
         app:tabTextColor="@color/black"
-        app:tabSelectedTextColor="@color/main_color">
+        app:tabSelectedTextColor="@color/main_color"
+        app:tabIndicatorColor="@color/main_color"
+        android:layout_marginHorizontal="50dp">
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/ti_item_my_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="파티룸">
         </com.google.android.material.tabs.TabItem>
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/ti_item_message_list"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="메시지">
