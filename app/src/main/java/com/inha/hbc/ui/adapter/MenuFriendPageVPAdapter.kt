@@ -18,32 +18,34 @@ import com.inha.hbc.util.fragmentmanager.MenuFragmentManager
 import com.inha.hbc.util.network.menu.MenuRetrofitService
 import com.inha.hbc.util.network.message.MessageRetrofitService
 
-class MenuFriendPageVPAdapter(val pos: Int): RecyclerView.Adapter<MenuFriendPageVPAdapter.FollowingPageHolder>() {
+class MenuFriendPageVPAdapter(): RecyclerView.Adapter<MenuFriendPageVPAdapter.FollowingPageHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FollowingPageHolder {
-        return FollowingPageHolder(ItemMenuFriendpageBinding.inflate(LayoutInflater.from(parent.context), parent,false), pos)
+        return FollowingPageHolder(ItemMenuFriendpageBinding.inflate(LayoutInflater.from(parent.context), parent,false))
     }
 
     override fun onBindViewHolder(holder: FollowingPageHolder, position: Int) {
-        holder.init()
+        holder.init(position)
     }
 
     override fun getItemCount(): Int = 2
 
-    class FollowingPageHolder(val binding: ItemMenuFriendpageBinding, val pos: Int): RecyclerView.ViewHolder(binding.root),
+    class FollowingPageHolder(val binding: ItemMenuFriendpageBinding): RecyclerView.ViewHolder(binding.root),
         FollowingListView, FollowerListView, RoomInfoView {
         var followingList =  ArrayList<FollowingContent?>()
         var followerList =  ArrayList<FollowerContent?>()
         var listSize = 0
         var page = 0
         var initV = true
+        var pos = 0
         lateinit var selectedFollowingInfo: FollowingContent
         lateinit var selectedFollowerInfo: FollowerContent
         lateinit var followingAdapter: MenuFollowingListRVAdapter
         lateinit var followerAdapter: MenuFollowerListRVAdapter
 
 
-        fun init() {
+        fun init(pos: Int) {
+            this.pos = pos
             if (pos == 0) {
                 initFollowingRv()
                 initFollowingView()
@@ -119,7 +121,7 @@ class MenuFriendPageVPAdapter(val pos: Int): RecyclerView.Adapter<MenuFriendPage
             followerList.add(null)
             listSize++
             followerAdapter.notifyItemInserted(listSize - 1)
-            MenuRetrofitService().getFollowingList((page+1).toString(), 10.toString(), this)
+            MenuRetrofitService().getFollowerList((page+1).toString(), 10.toString(), this)
         }
 
         fun initFollowingView() {

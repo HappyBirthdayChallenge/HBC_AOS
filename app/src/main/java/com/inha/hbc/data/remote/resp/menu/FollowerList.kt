@@ -16,7 +16,7 @@ data class FollowerListSuccess(
     val message: String,
     val code: String,
     val status: Int
-)
+): FollowerList()
 
 @Serializable
 @SerialName("E")
@@ -25,7 +25,7 @@ data class FollowerListFailure(
     var errors: Error?,
     var message: String?,
     var status: Int?
-)
+): FollowerList()
 
 @Serializable
 data class FollowerPageFront(

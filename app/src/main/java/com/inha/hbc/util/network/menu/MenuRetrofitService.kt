@@ -63,7 +63,7 @@ class MenuRetrofitService {
             ) {
                 if (response.isSuccessful) {
                     val resp = response.body()!![0] as FollowerListSuccess
-                    if (resp.code == "R-M014") {
+                    if (resp.code == "R-M020") {
                         followerListView.onFollowerListSuccess(resp)
                     }
                     else {
