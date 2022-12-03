@@ -223,8 +223,14 @@ class LetterBaseFragment: Fragment(), UploadView, UploadMessageView {
         }
 
         binding.tvLetterBaseSend.setOnClickListener {
-            binding.tvLetterBaseBackground.visibility = View.VISIBLE
-            binding.clLetterBase.visibility = View.VISIBLE
+            if (LetterFragmentManager.letterFragment.binding.etLetter.text.toString().length >= 2 &&
+                LetterFragmentManager.letterFragment.binding.etLetter.text.toString().length <= 3000) {
+                binding.tvLetterBaseBackground.visibility = View.VISIBLE
+                binding.clLetterBase.visibility = View.VISIBLE
+            }
+            else {
+                Toast.makeText(context, "메시지는 2~3000자로 작성해주세요!", Toast.LENGTH_SHORT).show()
+            }
         }
 
         binding.tlLetterBase.addOnTabSelectedListener(object: OnTabSelectedListener{
