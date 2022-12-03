@@ -344,7 +344,7 @@ class LetterBaseFragment: Fragment(), UploadView, UploadMessageView {
 
 
     fun openList() {
-        if (LetterFragmentManager.fileInfo.size > 10) {
+        if (LetterFragmentManager.fileInfo.size >= 10) {
             Toast.makeText(requireContext(), "최대 첨부개수 10개를 초과했어요!", Toast.LENGTH_SHORT).show()
             return
         }

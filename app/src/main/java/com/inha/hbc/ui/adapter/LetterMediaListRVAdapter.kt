@@ -32,10 +32,15 @@ class LetterMediaListRVAdapter(): RecyclerView.Adapter<LetterMediaListRVAdapter.
         fun init(pos: Int) {
             initListener(pos)
             if(pos == 0) {
+                binding.lavItemLetter.visibility = View.GONE
+                binding.ivItemLetterDel.visibility = View.GONE
+                binding.ivItemLetter.visibility = View.GONE
                 binding.tvItemLetterTitle.visibility = View.VISIBLE
                 binding.ivItemLetterAttach.visibility = View.VISIBLE
             }
             else {
+                binding.tvItemLetterTitle.visibility = View.GONE
+                binding.ivItemLetterAttach.visibility = View.GONE
                 if (!LetterFragmentManager.fileInfo[pos - 1].success) {
                     binding.lavItemLetter.setAnimation("letter_file_loading.json")
                     binding.lavItemLetter.visibility = View.VISIBLE
