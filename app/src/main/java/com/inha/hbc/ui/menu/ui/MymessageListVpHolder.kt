@@ -3,14 +3,15 @@ package com.inha.hbc.ui.menu.ui
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.flexbox.AlignItems
+import com.google.android.flexbox.FlexboxLayoutManager
 import com.inha.hbc.data.remote.resp.menu.*
 import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.databinding.ItemMyListVpBinding
-import com.inha.hbc.ui.adapter.MenuFollowerListRVAdapter
-import com.inha.hbc.ui.adapter.MenuFollowingListRVAdapter
 import com.inha.hbc.ui.adapter.MenuMymessageRVAdapter
 import com.inha.hbc.ui.main.view.RoomInfoView
 import com.inha.hbc.ui.menu.view.GetMymessageView
+import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import com.inha.hbc.util.fragmentmanager.MenuFragmentManager
 import com.inha.hbc.util.network.menu.MenuRetrofitService
 import com.inha.hbc.util.network.message.MessageRetrofitService
@@ -22,27 +23,25 @@ class MymessageListVpHolder(val binding: ItemMyListVpBinding, data: GetProfileSu
     var listSize = 0
     var page = 0
     var initV = true
-    var pos = 0
 
     fun init() {
-        this.pos = pos
         initRv()
-        initView()
         initListener()
-        }
+        initView()
+    }
 
-        fun initListener() {
-            binding.rvItemMyListVp.addOnScrollListener(object: RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
+    fun initListener() {
+        binding.rvItemMyListVp.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
 
-                    val lastitem = (binding.rvItemMyListVp.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
-                    val itemCount =  listSize - 1
-                    if (lastitem == itemCount && !initV) {
-                        dataArr.add(null)
-                        listSize++
-                        adapter.notifyItemInserted(listSize - 1)
-                        MenuRetrofitService().getMymessage((page+1).toString(), 10.toString(), this@MymessageListVpHolder)
+                val lastitem = (binding.rvItemMyListVp.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()
+                val itemCount =  listSize - 1
+                if (lastitem == itemCount && !initV) {
+                    dataArr.add(null)
+                    listSize++
+                    adapter.notifyItemInserted(listSize - 1)
+                    MenuRetrofitService().getMymessage((page+1).toString(), 10.toString(), this@MymessageListVpHolder)
 
                     }
                 }
@@ -57,9 +56,12 @@ class MymessageListVpHolder(val binding: ItemMyListVpBinding, data: GetProfileSu
                     selectedInfo = dataArr[pos]!!
                     MessageRetrofitService().roomInfo(dataArr[pos]!!.room_owner.id.toString(), this@MymessageListVpHolder)
                 }
-
             }
             binding.rvItemMyListVp.adapter= adapter
+
+            val manager = LinearLayoutManager(MainFragmentManager.baseActivity.applicationContext)
+            manager.orientation = LinearLayoutManager.VERTICAL
+            binding.rvItemMyListVp.layoutManager = manager
         }
 
 
