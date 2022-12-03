@@ -113,27 +113,35 @@ class LetterRecordFragment: Fragment(), UploadView {
     fun initTimer() {
         timer = timer(period = 1000) {
             if (state == RecordingState.PAUSE_RECORDING ||
-                    state == RecordingState.BEFORE_RECORDING) {
+                    state == RecordingState.BEFORE_RECORDING ||
+                    state == RecordingState.AFTER_RESET) {
                 while(true) {
                     if (state == RecordingState.ON_RECORDING) {
                         break
                     }
-1                }
+                    if (state == RecordingState.AFTER_RECORDING) {
+                        while (true) {
+                            if (state == RecordingState.AFTER_RESET) {
+
+                                time = 0
+                                activity?.runOnUiThread {
+                                    binding.tvLetterRecordTime.text = "00:00"
+                                }
+                                break
+                            }
+                        }
+                    }
+                }
                 return@timer
             }
             if (state == RecordingState.AFTER_RECORDING) {
-                while(true) {
+                while (true) {
                     if (state == RecordingState.AFTER_RESET) {
 
                         time = 0
                         activity?.runOnUiThread {
                             binding.tvLetterRecordTime.text = "00:00"
                         }
-                        break
-                    }
-                }
-                while(true) {
-                    if (state == RecordingState.ON_RECORDING) {
                         break
                     }
                 }
