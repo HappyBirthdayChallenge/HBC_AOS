@@ -5,6 +5,7 @@ import com.google.gson.JsonParser
 import com.inha.hbc.data.remote.resp.menu.*
 import com.inha.hbc.ui.menu.view.FollowerListView
 import com.inha.hbc.ui.menu.view.FollowingListView
+import com.inha.hbc.ui.menu.view.GetMymessageView
 import com.inha.hbc.ui.menu.view.GetProfileView
 import com.inha.hbc.util.network.NetworkModule
 import retrofit2.Call
@@ -25,6 +26,7 @@ class MenuRetrofitService {
     lateinit var followingListView: FollowingListView
     lateinit var followerListView: FollowerListView
     lateinit var getProfileView: GetProfileView
+    lateinit var getMymessageView: GetMymessageView
 
     fun getFollowingList(page: String, size: String, view: FollowingListView) {
         followingListView = view
@@ -102,6 +104,34 @@ class MenuRetrofitService {
             }
 
             override fun onFailure(call: Call<List<GetProfile>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
+    fun getMymessage(page: String, size: String, view: GetMymessageView) {
+        getMymessageView = view
+        callRetro().getMymessage(page, size).enqueue(object: Callback<List<GetMymessage>> {
+            override fun onResponse(
+                call: Call<List<GetMymessage>>,
+                response: Response<List<GetMymessage>>
+            ) {
+                if (response.isSuccessful) {
+                    val resp = response.body()!![0] as GetMymessageSuccess
+                    if (resp.code == "R-RM007") {
+                        getMymessageView.onGetMymessageSuccess(resp)
+                    }
+                    else {
+                        getMymessageView.onGetMymessageFailure()
+                    }
+                }
+                else {
+                    getMymessageView.onGetMymessageFailure()
+                }
+            }
+
+            override fun onFailure(call: Call<List<GetMymessage>>, t: Throwable) {
                 TODO("Not yet implemented")
             }
 

@@ -23,7 +23,7 @@ class MenuMyListVPAdapter(val data: GetProfileSuccess): RecyclerView.Adapter<Rec
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is MypageListHolder) {
+        if (holder is MypageListVpHolder) {
             holder.init(position)
         }
         else {

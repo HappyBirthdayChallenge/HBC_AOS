@@ -2,10 +2,7 @@ package com.inha.hbc.util.fragmentmanager
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.inha.hbc.data.remote.resp.menu.FollowerContent
-import com.inha.hbc.data.remote.resp.menu.Following
-import com.inha.hbc.data.remote.resp.menu.FollowingContent
-import com.inha.hbc.data.remote.resp.menu.GetProfileSuccess
+import com.inha.hbc.data.remote.resp.menu.*
 import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.ui.main.ui.MainFragment
 import com.inha.hbc.ui.menu.ui.FriendListFragment
@@ -89,6 +86,17 @@ object MenuFragmentManager: GetProfileView{
             image_url = data.data.member.image_url,
             username = data.data.member.username,
             birth_date = data.data.member.birth_date
+        ))
+        MainFragmentManager.refreshPartyRoom(resp, info)
+    }
+
+    fun goPartyRoom(resp: RoomInfoSuccess, data: Content) {
+        val info = FollowingContent(Following(
+            name = data.room_owner.name,
+            id = data.room_owner.id,
+            image_url = data.room_owner.image_url,
+            username = data.room_owner.username,
+            birth_date = data.room_owner.birth_date
         ))
         MainFragmentManager.refreshPartyRoom(resp, info)
     }
