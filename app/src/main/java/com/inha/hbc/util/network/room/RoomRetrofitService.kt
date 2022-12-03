@@ -59,7 +59,7 @@ class RoomRetrofitService {
 
     fun getReceiveMessage(page: String, roomId: String, size: String, view: GetReceiveMessageView) {
         getReceiveMessageView = view
-        callRetro().GetReceiveMessage(roomId,page, size).enqueue(object: Callback<List<GetReceiveMessage>> {
+        callRetro().GetReceiveMessage(roomId, page, size).enqueue(object: Callback<List<GetReceiveMessage>> {
             override fun onResponse(
                 call: Call<List<GetReceiveMessage>>,
                 response: Response<List<GetReceiveMessage>>

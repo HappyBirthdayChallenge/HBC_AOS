@@ -42,7 +42,7 @@ class MainMymessageRVAdapter(var dataArr: List<ReceiveMessageContent?>):Recycler
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return dataArr.size
     }
 
     class ReceiveMessageHolder(val binding: ItemMenuMessageBinding, val setReceiveMessage: SetReceiveMessage): RecyclerView.ViewHolder(binding.root) {
