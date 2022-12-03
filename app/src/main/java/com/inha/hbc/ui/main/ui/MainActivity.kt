@@ -3,6 +3,7 @@ package com.inha.hbc.ui.main.ui
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.ViewTreeObserver
 import androidx.appcompat.app.AppCompatActivity
 import com.inha.hbc.data.remote.resp.GetMyInfoSuccess
 import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
@@ -13,11 +14,13 @@ import java.util.ArrayList
 
 
 class MainActivity: AppCompatActivity() {
-    private lateinit var binding: ActivityMainBinding
+    lateinit var binding: ActivityMainBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
 
         Log.d("okhttpTok", GlobalApplication.prefs.getRealAccessJwt().toString())
         val ext = intent.extras

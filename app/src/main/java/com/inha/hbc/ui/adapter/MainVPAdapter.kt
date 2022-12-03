@@ -1,8 +1,10 @@
 package com.inha.hbc.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -37,10 +39,13 @@ class MainVPAdapter(var pageData: ArrayList<Int>): RecyclerView.Adapter<MainVPAd
 
     class PageHolder(val binding: ItemMainPageBinding, val pageData: ArrayList<Int>): RecyclerView.ViewHolder(binding.root), SearchDecoView {
 
+
+
         val bgOptions = RequestOptions().fitCenter()
             .skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE)
 
         var pos = 0
+
 
         fun init(pos: Int) {
             this.pos = pos

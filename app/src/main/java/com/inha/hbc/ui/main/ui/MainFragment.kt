@@ -1,12 +1,17 @@
 package com.inha.hbc.ui.main.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
+import android.view.ViewTreeObserver.OnGlobalLayoutListener
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2.OFFSCREEN_PAGE_LIMIT_DEFAULT
 import androidx.viewpager2.widget.ViewPager2.OffscreenPageLimit
+import com.bumptech.glide.Glide
 import com.inha.hbc.R
 import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.data.remote.resp.message.SearchDecoSuccess
@@ -24,6 +29,7 @@ class MainFragment: Fragment(), SearchDecoView {
     lateinit var binding : FragmentMainBinding
     var pageData = ArrayList<Int>()//0 왼쪽 1 가운데 2 내용 3 오른쪽
     var where = "mine"
+    var loadComplete = false
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,7 +42,16 @@ class MainFragment: Fragment(), SearchDecoView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        binding.vpMain.viewTreeObserver.addOnGlobalLayoutListener (object : OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                if (binding.tvMainTitle.text != "someone name" && loadComplete) {
+                    MainFragmentManager.baseActivity.binding.lavMainActivityLoading.visibility = View.GONE
+                    loadComplete = false
+                    binding.vpMain
+                        .viewTreeObserver.removeOnGlobalLayoutListener(this)
+                }
+            }
+        })
         initView()
         initListener()
     }
@@ -90,9 +105,14 @@ class MainFragment: Fragment(), SearchDecoView {
         binding.vpMain.currentItem = 1
 
 
+        Glide.with(MainFragmentManager.baseActivity.applicationContext).load(GlobalApplication.prefs.getInfo()!!.image_url).into(binding.ivMainProfileMenu)
+
+
         binding.tvMainTitle.text = MainFragmentManager.personInfo.data!!.username
 
         binding.lavMainLoading.visibility = View.GONE
+        loadComplete = true
+
     }
 
     override fun onSearchDecoFailure() {

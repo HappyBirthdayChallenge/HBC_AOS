@@ -13,4 +13,14 @@
         app:layout_constraintLeft_toLeftOf="parent">
     </androidx.fragment.app.FragmentContainerView>
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lav_main_activity_loading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:lottie_fileName="login_loading.json"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:elevation="1dp"
+        android:background="@color/white">
+    </com.airbnb.lottie.LottieAnimationView>
 </androidx.constraintlayout.widget.ConstraintLayout>
