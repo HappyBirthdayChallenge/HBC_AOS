@@ -76,7 +76,7 @@ class MainFragment: Fragment(), SearchDecoView {
             }
         }
         binding.ivMainNotify.setOnClickListener {
-            MainFragmentManager.
+            MainFragmentManager.transToNotify()
         }
 
         binding.tvMainTitle.setOnClickListener {
