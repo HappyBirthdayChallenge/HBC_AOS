@@ -32,8 +32,8 @@ class LetterShowFragment(val pos: Int): Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initListener()
         initView()
+        initListener()
     }
 
     fun initView() {
@@ -74,6 +74,10 @@ class LetterShowFragment(val pos: Int): Fragment() {
                 binding.lavLetterShowRecord.visibility = View.VISIBLE
 
                 binding.vvLetterShow.visibility = View.GONE
+
+                player = MediaPlayer()
+                player.setDataSource(LetterFragmentManager.fileInfo[pos].path)
+                player.prepare()
             }
             else -> {
                 binding.ivLetterShow.setImageURI(uri)
@@ -95,22 +99,33 @@ class LetterShowFragment(val pos: Int): Fragment() {
             }
         }
         binding.ivLetterShowReset.setOnClickListener {
-
+            stopPlayer()
+        }
+        player.setOnCompletionListener {
+            stopPlayer()
         }
     }
 
+    fun stopPlayer() {
+        player.stop()
+        binding.lavLetterShowRecord.pauseAnimation()
+        binding.ivLetterShowPlay.setImageResource(R.drawable.ic_letter_record_play)
+        playing = false
+        player.prepare()
+    }
+
     fun startPlayer() {
-        player = MediaPlayer()
-        player.setDataSource(MainFragmentManager.baseActivity.baseContext, LetterFragmentManager.fileInfo[pos].uri)
         player.start()
         playing = true
         binding.ivLetterShowPlay.setImageResource(R.drawable.ic_letter_record_pause)
+        binding.lavLetterShowRecord.playAnimation()
     }
 
     fun pausePlayer() {
         player.pause()
         playing = false
         binding.ivLetterShowPlay.setImageResource(R.drawable.ic_letter_record_play)
+        binding.lavLetterShowRecord.pauseAnimation()
 
     }
 
