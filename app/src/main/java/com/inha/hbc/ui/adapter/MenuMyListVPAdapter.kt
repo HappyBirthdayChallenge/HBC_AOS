@@ -10,6 +10,7 @@ import com.inha.hbc.databinding.ItemMyListVpBinding
 import com.inha.hbc.ui.menu.ui.MymessageListVpHolder
 import com.inha.hbc.ui.menu.ui.MypageListHolder
 import com.inha.hbc.ui.menu.ui.MypageListVpHolder
+import com.inha.hbc.util.sharedpreference.GlobalApplication
 
 class MenuMyListVPAdapter(val data: GetProfileSuccess): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -35,5 +36,12 @@ class MenuMyListVPAdapter(val data: GetProfileSuccess): RecyclerView.Adapter<Rec
         return position
     }
 
-    override fun getItemCount(): Int = 2
+    override fun getItemCount(): Int {
+        return if (data.data.member.id != GlobalApplication.prefs.getInfo()!!.id) {
+            1
+        }
+        else {
+            2
+        }
+    }
 }

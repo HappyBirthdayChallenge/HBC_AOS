@@ -3,8 +3,6 @@ package com.inha.hbc.ui.menu.ui
 import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.flexbox.AlignItems
-import com.google.android.flexbox.FlexboxLayoutManager
 import com.inha.hbc.data.remote.resp.menu.*
 import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.databinding.ItemMyListVpBinding
