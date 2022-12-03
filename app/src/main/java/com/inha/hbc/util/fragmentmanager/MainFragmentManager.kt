@@ -1,6 +1,7 @@
 package com.inha.hbc.util.fragmentmanager
 
 import android.view.View
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.inha.hbc.data.remote.resp.GetMyInfoBirth
 import com.inha.hbc.data.remote.resp.GetMyInfoData
@@ -87,6 +88,11 @@ object MainFragmentManager{
     fun transToMessageList() {
         manager.beginTransaction().add(id, MainMymessageFragment()).commit()
         manager.beginTransaction().hide(mainPage).commit()
+    }
+
+    fun closeMessageList(fragment: Fragment) {
+        manager.beginTransaction().remove(fragment).commit()
+        manager.beginTransaction().show(mainPage).commit()
     }
 
 }

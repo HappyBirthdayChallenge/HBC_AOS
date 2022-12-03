@@ -1,9 +1,11 @@
 package com.inha.hbc.ui.main.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,6 +18,7 @@ import com.inha.hbc.databinding.FragmentMainMymessageBinding
 import com.inha.hbc.ui.adapter.MainMymessageRVAdapter
 import com.inha.hbc.ui.adapter.MenuMymessageRVAdapter
 import com.inha.hbc.ui.main.view.GetReceiveMessageView
+import com.inha.hbc.util.fragmentmanager.LetterFragmentManager
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import com.inha.hbc.util.fragmentmanager.MenuFragmentManager
 import com.inha.hbc.util.network.menu.MenuRetrofitService
@@ -24,6 +27,7 @@ import com.inha.hbc.util.network.room.RoomRetrofitService
 import com.inha.hbc.util.sharedpreference.GlobalApplication
 
 class MainMymessageFragment: Fragment(), GetReceiveMessageView {
+    lateinit var callback: OnBackPressedCallback
     lateinit var binding: FragmentMainMymessageBinding
     lateinit var adapter: MainMymessageRVAdapter
     lateinit var selectedInfo: ReceiveMessageContent
@@ -63,6 +67,10 @@ class MainMymessageFragment: Fragment(), GetReceiveMessageView {
                 }
             }
         })
+
+        binding.ivMainMymessageBack.setOnClickListener {
+            MainFragmentManager.closeMessageList(this)
+        }
     }
 
 
@@ -98,5 +106,21 @@ class MainMymessageFragment: Fragment(), GetReceiveMessageView {
 
     override fun onGetReceiveMessageFailure() {
         TODO("Not yet implemented")
+    }
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                MainFragmentManager.closeMessageList(this@MainMymessageFragment)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 }
