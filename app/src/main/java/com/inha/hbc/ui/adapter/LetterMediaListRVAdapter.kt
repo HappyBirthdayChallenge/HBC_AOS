@@ -48,6 +48,7 @@ class LetterMediaListRVAdapter(): RecyclerView.Adapter<LetterMediaListRVAdapter.
                 else {
                     binding.lavItemLetter.visibility = View.GONE
                     binding.ivItemLetterDel.visibility = View.VISIBLE
+                    binding.ivItemLetter.visibility = View.VISIBLE
                 }
                 val uri = LetterFragmentManager.fileInfo[pos - 1].uri
                 when(LetterFragmentManager.fileInfo[pos - 1].type) { // 0 사진 1 동영상 2 음성
