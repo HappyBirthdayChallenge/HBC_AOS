@@ -25,7 +25,6 @@ import com.inha.hbc.databinding.FragmentLetterRecordBinding
 import com.inha.hbc.ui.letter.view.UploadView
 import com.inha.hbc.util.fragmentmanager.LetterFragmentManager
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
-import com.inha.hbc.util.network.message.MessageRetrofitService
 import java.io.File
 import java.util.Timer
 import kotlin.concurrent.timer
@@ -103,8 +102,8 @@ class LetterRecordFragment: Fragment(), UploadView {
         binding.lavLetterRecordState.repeatCount = LottieDrawable.INFINITE
     }
 
-    fun pausePlay() {
-        player.release()
+    fun stopPlay() {
+        player.reset()
         playing = false
         binding.ivLetterRecordPlay.setImageResource(R.drawable.ic_letter_record_play)
         binding.lavLetterRecordState.pauseAnimation()
@@ -269,14 +268,14 @@ class LetterRecordFragment: Fragment(), UploadView {
         }
         binding.ivLetterRecordPlay.setOnClickListener {
             if (playing) {
-                pausePlay()
+                stopPlay()
             }
             else {
                 startPlay()
             }
         }
         player.setOnCompletionListener {
-            pausePlay()
+            stopPlay()
         }
 
         binding.tvLetterRecordSubmit.setOnClickListener {

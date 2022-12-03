@@ -48,8 +48,9 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/iv_letter_record_recording"
         app:layout_constraintLeft_toRightOf="@id/iv_letter_record_play"
-        android:layout_marginBottom="44dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_letter_record_title"
         android:layout_marginHorizontal="50dp"
+        android:layout_marginTop="50dp"
         app:lottie_fileName="letter_record.json">
     </com.airbnb.lottie.LottieAnimationView>
     <ImageView
@@ -93,6 +94,7 @@
         app:layout_constraintLeft_toRightOf="@id/iv_letter_record_reset"
         app:layout_constraintRight_toLeftOf="@id/iv_letter_record_stop"
         app:layout_constraintBottom_toTopOf="@id/tv_letter_Record_submit"
+        app:layout_constraintTop_toBottomOf="@id/lav_letter_record_state"
         android:src="@drawable/ic_letter_record_start"
         android:layout_marginBottom="43dp">
     </ImageView>
