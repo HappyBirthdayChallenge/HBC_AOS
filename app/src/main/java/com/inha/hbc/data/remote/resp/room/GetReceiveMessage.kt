@@ -35,7 +35,7 @@ data class ReceiveMessageData(
 
 @Serializable
 data class Page(
-    val content: List<Content>,
+    val content: List<ReceiveMessageContent>,
     val empty: Boolean,
     val first: Boolean,
     val last: Boolean,
@@ -49,7 +49,7 @@ data class Page(
 )
 
 @Serializable
-data class Content(
+data class ReceiveMessageContent(
     val create_at: String,
     val decoration_type: String,
     val like: Boolean,

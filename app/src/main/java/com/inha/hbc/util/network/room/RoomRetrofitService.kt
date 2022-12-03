@@ -7,6 +7,8 @@ import com.inha.hbc.data.remote.resp.message.CreateMessageSuccess
 import com.inha.hbc.data.remote.resp.message.SearchDeco
 import com.inha.hbc.data.remote.resp.message.SearchDecoSuccess
 import com.inha.hbc.data.remote.resp.room.GetReceiveMessage
+import com.inha.hbc.data.remote.resp.room.GetReceiveMessageSuccess
+import com.inha.hbc.ui.main.view.GetReceiveMessageView
 import com.inha.hbc.ui.main.view.SearchDecoView
 import com.inha.hbc.util.network.NetworkModule
 import retrofit2.Call
@@ -25,6 +27,7 @@ class RoomRetrofitService {
     }
 
     lateinit var searchDecoView: SearchDecoView
+    lateinit var getReceiveMessageView: GetReceiveMessageView
 
     fun searchDeco(page: String, roomId: String, view: SearchDecoView) {
         searchDecoView = view
@@ -54,23 +57,24 @@ class RoomRetrofitService {
 
     }
 
-    fun getReceiveMessage(page: String, roomId: String, size: String) {
+    fun getReceiveMessage(page: String, roomId: String, size: String, view: GetReceiveMessageView) {
+        getReceiveMessageView = view
         callRetro().GetReceiveMessage(roomId,page, size).enqueue(object: Callback<List<GetReceiveMessage>> {
             override fun onResponse(
                 call: Call<List<GetReceiveMessage>>,
                 response: Response<List<GetReceiveMessage>>
             ) {
                 if (response.isSuccessful) {
-                    val resp = response.body()!![0] as SearchDecoSuccess
-                    if (resp.code == "R-R002") {
-                        searchDecoView.onSearchDecoSuccess(resp)
+                    val resp = response.body()!![0] as GetReceiveMessageSuccess
+                    if (resp.code == "R-R003") {
+                        getReceiveMessageView.onGetReceiveMessageSuccess(resp)
                     }
                     else {
-                        searchDecoView.onSearchDecoFailure()
+                        getReceiveMessageView.onGetReceiveMessageFailure()
                     }
                 }
                 else {
-                    searchDecoView.onSearchDecoFailure()
+                    getReceiveMessageView.onGetReceiveMessageFailure()
                 }
             }
 
