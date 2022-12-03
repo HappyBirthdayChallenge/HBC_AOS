@@ -68,7 +68,12 @@ class MainFragment: Fragment(), SearchDecoView {
         }
 
         binding.ivMainSend.setOnClickListener {
-            MainFragmentManager.transToLetter()
+            if (binding.tvMainTitle.text == GlobalApplication.prefs.getInfo()!!.username) {
+                MainFragmentManager.transToMessageList()
+            }
+            else {
+                MainFragmentManager.transToLetter()
+            }
         }
 
         binding.tvMainTitle.setOnClickListener {
@@ -80,9 +85,6 @@ class MainFragment: Fragment(), SearchDecoView {
         binding.lavMainLoading.visibility = View.VISIBLE
         RoomRetrofitService().searchDeco(1.toString(), MainFragmentManager.roomId.toString(), this)
 
-        if (where == "mine") {
-            binding.ivMainSend.setImageResource(R.drawable.ic_main_message_list)
-        }
     }
 
     override fun onSearchDecoSuccess(resp: SearchDecoSuccess) {
@@ -109,6 +111,14 @@ class MainFragment: Fragment(), SearchDecoView {
 
 
         binding.tvMainTitle.text = MainFragmentManager.personInfo.data!!.username
+
+
+        if (binding.tvMainTitle.text == GlobalApplication.prefs.getInfo()!!.username) {
+            binding.ivMainSend.setImageResource(R.drawable.ic_main_message_list)
+        }
+        else {
+            binding.ivMainSend.setImageResource(R.drawable.ic_main_send)
+        }
 
         binding.lavMainLoading.visibility = View.GONE
         loadComplete = true

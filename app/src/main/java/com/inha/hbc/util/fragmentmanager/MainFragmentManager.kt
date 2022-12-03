@@ -10,6 +10,7 @@ import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.ui.assist.cakeSelectionAssist
 import com.inha.hbc.ui.main.ui.MainActivity
 import com.inha.hbc.ui.main.ui.MainFragment
+import com.inha.hbc.ui.main.ui.MainMymessageFragment
 
 object MainFragmentManager{
     lateinit var manager: FragmentManager
@@ -81,8 +82,11 @@ object MainFragmentManager{
         mainPage.binding.lavMainLoading.visibility = View.VISIBLE
         LetterReadManager.init(manager, mainPage, id)
         LetterReadManager.start(messageId.toString())
+    }
 
-
+    fun transToMessageList() {
+        manager.beginTransaction().add(id, MainMymessageFragment()).commit()
+        manager.beginTransaction().hide(mainPage).commit()
     }
 
 }
