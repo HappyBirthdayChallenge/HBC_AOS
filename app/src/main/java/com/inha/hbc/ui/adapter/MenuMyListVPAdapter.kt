@@ -7,17 +7,32 @@ import com.inha.hbc.data.remote.resp.menu.GetProfileSuccess
 import com.inha.hbc.data.remote.resp.message.RoomInfoData
 import com.inha.hbc.databinding.ItemMyListBinding
 import com.inha.hbc.databinding.ItemMyListVpBinding
+import com.inha.hbc.ui.menu.ui.MymessageListVpHolder
 import com.inha.hbc.ui.menu.ui.MypageListHolder
 import com.inha.hbc.ui.menu.ui.MypageListVpHolder
 
-class MenuMyListVPAdapter(val data: GetProfileSuccess): RecyclerView.Adapter<MypageListVpHolder>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MypageListVpHolder {
-        val binding = ItemMyListVpBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MypageListVpHolder(binding, data)
+class MenuMyListVPAdapter(val data: GetProfileSuccess): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (viewType == 0) {
+            val binding = ItemMyListVpBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            MypageListVpHolder(binding, data)
+        } else {
+            val binding = ItemMyListVpBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            MymessageListVpHolder(binding, data)
+        }
     }
 
-    override fun onBindViewHolder(holder: MypageListVpHolder, position: Int) {
-        holder.init(position)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is MypageListHolder) {
+            holder.init(position)
+        }
+        else {
+            (holder as MymessageListVpHolder).init()
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
     }
 
     override fun getItemCount(): Int = 2

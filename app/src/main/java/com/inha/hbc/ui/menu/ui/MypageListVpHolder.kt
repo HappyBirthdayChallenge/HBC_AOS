@@ -11,9 +11,6 @@ import com.inha.hbc.util.fragmentmanager.MenuFragmentManager
 
 class MypageListVpHolder(val binding: ItemMyListVpBinding, val data: GetProfileSuccess): RecyclerView.ViewHolder(binding.root) {
     lateinit var adapter: MenuPartyroomRVAdapter
-    var listSize = 0
-    var page = 0
-    var initV = true
 
     fun init(pos: Int) {
         initRv(pos)
