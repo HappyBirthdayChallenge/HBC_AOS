@@ -6,6 +6,7 @@ import com.inha.hbc.data.remote.resp.message.CreateMessage
 import com.inha.hbc.data.remote.resp.message.CreateMessageSuccess
 import com.inha.hbc.data.remote.resp.message.SearchDeco
 import com.inha.hbc.data.remote.resp.message.SearchDecoSuccess
+import com.inha.hbc.data.remote.resp.room.GetReceiveMessage
 import com.inha.hbc.ui.main.view.SearchDecoView
 import com.inha.hbc.util.network.NetworkModule
 import retrofit2.Call
@@ -51,5 +52,31 @@ class RoomRetrofitService {
             }
         })
 
+    }
+
+    fun getReceiveMessage(page: String, roomId: String, size: String) {
+        callRetro().GetReceiveMessage(roomId,page, size).enqueue(object: Callback<List<GetReceiveMessage>> {
+            override fun onResponse(
+                call: Call<List<GetReceiveMessage>>,
+                response: Response<List<GetReceiveMessage>>
+            ) {
+                if (response.isSuccessful) {
+                    val resp = response.body()!![0] as SearchDecoSuccess
+                    if (resp.code == "R-R002") {
+                        searchDecoView.onSearchDecoSuccess(resp)
+                    }
+                    else {
+                        searchDecoView.onSearchDecoFailure()
+                    }
+                }
+                else {
+                    searchDecoView.onSearchDecoFailure()
+                }
+            }
+
+            override fun onFailure(call: Call<List<GetReceiveMessage>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+        })
     }
 }
