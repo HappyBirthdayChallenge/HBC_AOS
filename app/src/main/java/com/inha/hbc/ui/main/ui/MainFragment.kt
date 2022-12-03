@@ -75,6 +75,9 @@ class MainFragment: Fragment(), SearchDecoView {
                 MainFragmentManager.transToLetter()
             }
         }
+        binding.ivMainNotify.setOnClickListener {
+            MainFragmentManager.
+        }
 
         binding.tvMainTitle.setOnClickListener {
         }

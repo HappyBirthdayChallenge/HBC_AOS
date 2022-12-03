@@ -12,6 +12,7 @@ import com.inha.hbc.ui.assist.cakeSelectionAssist
 import com.inha.hbc.ui.main.ui.MainActivity
 import com.inha.hbc.ui.main.ui.MainFragment
 import com.inha.hbc.ui.main.ui.MainMymessageFragment
+import com.inha.hbc.ui.main.ui.NotifyFragment
 
 object MainFragmentManager{
     lateinit var manager: FragmentManager
@@ -91,6 +92,15 @@ object MainFragmentManager{
     }
 
     fun closeMessageList(fragment: Fragment) {
+        manager.beginTransaction().remove(fragment).commit()
+        manager.beginTransaction().show(mainPage).commit()
+    }
+    fun transToNotify() {
+        manager.beginTransaction().add(id, NotifyFragment()).commit()
+        manager.beginTransaction().hide(mainPage).commit()
+    }
+
+    fun closeNotify(fragment: Fragment) {
         manager.beginTransaction().remove(fragment).commit()
         manager.beginTransaction().show(mainPage).commit()
     }
