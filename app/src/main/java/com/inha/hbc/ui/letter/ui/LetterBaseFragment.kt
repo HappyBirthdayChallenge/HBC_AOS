@@ -230,6 +230,10 @@ class LetterBaseFragment: Fragment(), UploadView, UploadMessageView {
             if (data!=null) {
                 MessageRetrofitService().uploadMessage(data, this)
             }
+            else {
+                binding.tvLetterBaseBackground.visibility = View.GONE
+                binding.clLetterBase.visibility = View.GONE
+            }
         }
 
         binding.tvLetterBaseSend.setOnClickListener {

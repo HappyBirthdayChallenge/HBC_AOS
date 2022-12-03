@@ -1,6 +1,7 @@
 package com.inha.hbc.util.fragmentmanager
 
 import android.net.Uri
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.inha.hbc.R
@@ -134,6 +135,7 @@ object LetterFragmentManager: CreateMessageView, UploadView {
         var fileIds = ArrayList<Int>()
         for (i in fileInfo) {
             if (!i.success) {
+                Toast.makeText(letterBaseFragment.context, "파일업로드가 끝난 후 버튼을 눌러주세요!", Toast.LENGTH_SHORT).show()
                 return null
             }
             fileIds.add(i.realId!!.toInt())
