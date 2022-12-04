@@ -55,7 +55,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_weight="1"
-        android:background="@drawable/item_blue_follow_btn"
         android:text="팔로우"
         android:textSize="15sp"
         android:textStyle="bold"

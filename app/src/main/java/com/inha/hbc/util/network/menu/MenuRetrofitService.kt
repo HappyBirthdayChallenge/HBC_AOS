@@ -3,10 +3,7 @@ package com.inha.hbc.util.network.menu
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.inha.hbc.data.remote.resp.menu.*
-import com.inha.hbc.ui.menu.view.FollowerListView
-import com.inha.hbc.ui.menu.view.FollowingListView
-import com.inha.hbc.ui.menu.view.GetMymessageView
-import com.inha.hbc.ui.menu.view.GetProfileView
+import com.inha.hbc.ui.menu.view.*
 import com.inha.hbc.util.network.NetworkModule
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,6 +24,7 @@ class MenuRetrofitService {
     lateinit var followerListView: FollowerListView
     lateinit var getProfileView: GetProfileView
     lateinit var getMymessageView: GetMymessageView
+    lateinit var addFriendView: AddFriendView
 
     fun getFollowingList(page: String, size: String, view: FollowingListView) {
         followingListView = view
@@ -135,6 +133,33 @@ class MenuRetrofitService {
                 TODO("Not yet implemented")
             }
 
+        })
+    }
+
+    fun addFriend(memId: String, view: AddFriendView) {
+        addFriendView = view
+        callRetro().addFriend(memId).enqueue(object: Callback<List<AddFriend>>{
+            override fun onResponse(
+                call: Call<List<AddFriend>>,
+                response: Response<List<AddFriend>>
+            ) {
+                if (response.isSuccessful) {
+                    val resp = response.body()!![0] as AddFriendSuccess
+                    if (resp.code == "R-M013") {
+                        addFriendView.onAddFriendSuccess()
+                    }
+                    else {
+                        addFriendView.onAddFriendFailure()
+                    }
+                }
+                else {
+                    addFriendView.onAddFriendFailure()
+                }
+            }
+
+            override fun onFailure(call: Call<List<AddFriend>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
         })
     }
 }

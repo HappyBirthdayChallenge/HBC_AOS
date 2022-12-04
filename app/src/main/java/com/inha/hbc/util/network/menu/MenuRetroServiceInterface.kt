@@ -1,11 +1,9 @@
 package com.inha.hbc.util.network.menu
 
-import com.inha.hbc.data.remote.resp.menu.FollowerList
-import com.inha.hbc.data.remote.resp.menu.FollowingList
-import com.inha.hbc.data.remote.resp.menu.GetMymessage
-import com.inha.hbc.data.remote.resp.menu.GetProfile
+import com.inha.hbc.data.remote.resp.menu.*
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -32,4 +30,9 @@ interface MenuRetroServiceInterface {
         @Query("page") page: String,
         @Query("size") size: String
     ): Call<List<GetMymessage>>
+
+    @POST("/members/friends")
+    fun addFriend(
+        @Query("member_id") member_id: String
+    ): Call<List<AddFriend>>
 }

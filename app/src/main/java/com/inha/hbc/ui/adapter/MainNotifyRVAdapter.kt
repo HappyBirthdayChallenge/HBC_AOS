@@ -1,15 +1,21 @@
 package com.inha.hbc.ui.adapter
 
+import android.content.res.Resources
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.ui.graphics.Color
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.inha.hbc.R
 import com.inha.hbc.databinding.ItemMenuFriendlistLoadingBinding
 import com.inha.hbc.databinding.ItemNotifyBinding
 import com.inha.hbc.ui.assist.serverDecoToId
 import com.inha.hbc.ui.main.view.NotifyContent
+import com.inha.hbc.ui.menu.view.AddFriendView
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
+import com.inha.hbc.util.network.menu.MenuRetrofitService
 
 class MainNotifyRVAdapter(var data: List<NotifyContent?>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     interface SetNotify{
@@ -46,14 +52,26 @@ class MainNotifyRVAdapter(var data: List<NotifyContent?>):RecyclerView.Adapter<R
         }
         return 1
     }
-    class NotifyHolder(val binding: ItemNotifyBinding, var data: List<NotifyContent?>, val setNotify: SetNotify): RecyclerView.ViewHolder(binding.root) {
+    class NotifyHolder(val binding: ItemNotifyBinding, var data: List<NotifyContent?>, val setNotify: SetNotify):
+        RecyclerView.ViewHolder(binding.root), AddFriendView {
         fun init(pos: Int) {
             initView(pos)
             initListener(pos)
         }
 
         fun initListener(pos: Int) {
-            setNotify.onClick(pos, data[pos]!!.alarm_type)
+            binding.root.setOnClickListener {
+                setNotify.onClick(pos, data[pos]!!.alarm_type)
+            }
+            binding.tvItemNotifyFollow.setOnClickListener {
+                if (data[pos]!!.friend_alarm != null)  {
+                    if (binding.tvItemNotifyFollow.text == "팔로잉") {
+                    }
+                    else {
+                        MenuRetrofitService().addFriend(data[pos]!!.friend_alarm!!.member.id.toString(), this)
+                    }
+                }
+            }
         }
 
         fun initView(pos: Int) {
@@ -68,6 +86,24 @@ class MainNotifyRVAdapter(var data: List<NotifyContent?>):RecyclerView.Adapter<R
                         .into(binding.ivItemNotifyProfile)
 
                     binding.tvItemNotify.text = data[pos]!!.content
+
+                    if (data[pos]!!.friend_alarm!!.follow) {
+                        binding.tvItemNotifyFollow.text = "팔로잉"
+                        binding.tvItemNotifyFollow.setTextColor(
+                            MainFragmentManager.baseActivity.applicationContext.resources.getColor(R.color.black, null)
+                        )
+                        binding.tvItemNotifyFollow.textSize = 14f
+                        binding.tvItemNotifyFollow.background =
+                            MainFragmentManager.baseActivity.applicationContext.resources.getDrawable(
+                                R.drawable.item_white_following_btn, null
+                            )
+                    }
+                    else {
+                        binding.tvItemNotifyFollow.text = "팔로우"
+                            binding.tvItemNotifyFollow.background = MainFragmentManager.baseActivity.applicationContext.resources.getDrawable(
+                                R.drawable.item_blue_follow_btn, null
+                            )
+                    }
                 }
                 "MESSAGE" -> {
                     binding.cvItemNotifyProfile.visibility = View.INVISIBLE
@@ -101,6 +137,22 @@ class MainNotifyRVAdapter(var data: List<NotifyContent?>):RecyclerView.Adapter<R
                     binding.tvItemNotify.text = data[pos]!!.content
                 }
             }
+        }
+
+        override fun onAddFriendSuccess() {
+            binding.tvItemNotifyFollow.text = "팔로잉"
+            binding.tvItemNotifyFollow.setTextColor(
+                MainFragmentManager.baseActivity.applicationContext.resources.getColor(R.color.black, null)
+            )
+            binding.tvItemNotifyFollow.textSize = 14f
+            binding.tvItemNotifyFollow.background =
+                MainFragmentManager.baseActivity.applicationContext.resources.getDrawable(
+                    R.drawable.item_white_following_btn, null
+                )
+        }
+
+        override fun onAddFriendFailure() {
+            TODO("Not yet implemented")
         }
     }
 

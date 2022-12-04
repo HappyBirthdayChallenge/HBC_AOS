@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentManager
 import com.inha.hbc.data.remote.resp.GetMyInfoBirth
 import com.inha.hbc.data.remote.resp.GetMyInfoData
 import com.inha.hbc.data.remote.resp.GetMyInfoSuccess
+import com.inha.hbc.data.remote.resp.menu.Following
 import com.inha.hbc.data.remote.resp.menu.FollowingContent
 import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.ui.assist.cakeSelectionAssist
@@ -13,10 +14,13 @@ import com.inha.hbc.ui.main.ui.MainActivity
 import com.inha.hbc.ui.main.ui.MainFragment
 import com.inha.hbc.ui.main.ui.MainMymessageFragment
 import com.inha.hbc.ui.main.ui.NotifyFragment
+import com.inha.hbc.ui.main.view.Member
 import com.inha.hbc.ui.main.view.NotifyContent
+import com.inha.hbc.ui.main.view.RoomInfoView
+import com.inha.hbc.util.network.message.MessageRetrofitService
 import com.inha.hbc.util.sharedpreference.GlobalApplication
 
-object MainFragmentManager{
+object MainFragmentManager: RoomInfoView{
     lateinit var manager: FragmentManager
     lateinit var mainPage: MainFragment
     lateinit var baseActivity: MainActivity
@@ -57,6 +61,22 @@ object MainFragmentManager{
         LetterFragmentManager.start(roomId.toString())
     }
 
+
+    fun refreshPartyRoom(resp: RoomInfoSuccess) {
+        val arr = resp.data!![0].cake_type.split("E")
+        val cakeType = arr[arr.size - 1].toInt()
+
+        cakeId = cakeSelectionAssist(cakeType)
+        roomId = resp.data!![0].room_id
+        roomYear = resp.data!![0].birth_date.year
+
+        roominfo = resp
+
+        mainPage.binding.vpMain.adapter!!.notifyDataSetChanged()
+
+        manager.beginTransaction().replace(id, mainPage).commit()
+        manager.beginTransaction().show(mainPage).commit()
+    }
 
     fun refreshPartyRoom(resp: RoomInfoSuccess, followingContent: FollowingContent) {
         val arr = resp.data!![0].cake_type.split("E")
@@ -120,8 +140,30 @@ object MainFragmentManager{
             "MESSAGELIKE" -> {
 
             }
-            else -> {
+            else -> {//Room
+                personInfo = GetMyInfoSuccess(1, GetMyInfoData(authorities = listOf(""),
+                birth_date = GetMyInfoBirth(
+                    date = data.room_alarm!!.member.birth_date.date,
+                    month = data.room_alarm!!.member.birth_date.month,
+                    year = data.room_alarm!!.member.birth_date.year,
+                    type = data.room_alarm!!.member.birth_date.type
+                ),
+                id = data.room_alarm!!.member.id,
+                image_url = data.room_alarm!!.member.image_url,
+                name = data.room_alarm!!.member.name,
+                phone = "",
+                username = data.room_alarm!!.member.username
+                ), "", "")
+                MessageRetrofitService().roomInfo(data.room_alarm!!.member.id.toString(), this)
             }
         }
+    }
+
+    override fun onRoomInfoSuccess(resp: RoomInfoSuccess) {
+        refreshPartyRoom(resp)
+    }
+
+    override fun onRoomInfoFailure() {
+        TODO("Not yet implemented")
     }
 }
