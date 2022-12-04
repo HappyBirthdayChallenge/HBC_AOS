@@ -13,6 +13,8 @@ import com.inha.hbc.ui.main.ui.MainActivity
 import com.inha.hbc.ui.main.ui.MainFragment
 import com.inha.hbc.ui.main.ui.MainMymessageFragment
 import com.inha.hbc.ui.main.ui.NotifyFragment
+import com.inha.hbc.ui.main.view.NotifyContent
+import com.inha.hbc.util.sharedpreference.GlobalApplication
 
 object MainFragmentManager{
     lateinit var manager: FragmentManager
@@ -46,7 +48,7 @@ object MainFragmentManager{
     }
 
     fun transToMenu() {
-        MenuFragmentManager.init(manager, id)
+        MenuFragmentManager.init(manager, id, GlobalApplication.prefs.getInfo()!!.id)
         MenuFragmentManager.start(mainPage)
     }
 
@@ -105,4 +107,21 @@ object MainFragmentManager{
         manager.beginTransaction().show(mainPage).commit()
     }
 
+    fun notiToElse(type: String, data: NotifyContent, fragment: Fragment) {
+        manager.beginTransaction().remove(fragment).commit()
+        when (type) {
+            "FRIEND" -> {
+                MenuFragmentManager.init(manager, id, data.friend_alarm!!.member.id)
+                MenuFragmentManager.start(mainPage)
+            }
+            "MESSAGE" -> {
+                closeNotify(fragment)
+            }
+            "MESSAGELIKE" -> {
+
+            }
+            else -> {
+            }
+        }
+    }
 }

@@ -15,18 +15,21 @@ object MenuFragmentManager: GetProfileView{
 
     lateinit var manager: FragmentManager
     var id = 0
+    var memberId = 0
     lateinit var mainPage: MainFragment
     lateinit var menuPage: MypageFragment
 
-    fun init(manager: FragmentManager, containerId: Int) {
+    fun init(manager: FragmentManager, containerId: Int, memId: Int) {
         this.manager = manager
         id = containerId
+        memberId = memId
     }
 
     fun start(main: MainFragment) {
         mainPage = main
-        MenuRetrofitService().getProfile(GlobalApplication.prefs.getInfo()!!.id.toString(), this)
+        MenuRetrofitService().getProfile(memberId.toString(), this)
     }
+
     override fun onGetProfileSuccess(resp: GetProfileSuccess) {
         menuPage = MypageFragment(resp)
         manager.beginTransaction().hide(mainPage).commit()

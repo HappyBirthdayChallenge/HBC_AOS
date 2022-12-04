@@ -47,7 +47,8 @@ class NotifyFragment: Fragment(), GetNotifyView {
     fun initRv() {
         adapter = MainNotifyRVAdapter(dataArr)
         adapter.setNotify = object :MainNotifyRVAdapter.SetNotify{
-            override fun onClick(pos: Int) {
+            override fun onClick(pos: Int, type: String) {
+                MainFragmentManager.notiToElse(type, dataArr[pos]!!, this@NotifyFragment)
             }
         }
         binding.rvNotify.adapter = adapter

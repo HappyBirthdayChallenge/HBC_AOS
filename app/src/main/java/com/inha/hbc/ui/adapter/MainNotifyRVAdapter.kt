@@ -13,7 +13,7 @@ import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 
 class MainNotifyRVAdapter(var data: List<NotifyContent?>):RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     interface SetNotify{
-        fun onClick(pos: Int)
+        fun onClick(pos: Int, type: String)
     }
     lateinit var setNotify: SetNotify
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -48,6 +48,15 @@ class MainNotifyRVAdapter(var data: List<NotifyContent?>):RecyclerView.Adapter<R
     }
     class NotifyHolder(val binding: ItemNotifyBinding, var data: List<NotifyContent?>, val setNotify: SetNotify): RecyclerView.ViewHolder(binding.root) {
         fun init(pos: Int) {
+            initView(pos)
+            initListener(pos)
+        }
+
+        fun initListener(pos: Int) {
+            setNotify.onClick(pos, data[pos]!!.alarm_type)
+        }
+
+        fun initView(pos: Int) {
             when (data[pos]!!.alarm_type) {
                 "FRIEND" -> {
                     binding.cvItemNotifyProfile.visibility = View.VISIBLE
