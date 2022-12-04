@@ -8,8 +8,7 @@ import com.inha.hbc.data.remote.resp.message.SearchDeco
 import com.inha.hbc.data.remote.resp.message.SearchDecoSuccess
 import com.inha.hbc.data.remote.resp.room.GetReceiveMessage
 import com.inha.hbc.data.remote.resp.room.GetReceiveMessageSuccess
-import com.inha.hbc.ui.main.view.GetReceiveMessageView
-import com.inha.hbc.ui.main.view.SearchDecoView
+import com.inha.hbc.ui.main.view.*
 import com.inha.hbc.util.network.NetworkModule
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,6 +27,7 @@ class RoomRetrofitService {
 
     lateinit var searchDecoView: SearchDecoView
     lateinit var getReceiveMessageView: GetReceiveMessageView
+    lateinit var getNotifyView: GetNotifyView
 
     fun searchDeco(page: String, roomId: String, view: SearchDecoView) {
         searchDecoView = view
@@ -81,6 +81,34 @@ class RoomRetrofitService {
             override fun onFailure(call: Call<List<GetReceiveMessage>>, t: Throwable) {
                 TODO("Not yet implemented")
             }
+        })
+    }
+
+    fun getNotify(page: String, size: String, view: GetNotifyView) {
+        getNotifyView = view
+        callRetro().GetNotify(page, size).enqueue(object: Callback<List<GetNotify>>{
+            override fun onResponse(
+                call: Call<List<GetNotify>>,
+                response: Response<List<GetNotify>>
+            ) {
+                if (response.isSuccessful) {
+                    val resp = response.body()!![0] as GetNotifySuccess
+                    if (resp.code == "R-AL001") {
+                        getNotifyView.onGetNotifySuccess(resp)
+                    }
+                    else {
+                        getNotifyView.onGetNotifyFailure()
+                    }
+                }
+                else {
+                    getNotifyView.onGetNotifyFailure()
+                }
+            }
+
+            override fun onFailure(call: Call<List<GetNotify>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
         })
     }
 }

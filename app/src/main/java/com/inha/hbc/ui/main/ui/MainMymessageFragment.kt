@@ -90,7 +90,6 @@ class MainMymessageFragment: Fragment(), GetReceiveMessageView {
         listSize++
         adapter.notifyItemInserted(listSize - 1)
         RoomRetrofitService().getReceiveMessage((page+1).toString(),MainFragmentManager.roomId.toString(), 10.toString(), this@MainMymessageFragment)
-
     }
     override fun onGetReceiveMessageSuccess(resp: GetReceiveMessageSuccess) {
         dataArr.removeAt(listSize - 1)
