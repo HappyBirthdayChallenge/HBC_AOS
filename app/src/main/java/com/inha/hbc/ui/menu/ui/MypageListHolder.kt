@@ -19,10 +19,14 @@ class MypageListHolder(val binding: ItemMyListBinding, val data: GetProfileSucce
 
     fun initView() {
         val titles = listOf("파티룸", "메시지")
-        TabLayoutMediator(binding.tlItemMyList, binding.vpItemMyList
-        ) { tab, position -> tab.text = titles[position] }.attach()
         if (data.data.member.id != GlobalApplication.prefs.getInfo()!!.id) {
             binding.tlItemMyList.getTabAt(1)!!.view.visibility = View.GONE
+        }
+
+        else {
+            TabLayoutMediator(
+                binding.tlItemMyList, binding.vpItemMyList
+            ) { tab, position -> tab.text = titles[position] }.attach()
         }
 
     }
