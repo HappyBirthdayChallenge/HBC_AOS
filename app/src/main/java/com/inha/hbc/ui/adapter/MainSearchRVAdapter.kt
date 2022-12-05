@@ -84,7 +84,6 @@ class MainSearchRVAdapter(var data: ArrayList<Result>): RecyclerView.Adapter<Mai
             binding.tvItemUserListFollow.setTextColor(
                 MainFragmentManager.baseActivity.applicationContext.resources.getColor(R.color.black, null)
             )
-            binding.tvItemUserListFollow.textSize = 14f
             binding.tvItemUserListFollow.background =
                 MainFragmentManager.baseActivity.applicationContext.resources.getDrawable(
                     R.drawable.item_white_following_btn, null
