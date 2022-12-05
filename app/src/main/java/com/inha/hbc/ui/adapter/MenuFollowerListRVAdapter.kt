@@ -63,9 +63,9 @@ class MenuFollowerListRVAdapter(val friendList: ArrayList<FollowerContent?>): Re
     class FriendHolder(val binding: ItemUserListBinding, val data: ArrayList<FollowerContent?>, val listener: CstListener):
         RecyclerView.ViewHolder(binding.root), AddFriendView {
         fun init(pos: Int) {
-            binding.tvItemUserListName.text = data[pos]!!.follower.name
-            binding.tvItemUserListId.text = data[pos]!!.follower.username
-            Glide.with(MainFragmentManager.baseActivity.applicationContext).load(data[pos]!!.follower.image_url).into(binding.ivItemUserList)
+            binding.tvItemUserListName.text = data[pos]!!.member.name
+            binding.tvItemUserListId.text = data[pos]!!.member.username
+            Glide.with(MainFragmentManager.baseActivity.applicationContext).load(data[pos]!!.member.image_url).into(binding.ivItemUserList)
             if (data[pos]!!.follow) {
                 binding.tvItemUserListFollow.text = "팔로잉"
                 binding.tvItemUserListFollow.setTextColor(
@@ -91,7 +91,7 @@ class MenuFollowerListRVAdapter(val friendList: ArrayList<FollowerContent?>): Re
             }
 
             binding.tvItemUserListFollow.setOnClickListener {
-                MenuRetrofitService().addFriend(data[pos]!!.follower.id.toString(), this)
+                MenuRetrofitService().addFriend(data[pos]!!.member.id.toString(), this)
             }
         }
 

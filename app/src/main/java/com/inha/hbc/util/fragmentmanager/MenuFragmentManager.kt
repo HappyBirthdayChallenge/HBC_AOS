@@ -71,19 +71,21 @@ object MenuFragmentManager: GetProfileView{
         MainFragmentManager.refreshPartyRoom(resp, info)
     }
     fun goPartyRoom(resp: RoomInfoSuccess, info: FollowerContent) {
-        val infoo = FollowingContent(Following(
-            birth_date = info.follower.birth_date,
-            username = info.follower.username,
-            name = info.follower.name,
-            image_url = info.follower.image_url,
-            id = info.follower.id
+        val infoo = FollowingContent(
+            info.follow, Following(
+            birth_date = info.member.birth_date,
+            username = info.member.username,
+            name = info.member.name,
+            image_url = info.member.image_url,
+            id = info.member.id
         ))
         MainFragmentManager.refreshPartyRoom(resp, infoo)
     }
 
     fun goPartyRoom(data: GetProfileSuccess) {
         val resp = RoomInfoSuccess(code = "", data = data.data.rooms, message = "", status = 0)
-        val info = FollowingContent(Following(
+        val info = FollowingContent(
+            false, Following(
             name = data.data.member.name,
             id = data.data.member.id,
             image_url = data.data.member.image_url,
@@ -94,7 +96,8 @@ object MenuFragmentManager: GetProfileView{
     }
 
     fun goPartyRoom(resp: RoomInfoSuccess, data: Content) {
-        val info = FollowingContent(Following(
+        val info = FollowingContent(
+            false, Following(
             name = data.room_owner.name,
             id = data.room_owner.id,
             image_url = data.room_owner.image_url,

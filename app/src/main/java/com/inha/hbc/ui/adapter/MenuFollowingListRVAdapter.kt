@@ -60,9 +60,9 @@ class MenuFollowingListRVAdapter(val friendList: ArrayList<FollowingContent?>): 
 
     class FriendHolder(val binding: ItemUserListBinding, val data: ArrayList<FollowingContent?>, val listener: CstListener): RecyclerView.ViewHolder(binding.root) {
         fun init(pos: Int) {
-            binding.tvItemUserListName.text = data[pos]!!.following.name
-            binding.tvItemUserListId.text = data[pos]!!.following.username
-            Glide.with(MainFragmentManager.baseActivity.applicationContext).load(data[pos]!!.following.image_url).into(binding.ivItemUserList)
+            binding.tvItemUserListName.text = data[pos]!!.member.name
+            binding.tvItemUserListId.text = data[pos]!!.member.username
+            Glide.with(MainFragmentManager.baseActivity.applicationContext).load(data[pos]!!.member.image_url).into(binding.ivItemUserList)
             binding.tvItemUserListFollow.text = "팔로잉"
             binding.tvItemUserListFollow.setTextColor(
                 MainFragmentManager.baseActivity.applicationContext.resources.getColor(R.color.black, null)

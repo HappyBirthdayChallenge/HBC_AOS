@@ -87,7 +87,7 @@ class MenuFriendPageVPAdapter(): RecyclerView.Adapter<MenuFriendPageVPAdapter.Fo
                         followerList.add(null)
                         listSize++
                         followerAdapter.notifyItemInserted(listSize - 1)
-                        MenuRetrofitService().getFollowerList((page+1).toString(), 10.toString(), this@FollowingPageHolder)
+                        MenuRetrofitService().getFollowerList(MenuFragmentManager.memberId.toString(), (page+1).toString(), 10.toString(), this@FollowingPageHolder)
 
                     }
                 }
@@ -133,7 +133,7 @@ class MenuFriendPageVPAdapter(): RecyclerView.Adapter<MenuFriendPageVPAdapter.Fo
                         followingList.add(null)
                         listSize++
                         followingAdapter.notifyItemInserted(listSize - 1)
-                        MenuRetrofitService().getFollowingList((page+1).toString(), 10.toString(), this@FollowingPageHolder)
+                        MenuRetrofitService().getFollowingList(MenuFragmentManager.memberId.toString(), (page+1).toString(), 10.toString(), this@FollowingPageHolder)
 
                     }
                 }
@@ -171,7 +171,7 @@ class MenuFriendPageVPAdapter(): RecyclerView.Adapter<MenuFriendPageVPAdapter.Fo
             followerAdapter.cstListener = object: MenuFollowerListRVAdapter.CstListener{
                 override fun onClick(pos: Int, followerContent: FollowerContent) {
                     selectedFollowerInfo = followerContent
-                    MessageRetrofitService().roomInfo(followerList[pos]!!.follower.id.toString(), this@FollowingPageHolder)
+                    MessageRetrofitService().roomInfo(followerList[pos]!!.member.id.toString(), this@FollowingPageHolder)
                 }
 
             }
@@ -182,7 +182,7 @@ class MenuFriendPageVPAdapter(): RecyclerView.Adapter<MenuFriendPageVPAdapter.Fo
             followingAdapter.cstListener = object: MenuFollowingListRVAdapter.CstListener{
                 override fun onClick(pos: Int, followingContent: FollowingContent) {
                     selectedFollowingInfo = followingContent
-                    MessageRetrofitService().roomInfo(followingList[pos]!!.following.id.toString(), this@FollowingPageHolder)
+                    MessageRetrofitService().roomInfo(followingList[pos]!!.member.id.toString(), this@FollowingPageHolder)
                 }
 
             }
@@ -193,7 +193,7 @@ class MenuFriendPageVPAdapter(): RecyclerView.Adapter<MenuFriendPageVPAdapter.Fo
             followerList.add(null)
             listSize++
             followerAdapter.notifyItemInserted(listSize - 1)
-            MenuRetrofitService().getFollowerList((page+1).toString(), 10.toString(), this)
+            MenuRetrofitService().getFollowerList(MenuFragmentManager.memberId.toString(), (page+1).toString(), 10.toString(), this)
         }
 
         fun initFollowingView() {
@@ -201,7 +201,7 @@ class MenuFriendPageVPAdapter(): RecyclerView.Adapter<MenuFriendPageVPAdapter.Fo
             followingList.add(null)
             listSize++
             followingAdapter.notifyItemInserted(listSize - 1)
-            MenuRetrofitService().getFollowingList((page+1).toString(), 10.toString(), this)
+            MenuRetrofitService().getFollowingList(MenuFragmentManager.memberId.toString(), (page+1).toString(), 10.toString(), this)
         }
 
 
@@ -256,11 +256,11 @@ class MenuFriendPageVPAdapter(): RecyclerView.Adapter<MenuFriendPageVPAdapter.Fo
         override fun onRoomInfoSuccess(resp: RoomInfoSuccess) {
             if (pos == 0) {
                 MenuFragmentManager.goPartyRoom(resp, selectedFollowingInfo)
-                MainFragmentManager.transToMenu(selectedFollowingInfo.following.id)
+                MainFragmentManager.transToMenu(selectedFollowingInfo.member.id)
             }
             else {
                 MenuFragmentManager.goPartyRoom(resp, selectedFollowerInfo)
-                MainFragmentManager.transToMenu(selectedFollowerInfo.follower.id)
+                MainFragmentManager.transToMenu(selectedFollowerInfo.member.id)
             }
         }
 
@@ -292,7 +292,7 @@ class MenuFriendPageVPAdapter(): RecyclerView.Adapter<MenuFriendPageVPAdapter.Fo
                     followerList.add(
                         FollowerContent(
                         follow = i.follow,
-                        follower = Follower(
+                            member = Follower(
                             birth_date = i.member.birth_date,
                             username = i.member.username,
                             image_url = i.member.image_url,
@@ -309,13 +309,14 @@ class MenuFriendPageVPAdapter(): RecyclerView.Adapter<MenuFriendPageVPAdapter.Fo
                 for (i in resp.data!!.result) {
                     followingList.add(
                         FollowingContent(
-                            following = Following(
+                            member = Following(
                                 birth_date = i.member.birth_date,
                                 username = i.member.username,
                                 image_url = i.member.image_url,
                                 name = i.member.name,
                                 id = i.member.id
-                            )
+                            ),
+                            follow = i.follow
                         )
                     )
                 }

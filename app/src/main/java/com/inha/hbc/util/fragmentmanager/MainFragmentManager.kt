@@ -86,12 +86,12 @@ object MainFragmentManager: RoomInfoView{
 
         roominfo = resp
         personInfo = GetMyInfoSuccess(1, GetMyInfoData(authorities = listOf(""),
-        birth_date = GetMyInfoBirth(date = followingContent.following.birth_date.date, month = followingContent.following.birth_date.month, year = followingContent.following.birth_date.year, type = followingContent.following.birth_date.type),
-            id = followingContent.following.id,
-            image_url = followingContent.following.image_url,
-            name = followingContent.following.name,
+        birth_date = GetMyInfoBirth(date = followingContent.member.birth_date.date, month = followingContent.member.birth_date.month, year = followingContent.member.birth_date.year, type = followingContent.member.birth_date.type),
+            id = followingContent.member.id,
+            image_url = followingContent.member.image_url,
+            name = followingContent.member.name,
             phone = "",
-            username = followingContent.following.username
+            username = followingContent.member.username
         ), "", "")
 
         mainPage.binding.vpMain.adapter!!.notifyDataSetChanged()
