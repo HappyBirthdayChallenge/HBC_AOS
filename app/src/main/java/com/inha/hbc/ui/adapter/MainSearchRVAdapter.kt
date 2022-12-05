@@ -10,6 +10,7 @@ import com.inha.hbc.data.remote.resp.main.Result
 import com.inha.hbc.ui.menu.view.AddFriendView
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import com.inha.hbc.util.network.menu.MenuRetrofitService
+import com.inha.hbc.util.sharedpreference.GlobalApplication
 
 class MainSearchRVAdapter(var data: ArrayList<Result>): RecyclerView.Adapter<MainSearchRVAdapter.UserHolder>() {
     interface SetMainSearch{
@@ -41,7 +42,7 @@ class MainSearchRVAdapter(var data: ArrayList<Result>): RecyclerView.Adapter<Mai
             binding.tvItemUserListName.text = data[pos].member.name
 
 
-            if (data[pos]!!.follow) {
+            if (data[pos]!!.follow || data[pos]!!.member.id == GlobalApplication.prefs.getInfo()!!.id) {
                 binding.tvItemUserListFollow.text = "팔로잉"
                 binding.tvItemUserListFollow.setTextColor(
                     MainFragmentManager.baseActivity.applicationContext.resources.getColor(R.color.black, null)

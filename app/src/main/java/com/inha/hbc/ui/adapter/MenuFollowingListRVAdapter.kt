@@ -9,6 +9,7 @@ import com.inha.hbc.data.remote.resp.menu.FollowingContent
 import com.inha.hbc.databinding.ItemMenuFriendlistLoadingBinding
 import com.inha.hbc.databinding.ItemUserListBinding
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
+import com.inha.hbc.util.sharedpreference.GlobalApplication
 
 class MenuFollowingListRVAdapter(val friendList: ArrayList<FollowingContent?>): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -63,7 +64,7 @@ class MenuFollowingListRVAdapter(val friendList: ArrayList<FollowingContent?>): 
             binding.tvItemUserListName.text = data[pos]!!.member.name
             binding.tvItemUserListId.text = data[pos]!!.member.username
             Glide.with(MainFragmentManager.baseActivity.applicationContext).load(data[pos]!!.member.image_url).into(binding.ivItemUserList)
-            if (data[pos]!!.follow) {
+            if (data[pos]!!.follow || data[pos]!!.member.id == GlobalApplication.prefs.getInfo()!!.id) {
                 binding.tvItemUserListFollow.text = "팔로잉"
                 binding.tvItemUserListFollow.setTextColor(
                     MainFragmentManager.baseActivity.applicationContext.resources.getColor(R.color.black, null)
@@ -79,6 +80,7 @@ class MenuFollowingListRVAdapter(val friendList: ArrayList<FollowingContent?>): 
                     R.drawable.item_blue_follow_btn, null
                 )
             }
+            initListener(pos, data[pos]!!)
         }
 
         fun initListener(pos: Int, followingContent: FollowingContent) {
