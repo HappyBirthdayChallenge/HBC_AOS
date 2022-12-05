@@ -15,6 +15,7 @@ import com.inha.hbc.ui.main.view.GlobalSearchView
 import com.inha.hbc.util.network.main.MainRetrofitService
 import kotlin.concurrent.timer
 import com.inha.hbc.data.remote.resp.main.Result
+import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import java.util.regex.Pattern
 
 class SearchFragment: Fragment(), GlobalSearchView {
@@ -42,13 +43,15 @@ class SearchFragment: Fragment(), GlobalSearchView {
         adapter = MainSearchRVAdapter(dataArr)
         adapter.setMainSearch = object :MainSearchRVAdapter.SetMainSearch{
             override fun onClick(pos: Int) {
+                MainFragmentManager.searchToFriend(dataArr[pos]!!, this@SearchFragment)
             }
         }
         binding.rvSearch.adapter = adapter
     }
 
     fun updateView(resp: GlobalSearchSuccess) {
-        adapter.dataArr = resp.data!!.result
+        dataArr = resp.data!!.result
+        adapter.data = dataArr
         adapter.notifyDataSetChanged()
         binding.lavSearch.visibility = View.GONE
     }

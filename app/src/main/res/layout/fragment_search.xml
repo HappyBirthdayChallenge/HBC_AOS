@@ -39,7 +39,8 @@
         app:cardCornerRadius="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="10dp"
-        android:backgroundTint="@color/et_gray">
+        android:backgroundTint="@color/et_gray"
+        android:layout_marginHorizontal="40dp">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -68,7 +69,6 @@
                 android:inputType="text"
                 android:saveEnabled="false"
                 android:maxLength="20"
-                android:paddingVertical="10dp"
                 android:background="@color/transparent"
                 android:hint="사용자 이름 또는 아이디">
             </com.google.android.material.textfield.TextInputEditText>
@@ -83,7 +83,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:orientation="vertical"
-        tools:listitem="@layout/item_user_list">
+        tools:listitem="@layout/item_user_list"
+        android:layout_marginHorizontal="40dp">
     </androidx.recyclerview.widget.RecyclerView>
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lav_search"

@@ -125,6 +125,12 @@ object MainFragmentManager: RoomInfoView{
         manager.beginTransaction().show(mainPage).commit()
     }
 
+    fun searchToFriend(data: com.inha.hbc.data.remote.resp.main.Result, fragment: Fragment) {
+        manager.beginTransaction().remove(fragment).commit()
+        MenuFragmentManager.init(manager, id, data.member.id)
+        MenuFragmentManager.start(mainPage)
+    }
+
     fun notiToElse(type: String, data: NotifyContent, fragment: Fragment) {
         manager.beginTransaction().remove(fragment).commit()
         notiType = type
