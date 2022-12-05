@@ -9,12 +9,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.inha.hbc.data.remote.resp.main.GlobalSearchSuccess
 import com.inha.hbc.databinding.FragmentSearchBinding
+import com.inha.hbc.ui.adapter.MainSearchRVAdapter
 import com.inha.hbc.ui.main.view.GlobalSearchView
 import com.inha.hbc.util.network.main.MainRetrofitService
 import kotlin.concurrent.timer
+import com.inha.hbc.data.remote.resp.main.Result
 
 class SearchFragment: Fragment(), GlobalSearchView {
     lateinit var binding: FragmentSearchBinding
+    lateinit var adapter: MainSearchRVAdapter
+    var dataArr = listOf<Result>()
     var isTyping = false
     var time = 0
     override fun onCreateView(
@@ -32,7 +36,17 @@ class SearchFragment: Fragment(), GlobalSearchView {
     }
 
     fun initView() {
-
+        adapter = MainSearchRVAdapter(dataArr)
+        adapter.setMainSearch = object :MainSearchRVAdapter.SetMainSearch{
+            override fun onClick(pos: Int) {
+            }
+        }
+        binding.rvSearch.adapter = adapter
+    }
+    fun updateView(resp: GlobalSearchSuccess) {
+        dataArr = resp.data!!.result
+        adapter.notifyDataSetChanged()
+        binding.lavSearch.visibility = View.GONE
     }
 
     fun initListener() {
@@ -47,7 +61,7 @@ class SearchFragment: Fragment(), GlobalSearchView {
             override fun afterTextChanged(p0: Editable?) {
                 isTyping = false
                 startTimer()
-
+                binding.lavSearch.visibility = View.VISIBLE
             }
 
         })
@@ -69,7 +83,7 @@ class SearchFragment: Fragment(), GlobalSearchView {
     }
 
     override fun onGlobalSearchSuccess(resp: GlobalSearchSuccess) {
-        resp.
+        updateView(resp)
     }
 
     override fun onGlobalSearchFailure() {
