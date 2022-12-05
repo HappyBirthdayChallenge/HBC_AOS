@@ -25,14 +25,19 @@
 
     <TextView
         android:id="@+id/tv_item_user_list_id"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toRightOf="@id/cv_item_user_list"
         app:layout_constraintTop_toTopOf="@id/cv_item_user_list"
         app:layout_constraintBottom_toTopOf="@id/tv_item_user_list_name"
+        app:layout_constraintRight_toLeftOf="@id/tv_item_user_list_follow"
+        android:maxLines="1"
         android:layout_marginLeft="10dp"
+        android:paddingRight="10dp"
         android:text="aaaaaa"
-        android:textSize="16sp"
+        android:autoSizeTextType="uniform"
+        android:autoSizeStepGranularity="1dp"
+        android:autoSizeMinTextSize="1dp"
         android:textStyle="bold">
     </TextView>
     <TextView
@@ -55,13 +60,13 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/tv_item_user_list_id"
         android:text="팔로우"
         android:textSize="15sp"
         android:textStyle="bold"
         android:textColor="@color/blue"
         android:paddingHorizontal="10dp"
         android:paddingVertical="5dp"
-        android:layout_marginRight="10dp"
         android:elevation="5dp">
     </TextView>
 </androidx.constraintlayout.widget.ConstraintLayout>
