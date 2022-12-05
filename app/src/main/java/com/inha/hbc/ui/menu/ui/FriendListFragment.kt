@@ -4,10 +4,13 @@ import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnLayoutChangeListener
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import androidx.viewpager2.widget.ViewPager2.OnPageChangeCallback
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.inha.hbc.databinding.FragmentMenuFriendlistBinding
@@ -40,6 +43,17 @@ class FriendListFragment(val firstPos: Int): Fragment() {
        binding.ivMenuFriendlistBack.setOnClickListener {
            MenuFragmentManager.closeFriendList(this)
        }
+       binding.vpMenuFriendlist.registerOnPageChangeCallback(object : OnPageChangeCallback() {
+           override fun onPageScrolled(
+               position: Int,
+               positionOffset: Float,
+               positionOffsetPixels: Int
+           ) {
+               super.onPageScrolled(position, positionOffset, positionOffsetPixels)
+               val imm  = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+               imm.hideSoftInputFromWindow(this@FriendListFragment.binding.root.windowToken, 0)
+           }
+       })
    }
 
 
