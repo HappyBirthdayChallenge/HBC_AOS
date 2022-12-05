@@ -1,5 +1,6 @@
 package com.inha.hbc.util.network.room
 
+import com.inha.hbc.data.remote.resp.IsMe
 import com.inha.hbc.data.remote.resp.message.SearchDeco
 import com.inha.hbc.data.remote.resp.room.GetReceiveMessage
 import com.inha.hbc.ui.main.view.GetNotify
@@ -27,4 +28,9 @@ interface RoomRetroServiceInterface {
         @Query("page") page: String,
         @Query("size") size: String
     ): Call<List<GetNotify>>
+
+    @GET("/rooms/{room_id}/messages/mine")
+    fun findMymessage(
+        @Path("room_id") room_id: String
+    ): Call<List<IsMe>>
 }

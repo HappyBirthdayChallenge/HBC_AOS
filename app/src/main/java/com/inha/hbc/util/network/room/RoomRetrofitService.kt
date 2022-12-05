@@ -2,6 +2,8 @@ package com.inha.hbc.util.network.room
 
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import com.inha.hbc.data.remote.resp.IsMe
+import com.inha.hbc.data.remote.resp.IsMeSuccess
 import com.inha.hbc.data.remote.resp.message.CreateMessage
 import com.inha.hbc.data.remote.resp.message.CreateMessageSuccess
 import com.inha.hbc.data.remote.resp.message.SearchDeco
@@ -28,6 +30,7 @@ class RoomRetrofitService {
     lateinit var searchDecoView: SearchDecoView
     lateinit var getReceiveMessageView: GetReceiveMessageView
     lateinit var getNotifyView: GetNotifyView
+    lateinit var findMymessageView: FindMymessageView
 
     fun searchDeco(page: String, roomId: String, view: SearchDecoView) {
         searchDecoView = view
@@ -109,6 +112,30 @@ class RoomRetrofitService {
                 TODO("Not yet implemented")
             }
 
+        })
+    }
+
+    fun findMymessage(roomId: String, view: FindMymessageView) {
+        findMymessageView = view
+        callRetro().findMymessage(roomId).enqueue(object : Callback<List<IsMe>> {
+            override fun onResponse(call: Call<List<IsMe>>, response: Response<List<IsMe>>) {
+                if (response.isSuccessful) {
+                    val resp = response.body()!![0] as IsMeSuccess
+                    if (resp.code == "R-R004" || resp.code == "R-R006") {
+                        findMymessageView.onFindMymessageSuccess(resp)
+                    }
+                    else {
+                        findMymessageView.onFindMymessageFailure()
+                    }
+                }
+                else {
+                    findMymessageView.onFindMymessageFailure()
+                }
+            }
+
+            override fun onFailure(call: Call<List<IsMe>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
         })
     }
 }
