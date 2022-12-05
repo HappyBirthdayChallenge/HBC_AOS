@@ -45,7 +45,6 @@
                 android:inputType="text"
                 android:saveEnabled="false"
                 android:maxLength="20"
-                android:paddingVertical="10dp"
                 android:background="@color/transparent"
                 android:hint="친구 검색">
             </com.google.android.material.textfield.TextInputEditText>
