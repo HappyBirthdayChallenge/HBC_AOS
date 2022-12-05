@@ -29,7 +29,7 @@ class MenuRetrofitService {
     lateinit var addFriendView: AddFriendView
     lateinit var searchFollowView: SearchFollowView
 
-    fun getFollowingList(page: String, size: String, memId: String, view: FollowingListView) {
+    fun getFollowingList( memId: String,page: String, size: String, view: FollowingListView) {
         followingListView = view
         callRetro().getFollowingList(memId, page, size).enqueue(object: Callback<List<FollowingList>> {
             override fun onResponse(
@@ -56,7 +56,7 @@ class MenuRetrofitService {
         })
     }
 
-    fun getFollowerList(page: String, size: String, memId: String, view: FollowerListView) {
+    fun getFollowerList(memId: String, page: String, size: String, view: FollowerListView) {
         followerListView = view
         callRetro().getFollowerList(memId, page, size).enqueue(object: Callback<List<FollowerList>> {
             override fun onResponse(
