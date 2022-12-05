@@ -24,7 +24,7 @@ class SearchFragment: Fragment(), GlobalSearchView {
     lateinit var callback: OnBackPressedCallback
     lateinit var binding: FragmentSearchBinding
     lateinit var adapter: MainSearchRVAdapter
-    var dataArr = listOf<Result>()
+    var dataArr = ArrayList<Result>()
     var isTyping = false
     var time = 0
     override fun onCreateView(
@@ -52,12 +52,6 @@ class SearchFragment: Fragment(), GlobalSearchView {
         binding.rvSearch.adapter = adapter
     }
 
-    fun updateView(resp: GlobalSearchSuccess) {
-        dataArr = resp.data!!.result
-        adapter.data = dataArr
-        adapter.notifyDataSetChanged()
-        binding.lavSearch.visibility = View.GONE
-    }
 
     fun initListener() {
         binding.tieSearch.addTextChangedListener(object: TextWatcher {
@@ -69,6 +63,11 @@ class SearchFragment: Fragment(), GlobalSearchView {
             }
 
             override fun afterTextChanged(p0: Editable?) {
+                if (binding.tieSearch.text.toString() == "") {
+                    dataArr.clear()
+                    adapter.notifyDataSetChanged()
+                    return
+                }
                 if (checkValid(binding.tieSearch.text.toString()) == 0) {
                     return
                 }
@@ -96,6 +95,9 @@ class SearchFragment: Fragment(), GlobalSearchView {
             }
             if (isTyping || time == 500) {
                 time = 0
+                activity?.runOnUiThread {
+                    binding.lavSearch.visibility = View.GONE
+                }
                 this.cancel()
             }
         }
@@ -110,7 +112,12 @@ class SearchFragment: Fragment(), GlobalSearchView {
     }
 
     override fun onGlobalSearchSuccess(resp: GlobalSearchSuccess) {
-        updateView(resp)
+        dataArr.clear()
+        for (i in resp.data!!.result) {
+            dataArr.add(i)
+        }
+        adapter.notifyDataSetChanged()
+        binding.lavSearch.visibility = View.GONE
     }
 
     override fun onGlobalSearchFailure() {

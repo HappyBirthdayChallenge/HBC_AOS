@@ -11,7 +11,7 @@ import com.inha.hbc.ui.menu.view.AddFriendView
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import com.inha.hbc.util.network.menu.MenuRetrofitService
 
-class MainSearchRVAdapter(var data: List<Result>): RecyclerView.Adapter<MainSearchRVAdapter.UserHolder>() {
+class MainSearchRVAdapter(var data: ArrayList<Result>): RecyclerView.Adapter<MainSearchRVAdapter.UserHolder>() {
     interface SetMainSearch{
         fun onClick(pos: Int)
     }
@@ -29,7 +29,7 @@ class MainSearchRVAdapter(var data: List<Result>): RecyclerView.Adapter<MainSear
         return data.size
     }
 
-    class UserHolder(val binding: ItemUserListBinding, val setMainSearch: SetMainSearch, var dataArr: List<Result>):
+    class UserHolder(val binding: ItemUserListBinding, val setMainSearch: SetMainSearch, var data: ArrayList<Result>):
         RecyclerView.ViewHolder(binding.root), AddFriendView {
         fun init(pos: Int) {
             initView(pos)
@@ -37,11 +37,11 @@ class MainSearchRVAdapter(var data: List<Result>): RecyclerView.Adapter<MainSear
         }
 
         fun initView(pos: Int) {
-            binding.tvItemUserListId.text = dataArr[pos].member.username
-            binding.tvItemUserListName.text = dataArr[pos].member.name
+            binding.tvItemUserListId.text = data[pos].member.username
+            binding.tvItemUserListName.text = data[pos].member.name
 
 
-            if (dataArr[pos]!!.follow) {
+            if (data[pos]!!.follow) {
                 binding.tvItemUserListFollow.text = "팔로잉"
                 binding.tvItemUserListFollow.setTextColor(
                     MainFragmentManager.baseActivity.applicationContext.resources.getColor(R.color.black, null)
@@ -60,7 +60,7 @@ class MainSearchRVAdapter(var data: List<Result>): RecyclerView.Adapter<MainSear
             }
 
             Glide.with(MainFragmentManager.baseActivity.applicationContext)
-                .load(dataArr[pos]!!.member.image_url)
+                .load(data[pos]!!.member.image_url)
                 .into(binding.ivItemUserList)
 
         }
@@ -70,7 +70,7 @@ class MainSearchRVAdapter(var data: List<Result>): RecyclerView.Adapter<MainSear
                 if (binding.tvItemUserListFollow.text == "팔로잉") {
                 }
                 else {
-                    MenuRetrofitService().addFriend(dataArr[pos]!!.member.id.toString(), this)
+                    MenuRetrofitService().addFriend(data[pos]!!.member.id.toString(), this)
                 }
             }
 
