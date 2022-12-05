@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.inha.hbc.R
 import com.inha.hbc.data.remote.resp.menu.FollowingContent
 import com.inha.hbc.databinding.ItemMenuFriendlistLoadingBinding
 import com.inha.hbc.databinding.ItemUserListBinding
@@ -62,7 +63,14 @@ class MenuFollowingListRVAdapter(val friendList: ArrayList<FollowingContent?>): 
             binding.tvItemUserListName.text = data[pos]!!.following.name
             binding.tvItemUserListId.text = data[pos]!!.following.username
             Glide.with(MainFragmentManager.baseActivity.applicationContext).load(data[pos]!!.following.image_url).into(binding.ivItemUserList)
-
+            binding.tvItemUserListFollow.text = "팔로잉"
+            binding.tvItemUserListFollow.setTextColor(
+                MainFragmentManager.baseActivity.applicationContext.resources.getColor(R.color.black, null)
+            )
+            binding.tvItemUserListFollow.background =
+                MainFragmentManager.baseActivity.applicationContext.resources.getDrawable(
+                    R.drawable.item_white_following_btn, null
+                )
             initListener(pos, data[pos]!!)
         }
 
