@@ -79,6 +79,7 @@ class MainMymessageFragment: Fragment(), GetReceiveMessageView {
         adapter.setReceiveMessage = object: MainMymessageRVAdapter.SetReceiveMessage{
             override fun onClick(pos: Int) {
                 selectedInfo = dataArr[pos]!!
+                MainFragmentManager.closeMessageList(this@MainMymessageFragment)
             }
         }
         binding.rvMainMymessage.adapter= adapter
