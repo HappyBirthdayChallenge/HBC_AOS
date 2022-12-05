@@ -3,7 +3,7 @@ package com.inha.hbc.ui.assist
 fun convertDeco(name: String): String {
     val arr = name.split("_")
     var type = arr[arr.size - 2].uppercase()
-    if (type == "toy") {
+    if (type == "TOY") {
         type = "DOLL"
     }
     return type + "_TYPE" + arr[arr.size - 1]

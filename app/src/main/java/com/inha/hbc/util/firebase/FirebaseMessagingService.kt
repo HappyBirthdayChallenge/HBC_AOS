@@ -1,9 +1,11 @@
 package com.inha.hbc.util.firebase
 
 import android.util.Log
+import android.widget.Toast
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.firebase.messaging.RemoteMessage
 import com.inha.hbc.util.network.RetrofitService
 import com.inha.hbc.util.sharedpreference.GlobalApplication
 
@@ -28,6 +30,12 @@ class FirebaseMessagingService: FirebaseMessagingService() {
         Log.d("getToken","newTok")
         GlobalApplication.prefs.setFcmtoken(token)
         RetrofitService().refreshFcm(GlobalApplication.prefs.getFcmtoken()!!)
+    }
+
+    override fun onMessageReceived(message: RemoteMessage) {
+        super.onMessageReceived(message)
+        if (message.notification != null) {
+        }
     }
     
 
