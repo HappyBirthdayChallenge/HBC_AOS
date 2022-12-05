@@ -65,7 +65,7 @@ class MainFragment: Fragment(), SearchDecoView {
 
     fun initListener() {
         binding.ivMainProfileMenu.setOnClickListener {
-            MainFragmentManager.transToMenu()
+            MainFragmentManager.transToMenu(GlobalApplication.prefs.getInfo()!!.id)
         }
 
         binding.ivMainSend.setOnClickListener {

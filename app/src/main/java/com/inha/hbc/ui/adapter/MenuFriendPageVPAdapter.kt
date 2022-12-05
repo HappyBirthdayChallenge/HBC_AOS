@@ -18,6 +18,7 @@ import com.inha.hbc.ui.main.view.RoomInfoView
 import com.inha.hbc.ui.menu.view.FollowerListView
 import com.inha.hbc.ui.menu.view.FollowingListView
 import com.inha.hbc.ui.menu.view.SearchFollowView
+import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import com.inha.hbc.util.fragmentmanager.MenuFragmentManager
 import com.inha.hbc.util.network.main.MainRetrofitService
 import com.inha.hbc.util.network.menu.MenuRetrofitService
@@ -255,9 +256,11 @@ class MenuFriendPageVPAdapter(): RecyclerView.Adapter<MenuFriendPageVPAdapter.Fo
         override fun onRoomInfoSuccess(resp: RoomInfoSuccess) {
             if (pos == 0) {
                 MenuFragmentManager.goPartyRoom(resp, selectedFollowingInfo)
+                MainFragmentManager.transToMenu(selectedFollowingInfo.following.id)
             }
             else {
                 MenuFragmentManager.goPartyRoom(resp, selectedFollowerInfo)
+                MainFragmentManager.transToMenu(selectedFollowerInfo.follower.id)
             }
         }
 

@@ -49,8 +49,8 @@ object MainFragmentManager: RoomInfoView{
         manager.beginTransaction().add(id, mainPage).commit()
     }
 
-    fun transToMenu() {
-        MenuFragmentManager.init(manager, id, GlobalApplication.prefs.getInfo()!!.id)
+    fun transToMenu(memId: Int) {
+        MenuFragmentManager.init(manager, id, memId)
         MenuFragmentManager.start(mainPage)
     }
 
