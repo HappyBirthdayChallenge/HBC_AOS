@@ -63,15 +63,22 @@ class MenuFollowingListRVAdapter(val friendList: ArrayList<FollowingContent?>): 
             binding.tvItemUserListName.text = data[pos]!!.member.name
             binding.tvItemUserListId.text = data[pos]!!.member.username
             Glide.with(MainFragmentManager.baseActivity.applicationContext).load(data[pos]!!.member.image_url).into(binding.ivItemUserList)
-            binding.tvItemUserListFollow.text = "팔로잉"
-            binding.tvItemUserListFollow.setTextColor(
-                MainFragmentManager.baseActivity.applicationContext.resources.getColor(R.color.black, null)
-            )
-            binding.tvItemUserListFollow.background =
-                MainFragmentManager.baseActivity.applicationContext.resources.getDrawable(
-                    R.drawable.item_white_following_btn, null
+            if (data[pos]!!.follow) {
+                binding.tvItemUserListFollow.text = "팔로잉"
+                binding.tvItemUserListFollow.setTextColor(
+                    MainFragmentManager.baseActivity.applicationContext.resources.getColor(R.color.black, null)
                 )
-            initListener(pos, data[pos]!!)
+                binding.tvItemUserListFollow.background =
+                    MainFragmentManager.baseActivity.applicationContext.resources.getDrawable(
+                        R.drawable.item_white_following_btn, null
+                    )
+            }
+            else {
+                binding.tvItemUserListFollow.text = "팔로우"
+                binding.tvItemUserListFollow.background = MainFragmentManager.baseActivity.applicationContext.resources.getDrawable(
+                    R.drawable.item_blue_follow_btn, null
+                )
+            }
         }
 
         fun initListener(pos: Int, followingContent: FollowingContent) {
