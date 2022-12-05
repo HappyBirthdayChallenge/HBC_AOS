@@ -31,6 +31,7 @@ object MainFragmentManager: RoomInfoView{
     lateinit var roominfo: RoomInfoSuccess
     lateinit var personInfo: GetMyInfoSuccess
 
+    var notiType = ""
 
     fun init(manager: FragmentManager, id: Int, data: RoomInfoSuccess, info: GetMyInfoSuccess, base: MainActivity) {
         val arr = data.data!![0].cake_type.split("E")
@@ -129,15 +130,33 @@ object MainFragmentManager: RoomInfoView{
 
     fun notiToElse(type: String, data: NotifyContent, fragment: Fragment) {
         manager.beginTransaction().remove(fragment).commit()
-        when (type) {
+        notiType = type
+        when (notiType) {
             "FRIEND" -> {
                 MenuFragmentManager.init(manager, id, data.friend_alarm!!.member.id)
                 MenuFragmentManager.start(mainPage)
+                notiType = ""
             }
             "MESSAGE" -> {
                 closeNotify(fragment)
+                notiType = ""
             }
             "MESSAGE_LIKE" -> {
+                personInfo = GetMyInfoSuccess(1, GetMyInfoData(authorities = listOf(""),
+                    birth_date = GetMyInfoBirth(
+                        date = data.message_like_alarm!!.member.birth_date.date,
+                        month = data.message_like_alarm!!.member.birth_date.month,
+                        year = data.message_like_alarm!!.member.birth_date.year,
+                        type = data.message_like_alarm!!.member.birth_date.type
+                    ),
+                    id = data.message_like_alarm!!.member.id,
+                    image_url = data.message_like_alarm!!.member.image_url,
+                    name = data.message_like_alarm!!.member.name,
+                    phone = "",
+                    username = data.message_like_alarm!!.member.username
+                ), "", "")
+                notiMessageId = data.message_like_alarm!!.message_id
+                MessageRetrofitService().roomInfo(data.message_like_alarm!!.member.id.toString(), this)
 
             }
             else -> {//Room
@@ -158,9 +177,16 @@ object MainFragmentManager: RoomInfoView{
             }
         }
     }
-
+    var notiMessageId = 0
     override fun onRoomInfoSuccess(resp: RoomInfoSuccess) {
-        refreshPartyRoom(resp)
+        notiType =""
+        if (notiType == "MESSAGE_LIKE") {
+            refreshPartyRoom(resp)
+            openLetter(notiMessageId)
+        }
+        else {
+            refreshPartyRoom(resp)
+        }
     }
 
     override fun onRoomInfoFailure() {
