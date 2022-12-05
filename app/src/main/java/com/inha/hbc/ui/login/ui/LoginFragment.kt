@@ -20,6 +20,7 @@ import com.inha.hbc.ui.assist.cakeSelectionAssist
 import com.inha.hbc.ui.login.view.*
 import com.inha.hbc.ui.main.ui.MainActivity
 import com.inha.hbc.ui.main.view.RoomInfoView
+import com.inha.hbc.util.firebase.FirebaseMessagingService
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import com.inha.hbc.util.fragmentmanager.NormLoginFragmentManager
 import com.inha.hbc.util.sharedpreference.GlobalApplication
@@ -211,6 +212,7 @@ class LoginFragment(val isBackBirth: Boolean): Fragment(), KakaoLoginView, GetTo
 
         val parArr = arrayListOf(data)
         val infArr = arrayListOf(myInfo)
+        FirebaseMessagingService().searchToken()
         RetrofitService().refreshFcm(GlobalApplication.prefs.getFcmtoken()!!)
         val intent = Intent(requireActivity(), MainActivity::class.java).apply {
             putParcelableArrayListExtra("data", parArr)
