@@ -131,6 +131,11 @@ object MainFragmentManager: RoomInfoView{
         MenuFragmentManager.start(mainPage)
     }
 
+    fun closeSearch(fragment: Fragment) {
+        manager.beginTransaction().remove(fragment).commit()
+        manager.beginTransaction().show(mainPage).commit()
+    }
+
     fun notiToElse(type: String, data: NotifyContent, fragment: Fragment) {
         manager.beginTransaction().remove(fragment).commit()
         notiType = type

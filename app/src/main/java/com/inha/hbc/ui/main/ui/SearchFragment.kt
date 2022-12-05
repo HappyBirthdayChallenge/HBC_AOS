@@ -1,5 +1,6 @@
 package com.inha.hbc.ui.main.ui
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -7,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.inha.hbc.data.remote.resp.main.GlobalSearchSuccess
 import com.inha.hbc.databinding.FragmentSearchBinding
@@ -19,6 +21,7 @@ import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import java.util.regex.Pattern
 
 class SearchFragment: Fragment(), GlobalSearchView {
+    lateinit var callback: OnBackPressedCallback
     lateinit var binding: FragmentSearchBinding
     lateinit var adapter: MainSearchRVAdapter
     var dataArr = listOf<Result>()
@@ -75,6 +78,10 @@ class SearchFragment: Fragment(), GlobalSearchView {
             }
 
         })
+
+        binding.ivSearchBack.setOnClickListener {
+            MainFragmentManager.closeSearch(this@SearchFragment)
+        }
     }
 
 
@@ -108,5 +115,20 @@ class SearchFragment: Fragment(), GlobalSearchView {
 
     override fun onGlobalSearchFailure() {
         TODO("Not yet implemented")
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                MainFragmentManager.closeSearch(this@SearchFragment)
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        callback.remove()
     }
 }
