@@ -137,7 +137,7 @@ object MainFragmentManager: RoomInfoView{
             "MESSAGE" -> {
                 closeNotify(fragment)
             }
-            "MESSAGELIKE" -> {
+            "MESSAGE_LIKE" -> {
 
             }
             else -> {//Room

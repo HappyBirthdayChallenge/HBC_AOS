@@ -114,7 +114,7 @@ class MainNotifyRVAdapter(var data: List<NotifyContent?>):RecyclerView.Adapter<R
 
                     binding.tvItemNotify.text = data[pos]!!.content
                 }
-                "MESSAGELIKE" -> {
+                "MESSAGE_LIKE" -> {
                     binding.cvItemNotifyProfile.visibility = View.INVISIBLE
                     binding.ivItemNotifyElse.visibility = View.VISIBLE
                     binding.tvItemNotifyFollow.visibility = View.GONE
