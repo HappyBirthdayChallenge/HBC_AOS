@@ -17,7 +17,7 @@ fun convertAnime(name: String): String {
 
 fun serverDecoToId(name: String): Int {
     val arr = name.split("_")
-    var num = arr[1][arr[1].length - 1].toString().toInt()
+    var num = arr[1][arr[1].length - 1].toString().toInt() - 1
     var type = arr[0]
 
     var typenum = when (type) {
