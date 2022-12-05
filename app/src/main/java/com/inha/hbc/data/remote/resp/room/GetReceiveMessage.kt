@@ -17,7 +17,7 @@ data class GetReceiveMessageSuccess(
     val data: ReceiveMessageData,
     val message: String,
     val status: Int
-)
+): GetReceiveMessage()
 
 @Serializable
 @SerialName("E")
@@ -26,7 +26,7 @@ data class GetReceiveMessageFailure(
     var errors: Error?,
     var message: String?,
     var status: Int?
-)
+): GetReceiveMessage()
 
 @Serializable
 data class ReceiveMessageData(

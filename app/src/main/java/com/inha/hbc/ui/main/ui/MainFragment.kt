@@ -24,6 +24,7 @@ import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import com.inha.hbc.util.network.message.MessageRetrofitService
 import com.inha.hbc.util.network.room.RoomRetrofitService
 import com.inha.hbc.util.sharedpreference.GlobalApplication
+import java.util.Calendar
 
 class MainFragment: Fragment(), SearchDecoView {
     lateinit var binding : FragmentMainBinding
@@ -68,8 +69,17 @@ class MainFragment: Fragment(), SearchDecoView {
         }
 
         binding.ivMainSend.setOnClickListener {
-            if (binding.tvMainTitle.text == GlobalApplication.prefs.getInfo()!!.username) {
-                MainFragmentManager.transToMessageList()
+            if (MainFragmentManager.personInfo.data!!.username == GlobalApplication.prefs.getInfo()!!.username) {
+                val cal = Calendar.getInstance()
+                val mon = cal.get(Calendar.MONTH) + 1
+                val date = cal.get(Calendar.DATE)
+                if (MainFragmentManager.personInfo.data!!.birth_date.month == mon
+                    && MainFragmentManager.personInfo.data!!.birth_date.date >= date) {
+                    MainFragmentManager.transToMessageList()
+                }
+                else if (MainFragmentManager.personInfo.data!!.birth_date.month < mon) {
+                    MainFragmentManager.transToMessageList()
+                }
             }
             else {
                 MainFragmentManager.transToLetter()
