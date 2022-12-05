@@ -11,12 +11,14 @@ import retrofit2.http.Query
 interface MenuRetroServiceInterface {
     @GET("/members/friends/followings")
     fun getFollowingList(
+        @Query("member_id") member_id: String,
         @Query("page") page: String,
         @Query("size") size: String
     ): Call<List<FollowingList>>
 
     @GET("/members/friends/followers")
     fun getFollowerList(
+        @Query("member_id") member_id: String,
         @Query("page") page: String,
         @Query("size") size: String
     ): Call<List<FollowerList>>

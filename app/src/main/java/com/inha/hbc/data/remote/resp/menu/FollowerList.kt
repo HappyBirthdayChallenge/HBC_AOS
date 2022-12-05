@@ -50,7 +50,7 @@ data class FollowerPage(
 @Serializable
 data class FollowerContent(
     val follow: Boolean,
-    val follower: Follower
+    val member: Follower
 )
 
 @Serializable

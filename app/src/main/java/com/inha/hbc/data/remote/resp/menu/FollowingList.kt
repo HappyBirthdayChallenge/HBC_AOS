@@ -51,7 +51,8 @@ data class FollowingPage(
 
 @Serializable
 data class FollowingContent(
-    val following: Following
+    val follow: Boolean,
+    val member: Following
 )
 
 @Serializable
