@@ -3,10 +3,10 @@ package com.inha.hbc.ui.main.ui
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.inha.hbc.data.remote.resp.main.GlobalSearchSuccess
 import com.inha.hbc.databinding.FragmentSearchBinding
@@ -35,6 +35,7 @@ class SearchFragment: Fragment(), GlobalSearchView {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        initListener()
     }
 
     fun initView() {
@@ -45,8 +46,9 @@ class SearchFragment: Fragment(), GlobalSearchView {
         }
         binding.rvSearch.adapter = adapter
     }
+
     fun updateView(resp: GlobalSearchSuccess) {
-        dataArr = resp.data!!.result
+        adapter.dataArr = resp.data!!.result
         adapter.notifyDataSetChanged()
         binding.lavSearch.visibility = View.GONE
     }
@@ -61,10 +63,9 @@ class SearchFragment: Fragment(), GlobalSearchView {
             }
 
             override fun afterTextChanged(p0: Editable?) {
-//                if (checkValid(binding.tieSearch.text.toString()) == 0) {
-//                    Toast.makeText(context,"영문 대소문자 5~20자사이로 검색해주세요!", Toast.LENGTH_SHORT).show()
-//                    return
-//                }
+                if (checkValid(binding.tieSearch.text.toString()) == 0) {
+                    return
+                }
                 isTyping = false
                 startTimer()
                 binding.lavSearch.visibility = View.VISIBLE
@@ -77,12 +78,13 @@ class SearchFragment: Fragment(), GlobalSearchView {
     fun startTimer() {
         timer(period = 1) {
             time++
-            if (!isTyping && time == 100) {
+            if (!isTyping && time == 500) {
+                Log.d("keyword", binding.tieSearch.text.toString())
                 MainRetrofitService().globalSearch(binding.tieSearch.text.toString(), this@SearchFragment)
                 time = 0
                 this.cancel()
             }
-            if (isTyping || time == 100) {
+            if (isTyping || time == 500) {
                 time = 0
                 this.cancel()
             }
@@ -90,7 +92,7 @@ class SearchFragment: Fragment(), GlobalSearchView {
     }
 
     fun checkValid(str: String): Int {
-        val keywordPattern = "^[A-Za-z\\d]{5,20}\$"
+        val keywordPattern = "^[가-힣A-Za-z\\d]{1,20}\$"
         val pattern = Pattern.compile(keywordPattern)
         val matcher = pattern.matcher(str)
         return if (matcher.find()) 1

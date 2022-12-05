@@ -1,5 +1,6 @@
 package com.inha.hbc.ui.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -35,6 +36,7 @@ class MainSearchRVAdapter(var dataArr: List<Result>): RecyclerView.Adapter<MainS
         fun initView(pos: Int) {
             binding.tvItemUserListId.text = dataArr[pos].member.username
             binding.tvItemUserListName.text = dataArr[pos].member.name
+
 
             if (dataArr[pos]!!.follow) {
                 binding.tvItemUserListFollow.text = "팔로잉"
