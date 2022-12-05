@@ -10,10 +10,7 @@ import com.inha.hbc.data.remote.resp.menu.Following
 import com.inha.hbc.data.remote.resp.menu.FollowingContent
 import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
 import com.inha.hbc.ui.assist.cakeSelectionAssist
-import com.inha.hbc.ui.main.ui.MainActivity
-import com.inha.hbc.ui.main.ui.MainFragment
-import com.inha.hbc.ui.main.ui.MainMymessageFragment
-import com.inha.hbc.ui.main.ui.NotifyFragment
+import com.inha.hbc.ui.main.ui.*
 import com.inha.hbc.ui.main.view.Member
 import com.inha.hbc.ui.main.view.NotifyContent
 import com.inha.hbc.ui.main.view.RoomInfoView
@@ -191,5 +188,10 @@ object MainFragmentManager: RoomInfoView{
 
     override fun onRoomInfoFailure() {
         TODO("Not yet implemented")
+    }
+
+    fun transToSearch() {
+        manager.beginTransaction().add(id, SearchFragment()).commit()
+        manager.beginTransaction().hide(mainPage).commit()
     }
 }

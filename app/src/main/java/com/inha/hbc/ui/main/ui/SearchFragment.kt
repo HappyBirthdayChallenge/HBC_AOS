@@ -6,6 +6,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.inha.hbc.data.remote.resp.main.GlobalSearchSuccess
 import com.inha.hbc.databinding.FragmentSearchBinding
@@ -14,6 +15,7 @@ import com.inha.hbc.ui.main.view.GlobalSearchView
 import com.inha.hbc.util.network.main.MainRetrofitService
 import kotlin.concurrent.timer
 import com.inha.hbc.data.remote.resp.main.Result
+import java.util.regex.Pattern
 
 class SearchFragment: Fragment(), GlobalSearchView {
     lateinit var binding: FragmentSearchBinding
@@ -59,6 +61,10 @@ class SearchFragment: Fragment(), GlobalSearchView {
             }
 
             override fun afterTextChanged(p0: Editable?) {
+//                if (checkValid(binding.tieSearch.text.toString()) == 0) {
+//                    Toast.makeText(context,"영문 대소문자 5~20자사이로 검색해주세요!", Toast.LENGTH_SHORT).show()
+//                    return
+//                }
                 isTyping = false
                 startTimer()
                 binding.lavSearch.visibility = View.VISIBLE
@@ -66,6 +72,7 @@ class SearchFragment: Fragment(), GlobalSearchView {
 
         })
     }
+
 
     fun startTimer() {
         timer(period = 1) {
@@ -80,6 +87,14 @@ class SearchFragment: Fragment(), GlobalSearchView {
                 this.cancel()
             }
         }
+    }
+
+    fun checkValid(str: String): Int {
+        val keywordPattern = "^[A-Za-z\\d]{5,20}\$"
+        val pattern = Pattern.compile(keywordPattern)
+        val matcher = pattern.matcher(str)
+        return if (matcher.find()) 1
+        else 0
     }
 
     override fun onGlobalSearchSuccess(resp: GlobalSearchSuccess) {

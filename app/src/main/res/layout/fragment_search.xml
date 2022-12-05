@@ -95,6 +95,6 @@
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
         android:background="@color/white"
-        android:visibility="invisible">
+        android:visibility="gone">
     </com.airbnb.lottie.LottieAnimationView>
 </androidx.constraintlayout.widget.ConstraintLayout>

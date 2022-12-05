@@ -91,6 +91,9 @@ class MainFragment: Fragment(), SearchDecoView {
 
         binding.tvMainTitle.setOnClickListener {
         }
+        binding.ivMainSearch.setOnClickListener {
+            MainFragmentManager.transToSearch()
+        }
 
     }
 
