@@ -2,6 +2,8 @@ package com.inha.hbc.util.network.menu
 
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
+import com.inha.hbc.data.remote.resp.main.GlobalSearch
+import com.inha.hbc.data.remote.resp.main.GlobalSearchSuccess
 import com.inha.hbc.data.remote.resp.menu.*
 import com.inha.hbc.ui.menu.view.*
 import com.inha.hbc.util.network.NetworkModule
@@ -25,6 +27,7 @@ class MenuRetrofitService {
     lateinit var getProfileView: GetProfileView
     lateinit var getMymessageView: GetMymessageView
     lateinit var addFriendView: AddFriendView
+    lateinit var searchFollowView: SearchFollowView
 
     fun getFollowingList(page: String, size: String, view: FollowingListView) {
         followingListView = view
@@ -158,6 +161,59 @@ class MenuRetrofitService {
             }
 
             override fun onFailure(call: Call<List<AddFriend>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+
+    fun searchFollower(keyWord: String, view: SearchFollowView, type: String) {
+        searchFollowView = view
+        callRetro().searchFollower(keyWord).enqueue(object: Callback<List<GlobalSearch>> {
+            override fun onResponse(
+                call: Call<List<GlobalSearch>>,
+                response: Response<List<GlobalSearch>>
+            ) {
+                if (response.isSuccessful) {
+                    val resp = response.body()!![0] as GlobalSearchSuccess
+                    if (resp.code == "R-M023"){
+                        searchFollowView.onSearchFollowSuccess(resp, type)
+                    }
+                    else {
+                        searchFollowView.onSearchFollowFailure()
+                    }
+                }
+                else {
+                    searchFollowView.onSearchFollowFailure()
+                }
+            }
+
+            override fun onFailure(call: Call<List<GlobalSearch>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+    fun searchFollowing(keyWord: String, view: SearchFollowView, type: String) {
+        searchFollowView = view
+        callRetro().searchFollowing(keyWord).enqueue(object: Callback<List<GlobalSearch>> {
+            override fun onResponse(
+                call: Call<List<GlobalSearch>>,
+                response: Response<List<GlobalSearch>>
+            ) {
+                if (response.isSuccessful) {
+                    val resp = response.body()!![0] as GlobalSearchSuccess
+                    if (resp.code == "R-M023"){
+                        searchFollowView.onSearchFollowSuccess(resp, type)
+                    }
+                    else {
+                        searchFollowView.onSearchFollowFailure()
+                    }
+                }
+                else {
+                    searchFollowView.onSearchFollowFailure()
+                }
+            }
+
+            override fun onFailure(call: Call<List<GlobalSearch>>, t: Throwable) {
                 TODO("Not yet implemented")
             }
         })

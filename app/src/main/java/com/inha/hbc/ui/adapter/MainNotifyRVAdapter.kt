@@ -92,7 +92,6 @@ class MainNotifyRVAdapter(var data: List<NotifyContent?>):RecyclerView.Adapter<R
                         binding.tvItemNotifyFollow.setTextColor(
                             MainFragmentManager.baseActivity.applicationContext.resources.getColor(R.color.black, null)
                         )
-                        binding.tvItemNotifyFollow.textSize = 14f
                         binding.tvItemNotifyFollow.background =
                             MainFragmentManager.baseActivity.applicationContext.resources.getDrawable(
                                 R.drawable.item_white_following_btn, null
@@ -144,7 +143,6 @@ class MainNotifyRVAdapter(var data: List<NotifyContent?>):RecyclerView.Adapter<R
             binding.tvItemNotifyFollow.setTextColor(
                 MainFragmentManager.baseActivity.applicationContext.resources.getColor(R.color.black, null)
             )
-            binding.tvItemNotifyFollow.textSize = 14f
             binding.tvItemNotifyFollow.background =
                 MainFragmentManager.baseActivity.applicationContext.resources.getDrawable(
                     R.drawable.item_white_following_btn, null

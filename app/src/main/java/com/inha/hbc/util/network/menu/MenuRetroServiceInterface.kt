@@ -1,5 +1,6 @@
 package com.inha.hbc.util.network.menu
 
+import com.inha.hbc.data.remote.resp.main.GlobalSearch
 import com.inha.hbc.data.remote.resp.menu.*
 import retrofit2.Call
 import retrofit2.http.GET
@@ -35,4 +36,14 @@ interface MenuRetroServiceInterface {
     fun addFriend(
         @Query("member_id") member_id: String
     ): Call<List<AddFriend>>
+
+    @GET("/members/friends/search/follower")
+    fun searchFollower(
+        @Query("keyword")keyword: String
+    ): Call<List<GlobalSearch>>
+
+    @GET("/members/friends/search/following")
+    fun searchFollowing(
+        @Query("keyword")keyword: String
+    ): Call<List<GlobalSearch>>
 }
