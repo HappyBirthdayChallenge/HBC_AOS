@@ -3,8 +3,10 @@ package com.inha.hbc.ui.menu.ui
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.inha.hbc.R
 import com.inha.hbc.data.remote.resp.menu.GetProfileSuccess
 import com.inha.hbc.databinding.ItemMyInfoBinding
+import com.inha.hbc.ui.assist.dpToPx
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import com.inha.hbc.util.fragmentmanager.MenuFragmentManager
 import com.inha.hbc.util.sharedpreference.GlobalApplication
@@ -39,7 +41,30 @@ class MypageInfoHolder(val binding: ItemMyInfoBinding, val data: GetProfileSucce
         }
         else {
             binding.cvItemMyInfoFollow.visibility = View.VISIBLE
+            if (data.data.follow) {
+                binding.tvItemMyInfoFollow.text = "팔로잉"
+                binding.ivItemMyInfoFollow.visibility= View.VISIBLE
+                binding.cvItemMyInfoFollow.strokeColor =
+                    MainFragmentManager.baseActivity.applicationContext.resources.getColor(R.color.white, null)
+                binding.cvItemMyInfoFollow.strokeWidth = dpToPx(0)
+                binding.tvItemMyInfoFollow.setTextColor(
+                    MainFragmentManager.baseActivity.applicationContext.resources.getColor(R.color.black, null)
+                )
+            }
+            else {
+                binding.tvItemMyInfoFollow.text = "팔로우"
+                binding.ivItemMyInfoFollow.visibility= View.GONE
+                binding.cvItemMyInfoFollow.strokeColor =
+                    MainFragmentManager.baseActivity.applicationContext.resources.getColor(R.color.blue, null)
+                binding.cvItemMyInfoFollow.strokeWidth = dpToPx(2)
+                binding.tvItemMyInfoFollow.setTextColor(
+                    MainFragmentManager.baseActivity.applicationContext.resources.getColor(R.color.blue, null)
+                )
+            }
         }
+
+
+
     }
 
     fun initListener() {
