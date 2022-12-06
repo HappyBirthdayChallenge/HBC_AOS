@@ -1,10 +1,12 @@
 package com.inha.hbc.ui.menu.ui
 
 import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.datatransport.runtime.scheduling.jobscheduling.SchedulerConfig.Flag
 import com.inha.hbc.R
 import com.inha.hbc.data.remote.resp.menu.GetProfileSuccess
 import com.inha.hbc.databinding.ItemMyInfoBinding
@@ -47,6 +49,7 @@ class MypageInfoHolder(val binding: ItemMyInfoBinding, val data: GetProfileSucce
 
         if (data.data.member.id == GlobalApplication.prefs.getInfo()!!.id) {
             binding.cvItemMyInfoFollow.visibility = View.GONE
+            binding.cvItemMyInfoShare.visibility = View.VISIBLE
         }
         else {
             binding.cvItemMyInfoFollow.visibility = View.VISIBLE
@@ -95,6 +98,9 @@ class MypageInfoHolder(val binding: ItemMyInfoBinding, val data: GetProfileSucce
                 MenuRetrofitService().addFriend(data.data.member.id.toString(), this)
             }
         }
+        binding.cvItemMyInfoShare.setOnClickListener {
+            sendKakaoLink()
+        }
     }
 
     fun sendKakaoLink() {
@@ -129,7 +135,8 @@ class MypageInfoHolder(val binding: ItemMyInfoBinding, val data: GetProfileSucce
                 }
                 else if (sharingResult != null) {
                     Log.d("카카오톡 공유 성공", "카카오톡 공유 성공 ${sharingResult.intent}")
-                    MainFragmentManager.baseActivity.startActivity(sharingResult.intent)
+                    MainFragmentManager.baseActivity.startActivity(sharingResult.intent.addFlags(
+                        Intent.FLAG_ACTIVITY_NEW_TASK))
 
                     // 카카오톡 공유에 성공했지만 아래 경고 메시지가 존재할 경우 일부 컨텐츠가 정상 동작하지 않을 수 있습니다.
                     Log.d( "Warning","Warning Msg: ${sharingResult.warningMsg}")

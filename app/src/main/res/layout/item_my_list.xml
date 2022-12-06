@@ -9,6 +9,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@id/vp_item_my_list"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:tabTextColor="@color/black"
         app:tabSelectedTextColor="@color/main_color"
         app:tabIndicatorColor="@color/main_color"
