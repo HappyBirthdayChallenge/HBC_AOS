@@ -7,11 +7,14 @@ import com.inha.hbc.R
 import com.inha.hbc.data.remote.resp.menu.GetProfileSuccess
 import com.inha.hbc.databinding.ItemMyInfoBinding
 import com.inha.hbc.ui.assist.dpToPx
+import com.inha.hbc.ui.menu.view.AddFriendView
 import com.inha.hbc.util.fragmentmanager.MainFragmentManager
 import com.inha.hbc.util.fragmentmanager.MenuFragmentManager
+import com.inha.hbc.util.network.menu.MenuRetrofitService
 import com.inha.hbc.util.sharedpreference.GlobalApplication
 
-class MypageInfoHolder(val binding: ItemMyInfoBinding, val data: GetProfileSuccess): RecyclerView.ViewHolder(binding.root) {
+class MypageInfoHolder(val binding: ItemMyInfoBinding, val data: GetProfileSuccess):
+    RecyclerView.ViewHolder(binding.root), AddFriendView{
     fun init() {
         initListener()
         initView()
@@ -80,5 +83,27 @@ class MypageInfoHolder(val binding: ItemMyInfoBinding, val data: GetProfileSucce
         binding.tvItemMyInfoFollowingTitle.setOnClickListener {
             MenuFragmentManager.openFriendList(0)
         }
+
+        binding.cvItemMyInfoFollow.setOnClickListener {
+            if (binding.tvItemMyInfoFollow.text == "팔로우") {
+                MenuRetrofitService().addFriend(data.data.member.id.toString(), this)
+            }
+        }
     }
+
+    override fun onAddFriendSuccess() {
+        binding.tvItemMyInfoFollow.text = "팔로잉"
+        binding.ivItemMyInfoFollow.visibility= View.VISIBLE
+        binding.cvItemMyInfoFollow.strokeColor =
+            MainFragmentManager.baseActivity.applicationContext.resources.getColor(R.color.white, null)
+        binding.cvItemMyInfoFollow.strokeWidth = dpToPx(0)
+        binding.tvItemMyInfoFollow.setTextColor(
+            MainFragmentManager.baseActivity.applicationContext.resources.getColor(R.color.black, null)
+        )
+    }
+
+    override fun onAddFriendFailure() {
+        TODO("Not yet implemented")
+    }
+
 }
