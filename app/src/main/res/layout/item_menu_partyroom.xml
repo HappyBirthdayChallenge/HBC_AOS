@@ -27,8 +27,8 @@
                 app:layout_constraintRight_toLeftOf="@id/iv_item_menu_partyroom_fire_candle_first"
                 app:layout_constraintBottom_toTopOf="@id/iv_item_menu_partyroom_fire_candle_first"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_weight="1.75"
-                app:layout_constraintVertical_weight="3.5">
+                app:layout_constraintHorizontal_weight="2"
+                app:layout_constraintVertical_weight="4">
             </Space>
             <Space
                 android:id="@+id/sp_item_menu_partyroom_fire_candle_left_last"
@@ -39,7 +39,7 @@
                 app:layout_constraintBottom_toTopOf="@id/iv_item_menu_partyroom_fire_candle_last"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintHorizontal_weight="3"
-                app:layout_constraintVertical_weight="3.5">
+                app:layout_constraintVertical_weight="4">
             </Space>
             <ImageView
                 android:id="@+id/iv_item_menu_partyroom_fire_candle_first"
@@ -51,7 +51,7 @@
                 app:layout_constraintBottom_toTopOf="@id/sp_item_menu_partyroom_fire_candle_right_first"
                 app:layout_constraintTop_toBottomOf="@id/sp_item_menu_partyroom_fire_candle_left_first"
                 app:layout_constraintHorizontal_weight="1.5"
-                app:layout_constraintVertical_weight="3.5">
+                app:layout_constraintVertical_weight="2">
             </ImageView>
             <ImageView
                 android:id="@+id/iv_item_menu_partyroom_fire_candle_last"
@@ -63,7 +63,7 @@
                 app:layout_constraintTop_toBottomOf="@id/sp_item_menu_partyroom_fire_candle_left_last"
                 app:layout_constraintBottom_toTopOf="@id/sp_item_menu_partyroom_fire_candle_right_last"
                 app:layout_constraintHorizontal_weight="1.5"
-                app:layout_constraintVertical_weight="3.5">
+                app:layout_constraintVertical_weight="2">
             </ImageView>
             <Space
                 android:id="@+id/sp_item_menu_partyroom_fire_candle_right_first"
@@ -74,7 +74,7 @@
                 app:layout_constraintTop_toBottomOf="@id/iv_item_menu_partyroom_fire_candle_first"
                 app:layout_constraintBottom_toBottomOf="@id/iv_item_menu_partyroom_cake"
                 app:layout_constraintHorizontal_weight="2.5"
-                app:layout_constraintVertical_weight="3">
+                app:layout_constraintVertical_weight="2.5">
             </Space>
             <Space
                 android:id="@+id/sp_item_menu_partyroom_fire_candle_right_last"
@@ -84,8 +84,8 @@
                 app:layout_constraintLeft_toRightOf="@id/iv_item_menu_partyroom_fire_candle_last"
                 app:layout_constraintTop_toBottomOf="@id/iv_item_menu_partyroom_fire_candle_last"
                 app:layout_constraintBottom_toBottomOf="@id/iv_item_menu_partyroom_cake"
-                app:layout_constraintHorizontal_weight="2.25"
-                app:layout_constraintVertical_weight="3">
+                app:layout_constraintHorizontal_weight="2.3"
+                app:layout_constraintVertical_weight="2.5">
             </Space>
 
 
@@ -99,7 +99,7 @@
                 app:layout_constraintRight_toLeftOf="@id/iv_item_menu_partyroom_candle_first"
                 app:layout_constraintBottom_toTopOf="@id/iv_item_menu_partyroom_candle_first"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_weight="1.75"
+                app:layout_constraintHorizontal_weight="1.8"
                 app:layout_constraintVertical_weight="5">
             </Space>
             <Space
@@ -110,7 +110,7 @@
                 app:layout_constraintRight_toLeftOf="@id/iv_item_menu_partyroom_candle_last"
                 app:layout_constraintBottom_toTopOf="@id/iv_item_menu_partyroom_candle_last"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintHorizontal_weight="2.5"
+                app:layout_constraintHorizontal_weight="2.4"
                 app:layout_constraintVertical_weight="5">
             </Space>
             <ImageView
@@ -123,7 +123,7 @@
                 app:layout_constraintBottom_toTopOf="@id/sp_item_menu_partyroom_candle_right_first"
                 app:layout_constraintTop_toBottomOf="@id/sp_item_menu_partyroom_candle_left_first"
                 app:layout_constraintHorizontal_weight="1.5"
-                app:layout_constraintVertical_weight="2">
+                app:layout_constraintVertical_weight="1">
             </ImageView>
             <ImageView
                 android:id="@+id/iv_item_menu_partyroom_candle_last"
@@ -135,7 +135,7 @@
                 app:layout_constraintTop_toBottomOf="@id/sp_item_menu_partyroom_candle_left_last"
                 app:layout_constraintBottom_toTopOf="@id/sp_item_menu_partyroom_candle_right_last"
                 app:layout_constraintHorizontal_weight="1.5"
-                app:layout_constraintVertical_weight="2">
+                app:layout_constraintVertical_weight="1">
             </ImageView>
             <Space
                 android:id="@+id/sp_item_menu_partyroom_candle_right_first"
@@ -145,7 +145,7 @@
                 app:layout_constraintLeft_toRightOf="@id/iv_item_menu_partyroom_candle_first"
                 app:layout_constraintTop_toBottomOf="@id/iv_item_menu_partyroom_candle_first"
                 app:layout_constraintBottom_toBottomOf="@id/iv_item_menu_partyroom_cake"
-                app:layout_constraintHorizontal_weight="2.25"
+                app:layout_constraintHorizontal_weight="2.2"
                 app:layout_constraintVertical_weight="3">
             </Space>
             <Space
@@ -156,7 +156,7 @@
                 app:layout_constraintLeft_toRightOf="@id/iv_item_menu_partyroom_candle_last"
                 app:layout_constraintTop_toBottomOf="@id/iv_item_menu_partyroom_candle_last"
                 app:layout_constraintBottom_toBottomOf="@id/iv_item_menu_partyroom_cake"
-                app:layout_constraintHorizontal_weight="1.75"
+                app:layout_constraintHorizontal_weight="1.85"
                 app:layout_constraintVertical_weight="3">
             </Space>
 

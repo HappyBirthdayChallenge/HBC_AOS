@@ -48,7 +48,7 @@ class MenuPartyroomRVAdapter(val data: GetProfileSuccess): RecyclerView.Adapter<
             val day = cal.get(Calendar.DATE)
 
             var isBirth = false
-            if (mon == month && date== day) {
+            if (mon == month && date== day && cal.get(Calendar.YEAR) == data.data.rooms[pos].birth_date.year) {
                 isBirth = true
             }
 
