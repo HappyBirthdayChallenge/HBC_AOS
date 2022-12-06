@@ -255,12 +255,12 @@ class MenuFriendPageVPAdapter(): RecyclerView.Adapter<MenuFriendPageVPAdapter.Fo
 
         override fun onRoomInfoSuccess(resp: RoomInfoSuccess) {
             if (pos == 0) {
+                MainFragmentManager.fromFriendList = true
                 MenuFragmentManager.goPartyRoom(resp, selectedFollowingInfo)
-                MainFragmentManager.transToMenu(selectedFollowingInfo.member.id)
             }
             else {
+                MainFragmentManager.fromFriendList = true
                 MenuFragmentManager.goPartyRoom(resp, selectedFollowerInfo)
-                MainFragmentManager.transToMenu(selectedFollowerInfo.member.id)
             }
         }
 

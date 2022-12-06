@@ -34,6 +34,7 @@ object MainFragmentManager: RoomInfoView, FindMymessageView{
     var cakeId = 0
     lateinit var roominfo: RoomInfoSuccess
     lateinit var personInfo: GetMyInfoSuccess
+    var fromFriendList = false
 
     var notiType = ""
 
@@ -112,6 +113,10 @@ object MainFragmentManager: RoomInfoView, FindMymessageView{
         }
         manager.beginTransaction().replace(id, mainPage).commit()
         manager.beginTransaction().show(mainPage).commit()
+        if (fromFriendList) {
+            fromFriendList = false
+            transToMenu(personInfo.data!!.id)
+        }
     }
 
     fun openLetter(messageId: Int) {
