@@ -24,8 +24,8 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/iv_item_main_fire_candle_first"
-                app:layout_constraintBottom_toTopOf="@id/iv_item_main_fire_candle_first"
+                app:layout_constraintRight_toLeftOf="@id/iv_item_menu_partyroom_fire_candle_first"
+                app:layout_constraintBottom_toTopOf="@id/iv_item_menu_partyroom_fire_candle_first"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintHorizontal_weight="1.75"
                 app:layout_constraintVertical_weight="3.5">
@@ -72,7 +72,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/iv_item_menu_partyroom_fire_candle_first"
                 app:layout_constraintTop_toBottomOf="@id/iv_item_menu_partyroom_fire_candle_first"
-                app:layout_constraintBottom_toBottomOf="@id/iv_item_main_cake"
+                app:layout_constraintBottom_toBottomOf="@id/iv_item_menu_partyroom_cake"
                 app:layout_constraintHorizontal_weight="2.5"
                 app:layout_constraintVertical_weight="3">
             </Space>
@@ -83,7 +83,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/iv_item_menu_partyroom_fire_candle_last"
                 app:layout_constraintTop_toBottomOf="@id/iv_item_menu_partyroom_fire_candle_last"
-                app:layout_constraintBottom_toBottomOf="@id/iv_item_main_cake"
+                app:layout_constraintBottom_toBottomOf="@id/iv_item_menu_partyroom_cake"
                 app:layout_constraintHorizontal_weight="2.25"
                 app:layout_constraintVertical_weight="3">
             </Space>
@@ -144,7 +144,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/iv_item_menu_partyroom_candle_first"
                 app:layout_constraintTop_toBottomOf="@id/iv_item_menu_partyroom_candle_first"
-                app:layout_constraintBottom_toBottomOf="@id/iv_item_main_cake"
+                app:layout_constraintBottom_toBottomOf="@id/iv_item_menu_partyroom_cake"
                 app:layout_constraintHorizontal_weight="2.25"
                 app:layout_constraintVertical_weight="3">
             </Space>
@@ -155,7 +155,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintLeft_toRightOf="@id/iv_item_menu_partyroom_candle_last"
                 app:layout_constraintTop_toBottomOf="@id/iv_item_menu_partyroom_candle_last"
-                app:layout_constraintBottom_toBottomOf="@id/iv_item_main_cake"
+                app:layout_constraintBottom_toBottomOf="@id/iv_item_menu_partyroom_cake"
                 app:layout_constraintHorizontal_weight="1.75"
                 app:layout_constraintVertical_weight="3">
             </Space>
