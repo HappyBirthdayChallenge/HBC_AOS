@@ -80,6 +80,7 @@ class MenuFollowingListRVAdapter(val friendList: ArrayList<FollowingContent?>): 
                     R.drawable.item_blue_follow_btn, null
                 )
             }
+
             initListener(pos, data[pos]!!)
         }
 

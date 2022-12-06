@@ -13,7 +13,7 @@ class MenuPartyroomRVAdapter(val data: GetProfileSuccess): RecyclerView.Adapter<
     lateinit var setPartyroomRv: SetPartyroomRv
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PartyroomHolder {
         val binding = ItemMenuPartyroomBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PartyroomHolder(binding, setPartyroomRv)
+        return PartyroomHolder(binding, setPartyroomRv, data)
     }
 
     override fun onBindViewHolder(holder: PartyroomHolder, position: Int) {
@@ -24,13 +24,13 @@ class MenuPartyroomRVAdapter(val data: GetProfileSuccess): RecyclerView.Adapter<
         return data.data.rooms.size
     }
 
-    class PartyroomHolder(val binding: ItemMenuPartyroomBinding, val setPartyroomRv: SetPartyroomRv): RecyclerView.ViewHolder(binding.root) {
+    class PartyroomHolder(val binding: ItemMenuPartyroomBinding, val setPartyroomRv: SetPartyroomRv, var data: GetProfileSuccess): RecyclerView.ViewHolder(binding.root) {
         fun init(pos: Int) {
             initListener(pos)
             initView(pos)
         }
         fun initView(pos: Int) {
-            binding.tvMenuPartyroom.text= "year"
+            binding.tvMenuPartyroom.text= data.data.rooms[pos].birth_date.year.toString()
         }
 
         fun initListener(pos: Int) {
