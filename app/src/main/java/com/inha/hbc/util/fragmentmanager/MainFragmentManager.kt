@@ -3,21 +3,28 @@ package com.inha.hbc.util.fragmentmanager
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.inha.hbc.R
 import com.inha.hbc.data.remote.resp.GetMyInfoBirth
 import com.inha.hbc.data.remote.resp.GetMyInfoData
 import com.inha.hbc.data.remote.resp.GetMyInfoSuccess
+import com.inha.hbc.data.remote.resp.IsMe
 import com.inha.hbc.data.remote.resp.menu.Following
 import com.inha.hbc.data.remote.resp.menu.FollowingContent
 import com.inha.hbc.data.remote.resp.message.RoomInfoSuccess
+import com.inha.hbc.data.remote.resp.room.FindMymessage
+import com.inha.hbc.data.remote.resp.room.FindMymessageSuccess
 import com.inha.hbc.ui.assist.cakeSelectionAssist
 import com.inha.hbc.ui.main.ui.*
+import com.inha.hbc.ui.main.view.FindMymessageView
 import com.inha.hbc.ui.main.view.Member
 import com.inha.hbc.ui.main.view.NotifyContent
 import com.inha.hbc.ui.main.view.RoomInfoView
+import com.inha.hbc.util.network.menu.MenuRetrofitService
 import com.inha.hbc.util.network.message.MessageRetrofitService
+import com.inha.hbc.util.network.room.RoomRetrofitService
 import com.inha.hbc.util.sharedpreference.GlobalApplication
 
-object MainFragmentManager: RoomInfoView{
+object MainFragmentManager: RoomInfoView, FindMymessageView{
     lateinit var manager: FragmentManager
     lateinit var mainPage: MainFragment
     lateinit var baseActivity: MainActivity
@@ -72,8 +79,7 @@ object MainFragmentManager: RoomInfoView{
 
         mainPage.binding.vpMain.adapter!!.notifyDataSetChanged()
 
-        manager.beginTransaction().replace(id, mainPage).commit()
-        manager.beginTransaction().show(mainPage).commit()
+        RoomRetrofitService().findMymessage(roomId.toString(), this)
     }
 
     fun refreshPartyRoom(resp: RoomInfoSuccess, followingContent: FollowingContent) {
@@ -95,7 +101,15 @@ object MainFragmentManager: RoomInfoView{
         ), "", "")
 
         mainPage.binding.vpMain.adapter!!.notifyDataSetChanged()
-
+        RoomRetrofitService().findMymessage(roomId.toString(), this)
+    }
+    override fun onFindMymessageSuccess(resp: FindMymessageSuccess) {
+        if (resp.data.found) {
+            mainPage.binding.ivMainSend.setImageResource(R.drawable.ic_main_message_list)
+        }
+        else {
+            mainPage.binding.ivMainSend.setImageResource(R.drawable.ic_main_send)
+        }
         manager.beginTransaction().replace(id, mainPage).commit()
         manager.beginTransaction().show(mainPage).commit()
     }
@@ -204,5 +218,10 @@ object MainFragmentManager: RoomInfoView{
     fun transToSearch() {
         manager.beginTransaction().add(id, SearchFragment()).commit()
         manager.beginTransaction().hide(mainPage).commit()
+    }
+
+
+    override fun onFindMymessageFailure() {
+        TODO("Not yet implemented")
     }
 }

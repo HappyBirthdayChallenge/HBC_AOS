@@ -8,6 +8,8 @@ import com.inha.hbc.data.remote.resp.message.CreateMessage
 import com.inha.hbc.data.remote.resp.message.CreateMessageSuccess
 import com.inha.hbc.data.remote.resp.message.SearchDeco
 import com.inha.hbc.data.remote.resp.message.SearchDecoSuccess
+import com.inha.hbc.data.remote.resp.room.FindMymessage
+import com.inha.hbc.data.remote.resp.room.FindMymessageSuccess
 import com.inha.hbc.data.remote.resp.room.GetReceiveMessage
 import com.inha.hbc.data.remote.resp.room.GetReceiveMessageSuccess
 import com.inha.hbc.ui.main.view.*
@@ -117,10 +119,10 @@ class RoomRetrofitService {
 
     fun findMymessage(roomId: String, view: FindMymessageView) {
         findMymessageView = view
-        callRetro().findMymessage(roomId).enqueue(object : Callback<List<IsMe>> {
-            override fun onResponse(call: Call<List<IsMe>>, response: Response<List<IsMe>>) {
+        callRetro().findMymessage(roomId).enqueue(object : Callback<List<FindMymessage>> {
+            override fun onResponse(call: Call<List<FindMymessage>>, response: Response<List<FindMymessage>>) {
                 if (response.isSuccessful) {
-                    val resp = response.body()!![0] as IsMeSuccess
+                    val resp = response.body()!![0] as FindMymessageSuccess
                     if (resp.code == "R-R004" || resp.code == "R-R006") {
                         findMymessageView.onFindMymessageSuccess(resp)
                     }
@@ -133,7 +135,7 @@ class RoomRetrofitService {
                 }
             }
 
-            override fun onFailure(call: Call<List<IsMe>>, t: Throwable) {
+            override fun onFailure(call: Call<List<FindMymessage>>, t: Throwable) {
                 TODO("Not yet implemented")
             }
         })

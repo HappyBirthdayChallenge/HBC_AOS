@@ -25,7 +25,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:src="@drawable/ic_main_send">
+            android:src="@drawable/ic_main_message_list">
         </ImageView>
         <TextView
             android:id="@+id/tv_main_title"

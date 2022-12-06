@@ -10,6 +10,8 @@ import com.inha.hbc.data.local.LetterData
 import com.inha.hbc.data.remote.req.message.MessageData
 import com.inha.hbc.data.remote.resp.message.CreateMessageSuccess
 import com.inha.hbc.data.remote.resp.message.UploadSuccess
+import com.inha.hbc.data.remote.resp.room.FindMymessage
+import com.inha.hbc.data.remote.resp.room.FindMymessageSuccess
 import com.inha.hbc.ui.adapter.LetterMediaListRVAdapter
 import com.inha.hbc.ui.assist.convertAnime
 import com.inha.hbc.ui.assist.convertDeco
@@ -17,9 +19,11 @@ import com.inha.hbc.ui.letter.ui.*
 import com.inha.hbc.ui.letter.view.CreateMessageView
 import com.inha.hbc.ui.letter.view.UploadView
 import com.inha.hbc.ui.main.ui.MainFragment
+import com.inha.hbc.ui.main.view.FindMymessageView
 import com.inha.hbc.util.network.message.MessageRetrofitService
+import com.inha.hbc.util.network.room.RoomRetrofitService
 
-object LetterFragmentManager: CreateMessageView, UploadView {
+object LetterFragmentManager: CreateMessageView, UploadView, FindMymessageView {
     lateinit var manager: FragmentManager
     lateinit var mainPage: MainFragment
     lateinit var letterBaseFragment: LetterBaseFragment
@@ -57,10 +61,15 @@ object LetterFragmentManager: CreateMessageView, UploadView {
 
     fun letterClose() {
         fileInfo.clear()
+
         manager.beginTransaction().remove(letterBaseFragment).commit()
         manager.beginTransaction().show(mainPage).commit()
 
         letterId = -1
+    }
+
+    fun finLetterClose() {
+        RoomRetrofitService().findMymessage(MainFragmentManager.roomId.toString(), this)
     }
 
     fun objectOpen(type: String) {
@@ -168,6 +177,20 @@ object LetterFragmentManager: CreateMessageView, UploadView {
     }
 
     override fun onUploadFailure() {
+        TODO("Not yet implemented")
+    }
+
+    override fun onFindMymessageSuccess(resp: FindMymessageSuccess) {
+        if (resp.data.found) {
+            mainPage.binding.ivMainSend.setImageResource(R.drawable.ic_main_message_list)
+        }
+        else {
+            mainPage.binding.ivMainSend.setImageResource(R.drawable.ic_main_send)
+        }
+        letterClose()
+    }
+
+    override fun onFindMymessageFailure() {
         TODO("Not yet implemented")
     }
 
