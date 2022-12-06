@@ -14,9 +14,183 @@
                 android:id="@+id/iv_item_menu_partyroom"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:src="@drawable/img_example_partyroom"
+                android:src="@drawable/bg_type1_front"
                 android:scaleType="fitXY">
             </ImageView>
+
+
+            <Space
+                android:id="@+id/sp_item_menu_partyroom_fire_candle_left_first"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/iv_item_main_fire_candle_first"
+                app:layout_constraintBottom_toTopOf="@id/iv_item_main_fire_candle_first"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_weight="1.75"
+                app:layout_constraintVertical_weight="3.5">
+            </Space>
+            <Space
+                android:id="@+id/sp_item_menu_partyroom_fire_candle_left_last"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/iv_item_menu_partyroom_fire_candle_last"
+                app:layout_constraintBottom_toTopOf="@id/iv_item_menu_partyroom_fire_candle_last"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_weight="3"
+                app:layout_constraintVertical_weight="3.5">
+            </Space>
+            <ImageView
+                android:id="@+id/iv_item_menu_partyroom_fire_candle_first"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:elevation="1dp"
+                app:layout_constraintLeft_toRightOf="@id/sp_item_menu_partyroom_fire_candle_left_first"
+                app:layout_constraintRight_toLeftOf="@id/sp_item_menu_partyroom_fire_candle_right_first"
+                app:layout_constraintBottom_toTopOf="@id/sp_item_menu_partyroom_fire_candle_right_first"
+                app:layout_constraintTop_toBottomOf="@id/sp_item_menu_partyroom_fire_candle_left_first"
+                app:layout_constraintHorizontal_weight="1.5"
+                app:layout_constraintVertical_weight="3.5">
+            </ImageView>
+            <ImageView
+                android:id="@+id/iv_item_menu_partyroom_fire_candle_last"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:elevation="1dp"
+                app:layout_constraintLeft_toRightOf="@id/sp_item_menu_partyroom_fire_candle_left_last"
+                app:layout_constraintRight_toLeftOf="@id/sp_item_menu_partyroom_fire_candle_right_last"
+                app:layout_constraintTop_toBottomOf="@id/sp_item_menu_partyroom_fire_candle_left_last"
+                app:layout_constraintBottom_toTopOf="@id/sp_item_menu_partyroom_fire_candle_right_last"
+                app:layout_constraintHorizontal_weight="1.5"
+                app:layout_constraintVertical_weight="3.5">
+            </ImageView>
+            <Space
+                android:id="@+id/sp_item_menu_partyroom_fire_candle_right_first"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/iv_item_menu_partyroom_fire_candle_first"
+                app:layout_constraintTop_toBottomOf="@id/iv_item_menu_partyroom_fire_candle_first"
+                app:layout_constraintBottom_toBottomOf="@id/iv_item_main_cake"
+                app:layout_constraintHorizontal_weight="2.5"
+                app:layout_constraintVertical_weight="3">
+            </Space>
+            <Space
+                android:id="@+id/sp_item_menu_partyroom_fire_candle_right_last"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/iv_item_menu_partyroom_fire_candle_last"
+                app:layout_constraintTop_toBottomOf="@id/iv_item_menu_partyroom_fire_candle_last"
+                app:layout_constraintBottom_toBottomOf="@id/iv_item_main_cake"
+                app:layout_constraintHorizontal_weight="2.25"
+                app:layout_constraintVertical_weight="3">
+            </Space>
+
+
+
+
+            <Space
+                android:id="@+id/sp_item_menu_partyroom_candle_left_first"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/iv_item_menu_partyroom_candle_first"
+                app:layout_constraintBottom_toTopOf="@id/iv_item_menu_partyroom_candle_first"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_weight="1.75"
+                app:layout_constraintVertical_weight="5">
+            </Space>
+            <Space
+                android:id="@+id/sp_item_menu_partyroom_candle_left_last"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/iv_item_menu_partyroom_candle_last"
+                app:layout_constraintBottom_toTopOf="@id/iv_item_menu_partyroom_candle_last"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintHorizontal_weight="2.5"
+                app:layout_constraintVertical_weight="5">
+            </Space>
+            <ImageView
+                android:id="@+id/iv_item_menu_partyroom_candle_first"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:elevation="1dp"
+                app:layout_constraintLeft_toRightOf="@id/sp_item_menu_partyroom_candle_left_first"
+                app:layout_constraintRight_toLeftOf="@id/sp_item_menu_partyroom_candle_right_first"
+                app:layout_constraintBottom_toTopOf="@id/sp_item_menu_partyroom_candle_right_first"
+                app:layout_constraintTop_toBottomOf="@id/sp_item_menu_partyroom_candle_left_first"
+                app:layout_constraintHorizontal_weight="1.5"
+                app:layout_constraintVertical_weight="2">
+            </ImageView>
+            <ImageView
+                android:id="@+id/iv_item_menu_partyroom_candle_last"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:elevation="1dp"
+                app:layout_constraintLeft_toRightOf="@id/sp_item_menu_partyroom_candle_left_last"
+                app:layout_constraintRight_toLeftOf="@id/sp_item_menu_partyroom_candle_right_last"
+                app:layout_constraintTop_toBottomOf="@id/sp_item_menu_partyroom_candle_left_last"
+                app:layout_constraintBottom_toTopOf="@id/sp_item_menu_partyroom_candle_right_last"
+                app:layout_constraintHorizontal_weight="1.5"
+                app:layout_constraintVertical_weight="2">
+            </ImageView>
+            <Space
+                android:id="@+id/sp_item_menu_partyroom_candle_right_first"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/iv_item_menu_partyroom_candle_first"
+                app:layout_constraintTop_toBottomOf="@id/iv_item_menu_partyroom_candle_first"
+                app:layout_constraintBottom_toBottomOf="@id/iv_item_main_cake"
+                app:layout_constraintHorizontal_weight="2.25"
+                app:layout_constraintVertical_weight="3">
+            </Space>
+            <Space
+                android:id="@+id/sp_item_menu_partyroom_candle_right_last"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/iv_item_menu_partyroom_candle_last"
+                app:layout_constraintTop_toBottomOf="@id/iv_item_menu_partyroom_candle_last"
+                app:layout_constraintBottom_toBottomOf="@id/iv_item_main_cake"
+                app:layout_constraintHorizontal_weight="1.75"
+                app:layout_constraintVertical_weight="3">
+            </Space>
+
+
+
+
+            <Space
+                android:id="@+id/sp_item_menu_partyroom_cake_top"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/iv_item_menu_partyroom_cake"
+                app:layout_constraintVertical_weight="1">
+            </Space>
+            <ImageView
+                android:id="@+id/iv_item_menu_partyroom_cake"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/sp_item_menu_partyroom_cake_top"
+                app:layout_constraintBottom_toTopOf="@id/sp_item_menu_partyroom_cake_bottom"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintVertical_weight="0.7">
+            </ImageView>
+            <Space
+                android:id="@+id/sp_item_menu_partyroom_cake_bottom"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintTop_toBottomOf="@id/iv_item_menu_partyroom_cake"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_weight="1">
+            </Space>
+
+
             <TextView
                 android:id="@+id/tv_menu_partyroom"
                 android:layout_width="match_parent"
